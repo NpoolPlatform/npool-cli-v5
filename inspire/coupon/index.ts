@@ -12,6 +12,11 @@ export const useCouponStore = defineStore('coupon-pool', {
     Coupons: [] as Array<Coupon>
   }),
   getters: {
+    valid (): (coupon: Coupon) => boolean {
+      return (coupon: Coupon) => {
+        return coupon.StartAt <= Date.now() / 1000 && coupon.StartAt + coupon.DurationDays * 24 * 60 * 60 >= Date.now() / 1000
+      }
+    }
   },
   actions: {
     getCoupons (req: GetCouponsRequest, done: (error: boolean, rows?: Array<Coupon>) => void) {
