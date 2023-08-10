@@ -2,8 +2,7 @@ import { BaseRequest } from 'npool-cli-v4'
 
 export enum SettleType {
   GoodOrderPayment = 'GoodOrderPayment',
-  TechniqueServiceFee = 'TechniqueServiceFee',
-  NoCommission = 'NoCommission'
+  TechniqueServiceFee = 'TechniqueServiceFee'
 }
 export const SettleTypes = Object.values(SettleType)
 
