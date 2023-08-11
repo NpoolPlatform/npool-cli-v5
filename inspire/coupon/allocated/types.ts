@@ -6,6 +6,9 @@ export interface Coupon {
   CouponType: CouponType
   AppID: string
   UserID: string
+  Username: string
+  EmailAddress: string
+  PhoneNO: string
   Denomination: string
   Circulation: string
   /** @format int64 */
