@@ -1,4 +1,5 @@
 import { BaseRequest } from 'npool-cli-v4'
+import { SettleAmountType, SettleInterval, SettleMode, SettleType } from '../commission'
 
 export interface GoodAchievement {
   CoinTypeID: string
@@ -8,7 +9,12 @@ export interface GoodAchievement {
   GoodID: string
   GoodName: string
   GoodUnit: string
-  CommissionPercent: number
+  CommissionValue: string
+  CommissionThreshold: string
+  CommissionSettleType: SettleType
+  CommissionSettleMode: SettleMode
+  CommissionSettleAmountType: SettleAmountType
+  CommissionSettleInterval: SettleInterval
   TotalUnits: string
   SelfUnits: string
   TotalAmount: string
