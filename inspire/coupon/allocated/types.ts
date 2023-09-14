@@ -1,5 +1,5 @@
 import { BaseRequest } from '../../../request'
-import { CouponConstraint, CouponType } from '../types'
+import { CouponConstraint, CouponType } from '../const'
 
 export interface Coupon {
   ID: string

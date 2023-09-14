@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { API } from './const'
+import { API, CouponType } from './const'
 import {
   GetAppCouponsRequest,
   GetAppCouponsResponse,
@@ -18,7 +18,25 @@ export const useCouponStore = defineStore('coupon-pool', {
   state: () => ({
     Coupons: new Map<string, Array<Coupon>>()
   }),
-  getters: {},
+  getters: {
+    coupons (): (appID?: string, couponType?: CouponType) => Array<Coupon> {
+      return (appID?: string, couponType?: CouponType): Array<Coupon> => {
+        const coupons = [] as Array<Coupon>
+        this.Coupons.forEach((_coupons, _appID) => {
+          if (appID && appID !== _appID) {
+            return
+          }
+          _coupons.forEach((coupon) => {
+            if (couponType && coupon.CouponType !== couponType) {
+              return
+            }
+            coupons.push(coupon)
+          })
+        })
+        return coupons
+      }
+    }
+  },
   actions: {
     getCoupons (req: GetCouponsRequest, done: (error: boolean, rows?: Array<Coupon>) => void) {
       doActionWithError<GetCouponsRequest, GetCouponsResponse>(

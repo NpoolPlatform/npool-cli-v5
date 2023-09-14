@@ -1,19 +1,5 @@
 import { BaseRequest, NotifyRequest } from '../../request'
-
-export enum CouponType {
-  FixAmount = 'FixAmount',
-  Discount = 'Discount',
-  SpecialOffer = 'SpecialOffer'
-}
-export const CouponTypes = Object.values(CouponType)
-
-export enum CouponConstraint {
-  Normal = 'Normal',
-  PaymentThreshold = 'PaymentThreshold',
-  GoodOnly = 'GoodOnly',
-  GoodThreshold = 'GoodThreshold'
-}
-export const CouponConstraints = Object.values(CouponConstraint)
+import { CouponType, CouponConstraint } from './const'
 
 export interface Coupon {
   ID: string
