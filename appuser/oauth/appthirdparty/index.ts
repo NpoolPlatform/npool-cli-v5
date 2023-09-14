@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { APIS as APIEnum } from './const'
-import { doActionWithError } from 'npool-cli-v4'
+import { doActionWithError } from '../../../request'
 import {
   AppOAuthThirdParty,
   CreateAppOAuthThirdPartyRequest,

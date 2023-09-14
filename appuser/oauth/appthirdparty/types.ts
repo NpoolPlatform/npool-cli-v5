@@ -1,4 +1,4 @@
-import { BaseRequest } from 'npool-cli-v4'
+import { BaseRequest } from '../../../request'
 
 export interface AppOAuthThirdParty {
   ID: string

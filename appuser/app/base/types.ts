@@ -1,4 +1,4 @@
-import { CreateInvitationCodeWhen, RecaptchaType, SignMethodType } from './const'
+import { CreateInvitationCodeWhen, RecaptchaType, SignMethodType } from '../../base'
 
 export interface App {
   ID: string

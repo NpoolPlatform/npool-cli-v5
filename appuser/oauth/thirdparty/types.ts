@@ -1,4 +1,5 @@
-import { BaseRequest, SignMethodType } from 'npool-cli-v4'
+import { BaseRequest } from '../../../request'
+import { SignMethodType } from '../../base'
 
 export interface OAuthThirdParty {
   ID: string
