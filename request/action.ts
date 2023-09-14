@@ -2,7 +2,7 @@ import { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
 import { useErrorStore } from './error'
 import { useNotificationStore, Notification } from '../notify'
 import { ReqMessage } from './types'
-import { createAPI } from '../api'
+import { createAPI } from './axiosapi'
 
 const notification = useNotificationStore()
 const errorswitcher = useErrorStore()
