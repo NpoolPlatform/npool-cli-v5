@@ -34,25 +34,64 @@ import { useMyApplicationStore } from '../app'
 export const useUserStore = defineStore('users', {
   state: () => ({
     LoginHistories: [] as Array<LoginHistory>,
-    Users: new Map<string, Map<string, User>>()
+    Users: new Map<string, Array<User>>()
   }),
   getters: {
     loginHistories (): Array<LoginHistory> {
       return this.LoginHistories.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1)
     },
-    getUserByAppUserID (): (appID: string, userID: string) => User | undefined {
+    appUser (): (appID: string, userID: string) => User | undefined {
       return (appID: string, userID: string) => {
-        return this.Users.get(appID)?.get(userID)
+        return this.Users.get(appID)?.find((el) => el.ID === userID)
       }
     },
-    getUsersByAppID () {
+    appUsers (): (appID: string) => Array<User> | undefined {
       return (appID: string) => {
         return this.Users.get(appID)
+      }
+    },
+    addAppUsers (): (appID: string | undefined, users: Array<User>) => void {
+      return (appID: string | undefined, users: Array<User>) => {
+        if (!appID) {
+          const myApp = useMyApplicationStore()
+          if (!myApp.AppID) {
+            return
+          }
+          appID = myApp.AppID
+        }
+        let _users = this.Users.get(appID)
+        if (!_users) {
+          _users = []
+        }
+        _users.push(...users)
+        this.Users.set(appID, _users)
+      }
+    },
+    updateAppUser (): (user: User) => void {
+      return (user: User) => {
+        let users = this.Users.get(user.AppID)
+        if (!users) {
+          users = []
+        }
+        const index = users.findIndex((el) => el.ID === user.ID)
+        users.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, user)
+        this.Users.set(user.AppID, users)
+      }
+    },
+    delAppUser (): (user: User) => void {
+      return (user: User) => {
+        let users = this.Users.get(user.AppID)
+        if (!users) {
+          users = []
+        }
+        const index = users.findIndex((el) => el.ID === user.ID)
+        users.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+        this.Users.set(user.AppID, users)
       }
     }
   },
   actions: {
-    login (req: LoginRequest, done: (user: User, error: boolean) => void) {
+    login (req: LoginRequest, done: (error: boolean, row?: User) => void) {
       doActionWithError<LoginRequest, LoginResponse>(
         API.LOGIN,
         req,
@@ -60,12 +99,13 @@ export const useUserStore = defineStore('users', {
         (resp: LoginResponse): void => {
           const user = useLocalUserStore()
           user.setUser(resp.Info)
-          done(resp.Info, false)
+          this.updateAppUser(resp.Info)
+          done(false, resp.Info)
         }, () => {
-          done(undefined as unknown as User, true)
+          done(true)
         })
     },
-    loginVerify (req: LoginVerifyRequest, done: (resp: User, error: boolean) => void) {
+    loginVerify (req: LoginVerifyRequest, done: (error: boolean, row?: User) => void) {
       doActionWithError<LoginVerifyRequest, LoginVerifyResponse>(
         API.LOGIN_VERIFY,
         req,
@@ -73,9 +113,10 @@ export const useUserStore = defineStore('users', {
         (resp: LoginVerifyResponse): void => {
           const user = useLocalUserStore()
           user.setUser(resp.Info)
-          done(resp.Info, false)
+          this.updateAppUser(resp.Info)
+          done(false, resp.Info)
         }, () => {
-          done(undefined as unknown as User, true)
+          done(true)
         })
     },
     signup (req: SignupRequest, done: () => void) {
@@ -94,13 +135,14 @@ export const useUserStore = defineStore('users', {
         req.Message,
         (): void => {
           const user = useLocalUserStore()
+          this.delAppUser(user.User)
           user.restUser()
           done(false)
         }, () => {
           done(true)
         })
     },
-    updateUser (req: UpdateUserRequest, done: (user: User, error: boolean) => void) {
+    updateUser (req: UpdateUserRequest, done: (error: boolean, row?: User) => void) {
       doActionWithError<UpdateUserRequest, UpdateUserResponse>(
         API.UPDATE_USER,
         req,
@@ -108,9 +150,10 @@ export const useUserStore = defineStore('users', {
         (resp: UpdateUserResponse): void => {
           const user = useLocalUserStore()
           user.setUser(resp.Info)
-          done(resp.Info, false)
+          this.updateAppUser(resp.Info)
+          done(false, resp.Info)
         }, () => {
-          done(undefined as unknown as User, true)
+          done(true)
         })
     },
     resetUser (req: ResetUserRequest, done: (error: boolean) => void) {
@@ -124,93 +167,71 @@ export const useUserStore = defineStore('users', {
           done(true)
         })
     },
-    getLoginHistories (req: GetLoginHistoriesRequest, done: (histories: Array<LoginHistory>, error: boolean) => void) {
+    getLoginHistories (req: GetLoginHistoriesRequest, done: (error: boolean, histories?: Array<LoginHistory>) => void) {
       doActionWithError<GetLoginHistoriesRequest, GetLoginHistoriesResponse>(
         API.GET_LOGIN_HISTORIES,
         req,
         req.Message,
         (resp: GetLoginHistoriesResponse): void => {
           this.LoginHistories.push(...resp.Infos)
-          done(resp.Infos, false)
+          done(false, resp.Infos)
         }, () => {
-          done(undefined as unknown as Array<LoginHistory>, true)
+          done(true)
         }
       )
     },
-    updateUserKol (req: UpdateUserKolRequest, done: (error: boolean, row: User) => void) {
+    updateUserKol (req: UpdateUserKolRequest, done: (error: boolean, row?: User) => void) {
       doActionWithError<UpdateUserKolRequest, UpdateUserKolResponse>(
         API.UPDATE_USERKOL,
         req,
         req.Message,
         (resp: UpdateUserKolResponse): void => {
+          this.updateAppUser(resp.Info)
           done(false, resp.Info)
         }, () => {
-          done(true, {} as User)
+          done(true)
         }
       )
     },
 
-    getAppUsers (req: GetAppUsersRequest, done: (users: Array<User>, error: boolean) => void) {
+    getAppUsers (req: GetAppUsersRequest, done: (error: boolean, rows?: Array<User>) => void) {
       doActionWithError<GetAppUsersRequest, GetAppUsersResponse>(
         API.GET_APP_USERS,
         req,
         req.Message,
         (resp: GetAppUsersResponse): void => {
-          let data = this.getUsersByAppID(req.TargetAppID) as Map<string, User>
-          if (!data) {
-            data = new Map<string, User>()
-          }
-          resp.Infos.forEach((user) => {
-            data.set(user.ID, user)
-          })
-          this.Users.set(req.TargetAppID, data)
-          done(resp.Infos, false)
+          this.addAppUsers(req.TargetAppID, resp.Infos)
+          done(false, resp.Infos)
         }, () => {
-          done([], true)
+          done(true)
         })
     },
-    createAppUser (req: CreateAppUserRequest, done: (user: User, error: boolean) => void) {
+    createAppUser (req: CreateAppUserRequest, done: (error: boolean, row?: User) => void) {
       doActionWithError<CreateAppUserRequest, CreateAppUserResponse>(
         API.CREATE_APP_USER,
         req,
         req.Message,
         (resp: CreateAppUserResponse): void => {
-          let data = this.getUsersByAppID(req.TargetAppID)
-          if (!data) {
-            data = new Map<string, User>()
-          }
-          data.set(resp.Info.ID, resp.Info)
-          this.Users.set(req.TargetAppID, data)
-          done(resp.Info, false)
+          this.addAppUsers(req.TargetAppID, [resp.Info])
+          done(false, resp.Info)
         }, () => {
-          done({} as User, true)
+          done(true)
         })
     },
 
-    getUsers (req: GetUsersRequest, done: (user: Array<User>, error: boolean) => void) {
+    getUsers (req: GetUsersRequest, done: (error: boolean, rows?: Array<User>) => void) {
       doActionWithError<GetUsersRequest, GetUsersResponse>(
         API.GET_USERS,
         req,
         req.Message,
         (resp: GetUsersResponse): void => {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            done(resp.Infos, false)
-            return
-          }
-          let data = this.getUsersByAppID(myApp.AppID) as Map<string, User>
-          if (!data) {
-            data = new Map<string, User>()
-          }
-          resp.Infos.forEach((user) => {
-            data.set(user.ID, user)
-          })
-          done(resp.Infos, false)
+          this.addAppUsers(undefined, resp.Infos)
+          done(false, resp.Infos)
         }, () => {
-          done([], true)
+          done(true)
         })
     },
-    updateAppUser (req: UpdateAppUserRequest, done: (error: boolean, row: User) => void) {
+    updateAppUser (req: UpdateAppUserRequest, done: (error: boolean, row?: User) => void) {
       doActionWithError<UpdateAppUserRequest, UpdateAppUserResponse>(
         API.UPDATE_APP_USER,
         req,
@@ -218,7 +239,7 @@ export const useUserStore = defineStore('users', {
         (resp: UpdateAppUserResponse): void => {
           done(false, resp.Info)
         }, () => {
-          done(true, {} as User)
+          done(true)
         }
       )
     }
