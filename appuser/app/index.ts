@@ -1,9 +1,7 @@
 import { doActionWithError } from '../../request'
 import { defineStore } from 'pinia'
 import { API } from './const'
-
 import {
-  App,
   CreateAppRequest,
   CreateAppResponse,
   GetAppsRequest,
@@ -11,6 +9,8 @@ import {
   UpdateAppRequest,
   UpdateAppResponse
 } from './types'
+import { App } from './base'
+import { useMyApplicationStore } from './local'
 
 export const useApplicationStore = defineStore('applications', {
   state: () => ({
@@ -31,8 +31,12 @@ export const useApplicationStore = defineStore('applications', {
         req,
         req.Message,
         (resp: GetAppsResponse): void => {
+          const myApp = useMyApplicationStore()
           resp.Infos.forEach((app) => {
             this.Apps.set(app.ID, app)
+            if (myApp.AppID === app.ID) {
+              myApp.App = app
+            }
           })
           done(resp.Infos, false)
         }, () => {
@@ -65,3 +69,6 @@ export const useApplicationStore = defineStore('applications', {
     }
   }
 })
+
+export * from './base'
+export * from './local'
