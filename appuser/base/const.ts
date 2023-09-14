@@ -22,6 +22,8 @@ export enum RecaptchaType {
   GoogleRecaptchaV3 = 'GoogleRecaptchaV3'
 }
 
+export const RecaptchaTypes = Object.values(RecaptchaType)
+
 export enum AccountType {
   Mobile = 'Mobile',
   Email = 'Email',
