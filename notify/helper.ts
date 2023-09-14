@@ -1,4 +1,5 @@
-import { NotifyType, Notification } from '../../base'
+import { NotifyType } from './const'
+import { Notification } from './types'
 import { Notify } from 'quasar'
 
 const mergeMessage = (notification: Notification) => {
