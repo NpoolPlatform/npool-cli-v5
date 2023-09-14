@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { API } from './const'
-import { doActionWithError } from 'npool-cli-v4'
+import { doActionWithError } from '../../request/action'
 import { Achievement, GetUserAchievementsRequest, GetUserAchievementsResponse } from './types'
 
 export const useAchievementStore = defineStore('achievement', {

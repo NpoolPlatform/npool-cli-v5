@@ -1,4 +1,4 @@
-import { BaseRequest } from 'npool-cli-v4'
+import { BaseRequest } from '../../../request'
 import { CouponConstraint, CouponType } from '../types'
 
 export interface Coupon {

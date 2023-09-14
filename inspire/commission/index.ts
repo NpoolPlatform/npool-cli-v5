@@ -13,7 +13,7 @@ import {
   GetCommissionsRequest,
   GetCommissionsResponse
 } from './types'
-import { doActionWithError } from 'npool-cli-v4'
+import { doActionWithError } from '../../request/action'
 
 export const useCommissionStore = defineStore('commission', {
   state: () => ({

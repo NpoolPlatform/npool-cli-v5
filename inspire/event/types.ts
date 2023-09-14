@@ -1,4 +1,4 @@
-import { BaseRequest } from 'npool-cli-v4'
+import { BaseRequest } from '../../request'
 import { Coupon } from '../coupon/types'
 
 export enum CouponType {

@@ -5,7 +5,7 @@ import {
   GetCouponsRequest,
   GetCouponsResponse
 } from './types'
-import { doActionWithError } from 'npool-cli-v4'
+import { doActionWithError } from '../../request/action'
 
 export const useCouponStore = defineStore('coupon-pool', {
   state: () => ({

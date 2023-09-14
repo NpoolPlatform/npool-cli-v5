@@ -5,7 +5,7 @@ import {
   GetAppOpLogsResponse,
   OpLog
 } from './types'
-import { doActionWithError } from 'npool-cli-v4'
+import { doActionWithError } from '../request/action'
 
 export const useOpLogStore = defineStore('oplog', {
   state: () => ({

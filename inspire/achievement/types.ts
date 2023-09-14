@@ -1,4 +1,4 @@
-import { BaseRequest } from 'npool-cli-v4'
+import { BaseRequest } from '../../request'
 import { SettleAmountType, SettleInterval, SettleMode, SettleType } from '../commission'
 
 export interface GoodAchievement {
