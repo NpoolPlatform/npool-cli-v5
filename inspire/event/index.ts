@@ -21,7 +21,7 @@ export const useEventStore = defineStore('event', {
     }
   },
   actions: {
-    getEvents (req: GetEventsRequest, done: (error: boolean, rows: Array<Event>) => void) {
+    getEvents (req: GetEventsRequest, done: (error: boolean, rows?: Array<Event>) => void) {
       doActionWithError<GetEventsRequest, GetEventsResponse>(
         API.GET_EVENTINSPIRES,
         req,
@@ -30,11 +30,11 @@ export const useEventStore = defineStore('event', {
           this.Events.push(...resp.Infos)
           done(false, resp.Infos)
         }, () => {
-          done(true, [] as Array<Event>)
+          done(true)
         }
       )
     },
-    updateEvent (req: UpdateEventRequest, done: (error: boolean, row: Event) => void) {
+    updateEvent (req: UpdateEventRequest, done: (error: boolean, row?: Event) => void) {
       doActionWithError<UpdateEventRequest, UpdateEventResponse>(
         API.UPDATE_EVENTINSPIRE,
         req,
@@ -44,11 +44,11 @@ export const useEventStore = defineStore('event', {
           this.Events.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, resp.Info)
           done(false, resp.Info)
         }, () => {
-          done(true, {} as Event)
+          done(true)
         }
       )
     },
-    createEvent (req: CreateEventRequest, done: (error: boolean, row: Event) => void) {
+    createEvent (req: CreateEventRequest, done: (error: boolean, row?: Event) => void) {
       doActionWithError<CreateEventRequest, CreateEventResponse>(
         API.CREATE_EVENTINSPIRE,
         req,
@@ -57,7 +57,7 @@ export const useEventStore = defineStore('event', {
           this.Events.push(resp.Info)
           done(false, resp.Info)
         }, () => {
-          done(true, {} as Event)
+          done(true)
         }
       )
     }

@@ -23,7 +23,7 @@ export const useFiatCurrencyStore = defineStore('fiat-currency', {
     }
   },
   actions: {
-    getFiatCurrencyTypes (req: GetFiatCurrencyTypesRequest, done: (error: boolean, rows: Array<FiatCurrencyType>) => void) {
+    getFiatCurrencyTypes (req: GetFiatCurrencyTypesRequest, done: (error: boolean, rows?: Array<FiatCurrencyType>) => void) {
       doActionWithError<GetFiatCurrencyTypesRequest, GetFiatCurrencyTypesResponse>(
         API.GET_FIATCURRENCYTYPES,
         req,
@@ -32,11 +32,11 @@ export const useFiatCurrencyStore = defineStore('fiat-currency', {
           this.FiatCurrencyTypes.push(...resp.Infos)
           done(false, resp.Infos)
         }, () => {
-          done(true, [] as Array<FiatCurrencyType>)
+          done(true)
         }
       )
     },
-    updateFiatCurrencyType (req: UpdateFiatCurrencyTypeRequest, done: (error: boolean, row: FiatCurrencyType) => void) {
+    updateFiatCurrencyType (req: UpdateFiatCurrencyTypeRequest, done: (error: boolean, row?: FiatCurrencyType) => void) {
       doActionWithError<UpdateFiatCurrencyTypeRequest, UpdateFiatCurrencyTypeResponse>(
         API.UPDATE_FIATCURRENCYTYPE,
         req,
@@ -46,11 +46,11 @@ export const useFiatCurrencyStore = defineStore('fiat-currency', {
           this.FiatCurrencyTypes.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1, resp.Info)
           done(false, resp.Info)
         }, () => {
-          done(true, {} as FiatCurrencyType)
+          done(true)
         }
       )
     },
-    createFiatCurrencyType (req: CreateFiatCurrencyTypeRequest, done: (error: boolean, row: FiatCurrencyType) => void) {
+    createFiatCurrencyType (req: CreateFiatCurrencyTypeRequest, done: (error: boolean, row?: FiatCurrencyType) => void) {
       doActionWithError<CreateFiatCurrencyTypeRequest, CreateFiatCurrencyTypeResponse>(
         API.CREATE_FIATCURRENCYTYPE,
         req,
@@ -59,7 +59,7 @@ export const useFiatCurrencyStore = defineStore('fiat-currency', {
           this.FiatCurrencyTypes.push(resp.Info)
           done(false, resp.Info)
         }, () => {
-          done(true, {} as FiatCurrencyType)
+          done(true)
         }
       )
     }

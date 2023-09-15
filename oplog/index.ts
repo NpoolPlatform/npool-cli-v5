@@ -13,7 +13,7 @@ export const useOpLogStore = defineStore('oplog', {
   }),
   getters: {},
   actions: {
-    getAppOpLogs (req: GetAppOpLogsRequest, done: (error: boolean, rows: Array<OpLog>) => void) {
+    getAppOpLogs (req: GetAppOpLogsRequest, done: (error: boolean, rows?: Array<OpLog>) => void) {
       doActionWithError<GetAppOpLogsRequest, GetAppOpLogsResponse>(
         API.GET_OP_LOGS,
         req,
@@ -22,7 +22,7 @@ export const useOpLogStore = defineStore('oplog', {
           this.OpLogs.push(...resp.Infos)
           done(false, resp.Infos)
         }, () => {
-          done(true, [] as Array<OpLog>)
+          done(true)
         }
       )
     }
