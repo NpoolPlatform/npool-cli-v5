@@ -20,7 +20,7 @@ import {
 import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAdminFrontendTemplateStore = defineStore('admin-frontendtemplate-v4', {
+export const useFrontendTemplateStore = defineStore('front-templates', {
   state: () => ({
     FrontendTemplates: new Map<string, Array<Template>>()
   }),

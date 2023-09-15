@@ -18,7 +18,7 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useChurchEmailTemplateStore = defineStore('email-templates', {
+export const useEmailTemplateStore = defineStore('email-templates', {
   state: () => ({
     EmailTemplates: new Map<string, Array<Template>>()
   }),

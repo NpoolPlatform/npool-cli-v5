@@ -20,7 +20,7 @@ import {
 } from './types'
 import { formalizeAppID } from '../../appuser/app/local'
 
-export const useFrontendContactStore = defineStore('contacts', {
+export const useContactStore = defineStore('contacts', {
   state: () => ({
     Contacts: new Map<string, Array<Contact>>()
   }),
@@ -59,78 +59,81 @@ export const useFrontendContactStore = defineStore('contacts', {
         })
     },
 
-    createContact (req: CreateContactRequest, done: (contact: Contact, error: boolean) => void) {
+    createContact (req: CreateContactRequest, done: (error: boolean, contact?: Contact) => void) {
       doActionWithError<CreateContactRequest, CreateContactResponse>(
         API.CREATE_CONTACT,
         req,
         req.Message,
         (resp: CreateContactResponse): void => {
           this.addContacts(undefined, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         }, () => {
-          done({} as Contact, true)
+          done(true)
         })
     },
-    getContacts (req: GetContactsRequest, done: (contacts: Array<Contact>, error: boolean) => void) {
+    getContacts (req: GetContactsRequest, done: (error: boolean, contacts?: Array<Contact>) => void) {
       doActionWithError<GetContactsRequest, GetContactsResponse>(
         API.GET_CONTACTS,
         req,
         req.Message,
         (resp: GetContactsResponse): void => {
           this.addContacts(undefined, resp.Infos)
-          done(resp.Infos, false)
+          done(false, resp.Infos)
         }, () => {
-          done([], true)
+          done(true)
         })
     },
-    updateContact (req: UpdateContactRequest, done: (contact: Contact, error: boolean) => void) {
+    updateContact (req: UpdateContactRequest, done: (error: boolean, contact?: Contact) => void) {
       doActionWithError<UpdateContactRequest, UpdateContactResponse>(
         API.UPDATE_CONTACT,
         req,
         req.Message,
         (resp: UpdateContactResponse): void => {
           this.addContacts(undefined, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         }, () => {
-          done({} as Contact, true)
+          done(true)
         })
     },
 
-    createAppContact (req: CreateAppContactRequest, done: (contact: Contact, error: boolean) => void) {
+    createAppContact (req: CreateAppContactRequest, done: (error: boolean, contact?: Contact) => void) {
       doActionWithError<CreateAppContactRequest, CreateAppContactResponse>(
         API.CREATE_APP_CONTACT,
         req,
         req.Message,
         (resp: CreateAppContactResponse): void => {
           this.addContacts(req.TargetAppID, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         }, () => {
-          done({} as Contact, true)
+          done(true)
         })
     },
-    getAppContacts (req: GetAppContactsRequest, done: (contacts: Array<Contact>, error: boolean) => void) {
+    getAppContacts (req: GetAppContactsRequest, done: (error: boolean, contacts?: Array<Contact>) => void) {
       doActionWithError<GetAppContactsRequest, GetAppContactsResponse>(
         API.GET_APP_CONTACTS,
         req,
         req.Message,
         (resp: GetAppContactsResponse): void => {
           this.addContacts(req.TargetAppID, resp.Infos)
-          done(resp.Infos, false)
+          done(false, resp.Infos)
         }, () => {
-          done([], true)
+          done(true)
         })
     },
-    updateAppContact (req: UpdateAppContactRequest, done: (contact: Contact, error: boolean) => void) {
+    updateAppContact (req: UpdateAppContactRequest, done: (error: boolean, contact?: Contact) => void) {
       doActionWithError<UpdateAppContactRequest, UpdateAppContactResponse>(
         API.UPDATE_APP_CONTACT,
         req,
         req.Message,
         (resp: UpdateAppContactResponse): void => {
           this.addContacts(req.TargetAppID, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         }, () => {
-          done({} as Contact, true)
+          done(true)
         })
     }
   }
 })
+
+export * from './types'
+export * from './const'

@@ -70,7 +70,7 @@ export interface UpdateFrontendTemplateResponse {
 export interface CreateAppFrontendTemplateRequest extends BaseRequest {
   TargetAppID: string
   TargetLangID: string
-  UsedFor: Template
+  UsedFor: EventType
   Title: string
   Content: string
 }
