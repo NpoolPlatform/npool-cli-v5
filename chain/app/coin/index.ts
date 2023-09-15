@@ -17,7 +17,7 @@ import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app'
 import { NIL as NIL_UUID } from 'uuid'
 
-export const useAdminAppCoinStore = defineStore('app-coins', {
+export const useAppCoinStore = defineStore('app-coins', {
   state: () => ({
     AppCoins: new Map<string, Array<AppCoin>>()
   }),
@@ -172,3 +172,6 @@ export const useAdminAppCoinStore = defineStore('app-coins', {
     }
   }
 })
+
+export * from './const'
+export * from './types'

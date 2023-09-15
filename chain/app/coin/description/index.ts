@@ -18,7 +18,7 @@ import {
 import { doActionWithError } from '../../../../request'
 import { formalizeAppID } from '../../../../appuser/app'
 
-export const useAdminCoinDescriptionStore = defineStore('coin-descriptions', {
+export const useCoinDescriptionStore = defineStore('coin-descriptions', {
   state: () => ({
     CoinDescriptions: new Map<string, Array<CoinDescription>>()
   }),
