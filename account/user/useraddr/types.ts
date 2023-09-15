@@ -1,6 +1,7 @@
 import { BaseRequest } from '../../../request'
 import { SignMethodType } from '../../../appuser/base'
-import { Account, AccountUsedFor } from '../base'
+import { Account } from '../base'
+import { AccountUsedFor } from '../../base'
 
 export interface CreateUserAccountRequest extends BaseRequest {
   /**

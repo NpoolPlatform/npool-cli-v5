@@ -1,0 +1,115 @@
+import { defineStore } from 'pinia'
+import { doActionWithError } from '../../request'
+import { API } from './const'
+import {
+  GetStatementsRequest,
+  GetStatementsResponse,
+  GetMiningRewardsRequest,
+  GetMiningRewardsResponse,
+  MiningReward,
+  Statement,
+  GetAppStatementsRequest,
+  GetAppStatementsResponse
+} from './types'
+import { formalizeAppID } from '../../appuser/app'
+
+export const useFrontendStatementStore = defineStore('frontend-Statement-v4', {
+  state: () => ({
+    Statements: new Map<string, Array<Statement>>(),
+    MiningRewards: new Map<string, Array<MiningReward>>()
+  }),
+  getters: {
+    statements (): (appID?: string, userID?: string, coinTypeID?: string) => Array<Statement> {
+      return (appID?: string, userID?: string, coinTypeID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.Statements.get(appID)?.filter((el) => {
+          let ok = true
+          if (userID) ok &&= el.UserID === userID
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          return ok
+        }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+      }
+    },
+    miningRewards (): (appID?: string, userID?: string, coinTypeID?: string) => Array<MiningReward> {
+      return (appID?: string, userID?: string, coinTypeID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.MiningRewards.get(appID)?.filter((el) => {
+          let ok = true
+          if (userID) ok &&= el.UserID === userID
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          return ok
+        }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+      }
+    },
+    addStatements (): (appID: string | undefined, statements: Array<Statement>) => void {
+      return (appID: string | undefined, statements: Array<Statement>) => {
+        appID = formalizeAppID(appID)
+        let _statements = this.Statements.get(appID) as Array<Statement>
+        if (!_statements) {
+          _statements = []
+        }
+        statements.forEach((statement) => {
+          const index = _statements.findIndex((el) => el.ID === statement.ID)
+          _statements.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, statement)
+        })
+        this.Statements.set(appID, _statements)
+      }
+    },
+    addMiningRewards (): (appID: string | undefined, rewards: Array<MiningReward>) => void {
+      return (appID: string | undefined, rewards: Array<MiningReward>) => {
+        appID = formalizeAppID(appID)
+        let _rewards = this.MiningRewards.get(appID) as Array<MiningReward>
+        if (!_rewards) {
+          _rewards = []
+        }
+        rewards.forEach((reward) => {
+          const index = _rewards.findIndex((el) => el.ID === reward.ID)
+          _rewards.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, reward)
+        })
+        this.MiningRewards.set(appID, _rewards)
+      }
+    }
+  },
+  actions: {
+    getStatements (req: GetStatementsRequest, done: (error: boolean, rows: Array<Statement>) => void) {
+      doActionWithError<GetStatementsRequest, GetStatementsResponse>(
+        API.GET_STATEMENTS,
+        req,
+        req.Message,
+        (resp: GetStatementsResponse): void => {
+          this.addStatements(undefined, resp.Infos)
+          done(false, resp.Infos)
+        },
+        () => {
+          done(true, [] as Array<Statement>)
+        }
+      )
+    },
+    getMiningRewards (req: GetMiningRewardsRequest, done: (error: boolean, rows: Array<MiningReward>) => void) {
+      doActionWithError<GetMiningRewardsRequest, GetMiningRewardsResponse>(
+        API.GET_MININGREWARDS,
+        req,
+        req.Message,
+        (resp: GetMiningRewardsResponse): void => {
+          this.addMiningRewards(undefined, resp.Infos)
+          done(false, resp.Infos)
+        },
+        () => {
+          done(true, [] as Array<MiningReward>)
+        }
+      )
+    },
+    getAppStatements (req: GetAppStatementsRequest, done: (error: boolean, rows?: Array<Statement>) => void) {
+      doActionWithError<GetAppStatementsRequest, GetAppStatementsResponse>(
+        API.GET_APP_STATEMENTS,
+        req,
+        req.Message,
+        (resp: GetAppStatementsResponse): void => {
+          this.addStatements(req.TargetAppID, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true)
+        })
+    }
+  }
+})

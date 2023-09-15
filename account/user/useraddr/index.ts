@@ -20,9 +20,10 @@ import {
   UpdateAppUserAccountResponse
 } from './types'
 import { doActionWithError } from '../../../request'
-import { Account, AccountUsedFor } from '../base'
+import { Account } from '../base'
 import { API } from './const'
 import { formalizeAppID } from '../../../appuser/app'
+import { AccountUsedFor } from '../../base'
 
 export const useUserAccountStore = defineStore('user-accounts', {
   state: () => ({

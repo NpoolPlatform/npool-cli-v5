@@ -39,3 +39,9 @@ export const useLocalUserStore = defineStore('local-user', {
     }
   }
 })
+
+export const formalizeUserID = (userID?: string) => {
+  if (userID) return userID
+  const user = useLocalUserStore()
+  return user.User?.ID
+}
