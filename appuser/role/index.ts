@@ -26,29 +26,30 @@ import {
   GetAppRoleUsersResponse
 } from './types'
 import { doActionWithError } from '../../request'
-import { useMyApplicationStore } from '../app'
+import { formalizeAppID } from '../app'
 
-export const useAdminRoleStore = defineStore('admin-role-v3', {
+export const useRoleStore = defineStore('roles', {
   state: () => ({
     Roles: new Map<string, Array<Role>>(),
     RoleUsers: new Map<string, Map<string, Array<AppRoleUser>>>()
   }),
   getters: {
-    roleUsers () : (appID: string, roleID: string) => Array<AppRoleUser> | undefined {
-      return (appID: string, roleID: string) => {
+    roles (): (appID: string | undefined) => Array<Role> {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.Roles.get(appID) || []
+      }
+    },
+    roleUsers (): (appID: string | undefined, roleID: string) => Array<AppRoleUser> {
+      return (appID: string | undefined, roleID: string) => {
+        appID = formalizeAppID(appID)
         const roleUsers = this.RoleUsers.get(appID)
-        return roleUsers?.get(roleID)
+        return roleUsers?.get(roleID) || []
       }
     },
     addRoleUsers (): (appID: string | undefined, roleID: string, users: Array<AppRoleUser>) => void {
       return (appID: string | undefined, roleID: string, users: Array<AppRoleUser>) => {
-        if (!appID) {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            return
-          }
-          appID = myApp.AppID
-        }
+        appID = formalizeAppID(appID)
         let roleUsers = this.RoleUsers.get(appID)
         if (!roleUsers) {
           roleUsers = new Map<string, Array<AppRoleUser>>()
@@ -64,13 +65,7 @@ export const useAdminRoleStore = defineStore('admin-role-v3', {
     },
     delRoleUser (): (appID: string | undefined, roleID: string, userID: string) => void {
       return (appID: string | undefined, roleID: string, userID: string) => {
-        if (!appID) {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            return
-          }
-          appID = myApp.AppID
-        }
+        appID = formalizeAppID(appID)
         const roleUsers = this.RoleUsers.get(appID)
         if (!roleUsers) {
           return
@@ -87,36 +82,15 @@ export const useAdminRoleStore = defineStore('admin-role-v3', {
     },
     addRoles (): (appID: string | undefined, roles: Array<Role>) => void {
       return (appID: string | undefined, roles: Array<Role>) => {
-        if (!appID) {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            return
-          }
-          appID = myApp.AppID
-        }
+        appID = formalizeAppID(appID)
         let _roles = this.Roles.get(appID) as Array<Role>
         if (!_roles) {
           _roles = []
         }
-        _roles.push(...roles)
-        this.Roles.set(appID, _roles)
-      }
-    },
-    updateRole (): (appID: string | undefined, role: Role) => void {
-      return (appID: string | undefined, role: Role) => {
-        if (!appID) {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            return
-          }
-          appID = myApp.AppID
-        }
-        const _roles = this.Roles.get(appID) as Array<Role>
-        if (!_roles) {
-          return
-        }
-        const index = _roles.findIndex((el) => el.ID === role.ID)
-        _roles.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, role)
+        roles.forEach((role) => {
+          const index = _roles.findIndex((el) => el.ID === role.ID)
+          _roles.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, role)
+        })
         this.Roles.set(appID, _roles)
       }
     }
@@ -140,7 +114,7 @@ export const useAdminRoleStore = defineStore('admin-role-v3', {
         req,
         req.Message,
         (resp: UpdateRoleResponse): void => {
-          this.updateRole(undefined, resp.Info)
+          this.addRoles(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -203,7 +177,7 @@ export const useAdminRoleStore = defineStore('admin-role-v3', {
         req,
         req.Message,
         (resp: CreateAppRoleResponse): void => {
-          this.updateRole(req.TargetAppID, resp.Info)
+          this.addRoles(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -247,3 +221,6 @@ export const useAdminRoleStore = defineStore('admin-role-v3', {
     }
   }
 })
+
+export * from './types'
+export * from './const'
