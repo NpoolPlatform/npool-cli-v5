@@ -1,4 +1,4 @@
-import { AccountUsedFor } from './const'
+import { AccountUsedFor } from '../../base'
 
 export interface Account {
   ID: string

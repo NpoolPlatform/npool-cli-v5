@@ -10,9 +10,9 @@ import {
   GetAppTransferAccountsRequest,
   GetAppTransferAccountsResponse
 } from './types'
-import { doActionWithError } from '../../request'
+import { doActionWithError } from '../../../request'
 import { API } from './const'
-import { useMyApplicationStore } from '../../appuser/app'
+import { useMyApplicationStore } from '../../../appuser/app'
 
 export const useTransferAccountStore = defineStore('transfer-account', {
   state: () => ({

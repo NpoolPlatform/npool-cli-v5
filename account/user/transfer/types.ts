@@ -1,5 +1,5 @@
-import { BaseRequest } from '../../request'
-import { AccountType } from '../../appuser/base'
+import { BaseRequest } from '../../../request'
+import { AccountType } from '../../../appuser/base'
 
 export interface TransferAccount {
   ID: string

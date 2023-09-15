@@ -19,12 +19,12 @@ import {
   UpdateAppUserAccountRequest,
   UpdateAppUserAccountResponse
 } from './types'
-import { doActionWithError } from '../../request'
+import { doActionWithError } from '../../../request'
 import { Account, AccountUsedFor } from '../base'
 import { API } from './const'
-import { formalizeAppID } from '../../appuser/app'
+import { formalizeAppID } from '../../../appuser/app'
 
-export const useFrontendUserAccountStore = defineStore('frontend-useraccount-v4', {
+export const useUserAccountStore = defineStore('user-accounts', {
   state: () => ({
     UserAccounts: new Map<string, Array<Account>>()
   }),
