@@ -1,4 +1,4 @@
-import { CurrencyFeedType } from './const'
+import { CurrencyFeedType } from '../../../base'
 
 export interface CoinCurrency {
   ID: string

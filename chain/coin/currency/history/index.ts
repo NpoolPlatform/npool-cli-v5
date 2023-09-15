@@ -2,10 +2,10 @@ import { defineStore } from 'pinia'
 import { API } from './const'
 import {
   GetCurrencyHistoriesRequest,
-  GetCurrencyHistoriesResponse,
-  CoinCurrency
+  GetCurrencyHistoriesResponse
 } from './types'
 import { doActionWithError } from '../../../../request'
+import { CoinCurrency } from '../base'
 
 export const useCoinCurrencyHistoryStore = defineStore('coin-currency-histories', {
   state: () => ({

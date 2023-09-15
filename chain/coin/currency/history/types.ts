@@ -1,19 +1,5 @@
 import { BaseRequest } from '../../../../request'
-import { CurrencyFeedType } from '../../../base'
-
-export interface CoinCurrency {
-  ID: string
-  CoinTypeID: string
-  CoinName: string
-  CoinLogo: string
-  CoinUnit: string
-  CoinENV: string
-  CreatedAt: number
-  UpdatedAt: number
-  MarketValueHigh: string
-  MarketValueLow: string
-  FeedType: CurrencyFeedType
-}
+import { CoinCurrency } from '../base'
 
 export interface GetCurrencyHistoriesRequest extends BaseRequest {
   CoinTypeIDs: string[]
