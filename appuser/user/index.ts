@@ -29,7 +29,7 @@ import {
   UpdateAppUserResponse
 } from './types'
 import { LoginHistory, User } from './base'
-import { useMyApplicationStore } from '../app'
+import { formalizeAppID } from '../app'
 
 export const useUserStore = defineStore('users', {
   state: () => ({
@@ -45,37 +45,24 @@ export const useUserStore = defineStore('users', {
         return this.Users.get(appID)?.find((el) => el.ID === userID)
       }
     },
-    appUsers (): (appID: string) => Array<User> | undefined {
-      return (appID: string) => {
-        return this.Users.get(appID)
+    appUsers (): (appID: string | undefined) => Array<User> {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.Users.get(appID) || []
       }
     },
     addAppUsers (): (appID: string | undefined, users: Array<User>) => void {
       return (appID: string | undefined, users: Array<User>) => {
-        if (!appID) {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            return
-          }
-          appID = myApp.AppID
-        }
-        let _users = this.Users.get(appID)
+        appID = formalizeAppID(appID)
+        let _users = this.Users.get(appID) as Array<User>
         if (!_users) {
           _users = []
         }
-        _users.push(...users)
+        users.forEach((user) => {
+          const index = _users.findIndex((el) => el.ID === user.ID)
+          _users.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, user)
+        })
         this.Users.set(appID, _users)
-      }
-    },
-    updateAppUser (): (user: User) => void {
-      return (user: User) => {
-        let users = this.Users.get(user.AppID)
-        if (!users) {
-          users = []
-        }
-        const index = users.findIndex((el) => el.ID === user.ID)
-        users.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, user)
-        this.Users.set(user.AppID, users)
       }
     },
     delAppUser (): (user: User) => void {
@@ -99,7 +86,7 @@ export const useUserStore = defineStore('users', {
         (resp: LoginResponse): void => {
           const user = useLocalUserStore()
           user.setUser(resp.Info)
-          this.updateAppUser(resp.Info)
+          this.addAppUsers(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -113,7 +100,7 @@ export const useUserStore = defineStore('users', {
         (resp: LoginVerifyResponse): void => {
           const user = useLocalUserStore()
           user.setUser(resp.Info)
-          this.updateAppUser(resp.Info)
+          this.addAppUsers(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -150,7 +137,7 @@ export const useUserStore = defineStore('users', {
         (resp: UpdateUserResponse): void => {
           const user = useLocalUserStore()
           user.setUser(resp.Info)
-          this.updateAppUser(resp.Info)
+          this.addAppUsers(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -186,7 +173,7 @@ export const useUserStore = defineStore('users', {
         req,
         req.Message,
         (resp: UpdateUserKolResponse): void => {
-          this.updateAppUser(resp.Info)
+          this.addAppUsers(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)

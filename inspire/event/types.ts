@@ -1,40 +1,11 @@
+import { EventType } from '../../base'
 import { BaseRequest } from '../../request'
 import { Coupon } from '../coupon/types'
-
-export enum CouponType {
-  FixAmount = 'FixAmount',
-  Discount = 'Discount',
-  SpecialOffer = 'SpecialOffer'
-}
-
-export enum UsedFor {
-  Signup = 'Signup',
-  Signin = 'Signin',
-  Update = 'Update',
-  Contact = 'Contact',
-  SetWithdrawAddress = 'SetWithdrawAddress',
-  Withdraw = 'Withdraw',
-  CreateInvitationCode = 'CreateInvitationCode',
-  SetCommission = 'SetCommission',
-  SetTransferTargetUser = 'SetTransferTargetUser',
-  Transfer = 'Transfer',
-  WithdrawalRequest = 'WithdrawalRequest',
-  WithdrawalCompleted = 'WithdrawalCompleted',
-  DepositReceived = 'DepositReceived',
-  KYCApproved = 'KYCApproved',
-  KYCRejected = 'KYCRejected',
-  Purchase = 'Purchase',
-  AffiliatePurchase = 'AffiliatePurchase',
-  Announcement = 'Announcement',
-  AffiliateSignup = 'AffiliateSignup',
-}
-
-export const UsedFors = Object.values(UsedFor)
 
 export interface Event {
   ID: string
   AppName: string
-  EventType: UsedFor
+  EventType: EventType
   Coupons: Coupon[]
   Credits: string
   CreditsPerUSD: string
@@ -51,7 +22,7 @@ export interface Event {
 }
 
 export interface CreateEventRequest extends BaseRequest {
-  EventType: UsedFor
+  EventType: EventType
   CouponIDs: string[]
   Credits?: string
   CreditsPerUSD?: string
