@@ -20,11 +20,17 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAdminSMSTemplateStore = defineStore('sms-templates', {
+export const useSMSTemplateStore = defineStore('sms-templates', {
   state: () => ({
     SMSTemplates: new Map<string, Array<Template>>()
   }),
   getters: {
+    templates (): (appID?: string) => Array<Template> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.SMSTemplates.get(appID) || []
+      }
+    },
     addTemplates (): (appID: string | undefined, templates: Array<Template>) => void {
       return (appID: string | undefined, templates: Array<Template>) => {
         appID = formalizeAppID(appID)
@@ -140,3 +146,6 @@ export const useAdminSMSTemplateStore = defineStore('sms-templates', {
     }
   }
 })
+
+export * from './types'
+export * from './const'

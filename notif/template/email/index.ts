@@ -23,6 +23,12 @@ export const useChurchEmailTemplateStore = defineStore('email-templates', {
     EmailTemplates: new Map<string, Array<Template>>()
   }),
   getters: {
+    templates (): (appID?: string) => Array<Template> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.EmailTemplates.get(appID) || []
+      }
+    },
     addTemplates (): (appID: string | undefined, templates: Array<Template>) => void {
       return (appID: string | undefined, templates: Array<Template>) => {
         appID = formalizeAppID(appID)
@@ -126,3 +132,6 @@ export const useChurchEmailTemplateStore = defineStore('email-templates', {
     }
   }
 })
+
+export * from './types'
+export * from './const'

@@ -25,6 +25,12 @@ export const useAdminFrontendTemplateStore = defineStore('admin-frontendtemplate
     FrontendTemplates: new Map<string, Array<Template>>()
   }),
   getters: {
+    templates (): (appID?: string) => Array<Template> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.FrontendTemplates.get(appID) || []
+      }
+    },
     addTemplates (): (appID: string | undefined, templates: Array<Template>) => void {
       return (appID: string | undefined, templates: Array<Template>) => {
         appID = formalizeAppID(appID)
@@ -147,3 +153,6 @@ export const useAdminFrontendTemplateStore = defineStore('admin-frontendtemplate
     }
   }
 })
+
+export * from './types'
+export * from './const'
