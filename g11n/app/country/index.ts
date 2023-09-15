@@ -12,7 +12,7 @@ import {
   DeleteAppCountryResponse
 } from './types'
 import { doActionWithError } from '../../../request'
-import { formalizeAppID } from '../../../appuser/app'
+import { formalizeAppID } from '../../../appuser/app/local'
 
 export const useAppCountryStore = defineStore('app-countries', {
   state: () => ({

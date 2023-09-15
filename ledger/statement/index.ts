@@ -11,7 +11,7 @@ import {
   GetAppStatementsRequest,
   GetAppStatementsResponse
 } from './types'
-import { formalizeAppID } from '../../appuser/app'
+import { formalizeAppID } from '../../appuser/app/local'
 
 export const useFrontendStatementStore = defineStore('frontend-Statement-v4', {
   state: () => ({

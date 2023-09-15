@@ -25,7 +25,7 @@ import {
   UpdateAppUserOrderResponse
 } from './types'
 import { API, OrderState, OrderTimeoutSeconds, OrderType, PaymentState } from './const'
-import { formalizeAppID } from '../appuser/app'
+import { formalizeAppID } from '../appuser/app/local'
 import { NIL as NIL_UUID } from 'uuid'
 
 export const useOrderStore = defineStore('orders', {

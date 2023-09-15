@@ -1,4 +1,4 @@
-import { AccountType } from '../../appuser/base'
+import { SignMethodType } from '../../appuser/base'
 import { BaseRequest } from '../../request'
 
 export interface Transfer {
@@ -20,7 +20,7 @@ export interface Transfer {
 
 export interface CreateTransferRequest extends BaseRequest {
   Account: string
-  AccountType: AccountType
+  AccountType: SignMethodType
   VerificationCode: string
   TargetUserID: string
   Amount: string

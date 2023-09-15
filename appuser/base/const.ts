@@ -24,18 +24,6 @@ export enum RecaptchaType {
 
 export const RecaptchaTypes = Object.values(RecaptchaType)
 
-export enum AccountType {
-  Mobile = 'Mobile',
-  Email = 'Email',
-  Twitter = 'Twitter',
-  Github = 'Github',
-  Facebook = 'Facebook',
-  Linkedin = 'Linkedin',
-  Wechat = 'Wechat',
-  Google = 'Google',
-  Username = 'Username'
-}
-
 export enum DocumentType {
   DefaultKycDocumentType = 'DefaultKycDocumentType',
   IDCard = 'IDCard',

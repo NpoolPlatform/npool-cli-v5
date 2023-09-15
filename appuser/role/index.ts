@@ -26,7 +26,7 @@ import {
   GetAppRoleUsersResponse
 } from './types'
 import { doActionWithError } from '../../request'
-import { formalizeAppID } from '../app'
+import { formalizeAppID } from '../app/local'
 
 export const useRoleStore = defineStore('roles', {
   state: () => ({

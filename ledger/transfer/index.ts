@@ -6,7 +6,7 @@ import {
 } from './types'
 import { doActionWithError } from '../../request'
 import { API } from './const'
-import { formalizeAppID } from '../../appuser/app'
+import { formalizeAppID } from '../../appuser/app/local'
 
 export const useFrontendTransferStore = defineStore('transfers', {
   state: () => ({

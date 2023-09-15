@@ -10,7 +10,7 @@ import {
   GetAppLedgersRequest,
   GetAppLedgersResponse
 } from './types'
-import { formalizeAppID } from '../appuser/app'
+import { formalizeAppID } from '../appuser/app/local'
 import { formalizeUserID } from '../appuser/user'
 
 export const useChurchLedgerStore = defineStore('church-Ledger-v4', {

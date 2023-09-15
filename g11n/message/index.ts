@@ -25,7 +25,7 @@ import {
 import { doActionWithError } from '../../request'
 import { useLocaleStore } from '../locale'
 import { Message } from '../base'
-import { formalizeAppID } from '../../appuser/app'
+import { formalizeAppID } from '../../appuser/app/local'
 
 export const useMessageStore = defineStore('messages', {
   state: () => ({

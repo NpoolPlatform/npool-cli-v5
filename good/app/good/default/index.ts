@@ -20,7 +20,7 @@ import {
   UpdateNAppDefaultGoodRequest,
   UpdateNAppDefaultGoodResponse
 } from './types'
-import { formalizeAppID } from '../../../../appuser/app'
+import { formalizeAppID } from '../../../../appuser/app/local'
 
 export const useAppDefaultGoodStore = defineStore('app-default-goods', {
   state: () => ({

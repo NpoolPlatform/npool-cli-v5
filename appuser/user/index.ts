@@ -29,7 +29,7 @@ import {
   UpdateAppUserResponse
 } from './types'
 import { LoginHistory, User } from './base'
-import { formalizeAppID } from '../app'
+import { formalizeAppID } from '../app/local'
 
 export const useUserStore = defineStore('users', {
   state: () => ({

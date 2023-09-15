@@ -18,7 +18,7 @@ import {
   UpdateNAppGoodResponse
 } from './types'
 import { date } from 'quasar'
-import { formalizeAppID } from '../../../appuser/app'
+import { formalizeAppID } from '../../../appuser/app/local'
 
 export const useAppGoodStore = defineStore('app-goods', {
   state: () => ({

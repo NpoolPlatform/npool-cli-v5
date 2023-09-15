@@ -14,7 +14,7 @@ import {
   GetNAppCoinsResponse
 } from './types'
 import { doActionWithError } from '../../../request'
-import { formalizeAppID } from '../../../appuser/app'
+import { formalizeAppID } from '../../../appuser/app/local'
 import { NIL as NIL_UUID } from 'uuid'
 
 export const useAppCoinStore = defineStore('app-coins', {

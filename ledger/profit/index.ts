@@ -13,7 +13,7 @@ import {
   GoodProfit,
   Profit
 } from './types'
-import { formalizeAppID } from '../../appuser/app'
+import { formalizeAppID } from '../../appuser/app/local'
 import { formalizeUserID } from 'src/npoolstore/appuser/user'
 
 export const useFrontendProfitStore = defineStore('frontend-profit-v4', {

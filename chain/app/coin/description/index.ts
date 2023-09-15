@@ -16,7 +16,7 @@ import {
   UpdateAppCoinDescriptionResponse
 } from './types'
 import { doActionWithError } from '../../../../request'
-import { formalizeAppID } from '../../../../appuser/app'
+import { formalizeAppID } from '../../../../appuser/app/local'
 
 export const useCoinDescriptionStore = defineStore('coin-descriptions', {
   state: () => ({

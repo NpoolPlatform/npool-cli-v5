@@ -15,7 +15,7 @@ import {
 import { doActionWithError } from '../../../request'
 import { useLocaleStore } from '../../locale'
 import { AppLang } from '../../base'
-import { formalizeAppID } from '../../../appuser/app'
+import { formalizeAppID } from '../../../appuser/app/local'
 
 export const useAppLangStore = defineStore('app-langs', {
   state: () => ({

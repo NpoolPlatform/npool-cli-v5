@@ -13,3 +13,11 @@ export const useMyApplicationStore = defineStore('my-application', {
   },
   actions: {}
 })
+
+export const formalizeAppID = (appID?: string) => {
+  if (appID) {
+    return appID
+  }
+  const myApp = useMyApplicationStore()
+  return myApp.AppID
+}
