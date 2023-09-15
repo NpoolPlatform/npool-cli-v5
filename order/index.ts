@@ -28,7 +28,7 @@ import { API, OrderState, OrderTimeoutSeconds, OrderType, PaymentState } from '.
 import { formalizeAppID } from '../appuser/app'
 import { NIL as NIL_UUID } from 'uuid'
 
-export const useFrontendOrderStore = defineStore('frontend-order-v4', {
+export const useOrderStore = defineStore('orders', {
   state: () => ({
     Orders: new Map<string, Array<Order>>()
   }),
@@ -132,145 +132,145 @@ export const useFrontendOrderStore = defineStore('frontend-order-v4', {
     }
   },
   actions: {
-    getOrders (req: GetOrdersRequest, done: (orders: Array<Order>, error: boolean) => void) {
+    getOrders (req: GetOrdersRequest, done: (error: boolean, orders?: Array<Order>) => void) {
       doActionWithError<GetOrdersRequest, GetOrdersResponse>(
         API.GET_ORDERS,
         req,
         req.Message,
         (resp: GetOrdersResponse): void => {
           this.addOrders(undefined, resp.Infos)
-          done(resp.Infos, false)
+          done(false, resp.Infos)
         },
         () => {
-          done([], true)
+          done(true)
         }
       )
     },
-    createOrder (req: CreateOrderRequest, done: (order: Order, error: boolean) => void) {
+    createOrder (req: CreateOrderRequest, done: (error: boolean, order?: Order) => void) {
       doActionWithError<CreateOrderRequest, CreateOrderResponse>(
         API.CREATE_ORDER,
         req,
         req.Message,
         (resp: CreateOrderResponse): void => {
           this.addOrders(undefined, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         },
         () => {
-          done({} as Order, true)
+          done(true)
         }
       )
     },
-    updateOrder (req: UpdateOrderRequest, done: (order: Order, error: boolean) => void) {
+    updateOrder (req: UpdateOrderRequest, done: (error: boolean, order?: Order) => void) {
       doActionWithError<UpdateOrderRequest, UpdateOrderResponse>(
         API.UPDATE_ORDER,
         req,
         req.Message,
         (resp: UpdateOrderResponse): void => {
           this.addOrders(undefined, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         },
         () => {
-          done({} as Order, true)
+          done(true)
         }
       )
     },
-    getOrder (req: GetOrderRequest, done: (order: Order, error: boolean) => void) {
+    getOrder (req: GetOrderRequest, done: (error: boolean, order?: Order) => void) {
       doActionWithError<GetOrderRequest, GetOrderResponse>(
         API.GET_ORDER,
         req,
         req.Message,
         (resp: GetOrderResponse): void => {
           this.addOrders(undefined, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         },
         () => {
-          done({} as Order, true)
+          done(true)
         }
       )
     },
 
-    getAppOrders (req: GetAppOrdersRequest, done: (orders: Array<Order>, error: boolean) => void) {
+    getAppOrders (req: GetAppOrdersRequest, done: (error: boolean, orders?: Array<Order>) => void) {
       doActionWithError<GetAppOrdersRequest, GetAppOrdersResponse>(
         API.GET_APP_ORDERS,
         req,
         req.Message,
         (resp: GetAppOrdersResponse): void => {
           this.addOrders(undefined, resp.Infos)
-          done(resp.Infos, false)
+          done(false, resp.Infos)
         },
         () => {
-          done([], true)
+          done(true)
         }
       )
     },
-    createUserOrder (req: CreateUserOrderRequest, done: (order: Order, error: boolean) => void) {
+    createUserOrder (req: CreateUserOrderRequest, done: (error: boolean, order?: Order) => void) {
       doActionWithError<CreateUserOrderRequest, CreateUserOrderResponse>(
         API.CREATE_USER_ORDER,
         req,
         req.Message,
         (resp: CreateUserOrderResponse): void => {
           this.addOrders(undefined, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         },
         () => {
-          done({} as Order, true)
+          done(true)
         }
       )
     },
-    updateUserOrder (req: UpdateUserOrderRequest, done: (order: Order, error: boolean) => void) {
+    updateUserOrder (req: UpdateUserOrderRequest, done: (error: boolean, order?: Order) => void) {
       doActionWithError<UpdateUserOrderRequest, UpdateUserOrderResponse>(
         API.UPDATE_USER_ORDER,
         req,
         req.Message,
         (resp: UpdateUserOrderResponse): void => {
           this.addOrders(undefined, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         },
         () => {
-          done({} as Order, true)
+          done(true)
         }
       )
     },
 
-    getNAppOrders (req: GetNAppOrdersRequest, done: (orders: Array<Order>, error: boolean) => void) {
+    getNAppOrders (req: GetNAppOrdersRequest, done: (error: boolean, orders?: Array<Order>) => void) {
       doActionWithError<GetNAppOrdersRequest, GetNAppOrdersResponse>(
         API.GET_N_APP_ORDERS,
         req,
         req.Message,
         (resp: GetNAppOrdersResponse): void => {
           this.addOrders(req.TargetAppID, resp.Infos)
-          done(resp.Infos, false)
+          done(false, resp.Infos)
         },
         () => {
-          done([], true)
+          done(true)
         }
       )
     },
-    createAppUserOrder (req: CreateAppUserOrderRequest, done: (order: Order, error: boolean) => void) {
+    createAppUserOrder (req: CreateAppUserOrderRequest, done: (error: boolean, order?: Order) => void) {
       doActionWithError<CreateAppUserOrderRequest, CreateAppUserOrderResponse>(
         API.CREATE_APP_USER_ORDER,
         req,
         req.Message,
         (resp: CreateAppUserOrderResponse): void => {
           this.addOrders(req.TargetAppID, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         },
         () => {
-          done({} as Order, true)
+          done(true)
         }
       )
     },
-    updateAppUserOrder (req: UpdateAppUserOrderRequest, done: (order: Order, error: boolean) => void) {
+    updateAppUserOrder (req: UpdateAppUserOrderRequest, done: (error: boolean, order?: Order) => void) {
       doActionWithError<UpdateAppUserOrderRequest, UpdateAppUserOrderResponse>(
         API.UPDATE_APP_USER_ORDER,
         req,
         req.Message,
         (resp: UpdateAppUserOrderResponse): void => {
           this.addOrders(req.TargetAppID, [resp.Info])
-          done(resp.Info, false)
+          done(false, resp.Info)
         },
         () => {
-          done({} as Order, true)
+          done(true)
         }
       )
     }
