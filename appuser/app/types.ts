@@ -1,5 +1,5 @@
 import { BaseRequest } from '../../request'
-import { CreateInvitationCodeWhen, RecaptchaType, SignMethodType } from './const'
+import { CreateInvitationCodeWhen, RecaptchaType, SignMethodType } from '../base'
 import { App } from './base'
 
 export interface GetAppsRequest extends BaseRequest {
