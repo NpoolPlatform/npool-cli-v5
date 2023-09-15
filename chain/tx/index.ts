@@ -3,7 +3,7 @@ import { API } from './const'
 import { GetTxsRequest, GetTxsResponse, Tx } from './types'
 import { doActionWithError } from '../../request'
 
-export const useChurchTxStore = defineStore('church-tx-v4', {
+export const useTxStore = defineStore('transactions', {
   state: () => ({
     Txs: [] as Array<Tx>
   }),
@@ -40,3 +40,6 @@ export const useChurchTxStore = defineStore('church-tx-v4', {
     }
   }
 })
+
+export * from './const'
+export * from './types'
