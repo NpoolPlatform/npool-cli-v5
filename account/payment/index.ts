@@ -14,6 +14,11 @@ export const usePaymentAccountStore = defineStore('payment-accounts', {
     PaymentAccounts: [] as Array<Account>
   }),
   getters: {
+    accounts () {
+      return () => {
+        return this.PaymentAccounts
+      }
+    },
     addAccounts (): (accounts: Array<Account>) => void {
       return (accounts: Array<Account>) => {
         const _accounts = this.PaymentAccounts

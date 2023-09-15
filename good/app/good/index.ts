@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { doActionWithError } from '../../../request'
 import { useI18n } from 'vue-i18n'
-import { API } from './const'
+import { API, CancelMode } from './const'
 import {
   Good,
   GetAppGoodRequest,
@@ -29,6 +29,12 @@ export const useAppGoodStore = defineStore('app-goods', {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.AppGoods.get(appID)?.find((el) => el.GoodID === id)
+      }
+    },
+    goods (): (appID?: string) => Array<Good> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AppGoods.get(appID) || []
       }
     },
     online (): (appID: string | undefined, id: string) => boolean | undefined {
@@ -144,6 +150,11 @@ export const useAppGoodStore = defineStore('app-goods', {
     enableSetCommission (): (appID: string | undefined, id: string) => boolean | undefined {
       return (appID: string | undefined, id: string) => {
         return this.good(appID, id)?.EnableSetCommission
+      }
+    },
+    cancelable (): (appID: string | undefined, id: string) => boolean | undefined {
+      return (appID: string | undefined, id: string) => {
+        return this.good(appID, id)?.CancelMode !== CancelMode.UnCancellable
       }
     },
     addGoods (): (appID: string | undefined, goods: Array<Good>) => void {

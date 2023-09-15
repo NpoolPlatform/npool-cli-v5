@@ -16,6 +16,11 @@ export const useGoodBenefitAccountStore = defineStore('goodbenefit-accounts', {
     GoodBenefitAccounts: [] as Array<Account>
   }),
   getters: {
+    accounts () {
+      return () => {
+        return this.GoodBenefitAccounts
+      }
+    },
     addAccounts (): (accounts: Array<Account>) => void {
       return (accounts: Array<Account>) => {
         const _accounts = this.GoodBenefitAccounts

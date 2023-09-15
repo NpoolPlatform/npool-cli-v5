@@ -33,8 +33,8 @@ export const useOrderStore = defineStore('orders', {
     Orders: new Map<string, Array<Order>>()
   }),
   getters: {
-    orders (): (appID: string | undefined, userID: string | undefined) => Array<Order> {
-      return (appID: string | undefined, userID: string | undefined) => {
+    orders (): (appID?: string, userID?: string) => Array<Order> {
+      return (appID?: string, userID?: string) => {
         appID = formalizeAppID(appID)
         return this.Orders.get(appID)?.filter((el) => {
           let ok = true

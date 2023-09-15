@@ -13,6 +13,8 @@ enum GoogleTokenType {
   Login = 'login'
 }
 
+export const PriceCoinName = 'USDT'
+
 export {
   NotSet,
   VerificationCodeLength,

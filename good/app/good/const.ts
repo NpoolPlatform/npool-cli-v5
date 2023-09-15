@@ -9,7 +9,6 @@ export enum API {
 }
 
 export enum CancelMode {
-  DefaultCancelMode = 'DefaultCancelMode',
   CancellableBeforeStart = 'CancellableBeforeStart',
   CancellableBeforeBenefit = 'CancellableBeforeBenefit',
   UnCancellable = 'Uncancellable'

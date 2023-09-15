@@ -11,7 +11,7 @@ import {
 } from './types'
 import { doActionWithError } from '../../request'
 
-export const useFiatCurrencyStore = defineStore('fiat-currencies', {
+export const useFiatStore = defineStore('fiats', {
   state: () => ({
     FiatCurrencyTypes: [] as Array<FiatCurrencyType>
   }),

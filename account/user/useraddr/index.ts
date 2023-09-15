@@ -30,18 +30,16 @@ export const useUserAccountStore = defineStore('user-accounts', {
     UserAccounts: new Map<string, Array<Account>>()
   }),
   getters: {
-    withdrawAddresses (): (appID?: string) => Array<Account> | undefined {
-      return (appID?: string) => {
+    accounts (): (appID?: string, userID?: string, coinTypeID?: string, usedFor?: AccountUsedFor) => Array<Account> {
+      return (appID?: string, userID?: string, coinTypeID?: string, usedFor?: AccountUsedFor) => {
         appID = formalizeAppID(appID)
-        let accounts = this.UserAccounts.get(appID)
-        accounts = accounts?.filter((el) => el.UsedFor === AccountUsedFor.UserWithdraw)
-        return accounts?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1)
-      }
-    },
-    coinWithdrawAddresses (): (appID: string | undefined, coinTypeID: string) => Array<Account> | undefined {
-      return (appID: string | undefined, coinTypeID: string) => {
-        appID = formalizeAppID(appID)
-        return this.UserAccounts.get(appID)?.filter((el) => el.CoinTypeID === coinTypeID)
+        return this.UserAccounts.get(appID)?.filter((el) => {
+          let ok = true
+          if (userID) ok &&= el.UserID === userID
+          if (usedFor) ok &&= el.UsedFor === usedFor
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          return ok
+        }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     },
     addAccounts (): (appID: string | undefined, accounts: Array<Account>) => void {

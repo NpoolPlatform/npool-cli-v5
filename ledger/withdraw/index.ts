@@ -19,8 +19,8 @@ export const useWithdrawStore = defineStore('withdraws', {
     Withdraws: new Map<string, Array<Withdraw>>()
   }),
   getters: {
-    withdraws (): (appID: string | undefined, userID: string | undefined) => Array<Withdraw> {
-      return (appID: string | undefined, userID: string | undefined) => {
+    withdraws (): (appID?: string, userID?: string) => Array<Withdraw> {
+      return (appID?: string, userID?: string) => {
         appID = formalizeAppID(appID)
         return this.Withdraws.get(appID)?.filter((el) => {
           let ok = true

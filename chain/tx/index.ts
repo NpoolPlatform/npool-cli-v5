@@ -13,8 +13,8 @@ export const useTxStore = defineStore('transactions', {
         return this.Txs.find((el) => el.ID === id)
       }
     },
-    txs () {
-      return (appID: string) => this.Txs.filter((el) => el.AppID === appID)
+    txs (): (appID?: string) => Array<Tx> {
+      return (appID?: string) => this.Txs.filter((el) => !appID || el.AppID === appID)
     },
     addTxs (): (txs: Array<Tx>) => void {
       return (txs: Array<Tx>) => {

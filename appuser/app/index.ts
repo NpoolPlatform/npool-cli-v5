@@ -18,7 +18,7 @@ export const useApplicationStore = defineStore('applications', {
     AppID: undefined as unknown as string
   }),
   getters: {
-    getApp () {
+    app () {
       return (appID?: string) => {
         return appID ? this.Apps.get(appID) : this.Apps.get(this.AppID)
       }
