@@ -14,7 +14,7 @@ import {
 import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app'
 
-export const useAdminAppCountryStore = defineStore('admin-appcountry-v4', {
+export const useAppCountryStore = defineStore('app-countries', {
   state: () => ({
     AppCountries: new Map<string, Array<Country>>()
   }),
@@ -102,3 +102,6 @@ export const useAdminAppCountryStore = defineStore('admin-appcountry-v4', {
     }
   }
 })
+
+export * from './const'
+export * from './types'

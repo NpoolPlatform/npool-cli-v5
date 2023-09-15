@@ -18,7 +18,7 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
   getters: {
   },
   actions: {
-    getAppCoupons (req: GetAppCouponsRequest, done: (error: boolean, rows: Array<Coupon>) => void) {
+    getAppCoupons (req: GetAppCouponsRequest, done: (error: boolean, rows?: Array<Coupon>) => void) {
       doActionWithError<GetAppCouponsRequest, GetAppCouponsResponse>(
         API.GET_APP_ALLOCATEDCOUPONS,
         req,
@@ -27,11 +27,11 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
           this.AllocatedCoupons.push(...resp.Infos)
           done(false, resp.Infos)
         }, () => {
-          done(true, [] as Array<Coupon>)
+          done(true)
         }
       )
     },
-    getCoupons (req: GetCouponsRequest, done: (error: boolean, rows: Array<Coupon>) => void) {
+    getCoupons (req: GetCouponsRequest, done: (error: boolean, rows?: Array<Coupon>) => void) {
       doActionWithError<GetCouponsRequest, GetCouponsResponse>(
         API.GET_APP_ALLOCATEDCOUPONS,
         req,
@@ -40,11 +40,11 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
           this.AllocatedCoupons.push(...resp.Infos)
           done(false, resp.Infos)
         }, () => {
-          done(true, [] as Array<Coupon>)
+          done(true)
         }
       )
     },
-    createCoupon (req: CreateCouponRequest, done: (error: boolean, row: Coupon) => void) {
+    createCoupon (req: CreateCouponRequest, done: (error: boolean, row?: Coupon) => void) {
       doActionWithError<CreateCouponRequest, CreateCouponResponse>(
         API.CREATE_ALLOCATEDCOUPON,
         req,
@@ -53,7 +53,7 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
           this.AllocatedCoupons.push(resp.Info)
           done(false, resp.Info)
         }, () => {
-          done(true, {} as Coupon)
+          done(true)
         }
       )
     }

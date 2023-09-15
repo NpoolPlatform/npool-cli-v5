@@ -17,7 +17,7 @@ import { useLocaleStore } from '../../locale'
 import { AppLang } from '../../base'
 import { formalizeAppID } from '../../../appuser/app'
 
-export const useAdminAppLangStore = defineStore('admin-applang-v4', {
+export const useAppLangStore = defineStore('app-langs', {
   state: () => ({
     AppLangs: new Map<string, Array<AppLang>>()
   }),
@@ -122,3 +122,6 @@ export const useAdminAppLangStore = defineStore('admin-applang-v4', {
     }
   }
 })
+
+export * from './const'
+export * from './types'

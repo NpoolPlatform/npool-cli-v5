@@ -87,3 +87,6 @@ export const useLangStore = defineStore('langs', {
     }
   }
 })
+
+export * from './const'
+export * from './types'
