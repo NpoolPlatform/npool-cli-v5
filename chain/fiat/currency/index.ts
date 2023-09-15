@@ -1,70 +1,60 @@
 import { defineStore } from 'pinia'
-import { API } from './const'
+import { API, FiatType } from './const'
 import {
-  GetFiatCurrencyTypesRequest,
-  GetFiatCurrencyTypesResponse,
-  UpdateFiatCurrencyTypeRequest,
-  UpdateFiatCurrencyTypeResponse,
-  FiatCurrencyType,
-  CreateFiatCurrencyTypeRequest,
-  CreateFiatCurrencyTypeResponse
+  FiatCurrency,
+  GetFiatCurrenciesRequest,
+  GetFiatCurrenciesResponse,
+  GetFiatCurrencyRequest,
+  GetFiatCurrencyResponse
 } from './types'
 import { doActionWithError } from '../../../request'
 
-export const useFiatCurrencyStore = defineStore('fiat-currency', {
+export const useFiatCurrencyStore = defineStore('fiat-currencies', {
   state: () => ({
-    FiatCurrencyTypes: [] as Array<FiatCurrencyType>
+    FiatCurrencies: [] as Array<FiatCurrency>
   }),
   getters: {
-    getFiatCurrencyTypeByName () {
-      return (name: string) => {
-        return this.FiatCurrencyTypes.find((el) => el.Name === name)
+    jpy (): () => number | undefined {
+      return () => {
+        const currency = this.FiatCurrencies.find((el) => el?.FiatName === FiatType.JPY)
+        return currency ? Number(currency.MarketValueHigh) : Number('NaN')
+      }
+    },
+    addCurrencies (): (currencies: Array<FiatCurrency>) => void {
+      return (currencies: Array<FiatCurrency>) => {
+        currencies.forEach((currency) => {
+          const index = this.FiatCurrencies.findIndex((el) => el.ID === currency.ID)
+          this.FiatCurrencies.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, currency)
+        })
       }
     }
   },
   actions: {
-    getFiatCurrencyTypes (req: GetFiatCurrencyTypesRequest, done: (error: boolean, rows?: Array<FiatCurrencyType>) => void) {
-      doActionWithError<GetFiatCurrencyTypesRequest, GetFiatCurrencyTypesResponse>(
-        API.GET_FIATCURRENCYTYPES,
+    getFiatCurrencies (req: GetFiatCurrenciesRequest, done: (error: boolean, rows: Array<FiatCurrency>) => void) {
+      doActionWithError<GetFiatCurrenciesRequest, GetFiatCurrenciesResponse>(
+        API.GET_FIATCURRENCIES,
         req,
         req.Message,
-        (resp: GetFiatCurrencyTypesResponse): void => {
-          this.FiatCurrencyTypes.push(...resp.Infos)
+        (resp: GetFiatCurrenciesResponse): void => {
+          this.addCurrencies(resp.Infos)
           done(false, resp.Infos)
         }, () => {
-          done(true)
+          done(true, [] as Array<FiatCurrency>)
         }
       )
     },
-    updateFiatCurrencyType (req: UpdateFiatCurrencyTypeRequest, done: (error: boolean, row?: FiatCurrencyType) => void) {
-      doActionWithError<UpdateFiatCurrencyTypeRequest, UpdateFiatCurrencyTypeResponse>(
-        API.UPDATE_FIATCURRENCYTYPE,
+    getFiatCurrency (req: GetFiatCurrencyRequest, done: (error: boolean, rows: FiatCurrency) => void) {
+      doActionWithError<GetFiatCurrencyRequest, GetFiatCurrencyResponse>(
+        API.GET_FIATCURRENCY,
         req,
         req.Message,
-        (resp: UpdateFiatCurrencyTypeResponse): void => {
-          const index = this.FiatCurrencyTypes.findIndex((el) => el.ID === resp.Info.ID)
-          this.FiatCurrencyTypes.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1, resp.Info)
+        (resp: GetFiatCurrencyResponse): void => {
+          this.addCurrencies([resp.Info])
           done(false, resp.Info)
         }, () => {
-          done(true)
-        }
-      )
-    },
-    createFiatCurrencyType (req: CreateFiatCurrencyTypeRequest, done: (error: boolean, row?: FiatCurrencyType) => void) {
-      doActionWithError<CreateFiatCurrencyTypeRequest, CreateFiatCurrencyTypeResponse>(
-        API.CREATE_FIATCURRENCYTYPE,
-        req,
-        req.Message,
-        (resp: CreateFiatCurrencyTypeResponse): void => {
-          this.FiatCurrencyTypes.push(resp.Info)
-          done(false, resp.Info)
-        }, () => {
-          done(true)
+          done(true, {} as FiatCurrency)
         }
       )
     }
   }
 })
-
-export * from './types'
-export * from './const'
