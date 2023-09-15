@@ -12,6 +12,11 @@ export const useCoinCurrencyHistoryStore = defineStore('coin-currency-histories'
     Histories: [] as Array<CoinCurrency>
   }),
   getters: {
+    histories (): (coinTypeID?: string) => Array<CoinCurrency> {
+      return (coinTypeID?: string) => {
+        return this.Histories.filter((el) => !coinTypeID || el.CoinTypeID === coinTypeID)
+      }
+    },
     addHistories (): (currencies: Array<CoinCurrency>) => void {
       return (feeds: Array<CoinCurrency>) => {
         feeds.forEach((feed) => {

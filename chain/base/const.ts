@@ -4,3 +4,5 @@ export enum CurrencyFeedType {
   CoinBase = 'CoinBase',
   StableUSDHardCode = 'StableUSDHardCode',
 }
+
+export const CurrencyFeedTypes = Object.values(CurrencyFeedType)

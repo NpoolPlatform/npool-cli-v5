@@ -28,6 +28,12 @@ export const useAppCoinStore = defineStore('app-coins', {
         return this.AppCoins.get(appID)?.find((el) => el.CoinTypeID === coinTypeID)
       }
     },
+    coins (): (appID?: string) => Array<AppCoin> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AppCoins.get(appID) || []
+      }
+    },
     productPage (): (appID: string | undefined, coinTypeID: string) => string | undefined {
       return (appID: string | undefined, coinTypeID: string) => {
         return this.coin(appID, coinTypeID)?.ProductPage
