@@ -4,13 +4,13 @@ import { useNotificationStore, Notification } from '../notify'
 import { ReqMessage } from './types'
 import { createAPI } from './axiosapi'
 
-const notification = useNotificationStore()
-const errorswitcher = useErrorStore()
-
 function processError (err: AxiosError, message?: Notification) {
   if (message) {
     message.Description = err.response?.statusText
   }
+
+  const notification = useNotificationStore()
+  const errorswitcher = useErrorStore()
 
   for (const target of errorswitcher.ErrorTargets) {
     if (target.ErrorCode === err.response?.status) {
@@ -41,6 +41,7 @@ function doAction<MyRequest, MyResponse> (
     .then((response: AxiosResponse<MyResponse>) => {
       success(response.data)
       if (message.Info) {
+        const notification = useNotificationStore()
         notification.Notifications.push(message.Info)
       }
     })
@@ -60,6 +61,7 @@ function doActionWithError<MyRequest, MyResponse> (
     .then((response: AxiosResponse<MyResponse>) => {
       success(response.data)
       if (message.Info) {
+        const notification = useNotificationStore()
         notification.Notifications.push(message.Info)
       }
     })
@@ -80,6 +82,7 @@ function doGet<MyRequest, MyResponse> (
     .then((response: AxiosResponse<MyResponse>) => {
       success(response.data)
       if (message.Info) {
+        const notification = useNotificationStore()
         notification.Notifications.push(message.Info)
       }
     })
@@ -100,6 +103,7 @@ function doGetWithError<MyRequest, MyResponse> (
     .then((response: AxiosResponse<MyResponse>) => {
       success(response.data)
       if (message.Info) {
+        const notification = useNotificationStore()
         notification.Notifications.push(message.Info)
       }
     })
