@@ -1,8 +1,8 @@
 import { BaseRequest } from '../../../../request'
 import { FiatCurrency } from '../types'
 
-export interface GetFiatCurrenciesRequest extends BaseRequest {
-  CoinTypeIDs: string[]
+export interface GetFiatCurrencyHistoriesRequest extends BaseRequest {
+  FiatIDs: string[]
   /** @format int64 */
   StartAt: number
   /** @format int64 */
@@ -13,7 +13,7 @@ export interface GetFiatCurrenciesRequest extends BaseRequest {
   Limit: number
 }
 
-export interface GetFiatCurrenciesResponse {
+export interface GetFiatCurrencyHistoriesResponse {
   Infos: FiatCurrency[]
   /** @format int64 */
   Total: number

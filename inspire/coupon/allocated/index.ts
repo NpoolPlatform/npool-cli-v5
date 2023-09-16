@@ -10,12 +10,27 @@ import {
   GetCouponsResponse
 } from './types'
 import { doActionWithError } from '../../../request/action'
+import { formalizeAppID } from '../../../appuser/app/local'
 
 export const useAllocatedCouponStore = defineStore('allocated-coupon', {
   state: () => ({
-    AllocatedCoupons: [] as Array<Coupon>
+    AllocatedCoupons: new Map<string, Array<Coupon>>()
   }),
   getters: {
+    addCoupons (): (appID: string | undefined, coupons: Array<Coupon>) => void {
+      return (appID: string | undefined, coupons: Array<Coupon>) => {
+        appID = formalizeAppID(appID)
+        let _coupons = this.AllocatedCoupons.get(appID) as Array<Coupon>
+        if (!_coupons) {
+          _coupons = []
+        }
+        coupons.forEach((coupon) => {
+          const index = _coupons.findIndex((el) => el.ID === coupon.ID)
+          _coupons.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, coupon)
+        })
+        this.AllocatedCoupons.set(appID, _coupons)
+      }
+    }
   },
   actions: {
     getAppCoupons (req: GetAppCouponsRequest, done: (error: boolean, rows?: Array<Coupon>) => void) {
@@ -24,7 +39,7 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
         req,
         req.Message,
         (resp: GetAppCouponsResponse): void => {
-          this.AllocatedCoupons.push(...resp.Infos)
+          this.addCoupons(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -37,7 +52,7 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
         req,
         req.Message,
         (resp: GetCouponsResponse): void => {
-          this.AllocatedCoupons.push(...resp.Infos)
+          this.addCoupons(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -50,7 +65,7 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
         req,
         req.Message,
         (resp: CreateCouponResponse): void => {
-          this.AllocatedCoupons.push(resp.Info)
+          this.addCoupons(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)

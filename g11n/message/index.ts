@@ -32,10 +32,10 @@ export const useMessageStore = defineStore('messages', {
     Messages: new Map<string, Map<string, Array<Message>>>()
   }),
   getters: {
-    messages (): (appID: string | undefined, langID: string) => Array<Message> | undefined {
+    messages (): (appID: string | undefined, langID: string) => Array<Message> {
       return (appID: string | undefined, langID: string) => {
         appID = formalizeAppID(appID)
-        return this.Messages.get(appID)?.get(langID)
+        return this.Messages.get(appID)?.get(langID) || []
       }
     },
     addMessages (): (appID: string | undefined, messages: Array<Message>) => void {

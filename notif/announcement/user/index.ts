@@ -14,11 +14,17 @@ import {
 import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAdminAnnouncementUserStore = defineStore('announcement-users', {
+export const useAnnouncementUserStore = defineStore('announcement-users', {
   state: () => ({
     AnnouncementUsers: new Map<string, Array<User>>()
   }),
   getters: {
+    users (): (appID?: string) => Array<User> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AnnouncementUsers.get(appID) || []
+      }
+    },
     addUsers (): (appID: string | undefined, users: Array<User>) => void {
       return (appID: string | undefined, users: Array<User>) => {
         appID = formalizeAppID(appID)
@@ -101,3 +107,6 @@ export const useAdminAnnouncementUserStore = defineStore('announcement-users', {
     }
   }
 })
+
+export * from './types'
+export * from './const'

@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia'
 import { API } from './const'
 import {
-  GetFiatCurrenciesRequest,
-  GetFiatCurrenciesResponse
+  GetFiatCurrencyHistoriesRequest,
+  GetFiatCurrencyHistoriesResponse
 } from './types'
 import { doActionWithError } from '../../../../request'
 import { FiatCurrency } from '../types'
@@ -12,6 +12,11 @@ export const useFiatCurrencyHistoryStore = defineStore('fiat-currency-histories'
     Histories: [] as Array<FiatCurrency>
   }),
   getters: {
+    histories (): (fiatID?: string) => Array<FiatCurrency> {
+      return (fiatID?: string) => {
+        return this.Histories.filter((el) => !fiatID || el.FiatID === fiatID)
+      }
+    },
     addHistories (): (currencies: Array<FiatCurrency>) => void {
       return (feeds: Array<FiatCurrency>) => {
         feeds.forEach((feed) => {
@@ -22,12 +27,12 @@ export const useFiatCurrencyHistoryStore = defineStore('fiat-currency-histories'
     }
   },
   actions: {
-    getFiatCurrencyHistories (req: GetFiatCurrenciesRequest, done: (error: boolean, rows?: Array<FiatCurrency>) => void) {
-      doActionWithError<GetFiatCurrenciesRequest, GetFiatCurrenciesResponse>(
+    getFiatCurrencyHistories (req: GetFiatCurrencyHistoriesRequest, done: (error: boolean, rows?: Array<FiatCurrency>) => void) {
+      doActionWithError<GetFiatCurrencyHistoriesRequest, GetFiatCurrencyHistoriesResponse>(
         API.GET_HISTORIES,
         req,
         req.Message,
-        (resp: GetFiatCurrenciesResponse): void => {
+        (resp: GetFiatCurrencyHistoriesResponse): void => {
           this.addHistories(resp.Infos)
           done(false, resp.Infos)
         }, () => {
@@ -38,4 +43,5 @@ export const useFiatCurrencyHistoryStore = defineStore('fiat-currency-histories'
   }
 })
 
+export * from './const'
 export * from './types'

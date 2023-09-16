@@ -1,5 +1,5 @@
 export enum API {
-  CREATE_FIATCURRENCYTYPE = '/chain/v1/create/fiatcurrencytype',
-  GET_FIATCURRENCYTYPES = '/chain/v1/get/fiatcurrencytypes',
-  UPDATE_FIATCURRENCYTYPE = '/chain/v1/update/fiatcurrencytype'
+  CREATE_FIAT = '/chain/v1/create/fiat',
+  GET_FIATS = '/chain/v1/get/fiats',
+  UPDATE_FIAT = '/chain/v1/update/fiat'
 }

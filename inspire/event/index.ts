@@ -10,14 +10,32 @@ import {
   Event
 } from './types'
 import { doActionWithError } from '../../request/action'
+import { formalizeAppID } from '../../appuser/app/local'
 
 export const useEventStore = defineStore('event', {
   state: () => ({
-    Events: [] as Array<Event>
+    Events: new Map<string, Array<Event>>()
   }),
   getters: {
-    events: (state) : Array<Event> => {
-      return state.Events.sort((a, b) => a.EventType.localeCompare(b.EventType, 'zh-CN'))
+    events (): (appID?: string) => Array<Event> {
+      return (appID?: string) => {
+        appID = formalizeAppID()
+        return this.Events.get(appID)?.sort((a, b) => a.EventType.localeCompare(b.EventType, 'zh-CN')) || []
+      }
+    },
+    addEvents (): (appID: string | undefined, events: Array<Event>) => void {
+      return (appID: string | undefined, events: Array<Event>) => {
+        appID = formalizeAppID(appID)
+        let _events = this.Events.get(appID) as Array<Event>
+        if (!_events) {
+          _events = []
+        }
+        events.forEach((event) => {
+          const index = _events.findIndex((el) => el.ID === event.ID)
+          _events.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, event)
+        })
+        this.Events.set(appID, _events)
+      }
     }
   },
   actions: {
@@ -27,7 +45,7 @@ export const useEventStore = defineStore('event', {
         req,
         req.Message,
         (resp: GetEventsResponse): void => {
-          this.Events.push(...resp.Infos)
+          this.addEvents(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -40,8 +58,7 @@ export const useEventStore = defineStore('event', {
         req,
         req.Message,
         (resp: UpdateEventResponse): void => {
-          const index = this.Events.findIndex((el) => el.ID === resp.Info.ID)
-          this.Events.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, resp.Info)
+          this.addEvents(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -54,7 +71,7 @@ export const useEventStore = defineStore('event', {
         req,
         req.Message,
         (resp: CreateEventResponse): void => {
-          this.Events.push(resp.Info)
+          this.addEvents(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)

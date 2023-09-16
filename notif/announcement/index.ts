@@ -16,7 +16,7 @@ import {
 import { doActionWithError } from '../../request'
 import { formalizeAppID } from '../../appuser/app/local'
 
-export const useAdminAnnouncementStore = defineStore('announcements', {
+export const useAnnouncementStore = defineStore('announcements', {
   state: () => ({
     Announcements: new Map<string, Array<Announcement>>()
   }),
@@ -129,3 +129,6 @@ export const useAdminAnnouncementStore = defineStore('announcements', {
     }
   }
 })
+
+export * from './const'
+export * from './types'

@@ -76,6 +76,10 @@ export interface Good {
   UserPurchaseLimit: string
   CancelMode: CancelMode
   CancellableBeforeStart: number
+  AppGoodLocked: string
+  AppGoodWaitStart: string
+  AppGoodInService: string
+  AppGoodSold: string
 }
 
 export interface GetAppGoodsRequest extends BaseRequest {

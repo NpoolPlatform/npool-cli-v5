@@ -14,12 +14,27 @@ import {
   GetCommissionsResponse
 } from './types'
 import { doActionWithError } from '../../request/action'
+import { formalizeAppID } from '../../appuser/app/local'
 
-export const useCommissionStore = defineStore('commission', {
+export const useCommissionStore = defineStore('commissions', {
   state: () => ({
-    Commissions: [] as Array<Commission>
+    Commissions: new Map<string, Array<Commission>>()
   }),
   getters: {
+    addCommissions (): (appID: string | undefined, commissions: Array<Commission>) => void {
+      return (appID: string | undefined, commissions: Array<Commission>) => {
+        appID = formalizeAppID(appID)
+        let _commissions = this.Commissions.get(appID) as Array<Commission>
+        if (!_commissions) {
+          _commissions = []
+        }
+        commissions.forEach((commission) => {
+          const index = _commissions.findIndex((el) => el.ID === commission.ID)
+          _commissions.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, commission)
+        })
+        this.Commissions.set(appID, _commissions)
+      }
+    }
   },
   actions: {
     getCommissions (req: GetCommissionsRequest, done: (error: boolean, rows?: Array<Commission>) => void) {
@@ -28,7 +43,7 @@ export const useCommissionStore = defineStore('commission', {
         req,
         req.Message,
         (resp: GetCommissionsResponse): void => {
-          this.Commissions.push(...resp.Infos)
+          this.addCommissions(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -41,7 +56,7 @@ export const useCommissionStore = defineStore('commission', {
         req,
         req.Message,
         (resp: GetAppCommissionsResponse): void => {
-          this.Commissions.push(...resp.Infos)
+          this.addCommissions(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -54,8 +69,7 @@ export const useCommissionStore = defineStore('commission', {
         req,
         req.Message,
         (resp: UpdateCommissionResponse): void => {
-          const index = this.Commissions.findIndex((el) => el.UserID === resp.Info.UserID)
-          this.Commissions.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, resp.Info)
+          this.addCommissions(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -68,7 +82,7 @@ export const useCommissionStore = defineStore('commission', {
         req,
         req.Message,
         (resp: CreateUserCommissionResponse): void => {
-          this.Commissions.push(resp.Info)
+          this.addCommissions(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -91,3 +105,4 @@ export const useCommissionStore = defineStore('commission', {
 })
 
 export * from './types'
+export * from './const'

@@ -33,6 +33,12 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         return this.AppDefaultGoods.get(appID)?.find((el) => el.ID === id)
       }
     },
+    defaults (): (appID: string | undefined) => Array<Default> {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.AppDefaultGoods.get(appID) || []
+      }
+    },
     coinUnitDefaultGoodID (): (appID: string | undefined, coinUnit: string) => string | undefined {
       return (appID: string | undefined, coinUnit: string) => {
         appID = formalizeAppID(appID)

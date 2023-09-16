@@ -23,6 +23,9 @@ export const useGoodStore = defineStore('goods', {
         return this.Goods.find((el) => el.ID === id)
       }
     },
+    goods () {
+      return () => this.Goods
+    },
     addGoods (): (devices: Array<Good>) => void {
       return (devices: Array<Good>) => {
         devices.forEach((device) => {

@@ -12,7 +12,7 @@ import {
   UpdateCouponResponse
 } from './types'
 import { doActionWithError } from '../../request/action'
-import { useMyApplicationStore } from '../../appuser/app'
+import { formalizeAppID } from '../../appuser/app/local'
 
 export const useCouponStore = defineStore('coupon-pool', {
   state: () => ({
@@ -21,19 +21,22 @@ export const useCouponStore = defineStore('coupon-pool', {
   getters: {
     coupons (): (appID?: string, couponType?: CouponType) => Array<Coupon> {
       return (appID?: string, couponType?: CouponType): Array<Coupon> => {
-        const coupons = [] as Array<Coupon>
-        this.Coupons.forEach((_coupons, _appID) => {
-          if (appID && appID !== _appID) {
-            return
-          }
-          _coupons.forEach((coupon) => {
-            if (couponType && coupon.CouponType !== couponType) {
-              return
-            }
-            coupons.push(coupon)
-          })
+        appID = formalizeAppID(appID)
+        return this.Coupons.get(appID)?.filter((el) => !couponType || el.CouponType === couponType) || []
+      }
+    },
+    addCoupons (): (appID: string | undefined, coupons: Array<Coupon>) => void {
+      return (appID: string | undefined, coupons: Array<Coupon>) => {
+        appID = formalizeAppID(appID)
+        let _coupons = this.Coupons.get(appID) as Array<Coupon>
+        if (!_coupons) {
+          _coupons = []
+        }
+        coupons.forEach((coupon) => {
+          const index = _coupons.findIndex((el) => el.ID === coupon.ID)
+          _coupons.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, coupon)
         })
-        return coupons
+        this.Coupons.set(appID, _coupons)
       }
     }
   },
@@ -44,10 +47,7 @@ export const useCouponStore = defineStore('coupon-pool', {
         req,
         req.Message,
         (resp: GetCouponsResponse): void => {
-          const myApp = useMyApplicationStore()
-          if (myApp.AppID) {
-            this.Coupons.set(myApp.AppID, resp.Infos)
-          }
+          this.addCoupons(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -60,12 +60,7 @@ export const useCouponStore = defineStore('coupon-pool', {
         req,
         req.Message,
         (resp: GetAppCouponsResponse): void => {
-          let coupons = this.Coupons.get(req.TargetAppID)
-          if (!coupons) {
-            coupons = [] as Array<Coupon>
-          }
-          coupons.push(...resp.Infos)
-          this.Coupons.set(req.TargetAppID, coupons)
+          this.addCoupons(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true, [] as Array<Coupon>)
@@ -78,12 +73,7 @@ export const useCouponStore = defineStore('coupon-pool', {
         req,
         req.NotifyMessage,
         (resp: CreateCouponResponse): void => {
-          let coupons = this.Coupons.get(req.TargetAppID)
-          if (!coupons) {
-            coupons = [] as Array<Coupon>
-          }
-          coupons.push(resp.Info)
-          this.Coupons.set(req.TargetAppID, coupons)
+          this.addCoupons(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true, {} as Coupon)
@@ -96,13 +86,7 @@ export const useCouponStore = defineStore('coupon-pool', {
         req,
         req.NotifyMessage,
         (resp: UpdateCouponResponse): void => {
-          let coupons = this.Coupons.get(req.TargetAppID)
-          if (!coupons) {
-            coupons = [] as Array<Coupon>
-          }
-          const index = coupons.findIndex((el) => el.ID === resp.Info.ID)
-          coupons.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, resp.Info)
-          this.Coupons.set(req.TargetAppID, coupons)
+          this.addCoupons(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true, {} as Coupon)

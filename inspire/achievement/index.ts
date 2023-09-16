@@ -2,25 +2,43 @@ import { defineStore } from 'pinia'
 import { API } from './const'
 import { doActionWithError } from '../../request/action'
 import { Achievement, GetUserAchievementsRequest, GetUserAchievementsResponse } from './types'
+import { formalizeAppID } from 'src/npoolstore/appuser/app/local'
 
 export const useAchievementStore = defineStore('achievement', {
   state: () => ({
-    Achievements: [] as Array<Achievement>
+    Achievements: new Map<string, Array<Achievement>>()
   }),
   getters: {
-    achievements (): (userID?: string) => Array<Achievement> {
-      return (userID?: string) => {
-        return userID ? this.Achievements.filter((el) => el.UserID === userID) : this.Achievements
+    achievements (): (appID: string | undefined, userID?: string) => Array<Achievement> {
+      return (appID: string | undefined, userID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.Achievements.get(appID)?.filter((el) => !userID || el.UserID === userID) || []
       }
     },
-    inviteeAchievements (): (userID: string) => Array<Achievement> {
-      return (userID: string) => {
-        return this.Achievements.filter((el) => el.InviterID === userID)
+    inviteeAchievements (): (appID: string | undefined, userID: string) => Array<Achievement> {
+      return (appID: string | undefined, userID: string) => {
+        appID = formalizeAppID(appID)
+        return this.Achievements.get(appID)?.filter((el) => !userID || el.InviterID === userID) || []
       }
     },
-    inviterAchievements (): (userID: string) => Array<Achievement> {
-      return (userID: string) => {
-        return this.Achievements.filter((el) => el.InviterID !== userID)
+    inviterAchievements (): (appID: string | undefined, userID: string) => Array<Achievement> {
+      return (appID: string | undefined, userID: string) => {
+        appID = formalizeAppID(appID)
+        return this.Achievements.get(appID)?.filter((el) => !userID || el.InviterID !== userID) || []
+      }
+    },
+    addAchievements (): (appID: string | undefined, achievements: Array<Achievement>) => void {
+      return (appID: string | undefined, achievements: Array<Achievement>) => {
+        appID = formalizeAppID(appID)
+        let _achievements = this.Achievements.get(appID) as Array<Achievement>
+        if (!_achievements) {
+          _achievements = []
+        }
+        achievements.forEach((achievement) => {
+          const index = _achievements.findIndex((el) => el.UserID === achievement.UserID)
+          _achievements.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, achievement)
+        })
+        this.Achievements.set(appID, _achievements)
       }
     }
   },
@@ -31,13 +49,7 @@ export const useAchievementStore = defineStore('achievement', {
         req,
         req.Message,
         (resp: GetUserAchievementsResponse): void => {
-          resp.Infos.forEach((el) => {
-            const index = this.Achievements.findIndex((el1) => el.UserID === el1.UserID)
-            if (index >= 0) {
-              return
-            }
-            this.Achievements.push(el)
-          })
+          this.addAchievements(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -48,3 +60,4 @@ export const useAchievementStore = defineStore('achievement', {
 })
 
 export * from './types'
+export * from './const'

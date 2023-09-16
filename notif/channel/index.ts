@@ -14,7 +14,7 @@ import {
 import { doActionWithError } from '../../request'
 import { formalizeAppID } from '../../appuser/app/local'
 
-export const useAdminNotifChannelStore = defineStore('notif-channels', {
+export const useNotifChannelStore = defineStore('notif-channels', {
   state: () => ({
     NotifChannels: new Map<string, Array<TNotifChannel>>()
   }),
@@ -114,3 +114,6 @@ export const useAdminNotifChannelStore = defineStore('notif-channels', {
     }
   }
 })
+
+export * from './types'
+export * from './const'

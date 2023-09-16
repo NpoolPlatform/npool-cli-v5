@@ -3,16 +3,24 @@ import { API } from './const'
 import {
   GetAppSendStatesRequest,
   GetAppSendStatesResponse,
-  SendState
+  SendState,
+  GetNAppSendStatesRequest,
+  GetNAppSendStatesResponse
 } from './types'
 import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAdminSendStateStore = defineStore('admin-sendstate-v4', {
+export const useSendStateStore = defineStore('announcement-send-states', {
   state: () => ({
     SendStates: new Map<string, Array<SendState>>()
   }),
   getters: {
+    states (): (appID: string | undefined) => Array<SendState> {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.SendStates.get(appID) || []
+      }
+    },
     addStates (): (appID: string | undefined, states: Array<SendState>) => void {
       return (appID: string | undefined, states: Array<SendState>) => {
         appID = formalizeAppID(appID)
@@ -41,6 +49,23 @@ export const useAdminSendStateStore = defineStore('admin-sendstate-v4', {
           done(true, [] as Array<SendState>)
         }
       )
+    },
+
+    getNAppSendStates (req: GetNAppSendStatesRequest, done: (error: boolean, rows: Array<SendState>) => void) {
+      doActionWithError<GetNAppSendStatesRequest, GetNAppSendStatesResponse>(
+        API.GET_APP_SENDSTATES,
+        req,
+        req.Message,
+        (resp: GetNAppSendStatesResponse): void => {
+          this.addStates(req.TargetAppID, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true, [] as Array<SendState>)
+        }
+      )
     }
   }
 })
+
+export * from './const'
+export * from './types'

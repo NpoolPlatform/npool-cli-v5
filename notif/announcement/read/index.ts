@@ -12,11 +12,17 @@ import {
 import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAdminReadStateStore = defineStore('admin-readstate-v4', {
+export const useReadStateStore = defineStore('announcement-read-states', {
   state: () => ({
     ReadStates: new Map<string, Array<ReadState>>()
   }),
   getters: {
+    states (): (appID?: string) => Array<ReadState> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.ReadStates.get(appID) || []
+      }
+    },
     addStates (): (appID: string | undefined, states: Array<ReadState>) => void {
       return (appID: string | undefined, states: Array<ReadState>) => {
         appID = formalizeAppID(appID)
@@ -65,7 +71,7 @@ export const useAdminReadStateStore = defineStore('admin-readstate-v4', {
         req,
         req.Message,
         (resp: GetNAppReadStatesResponse): void => {
-          this.addStates(undefined, resp.Infos)
+          this.addStates(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true, [] as Array<ReadState>)
@@ -74,3 +80,6 @@ export const useAdminReadStateStore = defineStore('admin-readstate-v4', {
     }
   }
 })
+
+export * from './const'
+export * from './types'

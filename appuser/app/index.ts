@@ -10,7 +10,7 @@ import {
   UpdateAppResponse
 } from './types'
 import { App } from './base'
-import { useMyApplicationStore } from './local'
+import { useLocalApplicationStore } from './local'
 
 export const useApplicationStore = defineStore('applications', {
   state: () => ({
@@ -22,49 +22,52 @@ export const useApplicationStore = defineStore('applications', {
       return (appID?: string) => {
         return appID ? this.Apps.get(appID) : this.Apps.get(this.AppID)
       }
+    },
+    apps () {
+      return () => Array.from(this.Apps.values())
     }
   },
   actions: {
-    getApps (req: GetAppsRequest, done: (apps: Array<App>, error: boolean) => void) {
+    getApps (req: GetAppsRequest, done: (error: boolean, apps?: Array<App>) => void) {
       doActionWithError<GetAppsRequest, GetAppsResponse>(
         API.GET_APPS,
         req,
         req.Message,
         (resp: GetAppsResponse): void => {
-          const myApp = useMyApplicationStore()
+          const myApp = useLocalApplicationStore()
           resp.Infos.forEach((app) => {
             this.Apps.set(app.ID, app)
-            if (myApp.AppID === app.ID) {
-              myApp.App = app
+            if (myApp.myAppID === app.ID) {
+              myApp.MyApp = app
             }
           })
-          done(resp.Infos, false)
+          done(false, resp.Infos)
         }, () => {
-          done([], true)
+          done(true)
         })
     },
-    updateApp (req: UpdateAppRequest, done: (app: App, error: boolean) => void) {
+    updateApp (req: UpdateAppRequest, done: (error: boolean, app?: App) => void) {
       doActionWithError<UpdateAppRequest, UpdateAppResponse>(
         API.UPDATE_APP,
         req,
         req.Message,
         (resp: UpdateAppResponse): void => {
           this.Apps.set(resp.Info.ID, resp.Info)
-          done(resp.Info, false)
+          done(false, resp.Info)
         }, () => {
-          done({} as App, true)
+          done(true)
         })
     },
-    createApp (req: CreateAppRequest, done: (app: App, error: boolean) => void) {
+    createApp (req: CreateAppRequest, done: (error: boolean, app?: App) => void) {
       doActionWithError<CreateAppRequest, CreateAppResponse>(
         API.CREATE_APP,
         req,
         req.Message,
         (resp: CreateAppResponse): void => {
           this.Apps.set(resp.Info.ID, resp.Info)
-          done(resp.Info, false)
+          done(false, resp.Info)
         }, () => {
-          done({} as App, true)
+          done(true)
         })
     }
   }

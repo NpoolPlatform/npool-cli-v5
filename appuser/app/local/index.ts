@@ -1,14 +1,25 @@
 import { defineStore } from 'pinia'
 import { App } from '../base'
 
-export const useMyApplicationStore = defineStore('my-application', {
+export const useLocalApplicationStore = defineStore('local-application', {
   state: () => ({
-    App: undefined as unknown as App,
-    AppID: undefined as unknown as string
+    MyApp: undefined as unknown as App,
+    MyAppID: undefined as unknown as string,
+    CurrentApp: undefined as unknown as App,
+    CurrentAppID: undefined as unknown as string
   }),
   getters: {
-    getAppID (): string | undefined {
-      return this.App?.ID ? this.App?.ID : this.AppID
+    myAppID (): string | undefined {
+      return this.MyAppID
+    },
+    myApp (): App | undefined {
+      return this.MyApp
+    },
+    currentAppID (): string | undefined {
+      return this.CurrentAppID
+    },
+    currentApp (): App | undefined {
+      return this.currentApp
     }
   },
   actions: {}
@@ -18,6 +29,6 @@ export const formalizeAppID = (appID?: string) => {
   if (appID) {
     return appID
   }
-  const myApp = useMyApplicationStore()
-  return myApp.AppID
+  const myApp = useLocalApplicationStore()
+  return myApp.CurrentAppID || myApp.MyAppID
 }

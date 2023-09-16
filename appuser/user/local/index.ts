@@ -10,6 +10,9 @@ export const useLocalUserStore = defineStore('local-user', {
     logined (): boolean {
       return this.User && this.User.Logined && this.User.LoginVerified
     },
+    loginedUserID (): string | undefined {
+      return this.User?.ID
+    },
     findInvitationCode () : boolean {
       return this.User && this.User.InvitationCode?.length > 0
     },

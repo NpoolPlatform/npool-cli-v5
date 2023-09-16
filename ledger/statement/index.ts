@@ -9,11 +9,13 @@ import {
   MiningReward,
   Statement,
   GetAppStatementsRequest,
-  GetAppStatementsResponse
+  GetAppStatementsResponse,
+  CreateAppUserDepositRequest,
+  CreateAppUserDepositResponse
 } from './types'
 import { formalizeAppID } from '../../appuser/app/local'
 
-export const useFrontendStatementStore = defineStore('frontend-Statement-v4', {
+export const useStatementStore = defineStore('ledger-statements', {
   state: () => ({
     Statements: new Map<string, Array<Statement>>(),
     MiningRewards: new Map<string, Array<MiningReward>>()
@@ -110,6 +112,21 @@ export const useFrontendStatementStore = defineStore('frontend-Statement-v4', {
         }, () => {
           done(true)
         })
+    },
+    createAppUserDeposit (req: CreateAppUserDepositRequest, done: (error: boolean, row?: Statement) => void) {
+      doActionWithError<CreateAppUserDepositRequest, CreateAppUserDepositResponse>(
+        API.CREATE_APP_USER_DEPOSIT,
+        req,
+        req.Message,
+        (resp: CreateAppUserDepositResponse): void => {
+          this.addStatements(req.TargetAppID, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        })
     }
   }
 })
+
+export * from './types'
+export * from './const'

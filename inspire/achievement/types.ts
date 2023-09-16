@@ -25,6 +25,7 @@ export interface GoodAchievement {
 }
 
 export interface Achievement {
+  AppID: string
   UserID: string
   InviterID: string
   Username: string

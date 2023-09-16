@@ -13,7 +13,7 @@ import {
   UpdateVendorLocationResponse
 } from './types'
 
-export const useChurchVendorLocationStore = defineStore('vendor-locations', {
+export const useVendorLocationStore = defineStore('vendor-locations', {
   state: () => ({
     VendorLocations: [] as Array<VendorLocation>
   }),
@@ -22,6 +22,9 @@ export const useChurchVendorLocationStore = defineStore('vendor-locations', {
       return (id: string) => {
         return this.VendorLocations.find((el) => el.ID === id)
       }
+    },
+    vendorLocations () {
+      return () => this.VendorLocations
     },
     addLocations (): (devices: Array<VendorLocation>) => void {
       return (devices: Array<VendorLocation>) => {

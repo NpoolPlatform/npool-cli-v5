@@ -24,6 +24,9 @@ export const useDeviceInfoStore = defineStore('deviceinfos', {
         return this.DeviceInfos.find((el) => el.ID === id)
       }
     },
+    deviceInfos () {
+      return () => this.DeviceInfos
+    },
     addDevices (): (devices: Array<DeviceInfo>) => void {
       return (devices: Array<DeviceInfo>) => {
         devices.forEach((device) => {

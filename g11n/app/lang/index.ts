@@ -22,6 +22,12 @@ export const useAppLangStore = defineStore('app-langs', {
     AppLangs: new Map<string, Array<AppLang>>()
   }),
   getters: {
+    langs (): (appID?: string) => Array<AppLang> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AppLangs.get(appID) || []
+      }
+    },
     addLangs (): (appID: string | undefined, langs: Array<AppLang>) => void {
       return (appID: string | undefined, langs: Array<AppLang>) => {
         appID = formalizeAppID(appID)

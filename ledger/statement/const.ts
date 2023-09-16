@@ -2,6 +2,7 @@ export enum API {
   GET_STATEMENTS = '/ledger/v1/get/details',
   GET_APP_STATEMENTS = '/ledger/v1/get/app/details',
   GET_MININGREWARDS = '/ledger/v1/get/miningrewards',
+  CREATE_APP_USER_DEPOSIT = '/ledger/v1/create/app/user/deposit',
 }
 
 export enum IOType {

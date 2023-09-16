@@ -12,6 +12,16 @@ export const useCoinFiatCurrencyHistoryStore = defineStore('coin-fiat-currency-h
     Histories: [] as Array<CoinFiatCurrency>
   }),
   getters: {
+    histories (): (coinTypeID?: string, fiatID?: string) => Array<CoinFiatCurrency> {
+      return (coinTypeID?: string, fiatID?: string) => {
+        return this.Histories.filter((el) => {
+          let ok = true
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (fiatID) ok &&= el.FiatID === fiatID
+          return ok
+        })
+      }
+    },
     addHistories (): (currencies: Array<CoinFiatCurrency>) => void {
       return (feeds: Array<CoinFiatCurrency>) => {
         feeds.forEach((feed) => {

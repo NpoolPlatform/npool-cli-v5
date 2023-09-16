@@ -14,7 +14,7 @@ import {
 } from './types'
 import { formalizeAppID } from '../../appuser/app/local'
 
-export const useFrontendNotifStore = defineStore('notifs', {
+export const useNotifStore = defineStore('notifs', {
   state: () => ({
     Notifs: new Map<string, Array<Notif>>()
   }),

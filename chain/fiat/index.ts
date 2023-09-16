@@ -1,42 +1,45 @@
 import { defineStore } from 'pinia'
 import { API } from './const'
 import {
-  GetFiatCurrencyTypesRequest,
-  GetFiatCurrencyTypesResponse,
-  UpdateFiatCurrencyTypeRequest,
-  UpdateFiatCurrencyTypeResponse,
-  FiatCurrencyType,
-  CreateFiatCurrencyTypeRequest,
-  CreateFiatCurrencyTypeResponse
+  GetFiatsRequest,
+  GetFiatsResponse,
+  UpdateFiatRequest,
+  UpdateFiatResponse,
+  Fiat,
+  CreateFiatRequest,
+  CreateFiatResponse
 } from './types'
 import { doActionWithError } from '../../request'
 
 export const useFiatStore = defineStore('fiats', {
   state: () => ({
-    FiatCurrencyTypes: [] as Array<FiatCurrencyType>
+    Fiats: [] as Array<Fiat>
   }),
   getters: {
-    fiatCurrencyType (): (name: string) => FiatCurrencyType | undefined {
+    fiats () {
+      return () => this.Fiats
+    },
+    fiat (): (name: string) => Fiat | undefined {
       return (name: string) => {
-        return this.FiatCurrencyTypes.find((el) => el.Name === name)
+        return this.Fiats.find((el) => el.Name === name)
       }
     },
-    addCurrencyTypes (): (types: Array<FiatCurrencyType>) => void {
-      return (types: Array<FiatCurrencyType>) => {
+    addCurrencyTypes (): (types: Array<Fiat>) => void {
+      return (types: Array<Fiat>) => {
         types.forEach((_type) => {
-          const index = this.FiatCurrencyTypes.findIndex((el) => el.ID === _type.ID)
-          this.FiatCurrencyTypes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, _type)
+          const index = this.Fiats.findIndex((el) => el.ID === _type.ID)
+          this.Fiats.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, _type)
         })
       }
     }
   },
   actions: {
-    getFiatCurrencyTypes (req: GetFiatCurrencyTypesRequest, done: (error: boolean, rows?: Array<FiatCurrencyType>) => void) {
-      doActionWithError<GetFiatCurrencyTypesRequest, GetFiatCurrencyTypesResponse>(
-        API.GET_FIATCURRENCYTYPES,
+    getFiats (req: GetFiatsRequest, done: (error: boolean, rows?: Array<Fiat>) => void) {
+      doActionWithError<GetFiatsRequest, GetFiatsResponse>(
+        API.GET_FIATS,
         req,
         req.Message,
-        (resp: GetFiatCurrencyTypesResponse): void => {
+        (resp: GetFiatsResponse): void => {
           this.addCurrencyTypes(resp.Infos)
           done(false, resp.Infos)
         }, () => {
@@ -44,12 +47,12 @@ export const useFiatStore = defineStore('fiats', {
         }
       )
     },
-    updateFiatCurrencyType (req: UpdateFiatCurrencyTypeRequest, done: (error: boolean, row?: FiatCurrencyType) => void) {
-      doActionWithError<UpdateFiatCurrencyTypeRequest, UpdateFiatCurrencyTypeResponse>(
-        API.UPDATE_FIATCURRENCYTYPE,
+    updateFiat (req: UpdateFiatRequest, done: (error: boolean, row?: Fiat) => void) {
+      doActionWithError<UpdateFiatRequest, UpdateFiatResponse>(
+        API.UPDATE_FIAT,
         req,
         req.Message,
-        (resp: UpdateFiatCurrencyTypeResponse): void => {
+        (resp: UpdateFiatResponse): void => {
           this.addCurrencyTypes([resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -57,12 +60,12 @@ export const useFiatStore = defineStore('fiats', {
         }
       )
     },
-    createFiatCurrencyType (req: CreateFiatCurrencyTypeRequest, done: (error: boolean, row?: FiatCurrencyType) => void) {
-      doActionWithError<CreateFiatCurrencyTypeRequest, CreateFiatCurrencyTypeResponse>(
-        API.CREATE_FIATCURRENCYTYPE,
+    createFiat (req: CreateFiatRequest, done: (error: boolean, row?: Fiat) => void) {
+      doActionWithError<CreateFiatRequest, CreateFiatResponse>(
+        API.CREATE_FIAT,
         req,
         req.Message,
-        (resp: CreateFiatCurrencyTypeResponse): void => {
+        (resp: CreateFiatResponse): void => {
           this.addCurrencyTypes([resp.Info])
           done(false, resp.Info)
         }, () => {

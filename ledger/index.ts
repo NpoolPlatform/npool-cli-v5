@@ -13,7 +13,7 @@ import {
 import { formalizeAppID } from '../appuser/app/local'
 import { formalizeUserID } from '../appuser/user'
 
-export const useChurchLedgerStore = defineStore('church-Ledger-v4', {
+export const useLedgerStore = defineStore('ledgers', {
   state: () => ({
     Ledgers: new Map<string, Array<Ledger>>(),
     IntervalLedgers: new Map<string, Map<string, Array<Ledger>>>()
@@ -83,19 +83,19 @@ export const useChurchLedgerStore = defineStore('church-Ledger-v4', {
     }
   },
   actions: {
-    getAppLedgers (req: GetAppLedgersRequest, done: (Ledgers: Array<Ledger>, error: boolean) => void) {
+    getAppLedgers (req: GetAppLedgersRequest, done: (error: boolean, rows?: Array<Ledger>) => void) {
       doActionWithError<GetAppLedgersRequest, GetAppLedgersResponse>(
         API.GET_APP_LEDGERS,
         req,
         req.Message,
         (resp: GetAppLedgersResponse): void => {
           this.addLedgers(req.TargetAppID, resp.Infos)
-          done(resp.Infos, false)
+          done(false, resp.Infos)
         }, () => {
-          done([], true)
+          done(true)
         })
     },
-    getLedgers (req: GetLedgersRequest, done: (error: boolean, rows: Array<Ledger>) => void) {
+    getLedgers (req: GetLedgersRequest, done: (error: boolean, rows?: Array<Ledger>) => void) {
       doActionWithError<GetLedgersRequest, GetLedgersResponse>(
         API.GET_LEDGERS,
         req,
@@ -105,11 +105,11 @@ export const useChurchLedgerStore = defineStore('church-Ledger-v4', {
           done(false, resp.Infos)
         },
         () => {
-          done(true, [] as Array<Ledger>)
+          done(true)
         }
       )
     },
-    getIntervalLedgers (req: GetIntervalLedgersRequest, intervalKey: string, done: (error: boolean, rows: Array<Ledger>) => void) {
+    getIntervalLedgers (req: GetIntervalLedgersRequest, intervalKey: string, done: (error: boolean, rows?: Array<Ledger>) => void) {
       doActionWithError<GetIntervalLedgersRequest, GetIntervalLedgersResponse>(
         API.GET_INTERVALLEDGERS,
         req,
@@ -119,9 +119,12 @@ export const useChurchLedgerStore = defineStore('church-Ledger-v4', {
           done(false, resp.Infos)
         },
         () => {
-          done(true, [] as Array<Ledger>)
+          done(true)
         }
       )
     }
   }
 })
+
+export * from './types'
+export * from './const'

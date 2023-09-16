@@ -9,7 +9,9 @@ export const useLocaleStore = defineStore('locale-lang', {
     I18n: useI18n()
   }),
   getters: {
-
+    langID () {
+      return () => this.AppLang?.LangID
+    }
   },
   actions: {
     setLang (lang: AppLang) {

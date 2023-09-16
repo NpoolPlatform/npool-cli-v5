@@ -19,6 +19,12 @@ export const useAppCountryStore = defineStore('app-countries', {
     AppCountries: new Map<string, Array<Country>>()
   }),
   getters: {
+    countries (): (appID?: string) => Array<Country> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AppCountries.get(appID) || []
+      }
+    },
     addCountries (): (appID: string | undefined, countries: Array<Country>) => void {
       return (appID: string | undefined, countries: Array<Country>) => {
         appID = formalizeAppID(appID)

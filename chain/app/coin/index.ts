@@ -22,8 +22,9 @@ export const useAppCoinStore = defineStore('app-coins', {
     AppCoins: new Map<string, Array<AppCoin>>()
   }),
   getters: {
-    coin (): (appID: string | undefined, coinTypeID: string) => AppCoin | undefined {
-      return (appID: string | undefined, coinTypeID: string) => {
+    coin (): (appID: string | undefined, coinTypeID: string | undefined) => AppCoin | undefined {
+      return (appID: string | undefined, coinTypeID: string | undefined) => {
+        if (!coinTypeID) return undefined
         appID = formalizeAppID(appID)
         return this.AppCoins.get(appID)?.find((el) => el.CoinTypeID === coinTypeID)
       }

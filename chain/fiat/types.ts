@@ -1,8 +1,9 @@
 import { BaseRequest } from '../../request'
 
-export interface FiatCurrencyType {
+export interface Fiat {
   ID: string
   Name: string
+  Unit: string
   Logo: string
   /** @format int64 */
   CreatedAt: number
@@ -10,37 +11,37 @@ export interface FiatCurrencyType {
   UpdatedAt: number
 }
 
-export interface CreateFiatCurrencyTypeRequest extends BaseRequest {
+export interface CreateFiatRequest extends BaseRequest {
   Name: string
 }
 
-export interface CreateFiatCurrencyTypeResponse {
-  Info: FiatCurrencyType
+export interface CreateFiatResponse {
+  Info: Fiat
 }
 
-export interface GetFiatCurrencyTypesRequest extends BaseRequest {
+export interface GetFiatsRequest extends BaseRequest {
   /** @format int32 */
   Offset: number
   /** @format int32 */
   Limit: number
 }
 
-export interface GetFiatCurrencyTypesResponse {
-  Infos: FiatCurrencyType[]
+export interface GetFiatsResponse {
+  Infos: Fiat[]
   /** @format int64 */
   Total: number
 }
 
-export interface UpdateFiatCurrencyTypeRequest extends BaseRequest {
+export interface UpdateFiatRequest extends BaseRequest {
   ID: string
   Name: string
 }
 
-export interface UpdateFiatCurrencyTypeResponse {
-  Info: FiatCurrencyType
+export interface UpdateFiatResponse {
+  Info: Fiat
 }
 
 export interface GetCoinFiatCurrenciesRequest extends BaseRequest {
-  FiatCurrencyTypeIDs: string[]
+  FiatIDs: string[]
   CoinTypeIDs: string[]
 }

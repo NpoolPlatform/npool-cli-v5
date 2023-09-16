@@ -16,6 +16,11 @@ export const useCoinFiatStore = defineStore('coin-fiats', {
     CoinFiats: [] as Array<CoinFiat>
   }),
   getters: {
+    coinfiats (): () => Array<CoinFiat> {
+      return () => {
+        return this.CoinFiats
+      }
+    },
     addCoinFiats (): (fiats: Array<CoinFiat>) => void {
       return (fiats: Array<CoinFiat>) => {
         fiats.forEach((fiat) => {

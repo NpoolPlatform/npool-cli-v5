@@ -21,6 +21,11 @@ export const useCoinStore = defineStore('coins', {
         return this.Coins.find((el) => el.ID === id)
       }
     },
+    coins () {
+      return () => {
+        return this.Coins
+      }
+    },
     addCoins (): (coins: Array<Coin>) => void {
       return (coins: Array<Coin>) => {
         coins.forEach((coin) => {
