@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { API } from './const'
 import {
+  GetAnnouncementsRequest,
+  GetAnnouncementsResponse,
   GetAppAnnouncementsRequest,
   GetAppAnnouncementsResponse,
   CreateAnnouncementRequest,
@@ -61,6 +63,19 @@ export const useAnnouncementStore = defineStore('announcements', {
     }
   },
   actions: {
+    getAnnouncements (req: GetAnnouncementsRequest, done: (error: boolean, rows: Array<Announcement>) => void) {
+      doActionWithError<GetAnnouncementsRequest, GetAnnouncementsResponse>(
+        API.GET_ANNOUNCEMENTS,
+        req,
+        req.Message,
+        (resp: GetAnnouncementsResponse): void => {
+          this.addAnnouncements(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true, [] as Array<Announcement>)
+        }
+      )
+    },
     getAppAnnouncements (req: GetAppAnnouncementsRequest, done: (error: boolean, rows: Array<Announcement>) => void) {
       doActionWithError<GetAppAnnouncementsRequest, GetAppAnnouncementsResponse>(
         API.GET_APP_ANNOUNCEMENTS,
@@ -120,7 +135,7 @@ export const useAnnouncementStore = defineStore('announcements', {
         req,
         req.Message,
         (resp: GetNAppAnnouncementsResponse): void => {
-          this.addAnnouncements(undefined, resp.Infos)
+          this.addAnnouncements(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true, [] as Array<Announcement>)

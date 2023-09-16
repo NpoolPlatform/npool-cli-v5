@@ -12,7 +12,7 @@ import {
 } from './types'
 import { doActionWithError } from '../../../request'
 import { API } from './const'
-import { useMyApplicationStore } from '../../../appuser/app'
+import { formalizeAppID } from '../../../appuser/app/local'
 
 export const useTransferAccountStore = defineStore('transfer-account', {
   state: () => ({
@@ -21,25 +21,13 @@ export const useTransferAccountStore = defineStore('transfer-account', {
   getters: {
     transferAccounts (): (appID: string | undefined) => Array<TransferAccount> | undefined {
       return (appID: string | undefined) => {
-        if (!appID) {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            return
-          }
-          appID = myApp.AppID
-        }
+        appID = formalizeAppID(appID)
         return this.TransferAccounts.get(appID)?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1)
       }
     },
     addTransferAccounts (): (appID: string | undefined, accounts: Array<TransferAccount>) => void {
       return (appID: string | undefined, accounts: Array<TransferAccount>) => {
-        if (!appID) {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            return
-          }
-          appID = myApp.AppID
-        }
+        appID = formalizeAppID(appID)
         let _accounts = this.TransferAccounts.get(appID)
         if (!_accounts) {
           _accounts = []
@@ -50,13 +38,7 @@ export const useTransferAccountStore = defineStore('transfer-account', {
     },
     delTransferAccount (): (appID: string | undefined, accountID: string) => void {
       return (appID: string | undefined, accountID: string) => {
-        if (!appID) {
-          const myApp = useMyApplicationStore()
-          if (!myApp.AppID) {
-            return
-          }
-          appID = myApp.AppID
-        }
+        appID = formalizeAppID(appID)
         let _accounts = this.TransferAccounts.get(appID)
         if (!_accounts) {
           _accounts = []

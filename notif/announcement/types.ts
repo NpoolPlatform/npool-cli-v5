@@ -71,8 +71,6 @@ export interface GetAppAnnouncementsResponse {
 }
 
 export interface GetAnnouncementsRequest extends BaseRequest {
-  AppID: string
-  UserID: string
   /** @format int64 */
   Offset: number
   /** @format int64 */

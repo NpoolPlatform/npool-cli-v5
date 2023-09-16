@@ -1,11 +1,11 @@
 import { BaseRequest } from '../../request'
-import { AccountType, SignMethodType, SigninVerifyType } from '../base'
+import { SignMethodType, SigninVerifyType } from '../base'
 import { LoginHistory, User } from './base'
 
 export interface SignupRequest extends BaseRequest{
   Account: string
   PasswordHash: string
-  AccountType: AccountType
+  AccountType: SignMethodType
   VerificationCode: string
   InvitationCode: string
 }
@@ -17,7 +17,7 @@ export interface SignupResponse {
 export interface LoginRequest extends BaseRequest {
   Account: string
   PasswordHash: string
-  AccountType: AccountType
+  AccountType: SignMethodType
   ManMachineSpec: string
   EnvironmentSpec?: string
 }
@@ -29,7 +29,7 @@ export interface LoginResponse {
 export interface LoginVerifyRequest extends BaseRequest {
   UserID: string
   Account: string
-  AccountType: AccountType,
+  AccountType: SignMethodType,
   Token: string
   VerificationCode: string
 }
