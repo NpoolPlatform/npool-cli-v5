@@ -16,6 +16,7 @@ export interface Coupon {
   Name: string
   UserID?: string
   GoodID?: string
+  AppGoodID?: string
   Threshold?: string
   Allocated: string
   CouponConstraint: CouponConstraint
@@ -36,7 +37,7 @@ export interface CreateCouponRequest extends NotifyRequest {
   Message: string
   Name: string
   TargetUserID?: string
-  GoodID?: string
+  AppGoodID?: string
   Threshold?: string
   Random: boolean
   CouponConstraint: CouponConstraint
@@ -72,7 +73,7 @@ export interface UpdateCouponRequest extends NotifyRequest {
   Message: string;
   Name: string;
   TargetUserID?: string;
-  GoodID?: string;
+  AppGoodID?: string;
   Threshold?: string;
   Random: boolean
   CouponConstraint: CouponConstraint
