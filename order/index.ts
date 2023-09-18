@@ -232,14 +232,14 @@ export const useOrderStore = defineStore('orders', {
       )
     },
 
-    getNAppOrders (req: GetNAppOrdersRequest, done: (error: boolean, orders?: Array<Order>) => void) {
+    getNAppOrders (req: GetNAppOrdersRequest, done: (error: boolean, orders?: Array<Order>, total?: number) => void) {
       doActionWithError<GetNAppOrdersRequest, GetNAppOrdersResponse>(
         API.GET_N_APP_ORDERS,
         req,
         req.Message,
         (resp: GetNAppOrdersResponse): void => {
           this.addOrders(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done(false, resp.Infos, resp.Total)
         },
         () => {
           done(true)

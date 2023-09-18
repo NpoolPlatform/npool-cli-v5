@@ -4,7 +4,7 @@ import { AppID } from './localapp'
 
 const _order = order.useOrderStore()
 
-const getPageOrders = (pageIndex: number, pageEnd: number, done: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   _order.getOrders({
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
@@ -17,20 +17,20 @@ const getPageOrders = (pageIndex: number, pageEnd: number, done: (error: boolean
       }
     }
   }, (error: boolean, orders?: Array<order.Order>, total?: number) => {
-    if (error || !orders?.length || pageIndex === pageEnd) {
-      const totalPages = total as number / constant.DefaultPageSize + (total as number % constant.DefaultPageSize) ? 1 : 0
-      done(error, totalPages, total as number)
+    if (error || !orders?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
+      done?.(error, totalPages, total as number)
       return
     }
     getPageOrders(++pageIndex, pageEnd, done)
   })
 }
 
-export const getOrders = (pageStart: number, pages: number, done: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageOrders(pageStart, pageStart + pages, done)
+export const getOrders = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  getPageOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-const getPageNAppOrders = (pageIndex: number, pageEnd: number, done: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageNAppOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   _order.getNAppOrders({
     TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
@@ -44,17 +44,17 @@ const getPageNAppOrders = (pageIndex: number, pageEnd: number, done: (error: boo
       }
     }
   }, (error: boolean, orders?: Array<order.Order>, total?: number) => {
-    if (error || !orders?.length || pageIndex === pageEnd) {
-      const totalPages = total as number / constant.DefaultPageSize + (total as number % constant.DefaultPageSize) ? 1 : 0
-      done(error, totalPages, total as number)
+    if (error || !orders?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
+      done?.(error, totalPages, total as number)
       return
     }
-    getPageOrders(++pageIndex, pageEnd, done)
+    getPageNAppOrders(pageIndex + 1, pageEnd, done)
   })
 }
 
-export const getNAppOrders = (pageStart: number, pages: number, done: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageNAppOrders(pageStart, pageStart + pages, done)
+export const getNAppOrders = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  getPageNAppOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
 
 export const orders = computed(() => _order.orders(AppID.value))
