@@ -173,14 +173,14 @@ export const useAppGoodStore = defineStore('app-goods', {
     }
   },
   actions: {
-    getAppGoods (req: GetAppGoodsRequest, done: (error: boolean, rows?: Array<Good>) => void) {
+    getAppGoods (req: GetAppGoodsRequest, done: (error: boolean, rows?: Array<Good>, total?: number) => void) {
       doActionWithError<GetAppGoodsRequest, GetAppGoodsResponse>(
         API.GET_APPGOODS,
         req,
         req.Message,
         (resp: GetAppGoodsResponse): void => {
           this.addGoods(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
         })
@@ -210,14 +210,14 @@ export const useAppGoodStore = defineStore('app-goods', {
         })
     },
 
-    getNAppGoods (req: GetNAppGoodsRequest, done: (error: boolean, rows?: Array<Good>) => void) {
+    getNAppGoods (req: GetNAppGoodsRequest, done: (error: boolean, rows?: Array<Good>, total?: number) => void) {
       doActionWithError<GetNAppGoodsRequest, GetNAppGoodsResponse>(
         API.GET_N_APPGOODS,
         req,
         req.Message,
         (resp: GetNAppGoodsResponse): void => {
           this.addGoods(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
         })
