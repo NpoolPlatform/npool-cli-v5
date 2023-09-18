@@ -38,3 +38,17 @@ export enum OrderType {
 }
 
 export const OrderTypes = Object.values(OrderType)
+
+export enum PaymentType {
+  PayWithBalanceOnly = 'PayWithBalanceOnly',
+  PayWithTransferOnly = 'PayWithTransferOnly',
+  PayWithTransferAndBalance = 'PayWithTransferAndBalance',
+  PayWithParentOrder = 'PayWithParentOrder',
+  PayWithOffline = 'PayWithOffline',
+  PayWithNoPayment = 'PayWithNoPayment'
+}
+
+export enum InvestmentType {
+  UnionMining = 'UnionMining',
+  FullPayment = 'FullPayment'
+}
