@@ -29,7 +29,7 @@ export interface MiningReward {
   RewardAmount: string
   RewardAmountPerUnit: string
   Extra: string
-  GoodID: string
+  AppGoodID: string
   OrderID: string
   UserID: string
   Units: string

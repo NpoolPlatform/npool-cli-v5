@@ -53,12 +53,12 @@ export const useFrontendProfitStore = defineStore('frontend-profit-v4', {
         return incoming
       }
     },
-    intervalGoodIncoming (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined, key: string) => number {
-      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined, key: string) => {
+    intervalGoodIncoming (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined, key: string) => number {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined, key: string) => {
         let incoming = 0
         this.intervalGoodProfits(appID, userID, key).filter((el) => {
           let ok = el.CoinTypeID === coinTypeID
-          if (goodID) ok &&= el.GoodID === goodID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
           return ok
         }).forEach((el) => {
           incoming += Number(el.Incoming)
@@ -66,14 +66,14 @@ export const useFrontendProfitStore = defineStore('frontend-profit-v4', {
         return incoming
       }
     },
-    purchaseUnits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => number {
-      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => {
+    purchaseUnits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined) => number {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined) => {
         appID = formalizeAppID(appID)
         userID = formalizeUserID(userID)
         let units = 0
         this.GoodProfits.get(appID)?.filter((el) => {
           let ok = el.UserID === userID && el.CoinTypeID === coinTypeID
-          if (goodID) ok &&= el.GoodID === goodID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
           return ok
         })?.forEach((el) => {
           units += Number(el.Units)
@@ -81,14 +81,14 @@ export const useFrontendProfitStore = defineStore('frontend-profit-v4', {
         return units
       }
     },
-    totalIncoming (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => number {
-      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => {
+    totalIncoming (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined) => number {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined) => {
         appID = formalizeAppID(appID)
         userID = formalizeUserID(userID)
         let incoming = 0
         this.GoodProfits.get(appID)?.filter((el) => {
           let ok = el.UserID === userID && el.CoinTypeID === coinTypeID
-          if (goodID) ok &&= el.GoodID === goodID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
           return ok
         })?.forEach((el) => {
           incoming += Number(el.Incoming)

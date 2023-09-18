@@ -3,7 +3,7 @@ import { BaseRequest } from '../../request'
 export interface GoodProfit {
   AppID: string
   UserID: string
-  GoodID: string
+  AppGoodID: string
   GoodName: string
   GoodUnit: string
   GoodServicePeriodDays: number
