@@ -30,11 +30,12 @@ export interface Commission {
   CreatedAt: number
   /** @format int64 */
   UpdatedAt: number
+  AppGoodID: string
 }
 
 export interface CreateCommissionRequest extends BaseRequest {
   TargetUserID: string
-  GoodID: string
+  AppGoodID: string
   SettleType: SettleType
   SettleAmountType: SettleAmountType
   AmountOrPercent: string
@@ -50,7 +51,7 @@ export interface CreateCommissionResponse {
 
 export interface CreateUserCommissionRequest extends BaseRequest {
   TargetUserID: string
-  GoodID: string
+  AppGoodID: string
   SettleType: SettleType
   SettleAmountType: SettleAmountType
   SettleMode: SettleMode
@@ -104,12 +105,24 @@ export interface GetAppCommissionsResponse {
 }
 
 export interface CloneCommissionsRequest extends BaseRequest {
-  FromGoodID: string
-  ToGoodID: string
+  FromAppGoodID: string
+  ToAppGoodID: string
   Value: string
   ScalePercent: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CloneCommissionsResponse {
+}
+
+export interface CloneAppCommissionsRequest extends BaseRequest {
+  TargetAppID: string
+  FromAppGoodID: string
+  ToAppGoodID: string
+  Value: string
+  ScalePercent: string
+}
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface CloneAppCommissionsResponse {
 }

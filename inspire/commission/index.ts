@@ -11,7 +11,9 @@ import {
   CloneCommissionsResponse,
   Commission,
   GetCommissionsRequest,
-  GetCommissionsResponse
+  GetCommissionsResponse,
+  CloneAppCommissionsRequest,
+  CloneAppCommissionsResponse
 } from './types'
 import { doActionWithError } from '../../request/action'
 import { formalizeAppID } from '../../appuser/app/local'
@@ -92,6 +94,18 @@ export const useCommissionStore = defineStore('commissions', {
     cloneCommissions (req: CloneCommissionsRequest, done: (error: boolean) => void) {
       doActionWithError<CloneCommissionsRequest, CloneCommissionsResponse>(
         API.CLONE_COMMISSIONS,
+        req,
+        req.Message,
+        (): void => {
+          done(false)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    cloneAppCommissions (req: CloneAppCommissionsRequest, done: (error: boolean) => void) {
+      doActionWithError<CloneAppCommissionsRequest, CloneAppCommissionsResponse>(
+        API.CLONE_APP_COMMISSIONS,
         req,
         req.Message,
         (): void => {
