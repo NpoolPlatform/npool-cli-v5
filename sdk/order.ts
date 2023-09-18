@@ -1,7 +1,6 @@
 import { computed } from 'vue'
 import { order, notify, constant } from '../'
 import { AppID } from './localapp'
-import { NIL } from 'uuid'
 
 const _order = order.useOrderStore()
 
@@ -33,7 +32,7 @@ export const getOrders = (pageStart: number, pages: number, done?: (error: boole
 
 const getPageNAppOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   _order.getNAppOrders({
-    TargetAppID: NIL,
+    TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
     Message: {
