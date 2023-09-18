@@ -14,6 +14,7 @@ enum GoogleTokenType {
 }
 
 export const PriceCoinName = 'USDT'
+export const DefaultPageSize = 100
 
 export {
   NotSet,
