@@ -37,7 +37,7 @@ export const useInvitationCodeStore = defineStore('invitation-codes', {
           _codes = []
         }
         codes.forEach((code) => {
-          const index = _codes.findIndex((el) => el.ID === code.ID)
+          const index = _codes.findIndex((el) => el.AppID === code.AppID && el.UserID === code.UserID)
           _codes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, code)
         })
         this.InvitationCodes.set(appID, _codes)
