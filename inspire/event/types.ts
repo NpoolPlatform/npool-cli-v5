@@ -19,6 +19,7 @@ export interface Event {
   CreatedAt: number
   /** @format int64 */
   UpdatedAt: number
+  AppGoodID: string
 }
 
 export interface CreateEventRequest extends BaseRequest {
@@ -28,7 +29,7 @@ export interface CreateEventRequest extends BaseRequest {
   CreditsPerUSD?: string
   /** @format int64 */
   MaxConsecutive?: number
-  GoodID?: string
+  AppGoodID?: string
   /** @format int64 */
   InviterLayers?: number
 }

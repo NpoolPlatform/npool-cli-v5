@@ -3,8 +3,15 @@ import { BaseRequest } from '../../../../request'
 export interface Default {
   ID: string
   AppID: string
+  AppName: string
   GoodID: string
+  GoodName: string
+  AppGoodID: string
+  AppGoodName: string
   CoinTypeID: string
+  CoinName: string
+  CoinLogo: string
+  CoinEnv: string
   CoinUnit: string
   /** @format int64 */
   CreatedAt: number
@@ -13,8 +20,7 @@ export interface Default {
 }
 
 export interface CreateAppDefaultGoodRequest extends BaseRequest{
-  GoodID: string
-  CoinTypeID: string
+  AppGoodID: string
 }
 
 export interface CreateAppDefaultGoodResponse {
@@ -23,7 +29,7 @@ export interface CreateAppDefaultGoodResponse {
 
 export interface UpdateAppDefaultGoodRequest extends BaseRequest{
   ID: string
-  GoodID: string
+  AppGoodID: string
 }
 
 export interface UpdateAppDefaultGoodResponse {
@@ -53,8 +59,7 @@ export interface GetAppDefaultGoodsResponse {
 
 export interface CreateNAppDefaultGoodRequest extends BaseRequest{
   TargetAppID: string
-  GoodID: string
-  CoinTypeID: string
+  AppGoodID: string
 }
 
 export interface CreateNAppDefaultGoodResponse {
@@ -63,7 +68,7 @@ export interface CreateNAppDefaultGoodResponse {
 
 export interface UpdateNAppDefaultGoodRequest extends BaseRequest{
   ID: string
-  GoodID: string
+  AppGoodID: string
   TargetAppID: string
 }
 
