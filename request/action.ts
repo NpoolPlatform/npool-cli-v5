@@ -26,33 +26,33 @@ function processError (err: AxiosError, message?: Notification) {
   }
 
   if (message) {
-    notification.Notifications.push(message)
+    notification.pushNotification(message)
   }
 }
 
 function doAction<MyRequest, MyResponse> (
   url: string,
   req: MyRequest,
-  message: ReqMessage,
+  message: ReqMessage | undefined,
   success: (resp: MyResponse) => void) {
   const api = createAPI() as AxiosInstance
   api
     .post<MyRequest, AxiosResponse<MyResponse>>(url, req)
     .then((response: AxiosResponse<MyResponse>) => {
       success(response.data)
-      if (message.Info) {
+      if (message?.Info) {
         const notification = useNotificationStore()
-        notification.Notifications.push(message.Info)
+        notification.pushNotification(message?.Info)
       }
     })
     .catch((err: AxiosError) => {
-      processError(err, message.Error)
+      processError(err, message?.Error)
     })
 }
 function doActionWithError<MyRequest, MyResponse> (
   url: string,
   req: MyRequest,
-  message: ReqMessage,
+  message: ReqMessage | undefined,
   success: (resp: MyResponse) => void,
   error: () => void) {
   const api = createAPI() as AxiosInstance
@@ -60,13 +60,13 @@ function doActionWithError<MyRequest, MyResponse> (
     .post<MyRequest, AxiosResponse<MyResponse>>(url, req)
     .then((response: AxiosResponse<MyResponse>) => {
       success(response.data)
-      if (message.Info) {
+      if (message?.Info) {
         const notification = useNotificationStore()
-        notification.Notifications.push(message.Info)
+        notification.pushNotification(message.Info)
       }
     })
     .catch((err: AxiosError) => {
-      processError(err, message.Error)
+      processError(err, message?.Error)
       error()
     })
 }
@@ -74,27 +74,27 @@ function doActionWithError<MyRequest, MyResponse> (
 function doGet<MyRequest, MyResponse> (
   url: string,
   req: MyRequest,
-  message: ReqMessage,
+  message: ReqMessage | undefined,
   success: (resp: MyResponse) => void) {
   const api = createAPI(undefined, undefined, true) as AxiosInstance
   api
     .get<MyRequest, AxiosResponse<MyResponse>>(url)
     .then((response: AxiosResponse<MyResponse>) => {
       success(response.data)
-      if (message.Info) {
+      if (message?.Info) {
         const notification = useNotificationStore()
-        notification.Notifications.push(message.Info)
+        notification.pushNotification(message?.Info)
       }
     })
     .catch((err: AxiosError) => {
-      processError(err, message.Error)
+      processError(err, message?.Error)
     })
 }
 
 function doGetWithError<MyRequest, MyResponse> (
   url: string,
   req: MyRequest,
-  message: ReqMessage,
+  message: ReqMessage | undefined,
   success: (resp: MyResponse) => void,
   error: () => void) {
   const api = createAPI(undefined, undefined, true) as AxiosInstance
@@ -102,13 +102,13 @@ function doGetWithError<MyRequest, MyResponse> (
     .get<MyRequest, AxiosResponse<MyResponse>>(url)
     .then((response: AxiosResponse<MyResponse>) => {
       success(response.data)
-      if (message.Info) {
+      if (message?.Info) {
         const notification = useNotificationStore()
-        notification.Notifications.push(message.Info)
+        notification.pushNotification(message?.Info)
       }
     })
     .catch((err: AxiosError) => {
-      processError(err, message.Error)
+      processError(err, message?.Error)
       error()
     })
 }

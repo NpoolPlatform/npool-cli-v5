@@ -6,9 +6,9 @@ export interface ReqMessage {
 }
 
 export interface BaseRequest {
-  Message: ReqMessage
+  Message?: ReqMessage
 }
 
 export interface NotifyRequest {
-  NotifyMessage: ReqMessage
+  NotifyMessage?: ReqMessage
 }

@@ -42,9 +42,9 @@ export const useCodeRepoStore = defineStore('coderepo', {
         (resp: SendEmailCodeResponse): void => {
           const notification = useNotificationStore()
           if (resp.Code < 0) {
-            if (req.Message.Error) {
+            if (req.Message?.Error) {
               req.Message.Error.Description = resp.Message
-              notification.Notifications.push(req.Message.Error)
+              notification.pushNotification(req.Message.Error)
             }
           }
         })
@@ -57,9 +57,9 @@ export const useCodeRepoStore = defineStore('coderepo', {
         (resp: SendSMSCodeResponse): void => {
           const notification = useNotificationStore()
           if (resp.Code < 0) {
-            if (req.Message.Error) {
+            if (req.Message?.Error) {
               req.Message.Error.Description = resp.Message
-              notification.Notifications.push(req.Message.Error)
+              notification.pushNotification(req.Message.Error)
             }
           }
         })
@@ -111,17 +111,17 @@ export const useCodeRepoStore = defineStore('coderepo', {
                   done(token)
                 })
                 .catch((err: Error) => {
-                  if (req.Message.Error) {
+                  if (req.Message?.Error) {
                     req.Message.Error.Description = err.message
-                    notification.Notifications.push(req.Message.Error)
+                    notification.pushNotification(req.Message.Error)
                   }
                 })
             }
           })
           .catch((err: Error) => {
-            if (req.Message.Error) {
+            if (req.Message?.Error) {
               req.Message.Error.Description = err.message
-              notification.Notifications.push(req.Message.Error)
+              notification.pushNotification(req.Message.Error)
             }
           })
       }
@@ -134,9 +134,9 @@ export const useCodeRepoStore = defineStore('coderepo', {
         (resp: VerifyEmailCodeResponse): void => {
           const notification = useNotificationStore()
           if (resp.Code < 0) {
-            if (req.Message.Error) {
+            if (req.Message?.Error) {
               req.Message.Error.Description = resp.Message
-              notification.Notifications.push(req.Message.Error)
+              notification.pushNotification(req.Message.Error)
             }
             done(true)
           } else {
@@ -154,9 +154,9 @@ export const useCodeRepoStore = defineStore('coderepo', {
         (resp: VerifySMSCodeResponse): void => {
           const notification = useNotificationStore()
           if (resp.Code < 0) {
-            if (req.Message.Error) {
+            if (req.Message?.Error) {
               req.Message.Error.Description = resp.Message
-              notification.Notifications.push(req.Message.Error)
+              notification.pushNotification(req.Message.Error)
             }
             done(true)
           } else {

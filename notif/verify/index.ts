@@ -77,17 +77,17 @@ export const useFrontendVerifyStore = defineStore('verify', {
                   done(token)
                 })
                 .catch((err: Error) => {
-                  if (req.Message.Error) {
+                  if (req.Message?.Error) {
                     req.Message.Error.Description = err.message
-                    notification.Notifications.push(req.Message.Error)
+                    notification.pushNotification(req.Message.Error)
                   }
                 })
             }
           })
           .catch((err: Error) => {
-            if (req.Message.Error) {
+            if (req.Message?.Error) {
               req.Message.Error.Description = err.message
-              notification.Notifications.push(req.Message.Error)
+              notification.pushNotification(req.Message.Error)
             }
           })
       }

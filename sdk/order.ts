@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import { order, notify, constant } from '../'
 import { AppID } from './localapp'
+import { NIL } from 'uuid'
 
 const _order = order.useOrderStore()
 
@@ -32,7 +33,7 @@ export const getOrders = (pageStart: number, pages: number, done?: (error: boole
 
 const getPageNAppOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   _order.getNAppOrders({
-    TargetAppID: AppID.value,
+    TargetAppID: NIL,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
     Message: {
@@ -78,6 +79,20 @@ export const updateAppUserOrder = (id: string, canceled: boolean) => {
       }
     }
   }, () => {
+    // TODO
+  })
+}
+
+export const createAppUserOrder = (req: order.CreateAppUserOrderRequest) => {
+  req.Message = {
+    Error: {
+      Title: 'MSG_CREATE_ORDER',
+      Message: 'MSG_CREATE_ORDER_FAIL',
+      Popup: true,
+      Type: notify.NotifyType.Error
+    }
+  }
+  _order.createAppUserOrder(req, () => {
     // TODO
   })
 }
