@@ -1,14 +1,13 @@
 export enum GoodType {
-  DefaultGoodType = 'DefaultGoodType',
-  GoodTypeClassicMining = 'GoodTypeClassicMining',
-  GoodTypeUnionMining = 'GoodTypeUnionMining',
-  GoodTypeTechniqueFee = 'GoodTypeTechniqueFee',
-  GoodTypeElectricityFee = 'GoodTypeElectricityFee',
+  PowerRenting = 'PowerRenting',
+  MachineRenting = 'MachineRenting',
+  MachineHosting = 'MachineHosting',
+  TechniqueServiceFee = 'TechniqueServiceFee',
+  ElectricityFee = 'ElectricityFee',
 }
 export const GoodTypes = Object.values(GoodType)
 
 export enum BenefitType {
-  DefaultBenefitType = 'DefaultBenefitType',
   BenefitTypePlatform = 'BenefitTypePlatform',
   BenefitTypePool = 'BenefitTypePool',
 }
