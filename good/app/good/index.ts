@@ -10,8 +10,8 @@ import {
   GetAppGoodsResponse,
   UpdateAppGoodRequest,
   UpdateAppGoodResponse,
-  CreateNAppGoodRequest,
-  CreateNAppGoodResponse,
+  CreateAppGoodRequest,
+  CreateAppGoodResponse,
   GetNAppGoodsRequest,
   GetNAppGoodsResponse,
   UpdateNAppGoodRequest,
@@ -234,12 +234,12 @@ export const useAppGoodStore = defineStore('app-goods', {
           done(true)
         })
     },
-    createNAppGood (req: CreateNAppGoodRequest, done: (error: boolean, row?: Good) => void) {
-      doActionWithError<CreateNAppGoodRequest, CreateNAppGoodResponse>(
-        API.CREATE_N_APPGOOD,
+    createAppGood (req: CreateAppGoodRequest, done: (error: boolean, row?: Good) => void) {
+      doActionWithError<CreateAppGoodRequest, CreateAppGoodResponse>(
+        API.CREATE_APPGOOD,
         req,
         req.Message,
-        (resp: CreateNAppGoodResponse): void => {
+        (resp: CreateAppGoodResponse): void => {
           this.addGoods(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
