@@ -4,7 +4,7 @@ export interface DeviceInfo {
   ID: string
   Type: string
   Manufacturer: string
-  PowerComsuption: number
+  PowerConsumption: number
   ShipmentAt: number
   Posters: string[]
   CreatedAt: number
@@ -15,7 +15,7 @@ export interface DeviceInfo {
 export interface CreateDeviceInfoRequest extends BaseRequest {
   Type: string
   Manufacturer: string
-  PowerComsuption: number
+  PowerConsumption: number
   ShipmentAt: number
   Posters: string[]
 }
@@ -46,7 +46,7 @@ export interface UpdateDeviceInfoRequest extends BaseRequest {
   ID: string
   Type: string
   Manufacturer: string
-  PowerComsuption: number
+  PowerConsumption: number
   ShipmentAt: number
   Posters: string[]
 }

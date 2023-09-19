@@ -30,7 +30,7 @@ export interface Good {
   RecommendAt: number
   DeviceType: string
   DeviceManufacturer: string
-  DevicePowerComsuption: number
+  DevicePowerConsumption: number
   DeviceShipmentAt: number
   DevicePosters: string[]
   DurationDays: number

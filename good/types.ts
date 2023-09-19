@@ -6,7 +6,7 @@ export interface Good {
   DeviceInfoID: string
   DeviceType: string
   DeviceManufacturer: string
-  DevicePowerComsuption: number
+  DevicePowerConsumption: number
   DeviceShipmentAt: number
   DevicePosters: string[]
   DurationDays: number
