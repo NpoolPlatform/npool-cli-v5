@@ -40,6 +40,9 @@ export const useMessageStore = defineStore('messages', {
     },
     addMessages (): (appID: string | undefined, messages: Array<Message>) => void {
       return (appID: string | undefined, messages: Array<Message>) => {
+        if (!messages.length) {
+          return
+        }
         appID = formalizeAppID(appID)
         let _messages = this.Messages.get(appID) as Map<string, Array<Message>>
         if (!_messages) {
@@ -54,10 +57,13 @@ export const useMessageStore = defineStore('messages', {
           langMessages.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, message)
           _messages.set(message.LangID, langMessages)
         })
-
         const locale = useLocaleStore()
-        const langMessages = _messages.get(locale.AppLang.LangID) as Array<Message>
-        locale.setLocaleMessages(langMessages)
+        if (locale.AppLang) {
+          const langMessages = _messages.get(locale.AppLang.LangID) as Array<Message>
+          if (langMessages) {
+            locale.setLocaleMessages(langMessages)
+          }
+        }
         this.Messages.set(appID, _messages)
       }
     },
