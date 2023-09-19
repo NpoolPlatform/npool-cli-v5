@@ -13,3 +13,10 @@ export enum BenefitType {
 }
 
 export const BenefitTypes = Object.values(BenefitType)
+
+export enum StartMode {
+  GoodStartModeTBD = 'GoodStartModeTBD',
+  GoodStartModeConfirmed = 'GoodStartModeConfirmed'
+}
+
+export const StartModes = Object.values(StartMode)

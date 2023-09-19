@@ -1,5 +1,5 @@
 import { BaseRequest } from '../request'
-import { BenefitType, GoodCoinInfo, GoodType } from './base'
+import { BenefitType, GoodCoinInfo, GoodType, StartMode } from './base'
 
 export interface Good {
   ID: string
@@ -42,6 +42,9 @@ export interface Good {
   WaitStart: string
   Sold: string
   DeliveryAt: number
+  BenefitIntervalHours: number
+  UnitLockDeposit: string
+  StartMode: StartMode
   StartAt: number
   CreatedAt: number
   UpdatedAt: number
