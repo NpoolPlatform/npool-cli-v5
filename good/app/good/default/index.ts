@@ -128,7 +128,7 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
 
     getNAppDefaultGoods (req: GetNAppDefaultGoodsRequest, done: (error: boolean, rows?: Array<Default>) => void) {
       doActionWithError<GetNAppDefaultGoodsRequest, GetNAppDefaultGoodsResponse>(
-        API.GET_APP_DEFAULT_GOODS,
+        API.GET_N_APP_DEFAULT_GOODS,
         req,
         req.Message,
         (resp: GetNAppDefaultGoodsResponse): void => {
@@ -141,7 +141,7 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
     },
     deleteNAppDefaultGood (req: DeleteNAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
       doActionWithError<DeleteNAppDefaultGoodRequest, DeleteNAppDefaultGoodResponse>(
-        API.DELETE_APP_DEFAULT_GOOD,
+        API.DELETE_N_APP_DEFAULT_GOOD,
         req,
         req.Message,
         (resp: DeleteNAppDefaultGoodResponse): void => {
@@ -154,7 +154,7 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
     },
     createNAppDefaultGood (req: CreateNAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
       doActionWithError<CreateNAppDefaultGoodRequest, CreateNAppDefaultGoodResponse>(
-        API.CREATE_APP_DEFAULT_GOOD,
+        API.CREATE_N_APP_DEFAULT_GOOD,
         req,
         req.Message,
         (resp: CreateNAppDefaultGoodResponse): void => {
@@ -167,7 +167,7 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
     },
     updateNAppDefaultGood (req: UpdateNAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
       doActionWithError<UpdateNAppDefaultGoodRequest, UpdateNAppDefaultGoodResponse>(
-        API.UPDATE_APP_DEFAULT_GOOD,
+        API.UPDATE_N_APP_DEFAULT_GOOD,
         req,
         req.Message,
         (resp: UpdateNAppDefaultGoodResponse): void => {
