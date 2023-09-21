@@ -29,7 +29,7 @@ export const useAppGoodStore = defineStore('app-goods', {
     good (): (appID: string | undefined, id: string) => Good | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return this.AppGoods.get(appID)?.find((el) => el.GoodID === id)
+        return this.AppGoods.get(appID)?.find((el) => el.ID === id)
       }
     },
     goods (): (appID?: string) => Array<Good> {
