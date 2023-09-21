@@ -123,7 +123,7 @@ export const useProfitStore = defineStore('ledger-profits', {
     addGoodProfits (appID: string | undefined, profits: Array<GoodProfit>) {
       appID = formalizeAppID(appID)
       let _profits = this.GoodProfits.get(appID) as Array<GoodProfit>
-      if (_profits) {
+      if (!_profits) {
         _profits = []
       }
       profits.forEach((profit) => {
@@ -135,7 +135,7 @@ export const useProfitStore = defineStore('ledger-profits', {
     addIntervalGoodProfits (appID: string | undefined, key: string, profits: Array<GoodProfit>) {
       appID = formalizeAppID(appID)
       let _profits = this.IntervalGoodProfits.get(appID) as Map<string, Array<GoodProfit>>
-      if (_profits) {
+      if (!_profits) {
         _profits = new Map<string, Array<GoodProfit>>()
       }
       let keyProfits = _profits.get(key) as Array<GoodProfit>
@@ -152,7 +152,7 @@ export const useProfitStore = defineStore('ledger-profits', {
     addProfits (appID: string | undefined, profits: Array<Profit>) {
       appID = formalizeAppID(appID)
       let _profits = this.Profits.get(appID) as Array<Profit>
-      if (_profits) {
+      if (!_profits) {
         _profits = []
       }
       profits.forEach((profit) => {
@@ -164,7 +164,7 @@ export const useProfitStore = defineStore('ledger-profits', {
     addIntervalProfits (appID: string | undefined, key: string, profits: Array<Profit>) {
       appID = formalizeAppID(appID)
       let _profits = this.IntervalProfits.get(appID) as Map<string, Array<Profit>>
-      if (_profits) {
+      if (!_profits) {
         _profits = new Map<string, Array<Profit>>()
       }
       let keyProfits = _profits.get(key) as Array<Profit>
