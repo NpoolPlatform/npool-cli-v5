@@ -26,7 +26,21 @@ export const useCommissionStore = defineStore('commissions', {
   state: () => ({
     Commissions: new Map<string, Array<Commission>>()
   }),
-  getters: {},
+  getters: {
+    commissions (): (appID?: string, userID?: string, coinTypeID?: string, appGoodID?: string, current?: boolean) => Array<Commission> {
+      return (appID?: string, userID?: string, coinTypeID?: string, appGoodID?: string, current?: boolean) => {
+        appID = formalizeAppID(appID)
+        return this.Commissions.get(appID)?.filter((el) => {
+          let ok = true
+          if (userID) ok &&= el.UserID === userID
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
+          if (current) ok &&= el.EndAt === 0
+          return ok
+        })?.sort((a, b) => a.StartAt < b.StartAt ? 1 : -1) || []
+      }
+    }
+  },
   actions: {
     addCommissions (appID: string | undefined, commissions: Array<Commission>) {
       appID = formalizeAppID(appID)

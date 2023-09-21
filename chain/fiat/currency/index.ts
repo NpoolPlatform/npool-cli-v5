@@ -23,17 +23,15 @@ export const useFiatCurrencyStore = defineStore('fiat-currencies', {
     },
     currencies () {
       return () => this.FiatCurrencies
-    },
-    addCurrencies (): (currencies: Array<FiatCurrency>) => void {
-      return (currencies: Array<FiatCurrency>) => {
-        currencies.forEach((currency) => {
-          const index = this.FiatCurrencies.findIndex((el) => el.ID === currency.ID)
-          this.FiatCurrencies.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, currency)
-        })
-      }
     }
   },
   actions: {
+    addCurrencies (currencies: Array<FiatCurrency>) {
+      currencies.forEach((currency) => {
+        const index = this.FiatCurrencies.findIndex((el) => el.ID === currency.ID)
+        this.FiatCurrencies.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, currency)
+      })
+    },
     getFiatCurrencies (req: GetFiatCurrenciesRequest, done: (error: boolean, rows: Array<FiatCurrency>) => void) {
       doActionWithError<GetFiatCurrenciesRequest, GetFiatCurrenciesResponse>(
         API.GET_FIATCURRENCIES,

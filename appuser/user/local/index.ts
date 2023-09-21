@@ -30,6 +30,24 @@ export const useLocalUserStore = defineStore('local-user', {
     },
     isKol () : boolean {
       return this.User && this.User?.Kol
+    },
+    username (): string {
+      return this.User?.Username
+    },
+    gender (): string {
+      return this.User?.Gender
+    },
+    postalCode (): string {
+      return this.User?.PostalCode
+    },
+    firstName (): string {
+      return this.User?.FirstName
+    },
+    lastName (): string {
+      return this.User?.LastName
+    },
+    addressFields (): Array<string> | [] {
+      return this.User?.AddressFields || []
     }
   },
   actions: {
