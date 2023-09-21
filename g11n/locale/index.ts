@@ -21,7 +21,6 @@ export const useLocaleStore = defineStore('locale-lang', {
   },
   actions: {
     setLang (lang: AppLang) {
-      console.log('setLang', lang)
       if (!lang) {
         return
       }
