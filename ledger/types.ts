@@ -27,18 +27,6 @@ export interface GetLedgersResponse {
   Total: number
 }
 
-export interface GetIntervalLedgersRequest extends BaseRequest {
-  StartAt?: number
-  EndAt?: number
-  Offset: number
-  Limit: number
-}
-
-export interface GetIntervalLedgersResponse {
-  Infos: Array<Ledger>
-  Total: number
-}
-
 export interface GetAppLedgersRequest extends BaseRequest {
   TargetAppID: string
   Offset: number

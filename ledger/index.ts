@@ -5,8 +5,6 @@ import {
   Ledger,
   GetLedgersRequest,
   GetLedgersResponse,
-  GetIntervalLedgersRequest,
-  GetIntervalLedgersResponse,
   GetAppLedgersRequest,
   GetAppLedgersResponse
 } from './types'
@@ -15,8 +13,7 @@ import { formalizeUserID } from '../appuser/user'
 
 export const useLedgerStore = defineStore('ledgers', {
   state: () => ({
-    Ledgers: new Map<string, Array<Ledger>>(),
-    IntervalLedgers: new Map<string, Map<string, Array<Ledger>>>()
+    Ledgers: new Map<string, Array<Ledger>>()
   }),
   getters: {
     ledgers () : (appID?: string, userID?: string, coinTypeID?: string) => Array<Ledger> {
@@ -30,69 +27,27 @@ export const useLedgerStore = defineStore('ledgers', {
         }).sort((a, b) => a.Spendable > b.Spendable ? -1 : 1) || []
       }
     },
-    intervalLedgers (): (appID: string | undefined, userID: string | undefined, coinTypeID: string | undefined, key: string) => Array<Ledger> {
-      return (appID: string | undefined, userID: string | undefined, coinTypeID: string | undefined, key: string) => {
-        appID = formalizeAppID(appID)
-        return this.IntervalLedgers.get(appID)?.get(key)?.filter((el) => {
-          let ok = true
-          if (userID) ok &&= el.UserID === userID
-          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
-          return ok
-        }) || []
-      }
-    },
     coinBalance (): (appID: string | undefined, userID: string | undefined, coinTypeID: string) => string {
       return (appID: string | undefined, userID: string | undefined, coinTypeID: string) => {
         appID = formalizeAppID(appID)
         userID = formalizeUserID(userID)
         return this.Ledgers.get(appID)?.find((el) => el.UserID === userID && el.CoinTypeID === coinTypeID)?.Spendable || '0'
       }
-    },
-    intervalIncoming (): (appID: string | undefined, coinTypeID: string, intervalKey: string) => number {
-      return (appID: string | undefined, coinTypeID: string, intervalKey: string) => {
-        appID = formalizeAppID(appID)
-        let incoming = 0
-        this.IntervalLedgers.get(appID)?.get(intervalKey)?.filter((el) => el.CoinTypeID === coinTypeID).forEach((ledger) => {
-          incoming += Number(ledger.Incoming)
-        })
-        return incoming
-      }
-    },
-    addLedgers (): (appID: string | undefined, ledgers: Array<Ledger>) => void {
-      return (appID: string | undefined, ledgers: Array<Ledger>) => {
-        appID = formalizeAppID(appID)
-        let _ledgers = this.Ledgers.get(appID) as Array<Ledger>
-        if (!_ledgers) {
-          _ledgers = []
-        }
-        ledgers.forEach((ledger) => {
-          const index = _ledgers.findIndex((el) => el.UserID === ledger.UserID && el.CoinTypeID === ledger.CoinTypeID)
-          _ledgers.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, ledger)
-        })
-        this.Ledgers.set(appID, _ledgers)
-      }
-    },
-    addIntervalLedgers (): (appID: string | undefined, key: string, ledgers: Array<Ledger>) => void {
-      return (appID: string | undefined, key: string, ledgers: Array<Ledger>) => {
-        appID = formalizeAppID(appID)
-        let _ledgers = this.IntervalLedgers.get(appID) as Map<string, Array<Ledger>>
-        if (!_ledgers) {
-          _ledgers = new Map<string, Array<Ledger>>()
-        }
-        let keyLedgers = _ledgers.get(key) as Array<Ledger>
-        if (!keyLedgers) {
-          keyLedgers = []
-        }
-        ledgers.forEach((ledger) => {
-          const index = keyLedgers.findIndex((el) => el.UserID === ledger.UserID && el.CoinTypeID === ledger.CoinTypeID)
-          keyLedgers.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, ledger)
-        })
-        _ledgers.set(key, keyLedgers)
-        this.IntervalLedgers.set(appID, _ledgers)
-      }
     }
   },
   actions: {
+    addLedgers  (appID: string | undefined, ledgers: Array<Ledger>) {
+      appID = formalizeAppID(appID)
+      let _ledgers = this.Ledgers.get(appID) as Array<Ledger>
+      if (!_ledgers) {
+        _ledgers = []
+      }
+      ledgers.forEach((ledger) => {
+        const index = _ledgers.findIndex((el) => el.UserID === ledger.UserID && el.CoinTypeID === ledger.CoinTypeID)
+        _ledgers.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, ledger)
+      })
+      this.Ledgers.set(appID, _ledgers)
+    },
     getAppLedgers (req: GetAppLedgersRequest, done: (error: boolean, rows?: Array<Ledger>) => void) {
       doActionWithError<GetAppLedgersRequest, GetAppLedgersResponse>(
         API.GET_APP_LEDGERS,
@@ -112,20 +67,6 @@ export const useLedgerStore = defineStore('ledgers', {
         req.Message,
         (resp: GetLedgersResponse): void => {
           this.addLedgers(undefined, resp.Infos)
-          done(false, resp.Infos)
-        },
-        () => {
-          done(true)
-        }
-      )
-    },
-    getIntervalLedgers (req: GetIntervalLedgersRequest, intervalKey: string, done: (error: boolean, rows?: Array<Ledger>) => void) {
-      doActionWithError<GetIntervalLedgersRequest, GetIntervalLedgersResponse>(
-        API.GET_INTERVALLEDGERS,
-        req,
-        req.Message,
-        (resp: GetIntervalLedgersResponse): void => {
-          this.addIntervalLedgers(undefined, intervalKey, resp.Infos)
           done(false, resp.Infos)
         },
         () => {

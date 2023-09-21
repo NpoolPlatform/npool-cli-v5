@@ -24,12 +24,13 @@ export const useProfitStore = defineStore('ledger-profits', {
     IntervalProfits: new Map<string, Map<string, Array<Profit>>>()
   }),
   getters: {
-    intervalProfits (): (appID: string | undefined, userID: string | undefined, key: string) => Array<Profit> {
-      return (appID: string | undefined, userID: string | undefined, key: string) => {
+    intervalProfits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string | undefined, key: string) => Array<Profit> {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID: string | undefined, key: string) => {
         appID = formalizeAppID(appID)
         return this.IntervalProfits.get(appID)?.get(key)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
           return ok
         }) || []
       }
@@ -47,7 +48,7 @@ export const useProfitStore = defineStore('ledger-profits', {
     intervalIncoming (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, key: string) => number {
       return (appID: string | undefined, userID: string | undefined, coinTypeID: string, key: string) => {
         let incoming = 0
-        this.intervalProfits(appID, userID, key).filter((el) => el.CoinTypeID === coinTypeID).forEach((el) => {
+        this.intervalProfits(appID, userID, coinTypeID, key).forEach((el) => {
           incoming += Number(el.Incoming)
         })
         return incoming
