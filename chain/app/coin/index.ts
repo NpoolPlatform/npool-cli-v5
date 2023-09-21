@@ -15,7 +15,6 @@ import {
 } from './types'
 import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app/local'
-import { NIL as NIL_UUID } from 'uuid'
 
 export const useAppCoinStore = defineStore('app-coins', {
   state: () => ({
@@ -93,7 +92,7 @@ export const useAppCoinStore = defineStore('app-coins', {
       return (appID: string | undefined, coinUnit: string) => {
         appID = formalizeAppID(appID)
         const coin = this.AppCoins.get(appID)?.find((el) => el.Unit === coinUnit)
-        return coin ? coin.DefaultGoodID : NIL_UUID
+        return coin?.DefaultGoodID
       }
     },
     needMemo (): (appID: string | undefined, coinTypeID: string) => boolean | undefined {

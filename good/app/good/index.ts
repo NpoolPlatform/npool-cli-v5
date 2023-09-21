@@ -27,7 +27,9 @@ export const useAppGoodStore = defineStore('app-goods', {
     good (): (appID: string | undefined, id: string) => Good | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return this.AppGoods.get(appID)?.find((el) => el.ID === id)
+        return this.AppGoods.get(appID)?.find((el) => {
+          return el.ID === id
+        })
       }
     },
     goods (): (appID?: string) => Array<Good> {
@@ -192,6 +194,7 @@ export const useAppGoodStore = defineStore('app-goods', {
         _goods = []
       }
       goods.forEach((good) => {
+        if (!good) return
         const index = _goods.findIndex((el) => el.ID === good.ID)
         _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
       })

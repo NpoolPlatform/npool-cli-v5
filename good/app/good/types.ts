@@ -91,8 +91,9 @@ export interface GetAppGoodsResponse {
   Infos: Good[]
   Total: number
 }
+
 export interface GetAppGoodRequest extends BaseRequest {
-  GoodID: string
+  ID: string
 }
 
 export interface GetAppGoodResponse {
