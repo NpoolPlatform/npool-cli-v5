@@ -38,7 +38,7 @@ const warning = (notification: Notification): void => {
 
 const info = (notification: Notification): void => {
   Notify.create({
-    type: 'info',
+    type: 'positive',
     message: notification.Title,
     caption: mergeMessage(notification)
   })
