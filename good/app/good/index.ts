@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { doActionWithError } from '../../../request'
-import { useI18n } from 'vue-i18n'
 import { API, CancelMode } from './const'
 import {
   Good,
@@ -22,8 +21,7 @@ import { formalizeAppID } from '../../../appuser/app/local'
 
 export const useAppGoodStore = defineStore('app-goods', {
   state: () => ({
-    AppGoods: new Map<string, Array<Good>>(),
-    i18n: useI18n()
+    AppGoods: new Map<string, Array<Good>>()
   }),
   getters: {
     good (): (appID: string | undefined, id: string) => Good | undefined {
@@ -80,21 +78,21 @@ export const useAppGoodStore = defineStore('app-goods', {
         return Number(this.priceString(appID, id))
       }
     },
-    effectiveDate (): (appID: string | undefined, id: string) => string | undefined {
+    effectiveDate (): (appID: string | undefined, id: string) => string {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         const good = this.good(appID, id)
         if (!good) {
-          return this.i18n.t('MSG_TBA')
+          return 'MSG_TBA'
         }
         if (good.CoinPreSale) {
-          return this.i18n.t('MSG_TBA')
+          return 'MSG_TBA'
         }
         const now = new Date().getTime() / 1000
         if (now < good.StartAt) {
-          return new Date(good.StartAt * 1000).toLocaleDateString(this.i18n.locale)
+          return new Date(good.StartAt * 1000).toLocaleDateString()
         }
-        return this.i18n.t('MSG_EFFECTIVE_NEXT_DAY')
+        return 'MSG_EFFECTIVE_NEXT_DAY'
       }
     },
     purchaseLimit (): (appID: string | undefined, id: string) => number {
