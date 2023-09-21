@@ -12,8 +12,6 @@ import {
   CloneCommissionsRequest,
   CloneCommissionsResponse,
   Commission,
-  GetCommissionsRequest,
-  GetCommissionsResponse,
   CloneAppCommissionsRequest,
   CloneAppCommissionsResponse,
   GetCommissionHistoriesRequest,
@@ -37,7 +35,10 @@ export const useCommissionStore = defineStore('commissions', {
           if (appGoodID) ok &&= el.AppGoodID === appGoodID
           if (current) ok &&= el.EndAt === 0
           return ok
-        })?.sort((a, b) => a.StartAt < b.StartAt ? 1 : -1) || []
+        })?.sort((a, b) => {
+          if (a.GoodName !== b.GoodName) return a.GoodName.localeCompare(b.GoodName)
+          return a.StartAt < b.StartAt ? 1 : -1
+        }) || []
       }
     }
   },
@@ -53,19 +54,6 @@ export const useCommissionStore = defineStore('commissions', {
         _commissions.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, commission)
       })
       this.Commissions.set(appID, _commissions)
-    },
-    getCommissions (req: GetCommissionsRequest, done: (error: boolean, rows?: Array<Commission>) => void) {
-      doActionWithError<GetCommissionsRequest, GetCommissionsResponse>(
-        API.GET_COMMISSIONS,
-        req,
-        req.Message,
-        (resp: GetCommissionsResponse): void => {
-          this.addCommissions(undefined, resp.Infos)
-          done(false, resp.Infos)
-        }, () => {
-          done(true)
-        }
-      )
     },
     getAppCommissions (req: GetAppCommissionsRequest, done: (error: boolean, rows?: Array<Commission>) => void) {
       doActionWithError<GetAppCommissionsRequest, GetAppCommissionsResponse>(
@@ -145,7 +133,7 @@ export const useCommissionStore = defineStore('commissions', {
     },
     getCommissionHistories (req: GetCommissionHistoriesRequest, done: (error: boolean, rows?: Array<Commission>) => void) {
       doActionWithError<GetCommissionHistoriesRequest, GetCommissionHistoriesResponse>(
-        API.GET_APP_COMMISSIONS,
+        API.GET_COMMISSION_HISTORIES,
         req,
         req.Message,
         (resp: GetCommissionHistoriesResponse): void => {

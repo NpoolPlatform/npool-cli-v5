@@ -76,19 +76,6 @@ export interface UpdateCommissionResponse {
   Info: Commission
 }
 
-export interface GetCommissionsRequest extends BaseRequest {
-  /** @format int32 */
-  Offset: number
-  /** @format int32 */
-  Limit: number
-}
-
-export interface GetCommissionsResponse {
-  Infos: Commission[]
-  /** @format int64 */
-  Total: number
-}
-
 export interface GetAppCommissionsRequest extends BaseRequest {
   /** @format int64 */
   EndAt?: number
