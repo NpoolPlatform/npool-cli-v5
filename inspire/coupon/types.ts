@@ -44,56 +44,56 @@ export interface CreateCouponRequest extends NotifyRequest {
 }
 
 export interface CreateCouponResponse {
-  Info: Coupon;
+  Info: Coupon
 }
 
 export interface GetCouponsRequest extends BaseRequest{
-  CouponType?: CouponType;
+  CouponType?: CouponType
   /** @format int32 */
-  Offset: number;
+  Offset: number
   /** @format int32 */
-  Limit: number;
+  Limit: number
 }
 
 export interface GetCouponsResponse {
-  Infos: Coupon[];
+  Infos: Coupon[]
   /** @format int64 */
-  Total: number;
+  Total: number
 }
 
 export interface UpdateCouponRequest extends NotifyRequest {
-  ID: string;
-  TargetAppID: string;
-  Denomination: string;
-  Circulation: string;
+  ID: string
+  TargetAppID: string
+  Denomination: string
+  Circulation: string
   /** @format int64 */
-  StartAt: number;
+  StartAt: number
   /** @format int64 */
-  DurationDays: number;
-  Message: string;
-  Name: string;
-  TargetUserID?: string;
-  AppGoodID?: string;
-  Threshold?: string;
+  DurationDays: number
+  Message: string
+  Name: string
+  TargetUserID?: string
+  AppGoodID?: string
+  Threshold?: string
   Random: boolean
   CouponConstraint: CouponConstraint
 }
 
 export interface UpdateCouponResponse {
-  Info: Coupon;
+  Info: Coupon
 }
 
 export interface GetAppCouponsRequest extends BaseRequest {
-  TargetAppID: string;
-  CouponType?: CouponType;
+  TargetAppID: string
+  CouponType?: CouponType
   /** @format int32 */
-  Offset: number;
+  Offset: number
   /** @format int32 */
-  Limit: number;
+  Limit: number
 }
 
 export interface GetAppCouponsResponse {
-  Infos: Coupon[];
+  Infos: Coupon[]
   /** @format int64 */
-  Total: number;
+  Total: number
 }
