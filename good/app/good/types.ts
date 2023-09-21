@@ -170,7 +170,7 @@ export interface UpdateNAppGoodResponse {
   Info: Good
 }
 
-export interface CreateAppGoodRequest extends BaseRequest{
+export interface CreateAppGoodRequest extends BaseRequest {
   TargetAppID: string
   GoodID: string
   Online: boolean

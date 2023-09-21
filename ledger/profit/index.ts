@@ -16,7 +16,7 @@ import {
 import { formalizeAppID } from '../../appuser/app/local'
 import { formalizeUserID } from 'src/npoolstore/appuser/user'
 
-export const useFrontendProfitStore = defineStore('frontend-profit-v4', {
+export const useProfitStore = defineStore('ledger-profits', {
   state: () => ({
     GoodProfits: new Map<string, Array<GoodProfit>>(),
     IntervalGoodProfits: new Map<string, Map<string, Array<GoodProfit>>>(),
@@ -96,74 +96,88 @@ export const useFrontendProfitStore = defineStore('frontend-profit-v4', {
         return incoming
       }
     },
-    addGoodProfits (): (appID: string | undefined, profits: Array<GoodProfit>) => void {
-      return (appID: string | undefined, profits: Array<GoodProfit>) => {
+    profits (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string) => Array<Profit> {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID?: string) => {
         appID = formalizeAppID(appID)
-        let _profits = this.GoodProfits.get(appID) as Array<GoodProfit>
-        if (_profits) {
-          _profits = []
-        }
-        profits.forEach((profit) => {
-          const index = _profits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
-          _profits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
-        })
-        this.GoodProfits.set(appID, _profits)
+        return this.Profits.get(appID)?.filter((el) => {
+          let ok = true
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (userID) ok &&= el.UserID === userID
+          return ok
+        }) || []
       }
     },
-    addIntervalGoodProfits (): (appID: string | undefined, key: string, profits: Array<GoodProfit>) => void {
-      return (appID: string | undefined, key: string, profits: Array<GoodProfit>) => {
+    goodProfits (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string) => Array<GoodProfit> {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID?: string) => {
         appID = formalizeAppID(appID)
-        let _profits = this.IntervalGoodProfits.get(appID) as Map<string, Array<GoodProfit>>
-        if (_profits) {
-          _profits = new Map<string, Array<GoodProfit>>()
-        }
-        let keyProfits = _profits.get(key) as Array<GoodProfit>
-        if (!keyProfits) {
-          keyProfits = []
-        }
-        profits.forEach((profit) => {
-          const index = keyProfits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
-          keyProfits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
-        })
-        _profits.set(key, keyProfits)
-        this.IntervalGoodProfits.set(appID, _profits)
-      }
-    },
-    addProfits (): (appID: string | undefined, profits: Array<Profit>) => void {
-      return (appID: string | undefined, profits: Array<Profit>) => {
-        appID = formalizeAppID(appID)
-        let _profits = this.Profits.get(appID) as Array<Profit>
-        if (_profits) {
-          _profits = []
-        }
-        profits.forEach((profit) => {
-          const index = _profits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
-          _profits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
-        })
-        this.Profits.set(appID, _profits)
-      }
-    },
-    addIntervalProfits (): (appID: string | undefined, key: string, profits: Array<Profit>) => void {
-      return (appID: string | undefined, key: string, profits: Array<Profit>) => {
-        appID = formalizeAppID(appID)
-        let _profits = this.IntervalProfits.get(appID) as Map<string, Array<Profit>>
-        if (_profits) {
-          _profits = new Map<string, Array<Profit>>()
-        }
-        let keyProfits = _profits.get(key) as Array<Profit>
-        if (!keyProfits) {
-          keyProfits = []
-        }
-        profits.forEach((profit) => {
-          const index = keyProfits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
-          keyProfits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
-        })
-        _profits.set(key, keyProfits)
-        this.IntervalProfits.set(appID, _profits)
+        return this.GoodProfits.get(appID)?.filter((el) => {
+          let ok = true
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (userID) ok &&= el.UserID === userID
+          return ok
+        }) || []
       }
     }
   },
   actions: {
+    addGoodProfits (appID: string | undefined, profits: Array<GoodProfit>) {
+      appID = formalizeAppID(appID)
+      let _profits = this.GoodProfits.get(appID) as Array<GoodProfit>
+      if (_profits) {
+        _profits = []
+      }
+      profits.forEach((profit) => {
+        const index = _profits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
+        _profits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
+      })
+      this.GoodProfits.set(appID, _profits)
+    },
+    addIntervalGoodProfits (appID: string | undefined, key: string, profits: Array<GoodProfit>) {
+      appID = formalizeAppID(appID)
+      let _profits = this.IntervalGoodProfits.get(appID) as Map<string, Array<GoodProfit>>
+      if (_profits) {
+        _profits = new Map<string, Array<GoodProfit>>()
+      }
+      let keyProfits = _profits.get(key) as Array<GoodProfit>
+      if (!keyProfits) {
+        keyProfits = []
+      }
+      profits.forEach((profit) => {
+        const index = keyProfits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
+        keyProfits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
+      })
+      _profits.set(key, keyProfits)
+      this.IntervalGoodProfits.set(appID, _profits)
+    },
+    addProfits (appID: string | undefined, profits: Array<Profit>) {
+      appID = formalizeAppID(appID)
+      let _profits = this.Profits.get(appID) as Array<Profit>
+      if (_profits) {
+        _profits = []
+      }
+      profits.forEach((profit) => {
+        const index = _profits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
+        _profits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
+      })
+      this.Profits.set(appID, _profits)
+    },
+    addIntervalProfits (appID: string | undefined, key: string, profits: Array<Profit>) {
+      appID = formalizeAppID(appID)
+      let _profits = this.IntervalProfits.get(appID) as Map<string, Array<Profit>>
+      if (_profits) {
+        _profits = new Map<string, Array<Profit>>()
+      }
+      let keyProfits = _profits.get(key) as Array<Profit>
+      if (!keyProfits) {
+        keyProfits = []
+      }
+      profits.forEach((profit) => {
+        const index = keyProfits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
+        keyProfits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
+      })
+      _profits.set(key, keyProfits)
+      this.IntervalProfits.set(appID, _profits)
+    },
     getGoodProfits (req: GetGoodProfitsRequest, done: (error: boolean, rows: Array<GoodProfit>) => void) {
       doActionWithError<GetGoodProfitsRequest, GetGoodProfitsResponse>(
         API.GET_GOODPROFITS,
@@ -222,3 +236,6 @@ export const useFrontendProfitStore = defineStore('frontend-profit-v4', {
     }
   }
 })
+
+export * from './types'
+export * from './const'

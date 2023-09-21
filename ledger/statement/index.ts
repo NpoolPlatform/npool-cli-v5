@@ -32,15 +32,32 @@ export const useStatementStore = defineStore('ledger-statements', {
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     },
-    miningRewards (): (appID?: string, userID?: string, coinTypeID?: string) => Array<MiningReward> {
-      return (appID?: string, userID?: string, coinTypeID?: string) => {
+    miningRewards (): (appID?: string, userID?: string, coinTypeID?: string, orderID?: string) => Array<MiningReward> {
+      return (appID?: string, userID?: string, coinTypeID?: string, orderID?: string) => {
         appID = formalizeAppID(appID)
         return this.MiningRewards.get(appID)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
           if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (orderID) ok &&= el.OrderID === orderID
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+      }
+    },
+    miningRewardFloat (): (appID?: string, userID?: string, coinTypeID?: string, orderID?: string) => number {
+      return (appID?: string, userID?: string, coinTypeID?: string, orderID?: string) => {
+        appID = formalizeAppID(appID)
+        let rewards = 0
+        this.MiningRewards.get(appID)?.forEach((el) => {
+          let ok = true
+          if (userID) ok &&= el.UserID === userID
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (orderID) ok &&= el.OrderID === orderID
+          if (ok) {
+            rewards += Number(el.RewardAmount)
+          }
+        })
+        return rewards
       }
     },
     addStatements (): (appID: string | undefined, statements: Array<Statement>) => void {

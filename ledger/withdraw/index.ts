@@ -14,7 +14,7 @@ import {
 } from './types'
 import { formalizeAppID } from '../../appuser/app/local'
 
-export const useWithdrawStore = defineStore('withdraws', {
+export const useWithdrawStore = defineStore('ledger-withdraws', {
   state: () => ({
     Withdraws: new Map<string, Array<Withdraw>>()
   }),

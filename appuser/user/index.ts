@@ -75,6 +75,27 @@ export const useUserStore = defineStore('users', {
         users.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
         this.Users.set(user.AppID, users)
       }
+    },
+    displayName (): (emailAddress?: string, phoneNO?: string, firstName?: string, lastName?: string, locale?: string) => string {
+      return (emailAddress?: string, phoneNO?: string, firstName?: string, lastName?: string, locale?: string) => {
+        let username = emailAddress
+        let username1 = ''
+        switch (locale) {
+          case 'ja-JP':
+            username1 = (firstName || '') + ' ' + (lastName || '')
+            break
+          default:
+            username1 = (lastName || '') + ' ' + (firstName || '')
+            break
+        }
+        if (username1.replace(/ /g, '').length) {
+          username = username1
+        }
+        if (!username?.length) {
+          username = phoneNO
+        }
+        return username || ''
+      }
     }
   },
   actions: {

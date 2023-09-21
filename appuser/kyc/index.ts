@@ -47,39 +47,42 @@ export const useKYCStore = defineStore('kycs', {
         return this.Images.get(appID)?.get(userID) || new Map<ImageType, KYCImage>()
       }
     },
-    addKYCs (): (appID: string | undefined, kycs: Array<KYC>) => void {
-      return (appID: string | undefined, kycs: Array<KYC>) => {
+    image (): (appID: string | undefined, userID: string | undefined, imageType: ImageType) => KYCImage | undefined {
+      return (appID: string | undefined, userID: string | undefined, imageType: ImageType) => {
         appID = formalizeAppID(appID)
-        let _kycs = this.KYCs.get(appID) as Array<KYC>
-        if (!_kycs) {
-          _kycs = []
-        }
-        kycs.forEach((kyc) => {
-          const index = _kycs.findIndex((el) => el.ID === kyc.ID)
-          _kycs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, kyc)
-        })
-        this.KYCs.set(appID, _kycs)
-      }
-    },
-    addImage (): (appID: string | undefined, userID: string | undefined, image: KYCImage) => void {
-      return (appID: string | undefined, userID: string | undefined, image: KYCImage) => {
-        appID = formalizeAppID(appID)
-        userID = formalizeUserID(userID)
-        let appImages = this.Images.get(appID) as Map<string, Map<ImageType, KYCImage>>
-        if (!appImages) {
-          appImages = new Map<string, Map<ImageType, KYCImage>>()
-        }
-        let userImages = appImages.get(userID) as Map<ImageType, KYCImage>
-        if (!userImages) {
-          userImages = new Map<ImageType, KYCImage>()
-        }
-        userImages.set(image.Type, image)
-        appImages.set(userID, userImages)
-        this.Images.set(appID, appImages)
+        userID = formalizeUserID()
+        return this.Images.get(appID)?.get(userID)?.get(imageType)
       }
     }
   },
   actions: {
+    addKYCs (appID: string | undefined, kycs: Array<KYC>) {
+      appID = formalizeAppID(appID)
+      let _kycs = this.KYCs.get(appID) as Array<KYC>
+      if (!_kycs) {
+        _kycs = []
+      }
+      kycs.forEach((kyc) => {
+        const index = _kycs.findIndex((el) => el.ID === kyc.ID)
+        _kycs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, kyc)
+      })
+      this.KYCs.set(appID, _kycs)
+    },
+    addImage (appID: string | undefined, userID: string | undefined, image: KYCImage) {
+      appID = formalizeAppID(appID)
+      userID = formalizeUserID(userID)
+      let appImages = this.Images.get(appID) as Map<string, Map<ImageType, KYCImage>>
+      if (!appImages) {
+        appImages = new Map<string, Map<ImageType, KYCImage>>()
+      }
+      let userImages = appImages.get(userID) as Map<ImageType, KYCImage>
+      if (!userImages) {
+        userImages = new Map<ImageType, KYCImage>()
+      }
+      userImages.set(image.Type, image)
+      appImages.set(userID, userImages)
+      this.Images.set(appID, appImages)
+    },
     uploadImage (req: UploadKYCImageRequest, done: (error: boolean) => void) {
       doActionWithError<UploadKYCImageRequest, UploadKYCImageResponse>(
         API.UPLOAD_KYC_IMAGE,

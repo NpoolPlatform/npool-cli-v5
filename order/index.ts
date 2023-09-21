@@ -103,7 +103,7 @@ export const useOrderStore = defineStore('orders', {
                  order.OrderState !== OrderState.EXPIRED)
       }
     },
-    purchaseUnits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => number {
+    purchasedUnits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => number {
       return (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => {
         appID = formalizeAppID(appID)
         const units = 0

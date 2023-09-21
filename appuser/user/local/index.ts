@@ -7,6 +7,12 @@ export const useLocalUserStore = defineStore('local-user', {
     User: undefined as unknown as User
   }),
   getters: {
+    user () {
+      return () => this.User
+    },
+    selectedLangID (): string {
+      return this.User?.SelectedLangID
+    },
     logined (): boolean {
       return this.User && this.User.Logined && this.User.LoginVerified
     },

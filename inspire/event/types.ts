@@ -35,7 +35,7 @@ export interface CreateEventRequest extends BaseRequest {
 }
 
 export interface CreateEventResponse {
-  Info: Event;
+  Info: Event
 }
 
 export interface GetEventsRequest extends BaseRequest {

@@ -3,3 +3,8 @@ export enum API {
   GET_FIATS = '/chain/v1/get/fiats',
   UPDATE_FIAT = '/chain/v1/update/fiat'
 }
+
+export enum FiatType {
+  USD = 'USD',
+  JPY = 'JPY'
+}

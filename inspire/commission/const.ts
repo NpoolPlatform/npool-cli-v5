@@ -5,6 +5,8 @@ export enum API {
   GET_APP_COMMISSIONS = '/inspire/v1/get/app/commissions',
   GET_COMMISSIONS = '/inspire/v1/get/commissions',
   CLONE_APP_COMMISSIONS = '/inspire/v1/clone/app/commissions',
+  CREATE_COMMISSION = '/inspire/v1/create/commission',
+  GET_COMMISSION_HISTORIES = '/inspire/v1/get/commissionhistories'
 }
 
 export enum SettleType {

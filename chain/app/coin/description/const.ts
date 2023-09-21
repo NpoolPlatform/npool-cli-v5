@@ -9,8 +9,7 @@ export enum API {
 }
 
 export enum CoinDescriptionUsedFor {
-  DefaultUsedFor = 'DefaultUsedFor',
-  ProductPage = 'ProductPage',
+  ProductPage = 'ProductPage'
 }
 
 export const CoinDescriptionUsedFors = Object.values(CoinDescriptionUsedFor)

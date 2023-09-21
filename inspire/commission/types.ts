@@ -126,3 +126,16 @@ export interface CloneAppCommissionsRequest extends BaseRequest {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CloneAppCommissionsResponse {
 }
+
+export interface GetCommissionHistoriesRequest extends BaseRequest {
+  /** @format int32 */
+  Offset: number
+  /** @format int32 */
+  Limit: number
+}
+
+export interface GetCommissionHistoriesResponse {
+  Infos: Commission[]
+  /** @format int64 */
+  Total: number
+}

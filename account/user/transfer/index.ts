@@ -19,10 +19,14 @@ export const useTransferAccountStore = defineStore('transfer-account', {
     TransferAccounts: new Map<string, Array<TransferAccount>>()
   }),
   getters: {
-    transferAccounts (): (appID: string | undefined) => Array<TransferAccount> | undefined {
-      return (appID: string | undefined) => {
+    transferAccounts (): (appID: string | undefined, userID: string | undefined) => Array<TransferAccount> {
+      return (appID: string | undefined, userID: string | undefined) => {
         appID = formalizeAppID(appID)
-        return this.TransferAccounts.get(appID)?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1)
+        return this.TransferAccounts.get(appID)?.filter((el) => {
+          let ok = true
+          if (userID) ok &&= userID === el.UserID
+          return ok
+        }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     },
     addTransferAccounts (): (appID: string | undefined, accounts: Array<TransferAccount>) => void {
@@ -100,3 +104,6 @@ export const useTransferAccountStore = defineStore('transfer-account', {
     }
   }
 })
+
+export * from './types'
+export * from './const'

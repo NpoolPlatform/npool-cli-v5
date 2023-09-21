@@ -68,7 +68,7 @@ export interface CreateOrderRequest extends BaseRequest {
   PaymentCoinID: string
   ParentOrderID?: string
   PayWithBalanceAmount?: string
-  CouponIDs: Array<string>
+  CouponIDs?: Array<string>
   InvestmentType: InvestmentType
 }
 

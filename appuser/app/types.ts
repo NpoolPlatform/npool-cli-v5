@@ -2,6 +2,12 @@ import { BaseRequest } from '../../request'
 import { CreateInvitationCodeWhen, RecaptchaType, SignMethodType } from '../base'
 import { App } from './base'
 
+export type GetAppRequest = BaseRequest
+
+export interface GetAppResponse {
+  Info: App
+}
+
 export interface GetAppsRequest extends BaseRequest {
   Offset: number
   Limit: number

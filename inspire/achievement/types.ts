@@ -50,3 +50,12 @@ export interface GetUserAchievementsRequest extends BaseRequest {
 export interface GetUserAchievementsResponse {
   Infos: Array<Achievement>
 }
+
+export interface GetAchievementsRequest extends BaseRequest {
+  Offset: number
+  Limit: number
+}
+
+export interface GetAchievementsResponse {
+  Infos: Array<Achievement>
+}

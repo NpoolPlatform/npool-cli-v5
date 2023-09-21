@@ -22,7 +22,8 @@ import { formalizeAppID } from '../../../appuser/app/local'
 
 export const useAppGoodStore = defineStore('app-goods', {
   state: () => ({
-    AppGoods: new Map<string, Array<Good>>()
+    AppGoods: new Map<string, Array<Good>>(),
+    i18n: useI18n()
   }),
   getters: {
     good (): (appID: string | undefined, id: string) => Good | undefined {
@@ -39,16 +40,19 @@ export const useAppGoodStore = defineStore('app-goods', {
     },
     online (): (appID: string | undefined, id: string) => boolean | undefined {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         return this.good(appID, id)?.Online
       }
     },
     visible (): (appID: string | undefined, id: string) => boolean | undefined {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         return this.good(appID, id)?.Visible
       }
     },
     canBuy (): (appID: string | undefined, id: string) => boolean | undefined {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         const good = this.good(appID, id)
         if (!good) {
           return false
@@ -63,52 +67,59 @@ export const useAppGoodStore = defineStore('app-goods', {
         return good?.Online && good?.Visible
       }
     },
-    priceString (): (appID: string | undefined, id: string) => string | undefined {
+    priceString (): (appID: string | undefined, id: string) => string {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         const good = this.good(appID, id)
         return Number(good?.Price).toFixed(4)
       }
     },
-    priceFloat (): (appID: string | undefined, id: string) => number | undefined {
+    priceFloat (): (appID: string | undefined, id: string) => number {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         return Number(this.priceString(appID, id))
       }
     },
     effectiveDate (): (appID: string | undefined, id: string) => string | undefined {
       return (appID: string | undefined, id: string) => {
-        // eslint-disable-next-line @typescript-eslint/unbound-method
-        const { t, locale } = useI18n({ useScope: 'global' })
+        appID = formalizeAppID(appID)
         const good = this.good(appID, id)
         if (!good) {
-          return t('MSG_TBA')
+          return this.i18n.t('MSG_TBA')
         }
         if (good.CoinPreSale) {
-          return t('MSG_TBA')
+          return this.i18n.t('MSG_TBA')
         }
         const now = new Date().getTime() / 1000
         if (now < good.StartAt) {
-          return new Date(good.StartAt * 1000).toLocaleDateString(locale.value)
+          return new Date(good.StartAt * 1000).toLocaleDateString(this.i18n.locale)
         }
-        return t('MSG_EFFECTIVE_NEXT_DAY')
+        return this.i18n.t('MSG_EFFECTIVE_NEXT_DAY')
       }
     },
-    purchaseLimit (): (appID: string | undefined, id: string) => number | undefined {
+    purchaseLimit (): (appID: string | undefined, id: string) => number {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         const good = this.good(appID, id)
-        if (!good) {
-          return 0
-        }
-        const min = Math.min(good?.PurchaseLimit, Number(good?.GoodSpotQuantity))
+        const min = Math.min(good?.PurchaseLimit || 0, Number(good?.GoodSpotQuantity))
         return Math.floor(min)
       }
     },
-    spotQuantity (): (appID: string | undefined, id: string) => number | undefined {
+    spotQuantity (): (appID: string | undefined, id: string) => number {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         return Number(this.good(appID, id)?.GoodSpotQuantity)
       }
     },
-    goodPurchaseBtnMsg (): (appID: string | undefined, id: string) => string | undefined {
+    techniqueFeeTatio (): (appID: string | undefined, id: string) => number {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return Number(this.good(appID, id)?.TechnicalFeeRatio)
+      }
+    },
+    goodPurchaseBtnMsg (): (appID: string | undefined, id: string) => string {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         const good = this.good(appID, id)
         if (!good) {
           return 'MSG_SOLD_OUT'
@@ -126,11 +137,13 @@ export const useAppGoodStore = defineStore('app-goods', {
     },
     startDate (): (appID: string | undefined, id: string, format?: string) => string | undefined {
       return (appID: string | undefined, id: string, format?: string) => {
+        appID = formalizeAppID(appID)
         return date.formatDate(this.good(appID, id)?.StartAt as number * 1000, format || 'YYYY/MM/DD')
       }
     },
     saleEndDate (): (appID: string | undefined, id: string, format?: string) => string | undefined {
       return (appID: string | undefined, id: string, format?: string) => {
+        appID = formalizeAppID(appID)
         const good = this.good(appID, id)
         if (!good?.SaleEndAt) {
           return '*'
@@ -140,6 +153,7 @@ export const useAppGoodStore = defineStore('app-goods', {
     },
     saleEndTime (): (appID: string | undefined, id: string, format?: string) => string | undefined {
       return (appID: string | undefined, id: string, format?: string) => {
+        appID = formalizeAppID(appID)
         const good = this.good(appID, id)
         if (!good?.SaleEndAt) {
           return '*'
@@ -149,30 +163,42 @@ export const useAppGoodStore = defineStore('app-goods', {
     },
     enableSetCommission (): (appID: string | undefined, id: string) => boolean | undefined {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         return this.good(appID, id)?.EnableSetCommission
       }
     },
     cancelable (): (appID: string | undefined, id: string) => boolean | undefined {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         return this.good(appID, id)?.CancelMode !== CancelMode.UnCancellable
       }
     },
-    addGoods (): (appID: string | undefined, goods: Array<Good>) => void {
-      return (appID: string | undefined, goods: Array<Good>) => {
+    displayNames (): (appID: string | undefined, id: string) => Array<string> {
+      return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        let _goods = this.AppGoods.get(appID) as Array<Good>
-        if (!_goods) {
-          _goods = []
-        }
-        goods.forEach((good) => {
-          const index = _goods.findIndex((el) => el.ID === good.ID)
-          _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
-        })
-        this.AppGoods.set(appID, _goods)
+        return this.good(appID, id)?.DisplayNames || []
+      }
+    },
+    displayColors (): (appID: string | undefined, id: string) => Array<string> {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return this.good(appID, id)?.DisplayColors || []
       }
     }
   },
   actions: {
+    addGoods (appID: string | undefined, goods: Array<Good>) {
+      appID = formalizeAppID(appID)
+      let _goods = this.AppGoods.get(appID) as Array<Good>
+      if (!_goods) {
+        _goods = []
+      }
+      goods.forEach((good) => {
+        const index = _goods.findIndex((el) => el.ID === good.ID)
+        _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
+      })
+      this.AppGoods.set(appID, _goods)
+    },
     getAppGoods (req: GetAppGoodsRequest, done: (error: boolean, rows?: Array<Good>, total?: number) => void) {
       doActionWithError<GetAppGoodsRequest, GetAppGoodsResponse>(
         API.GET_APPGOODS,

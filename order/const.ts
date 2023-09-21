@@ -31,6 +31,8 @@ export enum PaymentState {
 }
 
 export const OrderTimeoutSeconds = 6 * 60 * 60
+export const RemainMax = '06:00:00'
+
 export enum OrderType {
   Normal = 'Normal',
   Offline = 'Offline',

@@ -20,6 +20,12 @@ export const useLocalApplicationStore = defineStore('local-application', {
     },
     currentApp (): App | undefined {
       return this.currentApp
+    },
+    commitBtnTargets () {
+      return () => this.MyApp?.CommitButtonTargets || []
+    },
+    maintaining () {
+      return () => this.MyApp?.Maintaining
     }
   },
   actions: {}

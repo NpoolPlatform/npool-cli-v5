@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { API, FiatType } from './const'
+import { API } from './const'
 import {
   FiatCurrency,
   GetFiatCurrenciesRequest,
@@ -8,17 +8,21 @@ import {
   GetFiatCurrencyResponse
 } from './types'
 import { doActionWithError } from '../../../request'
+import { FiatType } from '../const'
 
 export const useFiatCurrencyStore = defineStore('fiat-currencies', {
   state: () => ({
     FiatCurrencies: [] as Array<FiatCurrency>
   }),
   getters: {
-    jpy (): () => number | undefined {
+    jpy (): () => number {
       return () => {
         const currency = this.FiatCurrencies.find((el) => el?.FiatName === FiatType.JPY)
-        return currency ? Number(currency.MarketValueHigh) : Number('NaN')
+        return Number(currency?.MarketValueHigh) || 147.8
       }
+    },
+    currencies () {
+      return () => this.FiatCurrencies
     },
     addCurrencies (): (currencies: Array<FiatCurrency>) => void {
       return (currencies: Array<FiatCurrency>) => {

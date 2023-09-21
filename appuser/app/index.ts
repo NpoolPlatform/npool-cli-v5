@@ -7,7 +7,9 @@ import {
   GetAppsRequest,
   GetAppsResponse,
   UpdateAppRequest,
-  UpdateAppResponse
+  UpdateAppResponse,
+  GetAppRequest,
+  GetAppResponse
 } from './types'
 import { App } from './base'
 import { useLocalApplicationStore } from './local'
@@ -28,19 +30,34 @@ export const useApplicationStore = defineStore('applications', {
     }
   },
   actions: {
+    addApps (apps: Array<App>) {
+      apps.forEach((app) => {
+        this.Apps.set(app.ID, app)
+        const localapp = useLocalApplicationStore()
+        if (app.ID === localapp.myAppID) {
+          localapp.MyApp = app
+        }
+      })
+    },
+    getApp (req: GetAppRequest, done: (error: boolean, apps?: App) => void) {
+      doActionWithError<GetAppRequest, GetAppResponse>(
+        API.GET_APPS,
+        req,
+        req.Message,
+        (resp: GetAppResponse): void => {
+          this.addApps([resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        })
+    },
     getApps (req: GetAppsRequest, done: (error: boolean, apps?: Array<App>) => void) {
       doActionWithError<GetAppsRequest, GetAppsResponse>(
         API.GET_APPS,
         req,
         req.Message,
         (resp: GetAppsResponse): void => {
-          const myApp = useLocalApplicationStore()
-          resp.Infos.forEach((app) => {
-            this.Apps.set(app.ID, app)
-            if (myApp.myAppID === app.ID) {
-              myApp.MyApp = app
-            }
-          })
+          this.addApps(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -52,7 +69,7 @@ export const useApplicationStore = defineStore('applications', {
         req,
         req.Message,
         (resp: UpdateAppResponse): void => {
-          this.Apps.set(resp.Info.ID, resp.Info)
+          this.addApps([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -64,7 +81,7 @@ export const useApplicationStore = defineStore('applications', {
         req,
         req.Message,
         (resp: CreateAppResponse): void => {
-          this.Apps.set(resp.Info.ID, resp.Info)
+          this.addApps([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)

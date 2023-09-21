@@ -19,6 +19,9 @@ export const useCurrencyStore = defineStore('coin-currencies', {
         return Number(this.Currencies.find((el) => el.CoinTypeID === coinTypeID)?.MarketValueLow)
       }
     },
+    currencies () {
+      return () => this.Currencies
+    },
     expired () {
       return () => {
         const now = Math.ceil(new Date().getTime() / 1000)
@@ -63,3 +66,6 @@ export const useCurrencyStore = defineStore('coin-currencies', {
     }
   }
 })
+
+export * from './types'
+export * from './const'

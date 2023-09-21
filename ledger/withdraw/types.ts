@@ -1,3 +1,4 @@
+import { SignMethodType } from '../../appuser/base'
 import { BaseRequest } from '../../request'
 import { WithdrawState } from './const'
 
@@ -32,7 +33,7 @@ export interface CreateWithdrawRequest extends BaseRequest{
   CoinTypeID: string
   AccountID: string
   Amount: string
-  AccountType: string
+  AccountType: SignMethodType
   Account: string
   VerificationCode: string
 }

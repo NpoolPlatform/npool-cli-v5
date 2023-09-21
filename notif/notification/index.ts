@@ -112,3 +112,6 @@ export const useNotifStore = defineStore('notifs', {
     }
   }
 })
+
+export * from './types'
+export * from './const'

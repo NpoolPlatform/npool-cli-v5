@@ -48,6 +48,16 @@ export const useLedgerStore = defineStore('ledgers', {
         return this.Ledgers.get(appID)?.find((el) => el.UserID === userID && el.CoinTypeID === coinTypeID)?.Spendable || '0'
       }
     },
+    intervalIncoming (): (appID: string | undefined, coinTypeID: string, intervalKey: string) => number {
+      return (appID: string | undefined, coinTypeID: string, intervalKey: string) => {
+        appID = formalizeAppID(appID)
+        let incoming = 0
+        this.IntervalLedgers.get(appID)?.get(intervalKey)?.filter((el) => el.CoinTypeID === coinTypeID).forEach((ledger) => {
+          incoming += Number(ledger.Incoming)
+        })
+        return incoming
+      }
+    },
     addLedgers (): (appID: string | undefined, ledgers: Array<Ledger>) => void {
       return (appID: string | undefined, ledgers: Array<Ledger>) => {
         appID = formalizeAppID(appID)

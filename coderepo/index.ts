@@ -18,7 +18,7 @@ import { API } from './const'
 import { useI18n } from 'vue-i18n'
 import { GoogleTokenType } from '../const'
 import { NotifyType, useNotificationStore } from '../notify'
-import { SignMethodType } from '../appuser/base'
+import { SigninVerifyType } from '../appuser/base'
 import { EventType } from '../base'
 
 export const useCodeRepoStore = defineStore('coderepo', {
@@ -64,9 +64,9 @@ export const useCodeRepoStore = defineStore('coderepo', {
           }
         })
     },
-    sendVerificationCode (account: string, accountType: SignMethodType, usedFor: EventType, toUsername: string) {
+    sendVerificationCode (account: string, accountType: SigninVerifyType, usedFor: EventType, toUsername: string) {
       switch (accountType) {
-        case SignMethodType.Email:
+        case SigninVerifyType.Email:
           this.sendEmailCode({
             EmailAddress: account,
             UsedFor: usedFor,
@@ -81,7 +81,7 @@ export const useCodeRepoStore = defineStore('coderepo', {
             }
           })
           break
-        case SignMethodType.Mobile:
+        case SigninVerifyType.Mobile:
           this.sendSMSCode({
             PhoneNO: account,
             UsedFor: usedFor,

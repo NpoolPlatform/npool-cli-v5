@@ -8,7 +8,7 @@ import { doActionWithError } from '../../request'
 import { API } from './const'
 import { formalizeAppID } from '../../appuser/app/local'
 
-export const useFrontendTransferStore = defineStore('transfers', {
+export const useTransferStore = defineStore('ledger-transfers', {
   state: () => ({
     Transfers: new Map<string, Array<Transfer>>()
   }),

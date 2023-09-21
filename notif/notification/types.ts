@@ -58,13 +58,13 @@ export interface GetNotifsResponse {
 
 export interface GetAppNotifsRequest extends BaseRequest {
   /** @format int64 */
-  Offset: number;
+  Offset: number
   /** @format int64 */
-  Limit: number;
+  Limit: number
 }
 
 export interface GetAppNotifsResponse {
-  Infos: Notif[];
+  Infos: Notif[]
   /** @format int64 */
-  Total: number;
+  Total: number
 }

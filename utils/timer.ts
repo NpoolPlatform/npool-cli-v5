@@ -17,14 +17,8 @@ const remain = (timestamp: number): string => {
          (remainSeconds > 9 ? remainSeconds.toString() : '0' + remainSeconds.toString())
 }
 
-const formatTime = (timestamp: number, dateOnly?: boolean, format?: string): string => {
-  if (dateOnly) {
-    return date.formatDate(timestamp * 1000, 'YYYY/MM/DD')
-  }
-  if (format) {
-    return date.formatDate(timestamp * 1000, format)
-  }
-  return date.formatDate(timestamp * 1000, 'YYYY/MM/DD HH:mm:ss')
+const formatTime = (timestamp: number, format?: string, offsetHours?: number): string => {
+  return date.formatDate(timestamp * 1000 + (offsetHours || 0) * 60 * 60, format || 'YYYY/MM/DD HH:mm:ss')
 }
 
 const RemainZero = '00:00:00'

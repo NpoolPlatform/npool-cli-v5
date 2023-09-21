@@ -35,6 +35,12 @@ export const useAppCoinStore = defineStore('app-coins', {
         return this.AppCoins.get(appID) || []
       }
     },
+    payableCoins (): (appID?: string) => Array<AppCoin> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AppCoins.get(appID)?.filter((el) => !el.Disabled && !el.CoinDisabled && el.ForPay && el.CoinForPay && !el.Presale) || []
+      }
+    },
     productPage (): (appID: string | undefined, coinTypeID: string) => string | undefined {
       return (appID: string | undefined, coinTypeID: string) => {
         return this.coin(appID, coinTypeID)?.ProductPage
@@ -63,14 +69,9 @@ export const useAppCoinStore = defineStore('app-coins', {
         })
       }
     },
-    getCurrency (): (appID: string | undefined, coinTypeID: string) => number | undefined {
+    getCurrency (): (appID: string | undefined, coinTypeID: string) => number {
       return (appID: string | undefined, coinTypeID: string) => {
         return Number(this.coin(appID, coinTypeID)?.SettleValue)
-      }
-    },
-    haveCurrency (): (appID: string | undefined, coinTypeID: string) => boolean | undefined {
-      return (appID: string | undefined, coinTypeID: string) => {
-        return !(this.getCurrency(appID, coinTypeID) === 0 || this.getCurrency(appID, coinTypeID)?.toString()?.length === 0)
       }
     },
     stableUSD (): (appID: string | undefined, coinTypeID: string) => boolean | undefined {
@@ -88,7 +89,7 @@ export const useAppCoinStore = defineStore('app-coins', {
         return this.coin(appID, coinTypeID)?.Display
       }
     },
-    defaultGood (): (appID: string | undefined, coinUnit: string) => string | undefined {
+    defaultGoodID (): (appID: string | undefined, coinUnit: string) => string | undefined {
       return (appID: string | undefined, coinUnit: string) => {
         appID = formalizeAppID(appID)
         const coin = this.AppCoins.get(appID)?.find((el) => el.Unit === coinUnit)

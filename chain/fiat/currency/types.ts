@@ -15,7 +15,7 @@ export interface FiatCurrency {
 }
 
 export interface GetFiatCurrenciesRequest extends BaseRequest {
-  FiatCurrencyTypeIDs: string[]
+  FiatIDs: string[]
   CoinTypeIDs: string[]
 }
 
@@ -25,7 +25,7 @@ export interface GetFiatCurrenciesResponse {
 }
 
 export interface GetHistoriesRequest extends BaseRequest {
-  FiatCurrencyTypeID: string
+  FiatID: string
   /** @format int32 */
   Offset: number
   /** @format int32 */
@@ -43,7 +43,7 @@ export interface GetHistoriesResponse {
 }
 
 export interface GetFiatCurrencyRequest extends BaseRequest {
-  FiatCurrencyTypeName: string
+  FiatName: string
 }
 
 export interface GetFiatCurrencyResponse {
