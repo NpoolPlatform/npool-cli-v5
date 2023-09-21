@@ -41,7 +41,7 @@ export const useApplicationStore = defineStore('applications', {
     },
     getApp (req: GetAppRequest, done: (error: boolean, apps?: App) => void) {
       doActionWithError<GetAppRequest, GetAppResponse>(
-        API.GET_APPS,
+        API.GET_APP,
         req,
         req.Message,
         (resp: GetAppResponse): void => {

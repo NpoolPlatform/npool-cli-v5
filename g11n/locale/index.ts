@@ -16,7 +16,7 @@ export const useLocaleStore = defineStore('locale-lang', {
       return () => this.AppLang?.Short
     },
     lang () {
-      return () => this.AppLang.Lang
+      return () => this.AppLang?.Lang
     }
   },
   actions: {

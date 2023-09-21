@@ -1,8 +1,8 @@
-import { localapp } from '..'
+import { useLocalApplicationStore } from '../appuser/app/local'
 import { computed } from 'vue'
 import { NIL as NIL_UUID } from 'uuid'
 
-const myApp = localapp.useLocalApplicationStore()
+const myApp = useLocalApplicationStore()
 export const AppID = computed(() => myApp.currentAppID || myApp.myAppID || NIL_UUID)
 export const CurrentAppID = computed({
   get: () => myApp.currentAppID,
