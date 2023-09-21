@@ -38,39 +38,36 @@ export const useAppLangStore = defineStore('app-langs', {
         appID = formalizeAppID(appID)
         return this.AppLangs.get(appID) || []
       }
-    },
-    addLangs (): (appID: string | undefined, langs: Array<AppLang>) => void {
-      return (appID: string | undefined, langs: Array<AppLang>) => {
-        appID = formalizeAppID(appID)
-        let _langs = this.AppLangs.get(appID) as Array<AppLang>
-        if (!_langs) {
-          _langs = []
-        }
-        langs.forEach((lang) => {
-          const index = _langs?.findIndex((el) => el.ID === lang.ID)
-          _langs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, lang)
-        })
-        this.AppLangs.set(appID, _langs)
-        const locale = useLocaleStore()
-        if (!appID) {
-          locale.setLangs(_langs)
-        }
-      }
-    },
-    delLang (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
-        appID = formalizeAppID(appID)
-        const _langs = this.AppLangs.get(appID) as Array<AppLang>
-        if (!_langs) {
-          return
-        }
-        const index = _langs?.findIndex((el) => el.ID === id)
-        _langs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-        this.AppLangs.set(appID, _langs)
-      }
     }
   },
   actions: {
+    addLangs (appID: string | undefined, langs: Array<AppLang>) {
+      const setLang = !appID
+      appID = formalizeAppID(appID)
+      let _langs = this.AppLangs.get(appID) as Array<AppLang>
+      if (!_langs) {
+        _langs = []
+      }
+      langs.forEach((lang) => {
+        const index = _langs?.findIndex((el) => el.ID === lang.ID)
+        _langs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, lang)
+      })
+      this.AppLangs.set(appID, _langs)
+      const locale = useLocaleStore()
+      if (setLang) {
+        locale.setLangs(_langs)
+      }
+    },
+    delLang (appID: string | undefined, id: string) {
+      appID = formalizeAppID(appID)
+      const _langs = this.AppLangs.get(appID) as Array<AppLang>
+      if (!_langs) {
+        return
+      }
+      const index = _langs?.findIndex((el) => el.ID === id)
+      _langs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.AppLangs.set(appID, _langs)
+    },
     getAppLangs (req: GetAppLangsRequest, done: (error: boolean, rows: Array<AppLang>) => void) {
       doActionWithError<GetAppLangsRequest, GetAppLangsResponse>(
         API.GET_APPLANGS,
