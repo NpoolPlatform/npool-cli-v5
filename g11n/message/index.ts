@@ -32,58 +32,55 @@ export const useMessageStore = defineStore('messages', {
     Messages: new Map<string, Map<string, Array<Message>>>()
   }),
   getters: {
-    messages (): (appID: string | undefined, langID: string) => Array<Message> {
-      return (appID: string | undefined, langID: string) => {
+    messages (): (appID: string | undefined, langID: string | undefined, langName: string | undefined) => Array<Message> {
+      return (appID: string | undefined, langID: string | undefined, langName: string | undefined) => {
         appID = formalizeAppID(appID)
-        return this.Messages.get(appID)?.get(langID) || []
-      }
-    },
-    addMessages (): (appID: string | undefined, messages: Array<Message>) => void {
-      return (appID: string | undefined, messages: Array<Message>) => {
-        if (!messages.length) {
-          return
-        }
-        appID = formalizeAppID(appID)
-        let _messages = this.Messages.get(appID) as Map<string, Array<Message>>
-        if (!_messages) {
-          _messages = new Map<string, Array<Message>>()
-        }
-        messages.forEach((message) => {
-          let langMessages = _messages.get(message.LangID) as Array<Message>
-          if (!langMessages) {
-            langMessages = []
-          }
-          const index = langMessages.findIndex((el) => el.ID === message.ID)
-          langMessages.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, message)
-          _messages.set(message.LangID, langMessages)
-        })
-        const locale = useLocaleStore()
-        if (locale.AppLang) {
-          const langMessages = _messages.get(locale.AppLang.LangID) as Array<Message>
-          if (langMessages) {
-            locale.setLocaleMessages(langMessages)
-          }
-        }
-        this.Messages.set(appID, _messages)
-      }
-    },
-    delMessage (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
-        appID = formalizeAppID(appID)
-        const messages = this.Messages.get(appID) as Map<string, Array<Message>>
-        if (!messages) {
-          return
-        }
-        messages.forEach((langMessages, langID) => {
-          const index = langMessages.findIndex((el) => el.ID === id)
-          langMessages.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-          messages.set(langID, langMessages)
-        })
-        this.Messages.set(appID, messages)
+        return (this.Messages.get(appID)?.get(langID as string) ||
+              Array.from((this.Messages.get(appID)?.values() || [])).reduce((r, a) => r.concat(a), [])).filter((el) => !langName || el.Lang.includes(langName))
       }
     }
   },
   actions: {
+    addMessages (appID: string | undefined, messages: Array<Message>) {
+      if (!messages.length) {
+        return
+      }
+      appID = formalizeAppID(appID)
+      let _messages = this.Messages.get(appID) as Map<string, Array<Message>>
+      if (!_messages) {
+        _messages = new Map<string, Array<Message>>()
+      }
+      messages.forEach((message) => {
+        let langMessages = _messages.get(message.LangID) as Array<Message>
+        if (!langMessages) {
+          langMessages = []
+        }
+        const index = langMessages.findIndex((el) => el.ID === message.ID)
+        langMessages.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, message)
+        _messages.set(message.LangID, langMessages)
+      })
+      const locale = useLocaleStore()
+      if (locale.AppLang) {
+        const langMessages = _messages.get(locale.AppLang.LangID) as Array<Message>
+        if (langMessages) {
+          locale.setLocaleMessages(langMessages)
+        }
+      }
+      this.Messages.set(appID, _messages)
+    },
+    delMessage (appID: string | undefined, id: string) {
+      appID = formalizeAppID(appID)
+      const messages = this.Messages.get(appID) as Map<string, Array<Message>>
+      if (!messages) {
+        return
+      }
+      messages.forEach((langMessages, langID) => {
+        const index = langMessages.findIndex((el) => el.ID === id)
+        langMessages.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+        messages.set(langID, langMessages)
+      })
+      this.Messages.set(appID, messages)
+    },
     getMessages (req: GetMessagesRequest, done: (error: boolean, rows?: Array<Message>) => void) {
       doActionWithError<GetMessagesRequest, GetMessagesResponse>(
         API.GET_MESSAGES,
