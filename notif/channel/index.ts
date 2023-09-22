@@ -30,35 +30,31 @@ export const useNotifChannelStore = defineStore('notif-channels', {
         appID = formalizeAppID(appID)
         return this.NotifChannels.get(appID)?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 0) || []
       }
-    },
-    addChannels (): (appID: string | undefined, channels: Array<TNotifChannel>) => void {
-      return (appID: string | undefined, channels: Array<TNotifChannel>) => {
-        appID = formalizeAppID(appID)
-        let _channels = this.NotifChannels.get(appID) as Array<TNotifChannel>
-        if (!_channels) {
-          _channels = []
-        }
-        channels.forEach((channel) => {
-          const index = _channels.findIndex((el) => el.ID === channel.ID)
-          _channels.splice(index, 1, channel)
-        })
-        this.NotifChannels.set(appID, _channels)
-      }
-    },
-    delChannel (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
-        appID = formalizeAppID(appID)
-        let _channels = this.NotifChannels.get(appID) as Array<TNotifChannel>
-        if (!_channels) {
-          _channels = []
-        }
-        const index = _channels.findIndex((el) => el.ID === id)
-        _channels.splice(index, 1)
-        this.NotifChannels.set(appID, _channels)
-      }
     }
   },
   actions: {
+    addChannels  (appID: string | undefined, channels: Array<TNotifChannel>) {
+      appID = formalizeAppID(appID)
+      let _channels = this.NotifChannels.get(appID) as Array<TNotifChannel>
+      if (!_channels) {
+        _channels = []
+      }
+      channels.forEach((channel) => {
+        const index = _channels.findIndex((el) => el.ID === channel.ID)
+        _channels.splice(index, 1, channel)
+      })
+      this.NotifChannels.set(appID, _channels)
+    },
+    delChannel (appID: string | undefined, id: string) {
+      appID = formalizeAppID(appID)
+      let _channels = this.NotifChannels.get(appID) as Array<TNotifChannel>
+      if (!_channels) {
+        _channels = []
+      }
+      const index = _channels.findIndex((el) => el.ID === id)
+      _channels.splice(index, 1)
+      this.NotifChannels.set(appID, _channels)
+    },
     getAppNotifChannels (req: GetAppNotifChannelsRequest, done: (error: boolean, rows: Array<TNotifChannel>) => void) {
       doActionWithError<GetAppNotifChannelsRequest, GetAppNotifChannelsResponse>(
         API.GET_APP_NOTIFCHANNELS,
