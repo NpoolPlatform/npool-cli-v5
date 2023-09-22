@@ -53,6 +53,7 @@ export const useAppLangStore = defineStore('app-langs', {
         _langs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, lang)
       })
       this.AppLangs.set(appID, _langs)
+      if (!langs?.length) return
       const locale = useLocaleStore()
       if (setLang) {
         locale.setLangs(_langs)
