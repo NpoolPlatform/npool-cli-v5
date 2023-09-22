@@ -30,6 +30,7 @@ export interface Order {
   GoodServicePeriodDays: number
   GoodUnitPrice: string
   GoodValue: string
+  GoodValueUSD: string
   Units: string
   PaymentID: string
   PaymentCoinTypeID: string
