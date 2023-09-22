@@ -28,23 +28,21 @@ export const useWithdrawStore = defineStore('ledger-withdraws', {
           return ok
         })?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
-    },
-    addWithdraws (): (appID: string | undefined, withdraws: Array<Withdraw>) => void {
-      return (appID: string | undefined, withdraws: Array<Withdraw>) => {
-        appID = formalizeAppID(appID)
-        let _withdraws = this.Withdraws.get(appID) as Array<Withdraw>
-        if (!_withdraws) {
-          _withdraws = []
-        }
-        withdraws.forEach((withdraw) => {
-          const index = _withdraws.findIndex((el) => el.ID === withdraw.ID)
-          _withdraws.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, withdraw)
-        })
-        this.Withdraws.set(appID, _withdraws)
-      }
     }
   },
   actions: {
+    addWithdraws (appID: string | undefined, withdraws: Array<Withdraw>) {
+      appID = formalizeAppID(appID)
+      let _withdraws = this.Withdraws.get(appID) as Array<Withdraw>
+      if (!_withdraws) {
+        _withdraws = []
+      }
+      withdraws.forEach((withdraw) => {
+        const index = _withdraws.findIndex((el) => el.ID === withdraw.ID)
+        _withdraws.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, withdraw)
+      })
+      this.Withdraws.set(appID, _withdraws)
+    },
     getWithdraws (req: GetWithdrawsRequest, done: (error: boolean, rows: Array<Withdraw>) => void) {
       doActionWithError<GetWithdrawsRequest, GetWithdrawsResponse>(
         API.GET_WITHDRAWS,
