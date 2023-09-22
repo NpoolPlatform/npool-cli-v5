@@ -52,7 +52,7 @@ export const useNotifChannelStore = defineStore('notif-channels', {
         _channels = []
       }
       const index = _channels.findIndex((el) => el.ID === id)
-      _channels.splice(index, 1)
+      _channels.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.NotifChannels.set(appID, _channels)
     },
     getAppNotifChannels (req: GetAppNotifChannelsRequest, done: (error: boolean, rows: Array<TNotifChannel>) => void) {
