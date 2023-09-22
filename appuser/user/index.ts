@@ -124,6 +124,8 @@ export const useUserStore = defineStore('users', {
           this.addAppUsers(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
+          const user = useLocalUserStore()
+          user.restUser()
           done(true)
         })
     },
@@ -147,6 +149,8 @@ export const useUserStore = defineStore('users', {
           user.restUser()
           done(false)
         }, () => {
+          const user = useLocalUserStore()
+          user.restUser()
           done(true)
         })
     },
