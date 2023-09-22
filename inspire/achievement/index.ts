@@ -108,7 +108,7 @@ export const useAchievementStore = defineStore('achievement', {
     settleType (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => SettleType | undefined {
       return (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => {
         appID = formalizeAppID(appID)
-        userID = formalizeUserID()
+        userID = formalizeUserID(userID)
         return this.Achievements.get(appID)?.find((el) => el.UserID === userID)?.Achievements.find((el1) => {
           let ok = true
           if (coinTypeID) ok &&= el1.CoinTypeID === coinTypeID
@@ -120,7 +120,7 @@ export const useAchievementStore = defineStore('achievement', {
     settleAmountType (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => SettleAmountType | undefined {
       return (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => {
         appID = formalizeAppID(appID)
-        userID = formalizeUserID()
+        userID = formalizeUserID(userID)
         return this.Achievements.get(appID)?.find((el) => el.UserID === userID)?.Achievements.find((el1) => {
           let ok = true
           if (coinTypeID) ok &&= el1.CoinTypeID === coinTypeID
@@ -132,7 +132,7 @@ export const useAchievementStore = defineStore('achievement', {
     settleMode (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => SettleMode | undefined {
       return (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => {
         appID = formalizeAppID(appID)
-        userID = formalizeUserID()
+        userID = formalizeUserID(userID)
         return this.Achievements.get(appID)?.find((el) => el.UserID === userID)?.Achievements.find((el1) => {
           let ok = true
           if (coinTypeID) ok &&= el1.CoinTypeID === coinTypeID
@@ -144,7 +144,7 @@ export const useAchievementStore = defineStore('achievement', {
     settleInterval (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => SettleInterval | undefined {
       return (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => {
         appID = formalizeAppID(appID)
-        userID = formalizeUserID()
+        userID = formalizeUserID(userID)
         return this.Achievements.get(appID)?.find((el) => el.UserID === userID)?.Achievements.find((el1) => {
           let ok = true
           if (coinTypeID) ok &&= el1.CoinTypeID === coinTypeID
@@ -156,7 +156,7 @@ export const useAchievementStore = defineStore('achievement', {
     threshold (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => number {
       return (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => {
         appID = formalizeAppID(appID)
-        userID = formalizeUserID()
+        userID = formalizeUserID(userID)
         return Number(this.Achievements.get(appID)?.find((el) => el.UserID === userID)?.Achievements.find((el1) => {
           let ok = true
           if (coinTypeID) ok &&= el1.CoinTypeID === coinTypeID

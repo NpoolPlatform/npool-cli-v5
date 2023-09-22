@@ -43,14 +43,14 @@ export const useKYCStore = defineStore('kycs', {
     images (): (appID?: string, userID?: string) => Map<ImageType, KYCImage> {
       return (appID?: string, userID?: string) => {
         appID = formalizeAppID(appID)
-        userID = formalizeUserID()
+        userID = formalizeUserID(userID)
         return this.Images.get(appID)?.get(userID) || new Map<ImageType, KYCImage>()
       }
     },
     image (): (appID: string | undefined, userID: string | undefined, imageType: ImageType) => KYCImage | undefined {
       return (appID: string | undefined, userID: string | undefined, imageType: ImageType) => {
         appID = formalizeAppID(appID)
-        userID = formalizeUserID()
+        userID = formalizeUserID(userID)
         return this.Images.get(appID)?.get(userID)?.get(imageType)
       }
     }
