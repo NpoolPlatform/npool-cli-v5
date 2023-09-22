@@ -16,7 +16,8 @@ export const useCurrencyStore = defineStore('coin-currencies', {
   getters: {
     currency () {
       return (coinTypeID: string) => {
-        return Number(this.Currencies.find((el) => el.CoinTypeID === coinTypeID)?.MarketValueLow)
+        const _currency = this.Currencies.find((el) => el.CoinTypeID === coinTypeID)
+        return !_currency ? 0 : Number(_currency.MarketValueLow)
       }
     },
     currencies () {
