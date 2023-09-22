@@ -12,7 +12,6 @@ export interface Good {
   DisplayIndex: number
   PurchaseLimit: number
   Commission: boolean
-  CommissionPercent: number
   BenefitIntervalHours: number
   PromotionStartAt: number
   PromotionEndAt: number
@@ -64,8 +63,8 @@ export interface Good {
   SaleStartAt: number
   SaleEndAt: number
   ServiceStartAt: number
-  TechnicalFeeRatio: number
-  ElectricityFeeRatio: number
+  TechnicalFeeRatio: string
+  ElectricityFeeRatio: string
   DailyRewardAmount: string
   Descriptions: string[]
   DisplayNames: string[]
@@ -152,12 +151,11 @@ export interface UpdateNAppGoodRequest extends BaseRequest {
   Price: string
   DisplayIndex: number
   PurchaseLimit: number
-  CommissionPercent: number
   SaleStartAt?: number
   SaleEndAt?: number
   ServiceStartAt?: number
-  TechnicalFeeRatio?: number
-  ElectricityFeeRatio?: number
+  TechnicalFeeRatio?: string
+  ElectricityFeeRatio?: string
   DailyRewardAmount?: string
   CancelMode?: CancelMode
   CancellableBeforeStart?: number
@@ -180,7 +178,6 @@ export interface CreateAppGoodRequest extends BaseRequest {
   Price: string
   DisplayIndex: number
   PurchaseLimit: number
-  CommissionPercent: number
   OpenPurchase?: boolean
   IntoProductPage?: boolean
   CancelableBefore?: number

@@ -1,14 +1,14 @@
 import { defineStore } from 'pinia'
 import { API } from './const'
 import {
-  GetAppAnnouncementUsersRequest,
-  GetAppAnnouncementUsersResponse,
+  GetAnnouncementUsersRequest,
+  GetAnnouncementUsersResponse,
   CreateAnnouncementUserRequest,
   CreateAnnouncementUserResponse,
   DeleteAnnouncementUserRequest,
   DeleteAnnouncementUserResponse,
-  GetNAppAnnouncementUsersRequest,
-  GetNAppAnnouncementUsersResponse,
+  GetAppAnnouncementUsersRequest,
+  GetAppAnnouncementUsersResponse,
   User
 } from './types'
 import { doActionWithError } from '../../../request'
@@ -53,12 +53,12 @@ export const useAnnouncementUserStore = defineStore('announcement-users', {
     }
   },
   actions: {
-    getAppAnnouncementUsers (req: GetAppAnnouncementUsersRequest, done: (error: boolean, rows: Array<User>) => void) {
-      doActionWithError<GetAppAnnouncementUsersRequest, GetAppAnnouncementUsersResponse>(
+    getAnnouncementUsers (req: GetAnnouncementUsersRequest, done: (error: boolean, rows: Array<User>) => void) {
+      doActionWithError<GetAnnouncementUsersRequest, GetAnnouncementUsersResponse>(
         API.GET_ANNOUNCEMENTUSERS,
         req,
         req.Message,
-        (resp: GetAppAnnouncementUsersResponse): void => {
+        (resp: GetAnnouncementUsersResponse): void => {
           this.addUsers(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
@@ -92,12 +92,12 @@ export const useAnnouncementUserStore = defineStore('announcement-users', {
         }
       )
     },
-    getNAppAnnouncementUsers (req: GetNAppAnnouncementUsersRequest, done: (error: boolean, rows: Array<User>) => void) {
-      doActionWithError<GetNAppAnnouncementUsersRequest, GetNAppAnnouncementUsersResponse>(
-        API.GET_N_APP_ANNOUNCEMENTUSERS,
+    getAppAnnouncementUsers (req: GetAppAnnouncementUsersRequest, done: (error: boolean, rows: Array<User>) => void) {
+      doActionWithError<GetAppAnnouncementUsersRequest, GetAppAnnouncementUsersResponse>(
+        API.GET_APP_ANNOUNCEMENTUSERS,
         req,
         req.Message,
-        (resp: GetNAppAnnouncementUsersResponse): void => {
+        (resp: GetAppAnnouncementUsersResponse): void => {
           this.addUsers(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {

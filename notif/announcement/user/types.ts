@@ -51,19 +51,6 @@ export interface GetAnnouncementUsersResponse {
 }
 
 export interface GetAppAnnouncementUsersRequest extends BaseRequest {
-  /** @format int64 */
-  Offset: number
-  /** @format int64 */
-  Limit: number
-}
-
-export interface GetAppAnnouncementUsersResponse {
-  Infos: User[]
-  /** @format int64 */
-  Total: number
-}
-
-export interface GetNAppAnnouncementUsersRequest extends BaseRequest {
   TargetAppID: string
   /** @format int64 */
   Offset: number
@@ -71,7 +58,7 @@ export interface GetNAppAnnouncementUsersRequest extends BaseRequest {
   Limit: number
 }
 
-export interface GetNAppAnnouncementUsersResponse {
+export interface GetAppAnnouncementUsersResponse {
   Infos: User[]
   /** @format int64 */
   Total: number

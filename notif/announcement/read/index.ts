@@ -67,7 +67,7 @@ export const useReadStateStore = defineStore('announcement-read-states', {
     },
     getNAppReadStates (req: GetNAppReadStatesRequest, done: (error: boolean, rows: Array<ReadState>) => void) {
       doActionWithError<GetNAppReadStatesRequest, GetNAppReadStatesResponse>(
-        API.GET_APP_READSTATES,
+        API.GET_N_APP_READSTATES,
         req,
         req.Message,
         (resp: GetNAppReadStatesResponse): void => {

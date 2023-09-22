@@ -53,7 +53,7 @@ export const useSendStateStore = defineStore('announcement-send-states', {
 
     getNAppSendStates (req: GetNAppSendStatesRequest, done: (error: boolean, rows: Array<SendState>) => void) {
       doActionWithError<GetNAppSendStatesRequest, GetNAppSendStatesResponse>(
-        API.GET_APP_SENDSTATES,
+        API.GET_N_APP_SENDSTATES,
         req,
         req.Message,
         (resp: GetNAppSendStatesResponse): void => {
