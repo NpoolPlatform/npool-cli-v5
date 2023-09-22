@@ -7,7 +7,7 @@ import {
   GetGoogleTokenRequest
 } from './types'
 import { useI18n } from 'vue-i18n'
-import { SignMethodType } from '../../appuser/base'
+import { SigninVerifyType } from '../../appuser/base'
 import { EventType } from '../../base'
 import { NotifyType, useNotificationStore } from '../../notify'
 
@@ -18,9 +18,9 @@ export const useFrontendVerifyStore = defineStore('verify', {
   }),
   getters: {},
   actions: {
-    sendVerificationCode (account: string, accountType: SignMethodType, usedFor: EventType, toUsername: string) {
+    sendVerificationCode (account: string, accountType: SigninVerifyType, usedFor: EventType, toUsername: string) {
       switch (accountType) {
-        case SignMethodType.Email:
+        case SigninVerifyType.Email:
           this.sendCode({
             Account: account,
             AccountType: accountType,
@@ -36,7 +36,7 @@ export const useFrontendVerifyStore = defineStore('verify', {
             }
           })
           break
-        case SignMethodType.Mobile:
+        case SigninVerifyType.Mobile:
           this.sendCode({
             Account: account,
             AccountType: accountType,

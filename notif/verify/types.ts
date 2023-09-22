@@ -1,4 +1,4 @@
-import { SignMethodType } from '../../appuser/base'
+import { SigninVerifyType } from '../../appuser/base'
 import { BaseRequest } from '../../request'
 import { IReCaptchaComposition } from 'vue-recaptcha-v3'
 import { EventType } from '../../base'
@@ -6,7 +6,7 @@ import { GoogleTokenType } from '../../const'
 
 export interface SendCodeRequest extends BaseRequest {
   Account: string
-  AccountType: SignMethodType
+  AccountType: SigninVerifyType
   UsedFor: EventType
   ToUsername: string
 }
