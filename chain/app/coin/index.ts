@@ -143,7 +143,7 @@ export const useAppCoinStore = defineStore('app-coins', {
 
     getNAppCoins (req: GetNAppCoinsRequest, done: (error: boolean, appCoins?: Array<AppCoin>) => void) {
       doActionWithError<GetNAppCoinsRequest, GetNAppCoinsResponse>(
-        API.GET_APPCOINS,
+        API.GET_N_APPCOINS,
         req,
         req.Message,
         (resp: GetNAppCoinsResponse): void => {
