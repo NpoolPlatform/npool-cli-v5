@@ -16,7 +16,7 @@ export const useCurrencyStore = defineStore('coin-currencies', {
   getters: {
     currency () {
       return (coinTypeID: string) => {
-        return Number(this.Currencies.find((el) => el.CoinTypeID === coinTypeID)?.MarketValueLow)
+        return Number(this.Currencies.find((el) => el.CoinTypeID === coinTypeID)?.MarketValueLow) || 0
       }
     },
     currencies () {
@@ -27,17 +27,15 @@ export const useCurrencyStore = defineStore('coin-currencies', {
         const now = Math.ceil(new Date().getTime() / 1000)
         return !(now - this.Currencies[0]?.UpdatedAt <= 10 * 60)
       }
-    },
-    addCurrencies (): (currencies: Array<CoinCurrency>) => void {
-      return (currencies: Array<CoinCurrency>) => {
-        currencies.forEach((currency) => {
-          const index = this.Currencies.findIndex((el) => el.ID === currency.ID)
-          this.Currencies.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, currency)
-        })
-      }
     }
   },
   actions: {
+    addCurrencies (currencies: Array<CoinCurrency>) {
+      currencies.forEach((currency) => {
+        const index = this.Currencies.findIndex((el) => el.CoinTypeID === currency.CoinTypeID)
+        this.Currencies.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, currency)
+      })
+    },
     getCurrencies (req: GetCurrenciesRequest, done: (error: boolean, rows: Array<CoinCurrency>) => void) {
       doActionWithError<GetCurrenciesRequest, GetCurrenciesResponse>(
         API.GET_CURRENCIES,
