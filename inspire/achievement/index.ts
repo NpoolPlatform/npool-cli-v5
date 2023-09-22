@@ -29,10 +29,10 @@ export const useAchievementStore = defineStore('achievement', {
         return this.Achievements.get(appID)?.filter((el) => !userID || el.UserID === userID) || []
       }
     },
-    inviteeAchievements (): (appID: string | undefined, userID: string) => Array<Achievement> {
-      return (appID: string | undefined, userID: string) => {
+    inviteeAchievements (): (appID: string | undefined, userID: string, kol?: boolean) => Array<Achievement> {
+      return (appID: string | undefined, userID: string, kol?: boolean) => {
         appID = formalizeAppID(appID)
-        return this.Achievements.get(appID)?.filter((el) => !userID || el.InviterID === userID) || []
+        return this.Achievements.get(appID)?.filter((el) => !userID || (el.InviterID === userID && (kol === undefined || el.Kol === kol))) || []
       }
     },
     inviterAchievements (): (appID: string | undefined, userID: string) => Array<Achievement> {
