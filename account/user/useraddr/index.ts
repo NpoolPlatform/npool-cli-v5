@@ -41,35 +41,31 @@ export const useUserAccountStore = defineStore('user-accounts', {
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
-    },
-    addAccounts (): (appID: string | undefined, accounts: Array<Account>) => void {
-      return (appID: string | undefined, accounts: Array<Account>) => {
-        appID = formalizeAppID(appID)
-        let _accounts = this.UserAccounts.get(appID) as Array<Account>
-        if (!_accounts) {
-          _accounts = []
-        }
-        accounts.forEach((account) => {
-          const index = _accounts?.findIndex((el) => el.ID === account.ID)
-          _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
-        })
-        this.UserAccounts.set(appID, _accounts)
-      }
-    },
-    delAccount (): (appID: string | undefined, accountID: string) => void {
-      return (appID: string | undefined, accountID: string) => {
-        appID = formalizeAppID(appID)
-        let _accounts = this.UserAccounts.get(appID)
-        if (!_accounts) {
-          _accounts = []
-        }
-        const index = _accounts.findIndex((el) => el.ID === accountID)
-        _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-        this.UserAccounts.set(appID, _accounts)
-      }
     }
   },
   actions: {
+    addAccounts  (appID: string | undefined, accounts: Array<Account>) {
+      appID = formalizeAppID(appID)
+      let _accounts = this.UserAccounts.get(appID) as Array<Account>
+      if (!_accounts) {
+        _accounts = []
+      }
+      accounts.forEach((account) => {
+        const index = _accounts?.findIndex((el) => el.ID === account.ID)
+        _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
+      })
+      this.UserAccounts.set(appID, _accounts)
+    },
+    delAccount  (appID: string | undefined, accountID: string) {
+      appID = formalizeAppID(appID)
+      let _accounts = this.UserAccounts.get(appID)
+      if (!_accounts) {
+        _accounts = []
+      }
+      const index = _accounts.findIndex((el) => el.ID === accountID)
+      _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.UserAccounts.set(appID, _accounts)
+    },
     createUserAccount (req: CreateUserAccountRequest, done: (error: boolean, row?: Account) => void) {
       doActionWithError<CreateUserAccountRequest, CreateUserAccountResponse>(
         API.CREATE_USERACCOUNT,

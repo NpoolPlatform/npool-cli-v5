@@ -6,10 +6,17 @@ export enum API {
 }
 
 export enum WithdrawState {
-  DefaultWithdrawReviewState = 'DefaultWithdrawReviewState',
+  Created = 'Created',
   Reviewing = 'Reviewing',
+  Approved = 'Approved',
   Transferring = 'Transferring',
+  PreRejected = 'PreRejected',
+  ReturnRejectedBalance = 'ReturnRejectedBalance',
   Rejected = 'Rejected',
+  PreFail = 'PreFail',
+  ReturnFailBalance = 'ReturnFailBalance',
   TransactionFail = 'TransactionFail',
+  PreSuccessful = 'PreSuccessful',
+  SpendSuccessfulBalance = 'SpendSuccessfulBalance',
   Successful = 'Successful',
 }
