@@ -55,7 +55,7 @@ export const useAppCoinStore = defineStore('app-coins', {
         return this.coin(appID, coinTypeID)?.ForPay
       }
     },
-    withrawFee (): (appID: string | undefined, coinTypeID: string) => string | undefined {
+    withdrawFee (): (appID: string | undefined, coinTypeID: string) => string | undefined {
       return (appID: string | undefined, coinTypeID: string) => {
         return this.coin(appID, coinTypeID)?.WithdrawFeeAmount
       }
@@ -92,6 +92,9 @@ export const useAppCoinStore = defineStore('app-coins', {
       return (appID: string | undefined, coinUnit: string) => {
         appID = formalizeAppID(appID)
         const coin = this.AppCoins.get(appID)?.find((el) => el.Unit === coinUnit)
+        if (!coin?.DefaultGoodID) {
+          console.log('not set default good id')
+        }
         return coin?.DefaultGoodID
       }
     },
