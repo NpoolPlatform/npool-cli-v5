@@ -102,23 +102,31 @@ export const useAppCoinStore = defineStore('app-coins', {
       return (appID: string | undefined, coinTypeID: string) => {
         return this.coin(appID, coinTypeID)?.NeedMemo
       }
-    },
-    addCoins (): (appID: string | undefined, coins: Array<AppCoin>) => void {
-      return (appID: string | undefined, coins: Array<AppCoin>) => {
-        appID = formalizeAppID(appID)
-        let _coins = this.AppCoins.get(appID) as Array<AppCoin>
-        if (!_coins) {
-          _coins = []
-        }
-        coins.forEach((coin) => {
-          const index = _coins.findIndex((el) => el.ID === coin.ID)
-          _coins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, coin)
-        })
-        this.AppCoins.set(appID, _coins)
-      }
     }
   },
   actions: {
+    addCoins (appID: string | undefined, coins: Array<AppCoin>) {
+      appID = formalizeAppID(appID)
+      let _coins = this.AppCoins.get(appID) as Array<AppCoin>
+      if (!_coins) {
+        _coins = []
+      }
+      coins.forEach((coin) => {
+        const index = _coins.findIndex((el) => el.ID === coin.ID)
+        _coins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, coin)
+      })
+      this.AppCoins.set(appID, _coins)
+    },
+    delAppCoin (appID: string | undefined, id: string) {
+      appID = formalizeAppID(appID)
+      let _coins = this.AppCoins.get(appID) as Array<AppCoin>
+      if (!_coins) {
+        _coins = []
+      }
+      const index = _coins.findIndex((el) => el.ID === id)
+      _coins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.AppCoins.set(appID, _coins)
+    },
     getAppCoins (req: GetAppCoinsRequest, done: (error: boolean, appCoins?: Array<AppCoin>) => void) {
       doActionWithError<GetAppCoinsRequest, GetAppCoinsResponse>(
         API.GET_APPCOINS,
@@ -162,7 +170,7 @@ export const useAppCoinStore = defineStore('app-coins', {
         req,
         req.Message,
         (resp: CreateAppCoinResponse): void => {
-          this.addCoins(undefined, [resp.Info])
+          this.addCoins(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -174,7 +182,7 @@ export const useAppCoinStore = defineStore('app-coins', {
         req,
         req.Message,
         (resp: DeleteAppCoinResponse): void => {
-          this.addCoins(undefined, [resp.Info])
+          this.delAppCoin(req.TargetAppID, resp.Info.ID)
           done(false, resp.Info)
         }, () => {
           done(true)
