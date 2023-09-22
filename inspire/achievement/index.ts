@@ -81,16 +81,28 @@ export const useAchievementStore = defineStore('achievement', {
         return amount
       }
     },
-    commission (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => number {
+    commissionAmount (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => number {
       return (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => {
         appID = formalizeAppID(appID)
-        userID = formalizeUserID()
+        userID = formalizeUserID(userID)
         return Number(this.Achievements.get(appID)?.find((el) => el.UserID === userID)?.Achievements.find((el1) => {
           let ok = true
           if (coinTypeID) ok &&= el1.CoinTypeID === coinTypeID
           if (appGoodID) ok &&= el1.AppGoodID === appGoodID
           return ok
         })?.TotalCommission) || 0
+      }
+    },
+    commissionPercent (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => number {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => {
+        appID = formalizeAppID(appID)
+        userID = formalizeUserID(userID)
+        return Number(this.Achievements.get(appID)?.find((el) => el.UserID === userID)?.Achievements.find((el1) => {
+          let ok = true
+          if (coinTypeID) ok &&= el1.CoinTypeID === coinTypeID
+          if (appGoodID) ok &&= el1.AppGoodID === appGoodID
+          return ok
+        })?.CommissionValue) || 0
       }
     },
     settleType (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string) => SettleType | undefined {
