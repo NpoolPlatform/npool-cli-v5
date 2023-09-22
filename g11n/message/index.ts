@@ -35,7 +35,7 @@ export const useMessageStore = defineStore('messages', {
     messages (): (appID: string | undefined, langID: string | undefined, langName: string | undefined) => Array<Message> {
       return (appID: string | undefined, langID: string | undefined, langName: string | undefined) => {
         appID = formalizeAppID(appID)
-        return (this.Messages.get(appID)?.get(langID as string) ||
+        return (this.Messages.get(appID)?.get(langID as string) || (langID && []) ||
               Array.from((this.Messages.get(appID)?.values() || [])).reduce((r, a) => r.concat(a), [])).filter((el) => !langName || el.Lang.includes(langName))
       }
     }
