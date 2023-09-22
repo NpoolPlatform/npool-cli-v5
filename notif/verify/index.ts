@@ -6,15 +6,13 @@ import {
   SendCodeRequest,
   GetGoogleTokenRequest
 } from './types'
-import { useI18n } from 'vue-i18n'
 import { SigninVerifyType } from '../../appuser/base'
 import { EventType } from '../../base'
 import { NotifyType, useNotificationStore } from '../../notify'
 
-export const useFrontendVerifyStore = defineStore('verify', {
+export const useVerifyStore = defineStore('notify-verify', {
   state: () => ({
-    GoogleToken: new Map<string, string>(),
-    I18n: useI18n()
+    GoogleToken: new Map<string, string>()
   }),
   getters: {},
   actions: {
@@ -28,8 +26,8 @@ export const useFrontendVerifyStore = defineStore('verify', {
             ToUsername: toUsername,
             Message: {
               Error: {
-                Title: this.I18n.t('MSG_SEND_EMAIL_CODE'),
-                Message: this.I18n.t('MSG_SEND_EMAIL_CODE_FAIL'),
+                Title: 'MSG_SEND_EMAIL_CODE',
+                Message: 'MSG_SEND_EMAIL_CODE_FAIL',
                 Popup: true,
                 Type: NotifyType.Error
               }
@@ -44,8 +42,8 @@ export const useFrontendVerifyStore = defineStore('verify', {
             ToUsername: toUsername,
             Message: {
               Error: {
-                Title: this.I18n.t('MSG_SEND_SMS_CODE'),
-                Message: this.I18n.t('MSG_SEND_SMS_CODE_FAIL'),
+                Title: 'MSG_SEND_SMS_CODE',
+                Message: 'MSG_SEND_SMS_CODE_FAIL',
                 Popup: true,
                 Type: NotifyType.Error
               }
