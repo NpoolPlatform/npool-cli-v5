@@ -24,7 +24,7 @@ import {
   UpdateAppUserOrderRequest,
   UpdateAppUserOrderResponse
 } from './types'
-import { API, OrderState, OrderTimeoutSeconds, OrderType, PaymentState } from './const'
+import { API, OrderState, OrderTimeoutSeconds, PaymentState } from './const'
 import { formalizeAppID } from '../appuser/app/local'
 import { NIL as NIL_UUID } from 'uuid'
 
@@ -57,9 +57,6 @@ export const useOrderStore = defineStore('orders', {
         }
         if (order.PaymentState === PaymentState.NO_PAYMENT) {
           return 'MSG_NO_PAYMENT'
-        }
-        if (order.OrderType === OrderType.Offline) {
-          return 'MSG_PAYMENT_OFFLINE'
         }
         if (order.PaymentID === NIL_UUID && Number(order.TransferAmount) > 0) {
           return 'MSG_INVALID_PAYMENT'
