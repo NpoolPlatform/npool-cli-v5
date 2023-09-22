@@ -169,7 +169,7 @@ export const useKYCStore = defineStore('kycs', {
         req,
         req.Message,
         (resp: GetAppUserKYCImageResponse): void => {
-          this.addImage(req.TargetUserID, req.TargetUserID, {
+          this.addImage(req.TargetAppID, req.TargetUserID, {
             Type: req.ImageType,
             URI: '',
             Base64: resp.Info
