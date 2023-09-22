@@ -1,30 +1,13 @@
 import { defineStore } from 'pinia'
-import { doAction, doActionWithError } from '../request'
 import {
-  CodeRepoState,
-  ContactByEmailRequest,
-  ContactByEmailResponse,
-  GetGoogleTokenRequest,
-  SendEmailCodeRequest,
-  SendEmailCodeResponse,
-  SendSMSCodeRequest,
-  SendSMSCodeResponse,
-  VerifyEmailCodeRequest,
-  VerifyEmailCodeResponse,
-  VerifySMSCodeRequest,
-  VerifySMSCodeResponse
+  GetGoogleTokenRequest
 } from './types'
-import { API } from './const'
-import { useI18n } from 'vue-i18n'
 import { GoogleTokenType } from '../const'
-import { NotifyType, useNotificationStore } from '../notify'
-import { SigninVerifyType } from '../appuser/base'
-import { EventType } from '../base'
+import { useNotificationStore } from '../notify'
 
 export const useCodeRepoStore = defineStore('coderepo', {
-  state: (): CodeRepoState => ({
-    GoogleToken: new Map<string, string>(),
-    I18n: useI18n()
+  state: () => ({
+    GoogleToken: new Map<string, string>()
   }),
   getters: {
     getGoogleTokenByType (): (tokenType: GoogleTokenType) => string | undefined {
@@ -34,69 +17,6 @@ export const useCodeRepoStore = defineStore('coderepo', {
     }
   },
   actions: {
-    sendEmailCode (req: SendEmailCodeRequest) {
-      doAction<SendEmailCodeRequest, SendEmailCodeResponse>(
-        API.SEND_EMAIL_CODE,
-        req,
-        req.Message,
-        (resp: SendEmailCodeResponse): void => {
-          const notification = useNotificationStore()
-          if (resp.Code < 0) {
-            if (req.Message?.Error) {
-              req.Message.Error.Description = resp.Message
-              notification.pushNotification(req.Message.Error)
-            }
-          }
-        })
-    },
-    sendSMSCode (req: SendSMSCodeRequest) {
-      doAction<SendSMSCodeRequest, SendSMSCodeResponse>(
-        API.SEND_SMS_CODE,
-        req,
-        req.Message,
-        (resp: SendSMSCodeResponse): void => {
-          const notification = useNotificationStore()
-          if (resp.Code < 0) {
-            if (req.Message?.Error) {
-              req.Message.Error.Description = resp.Message
-              notification.pushNotification(req.Message.Error)
-            }
-          }
-        })
-    },
-    sendVerificationCode (account: string, accountType: SigninVerifyType, usedFor: EventType, toUsername: string) {
-      switch (accountType) {
-        case SigninVerifyType.Email:
-          this.sendEmailCode({
-            EmailAddress: account,
-            UsedFor: usedFor,
-            ToUsername: toUsername,
-            Message: {
-              Error: {
-                Title: this.I18n.t('MSG_SEND_EMAIL_CODE'),
-                Message: this.I18n.t('MSG_SEND_EMAIL_CODE_FAIL'),
-                Popup: true,
-                Type: NotifyType.Error
-              }
-            }
-          })
-          break
-        case SigninVerifyType.Mobile:
-          this.sendSMSCode({
-            PhoneNO: account,
-            UsedFor: usedFor,
-            Message: {
-              Error: {
-                Title: this.I18n.t('MSG_SEND_SMS_CODE'),
-                Message: this.I18n.t('MSG_SEND_SMS_CODE_FAIL'),
-                Popup: true,
-                Type: NotifyType.Error
-              }
-            }
-          })
-          break
-      }
-    },
     getGoogleToken (req: GetGoogleTokenRequest, done: (token: string) => void) {
       const recaptcha = req.Recaptcha
       const notification = useNotificationStore()
@@ -125,58 +45,8 @@ export const useCodeRepoStore = defineStore('coderepo', {
             }
           })
       }
-    },
-    verifyEmailCode (req: VerifyEmailCodeRequest, done: (error: boolean) => void) {
-      doActionWithError<VerifyEmailCodeRequest, VerifyEmailCodeResponse>(
-        API.VERIFY_EMAIL_CODE,
-        req,
-        req.Message,
-        (resp: VerifyEmailCodeResponse): void => {
-          const notification = useNotificationStore()
-          if (resp.Code < 0) {
-            if (req.Message?.Error) {
-              req.Message.Error.Description = resp.Message
-              notification.pushNotification(req.Message.Error)
-            }
-            done(true)
-          } else {
-            done(false)
-          }
-        }, () => {
-          done(true)
-        })
-    },
-    verifySMSCode (req: VerifySMSCodeRequest, done: (error: boolean) => void) {
-      doActionWithError<VerifySMSCodeRequest, VerifySMSCodeResponse>(
-        API.VERIFY_SMS_CODE,
-        req,
-        req.Message,
-        (resp: VerifySMSCodeResponse): void => {
-          const notification = useNotificationStore()
-          if (resp.Code < 0) {
-            if (req.Message?.Error) {
-              req.Message.Error.Description = resp.Message
-              notification.pushNotification(req.Message.Error)
-            }
-            done(true)
-          } else {
-            done(false)
-          }
-        }, () => {
-          done(true)
-        })
-    },
-    sendContactEmail (req: ContactByEmailRequest, done: () => void) {
-      doAction<ContactByEmailRequest, ContactByEmailResponse>(
-        API.CONTACT_BY_EMAIL,
-        req,
-        req.Message,
-        (): void => {
-          done()
-        })
     }
   }
 })
 
 export * from './types'
-export * from './const'
