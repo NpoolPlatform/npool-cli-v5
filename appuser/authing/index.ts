@@ -27,35 +27,31 @@ export const useAuthingStore = defineStore('auths', {
           return ok
         }) || []
       }
-    },
-    addAuths (): (appID: string | undefined, auths: Array<Auth>) => void {
-      return (appID: string | undefined, auths: Array<Auth>) => {
-        appID = formalizeAppID(appID)
-        let _auths = this.Auths.get(appID) as Array<Auth>
-        if (!_auths) {
-          _auths = []
-        }
-        auths.forEach((auth) => {
-          const index = _auths.findIndex((el) => el.ID === auth.ID)
-          _auths.splice(index, 1, auth)
-        })
-        this.Auths.set(appID, _auths)
-      }
-    },
-    delAuth (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
-        appID = formalizeAppID(appID)
-        let _auths = this.Auths.get(appID) as Array<Auth>
-        if (!_auths) {
-          _auths = []
-        }
-        const index = _auths.findIndex((el) => el.ID === id)
-        _auths.splice(index, 1)
-        this.Auths.set(appID, _auths)
-      }
     }
   },
   actions: {
+    addAuths (appID: string | undefined, auths: Array<Auth>) {
+      appID = formalizeAppID(appID)
+      let _auths = this.Auths.get(appID) as Array<Auth>
+      if (!_auths) {
+        _auths = []
+      }
+      auths.forEach((auth) => {
+        const index = _auths.findIndex((el) => el.ID === auth.ID)
+        _auths.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, auth)
+      })
+      this.Auths.set(appID, _auths)
+    },
+    delAuth (appID: string | undefined, id: string) {
+      appID = formalizeAppID(appID)
+      let _auths = this.Auths.get(appID) as Array<Auth>
+      if (!_auths) {
+        _auths = []
+      }
+      const index = _auths.findIndex((el) => el.ID === id)
+      _auths.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.Auths.set(appID, _auths)
+    },
     getAppAuths (req: GetAppAuthsRequest, done: (error: boolean, auths?: Array<Auth>) => void) {
       doActionWithError<GetAppAuthsRequest, GetAppAuthsResponse>(
         API.GET_APP_AUTHS,
