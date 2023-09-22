@@ -112,11 +112,11 @@ export const useProfitStore = defineStore('ledger-profits', {
       return (appID: string | undefined, userID: string | undefined, coinTypeID?: string) => {
         appID = formalizeAppID(appID)
         return this.GoodProfits.get(appID)?.filter((el) => {
-          let ok = true
+          let ok = Number(el.Units) > 0
           if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
           if (userID) ok &&= el.UserID === userID
           return ok
-        }) || []
+        })?.sort((a, b) => a.GoodName.localeCompare(b.GoodName)) || []
       }
     }
   },
