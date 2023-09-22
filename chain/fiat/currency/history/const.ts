@@ -1,3 +1,3 @@
 export enum API {
-  GET_HISTORIES = '/chain/v1/get/histories',
+  GET_HISTORIES = '/chain/v1/get/fiatcurrencyhistories',
 }
