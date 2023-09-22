@@ -18,18 +18,17 @@ export const usePaymentAccountStore = defineStore('payment-accounts', {
       return () => {
         return this.PaymentAccounts
       }
-    },
-    addAccounts (): (accounts: Array<Account>) => void {
-      return (accounts: Array<Account>) => {
-        const _accounts = this.PaymentAccounts
-        accounts.forEach((account) => {
-          const index = _accounts?.findIndex((el) => el.ID === account.ID)
-          _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
-        })
-      }
     }
   },
   actions: {
+    addAccounts (accounts: Array<Account>) {
+      const _accounts = this.PaymentAccounts
+      accounts.forEach((account) => {
+        if (!account) return
+        const index = _accounts?.findIndex((el) => el.ID === account.ID)
+        _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
+      })
+    },
     getPaymentAccounts (req: GetPaymentAccountsRequest, done: (error: boolean, rows?: Array<Account>,) => void) {
       doActionWithError<GetPaymentAccountsRequest, GetPaymentAccountsResponse>(
         API.GET_PAYMENTACCOUNTS,

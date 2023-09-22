@@ -24,18 +24,17 @@ export const usePlatformAccountStore = defineStore('platform-accounts', {
         }
         return this.PlatformAccounts.filter((el) => el.UsedFor === usedFor)
       }
-    },
-    addAccounts (): (accounts: Array<Account>) => void {
-      return (accounts: Array<Account>) => {
-        const _accounts = this.PlatformAccounts
-        accounts.forEach((account) => {
-          const index = _accounts?.findIndex((el) => el.ID === account.ID)
-          _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
-        })
-      }
     }
   },
   actions: {
+    addAccounts (accounts: Array<Account>) {
+      const _accounts = this.PlatformAccounts
+      accounts.forEach((account) => {
+        if (!account) return
+        const index = _accounts?.findIndex((el) => el.ID === account.ID)
+        _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
+      })
+    },
     getPlatformAccounts (req: GetPlatformAccountsRequest, done: (error: boolean, rows?: Array<Account>) => void) {
       doActionWithError<GetPlatformAccountsRequest, GetPlatformAccountsResponse>(
         API.GET_PLATFORMACCOUNTS,

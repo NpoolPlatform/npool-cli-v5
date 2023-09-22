@@ -59,37 +59,33 @@ export const useStatementStore = defineStore('ledger-statements', {
         })
         return rewards
       }
-    },
-    addStatements (): (appID: string | undefined, statements: Array<Statement>) => void {
-      return (appID: string | undefined, statements: Array<Statement>) => {
-        appID = formalizeAppID(appID)
-        let _statements = this.Statements.get(appID) as Array<Statement>
-        if (!_statements) {
-          _statements = []
-        }
-        statements.forEach((statement) => {
-          const index = _statements.findIndex((el) => el.ID === statement.ID)
-          _statements.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, statement)
-        })
-        this.Statements.set(appID, _statements)
-      }
-    },
-    addMiningRewards (): (appID: string | undefined, rewards: Array<MiningReward>) => void {
-      return (appID: string | undefined, rewards: Array<MiningReward>) => {
-        appID = formalizeAppID(appID)
-        let _rewards = this.MiningRewards.get(appID) as Array<MiningReward>
-        if (!_rewards) {
-          _rewards = []
-        }
-        rewards.forEach((reward) => {
-          const index = _rewards.findIndex((el) => el.ID === reward.ID)
-          _rewards.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, reward)
-        })
-        this.MiningRewards.set(appID, _rewards)
-      }
     }
   },
   actions: {
+    addStatements  (appID: string | undefined, statements: Array<Statement>) {
+      appID = formalizeAppID(appID)
+      let _statements = this.Statements.get(appID) as Array<Statement>
+      if (!_statements) {
+        _statements = []
+      }
+      statements.forEach((statement) => {
+        const index = _statements.findIndex((el) => el.ID === statement.ID)
+        _statements.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, statement)
+      })
+      this.Statements.set(appID, _statements)
+    },
+    addMiningRewards (appID: string | undefined, rewards: Array<MiningReward>) {
+      appID = formalizeAppID(appID)
+      let _rewards = this.MiningRewards.get(appID) as Array<MiningReward>
+      if (!_rewards) {
+        _rewards = []
+      }
+      rewards.forEach((reward) => {
+        const index = _rewards.findIndex((el) => el.ID === reward.ID)
+        _rewards.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, reward)
+      })
+      this.MiningRewards.set(appID, _rewards)
+    },
     getStatements (req: GetStatementsRequest, done: (error: boolean, rows: Array<Statement>) => void) {
       doActionWithError<GetStatementsRequest, GetStatementsResponse>(
         API.GET_STATEMENTS,

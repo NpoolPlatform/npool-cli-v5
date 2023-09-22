@@ -3,6 +3,7 @@ import { IOSubType, IOType } from './const'
 
 export interface Statement {
   ID: string
+  AppID: string
   CoinTypeID: string
   CoinName: string
   DisplayNames: string[]
@@ -20,6 +21,7 @@ export interface Statement {
 
 export interface MiningReward {
   ID: string
+  AppID: string
   CoinTypeID: string
   CoinName: string
   CoinLogo: string
