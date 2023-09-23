@@ -230,6 +230,29 @@ export const useAchievementStore = defineStore('achievement', {
         })
         return amount
       }
+    },
+    totalInviteeSuperiorCommission (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string, kol?: boolean) => number {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID?: string, appGoodID?: string, kol?: boolean) => {
+        appID = formalizeAppID(appID)
+        let amount = 0
+        this.Achievements.get(appID)?.forEach((el) => {
+          if (userID && el.UserID !== userID) {
+            return
+          }
+          if (kol !== undefined && el.Kol === kol) {
+            return
+          }
+          el.Achievements.forEach((el1) => {
+            let ok = true
+            if (coinTypeID) ok &&= el1.CoinTypeID === coinTypeID
+            if (appGoodID) ok &&= el1.AppGoodID === appGoodID
+            if (ok) {
+              amount += Number(el1.SuperiorCommission)
+            }
+          })
+        })
+        return amount
+      }
     }
   },
   actions: {
