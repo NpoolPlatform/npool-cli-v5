@@ -30,6 +30,16 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
         })
         this.AllocatedCoupons.set(appID, _coupons)
       }
+    },
+    coupons (): (appID?: string, userID?: string) => Array<Coupon> {
+      return (appID?: string, userID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AllocatedCoupons.get(appID)?.filter((el) => {
+          let ok = true
+          if (userID) ok &&= el.UserID === userID
+          return ok
+        }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+      }
     }
   },
   actions: {
