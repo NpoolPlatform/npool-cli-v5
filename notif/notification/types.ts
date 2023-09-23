@@ -1,6 +1,6 @@
 import { EventType } from '../../base'
 import { BaseRequest } from '../../request'
-import { NotifChannel } from '../channel/const'
+import { NotifChannel } from '../base'
 
 export interface Notif {
   ID: string

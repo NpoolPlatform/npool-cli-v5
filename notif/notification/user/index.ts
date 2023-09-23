@@ -12,7 +12,7 @@ import {
 import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAdminNotifUserStore = defineStore('notif-users', {
+export const useNotifUserStore = defineStore('notif-users', {
   state: () => ({
     NotifUsers: new Map<string, Array<User>>()
   }),
@@ -41,6 +41,20 @@ export const useAdminNotifUserStore = defineStore('notif-users', {
         const index = _users.findIndex((el) => el.ID === id)
         _users.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
         this.NotifUsers.set(appID, _users)
+      }
+    },
+    users (): (appID?: string, userID?: string) => Array<User> {
+      return (appID?: string, userID?: string) => {
+        appID = formalizeAppID(appID)
+        let _users = this.NotifUsers.get(appID) as Array<User>
+        if (!_users) {
+          _users = []
+        }
+        return _users?.filter((el) => {
+          let ok = true
+          if (userID) ok &&= el.UserID === userID
+          return ok
+        }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     }
   },
@@ -86,3 +100,6 @@ export const useAdminNotifUserStore = defineStore('notif-users', {
     }
   }
 })
+
+export * from './types'
+export * from './const'
