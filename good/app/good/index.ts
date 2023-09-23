@@ -179,6 +179,12 @@ export const useAppGoodStore = defineStore('app-goods', {
         return this.good(appID, id)?.DisplayNames || []
       }
     },
+    displayName (): (appID: string | undefined, id: string, index: number) => string {
+      return (appID: string | undefined, id: string, index: number) => {
+        const good = this.good(appID, id)
+        return ((good?.DisplayNames.length && good?.DisplayNames.length > index) ? good?.DisplayNames[index] : good?.GoodName) || ''
+      }
+    },
     displayColors (): (appID: string | undefined, id: string) => Array<string> {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)

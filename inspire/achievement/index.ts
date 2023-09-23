@@ -8,8 +8,8 @@ import {
   GetAchievementsRequest,
   GetAchievementsResponse
 } from './types'
-import { formalizeAppID } from 'src/npoolstore/appuser/app/local'
-import { formalizeUserID } from 'src/npoolstore/appuser/user'
+import { formalizeAppID } from '../../appuser/app/local'
+import { formalizeUserID } from '../..//appuser/user'
 import { SettleAmountType, SettleInterval, SettleMode, SettleType } from '../commission'
 
 export const useAchievementStore = defineStore('achievement', {
@@ -69,7 +69,7 @@ export const useAchievementStore = defineStore('achievement', {
           if (userID && el.InviterID !== userID) {
             return
           }
-          if (kol !== undefined && el.Kol === kol) {
+          if (kol !== undefined && el.Kol !== kol) {
             return
           }
           el.Achievements.forEach((el1) => {
@@ -112,7 +112,7 @@ export const useAchievementStore = defineStore('achievement', {
           if (userID && el.InviterID !== userID) {
             return
           }
-          if (kol !== undefined && el.Kol === kol) {
+          if (kol !== undefined && el.Kol !== kol) {
             return
           }
           el.Achievements.forEach((el1) => {
@@ -236,10 +236,10 @@ export const useAchievementStore = defineStore('achievement', {
         appID = formalizeAppID(appID)
         let amount = 0
         this.Achievements.get(appID)?.forEach((el) => {
-          if (userID && el.UserID !== userID) {
+          if (userID && el.InviterID !== userID) {
             return
           }
-          if (kol !== undefined && el.Kol === kol) {
+          if (kol !== undefined && el.Kol !== kol) {
             return
           }
           el.Achievements.forEach((el1) => {
