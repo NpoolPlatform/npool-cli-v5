@@ -16,8 +16,16 @@ export enum EventType {
   KYCRejected = 'KYCRejected',
   Purchase = 'Purchase',
   AffiliatePurchase = 'AffiliatePurchase',
-  Announcement = 'Announcement',
   AffiliateSignup = 'AffiliateSignup',
+  GoodBenefit1 = ' GoodBenefit1',
+  NewLogin = 'NewLogin',
+  UpdatePassword = 'UpdatePassword',
+  UpdateEmail = 'UpdateEmail',
+  UpdateMobile = 'UpdateMobile',
+  UpdateGoogleAuth = 'UpdateGoogleAuth',
+  OrderCompleted = 'OrderCompleted',
+  Announcement = 'Announcement',
+  ProductPage = 'ProductPage'
 }
 
 export const EventTypes = Object.values(EventType)
