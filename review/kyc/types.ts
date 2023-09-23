@@ -34,11 +34,9 @@ export interface GetKycReviewsResponse {
 }
 
 export interface UpdateKycReviewRequest extends NotifyRequest {
-  LangID?: string
   ReviewID: string
   State?: ReviewState
   Message: string
-  UserID?: string
 }
 
 export interface UpdateKycReviewResponse {
@@ -58,11 +56,9 @@ export interface GetAppKycReviewsResponse {
 
 export interface UpdateAppKycReviewRequest extends NotifyRequest {
   TargetAppID: string
-  LangID?: string
   ReviewID: string
   State?: ReviewState
   Message: string
-  UserID?: string
 }
 
 export interface UpdateAppKycReviewResponse {
