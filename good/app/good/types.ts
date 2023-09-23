@@ -108,7 +108,7 @@ export interface UpdateAppGoodRequest extends BaseRequest {
   Price: string
   DisplayIndex: number
   PurchaseLimit: number
-  CommissionPercent: number
+  CommissionPercent?: number
   SaleStartAt?: number
   SaleEndAt?: number
   ServiceStartAt?: number
