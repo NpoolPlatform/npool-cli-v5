@@ -1,4 +1,5 @@
 export * as commission from './inspire/commission'
+export * as reconcile from './inspire/reconcile'
 export * as coupon from './inspire/coupon'
 export * as allocatedCoupon from './inspire/coupon/allocated'
 export * as eventinspire from './inspire/event'
