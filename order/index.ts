@@ -100,14 +100,14 @@ export const useOrderStore = defineStore('orders', {
                  order.OrderState !== OrderState.EXPIRED)
       }
     },
-    purchasedUnits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => number {
-      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, goodID: string | undefined) => {
+    purchasedUnits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined) => number {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined) => {
         appID = formalizeAppID(appID)
         const units = 0
         this.Orders.get(appID)?.filter((el) => {
           let ok = el.CoinTypeID === coinTypeID
           if (userID) ok &&= el.UserID === userID
-          if (goodID) ok &&= el.GoodID === goodID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
           return ok
         })
         return units
