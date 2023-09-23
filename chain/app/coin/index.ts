@@ -99,6 +99,18 @@ export const useAppCoinStore = defineStore('app-coins', {
       return (appID: string | undefined, coinTypeID: string) => {
         return this.coin(appID, coinTypeID)?.NeedMemo
       }
+    },
+    displayName (): (appID: string | undefined, coinTypeID: string, index: number) => string {
+      return (appID: string | undefined, coinTypeID: string, index: number) => {
+        const coin = this.coin(appID, coinTypeID)
+        return ((coin?.DisplayNames.length && coin?.DisplayNames.length > index) ? coin?.DisplayNames[index] : coin?.Name) || ''
+      }
+    },
+    settleTip (): (appID: string | undefined, coinTypeID: string, index: number) => string {
+      return (appID: string | undefined, coinTypeID: string, index: number) => {
+        const coin = this.coin(appID, coinTypeID)
+        return (coin?.SettleTips.length && coin?.SettleTips.length > index) ? coin?.SettleTips[index] : ''
+      }
     }
   },
   actions: {
