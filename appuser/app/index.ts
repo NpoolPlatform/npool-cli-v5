@@ -12,17 +12,17 @@ import {
   GetAppResponse
 } from './types'
 import { App } from './base'
-import { useLocalApplicationStore } from './local'
+import { formalizeAppID, useLocalApplicationStore } from './local'
 
 export const useApplicationStore = defineStore('applications', {
   state: () => ({
-    Apps: new Map<string, App>(),
-    AppID: undefined as unknown as string
+    Apps: new Map<string, App>()
   }),
   getters: {
     app () {
       return (appID?: string) => {
-        return appID ? this.Apps.get(appID) : this.Apps.get(this.AppID)
+        appID = formalizeAppID(appID)
+        return this.Apps.get(appID)
       }
     },
     apps () {
