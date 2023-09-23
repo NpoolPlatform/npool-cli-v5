@@ -92,9 +92,6 @@ export const useAppCoinStore = defineStore('app-coins', {
       return (appID: string | undefined, coinUnit: string) => {
         appID = formalizeAppID(appID)
         const coin = this.AppCoins.get(appID)?.find((el) => el.Unit === coinUnit)
-        if (!coin?.DefaultGoodID) {
-          console.log('not set default good id')
-        }
         return coin?.DefaultGoodID
       }
     },
