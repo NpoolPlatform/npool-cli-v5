@@ -4,11 +4,3 @@ export enum API {
   GET_APP_NOTIFCHANNELS = '/notif/v1/get/app/notifchannels',
   GET_N_APP_NOTIFCHANNELS = '/notif/v1/get/n/app/notifchannels',
 }
-
-export enum NotifChannel {
-  ChannelEmail = 'ChannelEmail',
-  ChannelSMS = 'ChannelSMS',
-  ChannelFrontend = 'ChannelFrontend'
-}
-
-export const NotifChannels = Object.values(NotifChannel)

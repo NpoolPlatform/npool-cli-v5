@@ -1,6 +1,6 @@
 import { BaseRequest } from '../../request'
 import { EventType } from '../../base'
-import { NotifChannel } from './const'
+import { NotifChannel } from '../base'
 
 export interface TNotifChannel {
   AppID: string

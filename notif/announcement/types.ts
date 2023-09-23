@@ -1,7 +1,5 @@
 import { BaseRequest } from '../../request'
-import { NotifType } from '../base'
-import { NotifChannel } from '../channel/const'
-
+import { NotifType, NotifChannel } from '../base'
 export interface Announcement {
   ID: string
   AppID: string
