@@ -91,7 +91,7 @@ export const useAppCoinStore = defineStore('app-coins', {
     defaultGoodID (): (appID: string | undefined, coinUnit: string) => string | undefined {
       return (appID: string | undefined, coinUnit: string) => {
         appID = formalizeAppID(appID)
-        const coin = this.AppCoins.get(appID)?.find((el) => el.Unit === coinUnit)
+        const coin = this.AppCoins.get(appID)?.find((el) => el.Unit === coinUnit && el.DefaultGoodID?.length)
         return coin?.DefaultGoodID
       }
     },
