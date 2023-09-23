@@ -29,6 +29,7 @@ export const useAppLangStore = defineStore('app-langs', {
           let ok = true
           if (langID) ok &&= el.LangID === langID
           if (langName) ok &&= el.Lang === langName
+          if (!langID && !langName) ok &&= el.Main
           return ok
         })
       }
