@@ -37,7 +37,7 @@ export interface DeleteAnnouncementUserResponse {
 }
 
 export interface GetAnnouncementUsersRequest extends BaseRequest {
-  AnnouncementID: string
+  AnnouncementID?: string
   /** @format int64 */
   Offset: number
   /** @format int64 */
