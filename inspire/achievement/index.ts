@@ -8,8 +8,8 @@ import {
   GetAchievementsRequest,
   GetAchievementsResponse
 } from './types'
-import { formalizeAppID } from 'src/npoolstore/appuser/app/local'
-import { formalizeUserID } from 'src/npoolstore/appuser/user'
+import { formalizeAppID } from '../../appuser/app/local'
+import { formalizeUserID } from '../..//appuser/user'
 import { SettleAmountType, SettleInterval, SettleMode, SettleType } from '../commission'
 
 export const useAchievementStore = defineStore('achievement', {
