@@ -32,7 +32,7 @@ export const useCoinDescriptionStore = defineStore('coin-descriptions', {
     descriptions (): (appID?: string, coinTypeID?: string) => Array<CoinDescription> | undefined {
       return (appID?: string, coinTypeID?: string) => {
         appID = formalizeAppID(appID)
-        return this.CoinDescriptions.get(appID)?.filter((el) => !coinTypeID || el.CoinTypeID === coinTypeID)
+        return this.CoinDescriptions.get(appID)?.filter((el) => !coinTypeID || el.CoinTypeID === coinTypeID) || []
       }
     },
     coinUsedForDescription (): (appID: string | undefined, coinTypeID: string, usedFor: CoinDescriptionUsedFor) => CoinDescription | undefined {
