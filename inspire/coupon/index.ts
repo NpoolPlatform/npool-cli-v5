@@ -25,13 +25,6 @@ export const useCouponStore = defineStore('coupon-pool', {
         return this.Coupons.get(appID)?.filter((el) => !couponType || el.CouponType === couponType) || []
       }
     },
-    valid (): (coupon: Coupon) => boolean {
-      return (coupon: Coupon) => {
-        // TODO:
-        console.log(coupon)
-        return false
-      }
-    },
     addCoupons (): (appID: string | undefined, coupons: Array<Coupon>) => void {
       return (appID: string | undefined, coupons: Array<Coupon>) => {
         appID = formalizeAppID(appID)
