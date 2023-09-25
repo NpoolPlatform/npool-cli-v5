@@ -1,4 +1,5 @@
 import { GoodTopMostType } from 'src/npoolstore/good/base'
+import { BaseRequest } from 'src/npoolstore/request'
 
 export interface TopMostGood {
     ID: string
@@ -23,7 +24,7 @@ export interface TopMostGood {
     UpdatedAt: number
 }
 
-export interface CreateTopMostGoodRequest {
+export interface CreateTopMostGoodRequest extends BaseRequest {
     AppID: string
     TopMostID: string
     AppGoodID: string
@@ -35,18 +36,18 @@ export interface CreateTopMostGoodResponse {
     Info: TopMostGood
 }
 
-export interface V1UpdateTopMostGoodRequest {
+export interface UpdateTopMostGoodRequest extends BaseRequest {
     ID: string
     AppID: string
     Posters: string[]
     Price: string
 }
 
-export interface V1UpdateTopMostGoodResponse {
+export interface UpdateTopMostGoodResponse {
     Info: TopMostGood
 }
 
-export interface DeleteTopMostGoodRequest {
+export interface DeleteTopMostGoodRequest extends BaseRequest {
     ID: string
     AppID: string
 }
@@ -55,7 +56,7 @@ export interface DeleteTopMostGoodResponse {
     Info: TopMostGood
 }
 
-export interface GetTopMostGoodsRequest {
+export interface GetTopMostGoodsRequest extends BaseRequest {
     AppID: string
     /** @format int32 */
     Offset: number
@@ -69,7 +70,7 @@ export interface GetTopMostGoodsResponse {
     Total: number
 }
 
-export interface CreateNTopMostGoodRequest {
+export interface CreateNTopMostGoodRequest extends BaseRequest {
     TargetAppID: string
     TopMostID: string
     AppGoodID: string
@@ -81,7 +82,7 @@ export interface CreateNTopMostGoodResponse {
     Info: TopMostGood
 }
 
-export interface GetNTopMostGoodsRequest {
+export interface GetNTopMostGoodsRequest extends BaseRequest {
     TargetAppID: string
     /** @format int32 */
     Offset: number
@@ -95,7 +96,7 @@ export interface GetNTopMostGoodsResponse {
     Total: number
 }
 
-export interface UpdateNTopMostGoodRequest {
+export interface UpdateNTopMostGoodRequest extends BaseRequest {
     ID: string
     TargetAppID: string
     Posters: string[]
