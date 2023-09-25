@@ -6,6 +6,7 @@ export interface VendorLocation {
   Province: string
   City: string
   Address: string
+  BrandID: string
   BrandName: string
   BrandLogo: string
   CreatedAt: number

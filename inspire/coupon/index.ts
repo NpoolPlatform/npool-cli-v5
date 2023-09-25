@@ -25,11 +25,21 @@ export const useCouponStore = defineStore('coupon-pool', {
         return this.Coupons.get(appID)?.filter((el) => !couponType || el.CouponType === couponType) || []
       }
     },
-    valid (): (coupon: Coupon) => boolean {
-      return (coupon: Coupon) => {
-        // TODO:
-        console.log(coupon)
-        return false
+    coupon (): (appID: string | undefined, id: string) => Coupon | undefined {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return this.Coupons.get(appID)?.find((el) => el.ID === id)
+      }
+    },
+    valid (): (appID: string | undefined, id: string) => boolean {
+      return (appID: string | undefined, id: string) => {
+        const coupon = this.coupon(appID, id)
+        if (!coupon) {
+          return false
+        }
+        const endAt = coupon.StartAt + coupon.DurationDays * 60 * 60 * 24
+        const now = new Date().getTime() / 1000
+        return Number(coupon.Allocated) < Number(coupon.Circulation) && endAt <= now
       }
     },
     addCoupons (): (appID: string | undefined, coupons: Array<Coupon>) => void {

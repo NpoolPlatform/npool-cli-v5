@@ -17,7 +17,7 @@ export enum EventType {
   Purchase = 'Purchase',
   AffiliatePurchase = 'AffiliatePurchase',
   AffiliateSignup = 'AffiliateSignup',
-  GoodBenefit1 = ' GoodBenefit1',
+  GoodBenefit1 = 'GoodBenefit1',
   NewLogin = 'NewLogin',
   UpdatePassword = 'UpdatePassword',
   UpdateEmail = 'UpdateEmail',

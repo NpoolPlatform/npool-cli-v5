@@ -20,3 +20,11 @@ export enum StartMode {
 }
 
 export const StartModes = Object.values(StartMode)
+
+export enum GoodLabel {
+  GoodLabelPromotion = 'GoodLabelPromotion',
+  GoodLabelNoviceExclusive = 'GoodLabelNoviceExclusive',
+  GoodLabelInnovationStarter = 'GoodLabelInnovationStarter',
+  GoodLabelLoyaltyExclusive = 'GoodLabelLoyaltyExclusive'
+}
+export const GoodLabels = Object.values(GoodLabel)
