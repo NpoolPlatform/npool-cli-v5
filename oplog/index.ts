@@ -6,21 +6,35 @@ import {
   OpLog
 } from './types'
 import { doActionWithError } from '../request/action'
+import { formalizeAppID } from '../appuser/app/local'
 
 export const useOpLogStore = defineStore('oplog', {
   state: () => ({
-    OpLogs: [] as Array<OpLog>
+    OpLogs: new Map<string, Array<OpLog>>(),
+    Total: 0
   }),
-  getters: {},
+  getters: {
+    oplogs (): (appID?: string) => Array<OpLog> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.OpLogs.get(appID) || []
+      }
+    }
+  },
   actions: {
-    getAppOpLogs (req: GetAppOpLogsRequest, done: (error: boolean, rows?: Array<OpLog>) => void) {
+    addLogs (appID?: string, logs?: Array<OpLog>) {
+      appID = formalizeAppID(appID)
+      this.OpLogs.set(appID, logs || [])
+    },
+    getAppOpLogs (req: GetAppOpLogsRequest, done: (error: boolean, rows?: Array<OpLog>, total?: number) => void) {
       doActionWithError<GetAppOpLogsRequest, GetAppOpLogsResponse>(
         API.GET_OP_LOGS,
         req,
         req.Message,
         (resp: GetAppOpLogsResponse): void => {
-          this.OpLogs.push(...resp.Infos)
-          done(false, resp.Infos)
+          this.addLogs(undefined, resp.Infos)
+          this.Total = resp.Total
+          done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
         }
