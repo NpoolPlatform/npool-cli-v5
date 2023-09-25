@@ -64,8 +64,10 @@ export const useOrderStore = defineStore('orders', {
         if (order.OrderState === OrderState.PAYMENT_TIMEOUT) {
           return 'MSG_CANCELED_BY_TIMEOUT'
         }
-        if (order.OrderState === OrderState.WAIT_PAYMENT) {
-          return remain(order.CreatedAt + OrderTimeoutSeconds)
+        switch (order.OrderState) {
+          case OrderState.WAIT_PAYMENT:
+          case OrderState.CREATED:
+            return remain(order.CreatedAt + OrderTimeoutSeconds)
         }
         if (order.OrderState === OrderState.EXPIRED) {
           return 'MSG_DONE'
