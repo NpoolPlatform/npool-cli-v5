@@ -74,7 +74,8 @@ export const useTopMostStore = defineStore('topmost', {
           done(false, resp.Info)
         }, () => {
           done(true)
-        })
+        }
+      )
     },
     getTopMosts (req: GetTopMostsRequest, done: (error: boolean, rows?: Array<TopMost>, total?: number) => void) {
       doActionWithError<GetTopMostsRequest, GetTopMostsResponse>(
@@ -86,7 +87,8 @@ export const useTopMostStore = defineStore('topmost', {
           done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
-        })
+        }
+      )
     },
     updateTopMost (req: UpdateTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
       doActionWithError<UpdateTopMostRequest, UpdateTopMostResponse>(
@@ -98,7 +100,8 @@ export const useTopMostStore = defineStore('topmost', {
           done(false, resp.Info)
         }, () => {
           done(true)
-        })
+        }
+      )
     },
     deleteTopMost (req: DeleteTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
       doActionWithError<DeleteTopMostRequest, DeleteTopMostResponse>(
@@ -123,7 +126,8 @@ export const useTopMostStore = defineStore('topmost', {
           done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
-        })
+        }
+      )
     },
     updateNTopMost (req: UpdateNTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
       doActionWithError<UpdateNTopMostRequest, UpdateNTopMostResponse>(
@@ -135,7 +139,8 @@ export const useTopMostStore = defineStore('topmost', {
           done(false, resp.Info)
         }, () => {
           done(true)
-        })
+        }
+      )
     }
   }
 })
