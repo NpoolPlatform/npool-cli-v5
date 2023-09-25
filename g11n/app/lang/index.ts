@@ -39,6 +39,18 @@ export const useAppLangStore = defineStore('app-langs', {
         appID = formalizeAppID(appID)
         return this.AppLangs.get(appID) || []
       }
+    },
+    mainLangID (): (appID?: string) => string | undefined {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AppLangs.get(appID)?.find((el) => el.Main)?.LangID
+      }
+    },
+    langID (): (appID: string | undefined, langName?: string) => string | undefined {
+      return (appID?: string, langName?: string) => {
+        appID = formalizeAppID(appID)
+        return this.AppLangs.get(appID)?.find((el) => el.Lang === langName)?.LangID
+      }
     }
   },
   actions: {

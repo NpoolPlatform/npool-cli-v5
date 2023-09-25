@@ -31,24 +31,17 @@ export const useLocaleStore = defineStore('locale-lang', {
     setLangs (langs: Array<AppLang>) {
       const langID = Cookies.get('X-Lang-ID')
       const userID = Cookies.get('X-User-ID')
-      if (langs.length > 0) {
-        if (!userID && langID && langID?.length > 0) {
-          const _lang = langs.find((el) => el.LangID === langID)
-          if (_lang) {
-            this.setLang(_lang)
-            return
-          }
-        }
-        let flag = false
-        langs.forEach((el) => {
-          if (el.Main) {
-            flag = true
-            this.setLang(el)
-          }
-        })
-        if (!flag && langs.length > 0) {
-          this.setLang(langs[0])
-        }
+      if (langs.length === 0) {
+        return
+      }
+      if (!userID && !langID?.length) {
+        return
+      }
+      const _lang = langs.find((el) => {
+        return el.LangID === langID
+      })
+      if (_lang) {
+        this.setLang(_lang)
       }
     },
     setLocaleMessages (messages: Array<Message>) {
