@@ -35,7 +35,7 @@ export const useAppGoodStore = defineStore('app-goods', {
     goods (): (appID?: string) => Array<Good> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
-        return this.AppGoods.get(appID) || []
+        return this.AppGoods.get(appID)?.sort((a, b) => a.DisplayIndex - b.DisplayIndex) || []
       }
     },
     online (): (appID: string | undefined, id: string) => boolean | undefined {

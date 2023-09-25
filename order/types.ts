@@ -159,7 +159,6 @@ export interface CreateAppUserOrderRequest extends BaseRequest {
   TargetUserID: string
   AppGoodID: string
   Units: string
-  PaymentCoinID?: string
   ParentOrderID?: string
   OrderType: OrderType.Offline | OrderType.Airdrop
   InvestmentType: InvestmentType
