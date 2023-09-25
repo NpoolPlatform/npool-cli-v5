@@ -24,9 +24,8 @@ import {
   UpdateAppUserOrderRequest,
   UpdateAppUserOrderResponse
 } from './types'
-import { API, OrderState, OrderTimeoutSeconds, PaymentState } from './const'
+import { API, OrderState, OrderTimeoutSeconds } from './const'
 import { formalizeAppID } from '../appuser/app/local'
-import { NIL as NIL_UUID } from 'uuid'
 
 export const useOrderStore = defineStore('orders', {
   state: () => ({
@@ -54,12 +53,6 @@ export const useOrderStore = defineStore('orders', {
         const order = this.order(orderID)
         if (!order) {
           return 'MSG_ERROR'
-        }
-        if (order.PaymentState === PaymentState.NO_PAYMENT) {
-          return 'MSG_NO_PAYMENT'
-        }
-        if (order.PaymentID === NIL_UUID && Number(order.TransferAmount) > 0) {
-          return 'MSG_INVALID_PAYMENT'
         }
         if (order.OrderState === OrderState.PAYMENT_TIMEOUT) {
           return 'MSG_CANCELED_BY_TIMEOUT'
