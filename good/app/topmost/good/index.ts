@@ -23,7 +23,7 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
     TopMostGoods: new Map<string, Array<TopMostGood>>()
   }),
   getters: {
-    topmost (): (appID: string | undefined, id: string) => TopMostGood | undefined {
+    topmostgood (): (appID: string | undefined, id: string) => TopMostGood | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.TopMostGoods.get(appID)?.find((el) => {
@@ -31,7 +31,7 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
         })
       }
     },
-    topmosts (): (appID?: string) => Array<TopMostGood> {
+    topmostgoods (): (appID?: string) => Array<TopMostGood> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.TopMostGoods.get(appID) || []
@@ -55,7 +55,7 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
     deleteTopMostGoods (): (tops: Array<TopMostGood>) => void {
       return (tops: Array<TopMostGood>) => {
         tops.forEach((top) => {
-          const _tops = this.topmosts(top.AppID) || []
+          const _tops = this.topmostgoods(top.AppID) || []
           const index = _tops.findIndex((el) => el.ID === top.ID)
           _tops.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
           this.TopMostGoods.set(top.AppID, _tops)
