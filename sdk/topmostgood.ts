@@ -126,7 +126,7 @@ export const updateTopMostGood = (target: TopMostGood, finish: (error: boolean) 
   })
 }
 
-export const updateNTopMost = (target: TopMostGood, finish: (error: boolean) => void) => {
+export const updateNTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
   top.updateNTopMostGood({
     ...target,
     TargetAppID: target.AppID,
