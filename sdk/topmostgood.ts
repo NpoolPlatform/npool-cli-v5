@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import { topmostgood, constant, notify } from '..'
 import { AppID } from './localapp'
+import { TopMostGood } from '../good/app/topmost/good'
 
 const top = topmostgood.useTopMostGoodStore()
 
@@ -57,3 +58,93 @@ export const getNTopMostGoods = (pageStart: number, pages: number, done?: (error
 }
 
 export const topMostGoods = computed(() => top.topmostgoods(AppID.value))
+
+export const createTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+  top.createTopMostGood({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_TOPMOST_GOOD',
+        Message: 'MSG_CREATE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_TOPMOST_GOOD',
+        Message: 'MSG_CREATE_TOPMOST_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
+
+export const createNTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+  top.createNTopMostGood({
+    ...target,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_TOPMOST_GOOD',
+        Message: 'MSG_CREATE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_TOPMOST_GOOD',
+        Message: 'MSG_CREATE_TOPMOST_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
+
+export const updateTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+  top.updateTopMostGood({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_TOPMOST_GOOD',
+        Message: 'MSG_UPDATE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_UPDATE_TOPMOST_GOOD',
+        Message: 'MSG_UPDATE_TOPMOST_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
+
+export const updateNTopMost = (target: TopMostGood, finish: (error: boolean) => void) => {
+  top.updateNTopMostGood({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_TOPMOST_GOOD',
+        Message: 'MSG_UPDATE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_UPDATE_TOPMOST_GOOD',
+        Message: 'MSG_UPDATE_TOPMOST_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}

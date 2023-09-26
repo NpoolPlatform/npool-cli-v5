@@ -14,7 +14,9 @@ import {
   UpdateNTopMostGoodRequest,
   UpdateNTopMostGoodResponse,
   DeleteTopMostGoodRequest,
-  DeleteTopMostGoodResponse
+  DeleteTopMostGoodResponse,
+  CreateNTopMostGoodRequest,
+  CreateNTopMostGoodResponse
 } from './types'
 import { formalizeAppID } from '../../../../appuser/app/local'
 
@@ -124,6 +126,19 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
         (resp: GetNTopMostGoodsResponse): void => {
           this.addTopMostGoods(req.TargetAppID, resp.Infos)
           done(false, resp.Infos, resp.Total)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    createNTopMostGood (req: CreateNTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+      doActionWithError<CreateNTopMostGoodRequest, CreateNTopMostGoodResponse>(
+        API.CREATE_TOPMOST_GOOD,
+        req,
+        req.Message,
+        (resp: CreateNTopMostGoodResponse): void => {
+          this.addTopMostGoods(undefined, [resp.Info])
+          done(false, resp.Info)
         }, () => {
           done(true)
         }
