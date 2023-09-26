@@ -1,6 +1,7 @@
 import { computed } from 'vue'
 import { topmost, constant, notify } from '..'
 import { AppID } from './localapp'
+import { TopMost } from '../good/app/topmost'
 
 const top = topmost.useTopMostStore()
 
@@ -57,3 +58,93 @@ export const getNTopMosts = (pageStart: number, pages: number, done?: (error: bo
 }
 
 export const topMosts = computed(() => top.topmosts(AppID.value))
+
+export const createTopMost = (target: TopMost, finish: (error: boolean) => void) => {
+  top.createTopMost({
+    ...target,
+    NotifyMessage: {
+      Error: {
+        Title: 'MSG_CREATE_TOPMOST',
+        Message: 'MSG_CREATE_TOPMOST_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_TOPMOST',
+        Message: 'MSG_CREATE_TOPMOST_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
+
+export const createNTopMost = (target: TopMost, finish: (error: boolean) => void) => {
+  top.createNTopMost({
+    ...target,
+    TargetAppID: AppID.value,
+    NotifyMessage: {
+      Error: {
+        Title: 'MSG_CREATE_TOPMOST',
+        Message: 'MSG_CREATE_TOPMOST_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_TOPMOST',
+        Message: 'MSG_CREATE_TOPMOST_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
+
+export const updateTopMost = (target: TopMost, finish: (error: boolean) => void) => {
+  top.updateTopMost({
+    ...target,
+    NotifyMessage: {
+      Error: {
+        Title: 'MSG_UPDATE_TOPMOST',
+        Message: 'MSG_UPDATE_TOPMOST_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_UPDATE_TOPMOST',
+        Message: 'MSG_UPDATE_TOPMOST_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
+
+export const updateNTopMost = (target: TopMost, finish: (error: boolean) => void) => {
+  top.updateNTopMost({
+    ...target,
+    TargetAppID: target.AppID,
+    NotifyMessage: {
+      Error: {
+        Title: 'MSG_UPDATE_TOPMOST',
+        Message: 'MSG_UPDATE_TOPMOST_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_UPDATE_TOPMOST',
+        Message: 'MSG_UPDATE_TOPMOST_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}

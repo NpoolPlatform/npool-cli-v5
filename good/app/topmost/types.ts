@@ -82,6 +82,28 @@ export interface GetTopMostsResponse {
     Total: number
 }
 
+export interface CreateNTopMostRequest extends NotifyRequest {
+    TargetAppID: string
+    TopMostType: GoodTopMostType
+    Title: string
+    Message: string
+    Posters: string[]
+    /** @format int64 */
+    StartAt: number
+    /** @format int64 */
+    EndAt: number
+    ThresholdCredits: string
+    /** @format int64 */
+    RegisterElapsedSeconds: number
+    /** @format int64 */
+    ThresholdPurchases: number
+    ThresholdPaymentAmount: string
+    KycMust: boolean
+}
+
+export interface CreateNTopMostResponse {
+    Info: TopMost
+}
 export interface GetNTopMostsRequest extends BaseRequest {
     TargetAppID: string;
     /** @format int32 */

@@ -14,7 +14,9 @@ import {
   UpdateNTopMostRequest,
   UpdateNTopMostResponse,
   DeleteTopMostRequest,
-  DeleteTopMostResponse
+  DeleteTopMostResponse,
+  CreateNTopMostRequest,
+  CreateNTopMostResponse
 } from './types'
 import { formalizeAppID } from '../../../appuser/app/local'
 
@@ -124,6 +126,19 @@ export const useTopMostStore = defineStore('topmost', {
         (resp: GetNTopMostsResponse): void => {
           this.addTopMosts(req.TargetAppID, resp.Infos)
           done(false, resp.Infos, resp.Total)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    createNTopMost (req: CreateNTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
+      doActionWithError<CreateNTopMostRequest, CreateNTopMostResponse>(
+        API.CREATE_TOPMOST,
+        req,
+        req.NotifyMessage,
+        (resp: CreateTopMostResponse): void => {
+          this.addTopMosts(undefined, [resp.Info])
+          done(false, resp.Info)
         }, () => {
           done(true)
         }
