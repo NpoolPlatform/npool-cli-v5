@@ -105,38 +105,38 @@ export interface CreateNTopMostResponse {
     Info: TopMost
 }
 export interface GetNTopMostsRequest extends BaseRequest {
-    TargetAppID: string;
+    TargetAppID: string
     /** @format int32 */
-    Offset: number;
+    Offset: number
     /** @format int32 */
-    Limit: number;
+    Limit: number
 }
 
 export interface GetNTopMostsResponse {
-    Infos: TopMost[];
+    Infos: TopMost[]
     /** @format int64 */
-    Total: number;
+    Total: number
 }
 
 export interface UpdateNTopMostRequest extends NotifyRequest {
-    ID: string;
-    TargetAppID: string;
-    Title: string;
-    Message: string;
-    Posters: string[];
+    ID: string
+    TargetAppID: string
+    Title: string
+    Message: string
+    Posters: string[]
     /** @format int64 */
-    StartAt: number;
+    StartAt: number
     /** @format int64 */
-    EndAt: number;
-    ThresholdCredits: string;
+    EndAt: number
+    ThresholdCredits: string
     /** @format int64 */
-    RegisterElapsedSeconds: number;
+    RegisterElapsedSeconds: number
     /** @format int64 */
-    ThresholdPurchases: number;
-    ThresholdPaymentAmount: string;
-    KycMust: boolean;
+    ThresholdPurchases: number
+    ThresholdPaymentAmount: string
+    KycMust: boolean
 }
 
 export interface UpdateNTopMostResponse {
-    Info: TopMost;
+    Info: TopMost
 }
