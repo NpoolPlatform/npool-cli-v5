@@ -28,3 +28,13 @@ export enum GoodLabel {
   GoodLabelLoyaltyExclusive = 'GoodLabelLoyaltyExclusive'
 }
 export const GoodLabels = Object.values(GoodLabel)
+
+/** @default "DefaultGoodTopMostType" */
+export enum GoodTopMostType {
+  TopMostPromotion = 'TopMostPromotion',
+  TopMostNoviceExclusive = 'TopMostNoviceExclusive',
+  TopMostBestOffer = 'TopMostBestOffer',
+  TopMostInnovationStarter = 'TopMostInnovationStarter',
+  TopMostLoyaltyExclusive = 'TopMostLoyaltyExclusive',
+}
+export const GoodTypeMostTypes = Object.values(GoodTopMostType)
