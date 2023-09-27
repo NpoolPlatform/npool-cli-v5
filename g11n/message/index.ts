@@ -81,14 +81,14 @@ export const useMessageStore = defineStore('messages', {
       })
       this.Messages.set(appID, messages)
     },
-    getMessages (req: GetMessagesRequest, done: (error: boolean, rows?: Array<Message>) => void) {
+    getMessages (req: GetMessagesRequest, done: (error: boolean, rows?: Array<Message>, total?: number) => void) {
       doActionWithError<GetMessagesRequest, GetMessagesResponse>(
         API.GET_MESSAGES,
         req,
         req.Message,
         (resp: GetMessagesResponse): void => {
           this.addMessages(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
         }
