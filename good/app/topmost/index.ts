@@ -133,7 +133,7 @@ export const useTopMostStore = defineStore('topmost', {
     },
     createNTopMost (req: CreateNTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
       doActionWithError<CreateNTopMostRequest, CreateNTopMostResponse>(
-        API.CREATE_TOPMOST,
+        API.CREATE_N_TOPMOST,
         req,
         req.NotifyMessage,
         (resp: CreateTopMostResponse): void => {
