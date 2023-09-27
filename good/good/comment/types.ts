@@ -20,8 +20,8 @@ export interface Comment {
 }
 
 export interface CreateCommentRequest extends BaseRequest {
-    AppID: string
-    UserID: string
+    AppID?: string
+    UserID?: string
     GoodID: string
     OrderID: string
     Content: string
@@ -43,7 +43,7 @@ export interface DeleteCommentResponse {
 }
 
 export interface GetCommentsRequest extends BaseRequest {
-    GoodID: string
+    GoodID?: string
     /** @format int32 */
     Offset: number
     /** @format int32 */
