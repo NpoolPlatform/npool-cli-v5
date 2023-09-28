@@ -144,7 +144,7 @@ export const useProfitStore = defineStore('ledger-profits', {
         keyProfits = []
       }
       profits.forEach((profit) => {
-        const index = keyProfits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID)
+        const index = keyProfits.findIndex((el) => el.UserID === profit.UserID && el.CoinTypeID === profit.CoinTypeID && el.AppGoodID === profit.AppGoodID)
         keyProfits.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, profit)
       })
       _profits.set(key, keyProfits)
