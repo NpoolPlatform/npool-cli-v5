@@ -32,13 +32,14 @@ export const useStatementStore = defineStore('ledger-statements', {
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     },
-    miningRewards (): (appID?: string, userID?: string, coinTypeID?: string, orderID?: string) => Array<MiningReward> {
-      return (appID?: string, userID?: string, coinTypeID?: string, orderID?: string) => {
+    miningRewards (): (appID?: string, userID?: string, coinTypeID?: string, appGoodID?: string, orderID?: string) => Array<MiningReward> {
+      return (appID?: string, userID?: string, coinTypeID?: string, appGoodID?: string, orderID?: string) => {
         appID = formalizeAppID(appID)
         return this.MiningRewards.get(appID)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
           if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
           if (orderID) ok &&= el.OrderID === orderID
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
