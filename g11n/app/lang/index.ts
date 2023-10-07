@@ -13,7 +13,6 @@ import {
   DeleteAppLangResponse
 } from './types'
 import { doActionWithError } from '../../../request'
-import { useLocaleStore } from '../../locale'
 import { AppLang } from '../../base'
 import { formalizeAppID } from '../../../appuser/app/local'
 
@@ -55,7 +54,6 @@ export const useAppLangStore = defineStore('app-langs', {
   },
   actions: {
     addLangs (appID: string | undefined, langs: Array<AppLang>) {
-      const setLang = !appID
       appID = formalizeAppID(appID)
       let _langs = this.AppLangs.get(appID) as Array<AppLang>
       if (!_langs) {
@@ -66,11 +64,6 @@ export const useAppLangStore = defineStore('app-langs', {
         _langs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, lang)
       })
       this.AppLangs.set(appID, _langs)
-      if (!langs?.length) return
-      const locale = useLocaleStore()
-      if (setLang) {
-        locale.setLangs(_langs)
-      }
     },
     delLang (appID: string | undefined, id: string) {
       appID = formalizeAppID(appID)
