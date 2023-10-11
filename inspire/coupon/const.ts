@@ -10,6 +10,7 @@ export enum CouponType {
   Discount = 'Discount',
   SpecialOffer = 'SpecialOffer'
 }
+
 export const CouponTypes = Object.values(CouponType)
 
 export enum CouponConstraint {
@@ -19,3 +20,11 @@ export enum CouponConstraint {
   GoodThreshold = 'GoodThreshold'
 }
 export const CouponConstraints = Object.values(CouponConstraint)
+
+export enum CouponScope {
+  AllGood = "AllGood",
+  Whitelist = "Whitelist",
+  Blacklist = "Blacklist",
+}
+
+export const CouponScopes = Object.values(CouponScope)

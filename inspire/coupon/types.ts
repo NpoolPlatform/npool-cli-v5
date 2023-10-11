@@ -1,5 +1,5 @@
 import { BaseRequest, NotifyRequest } from '../../request'
-import { CouponType, CouponConstraint } from './const'
+import { CouponType, CouponConstraint, CouponScope } from './const'
 
 export interface Coupon {
   ID: string
@@ -20,6 +20,7 @@ export interface Coupon {
   Threshold?: string
   Allocated: string
   CouponConstraint: CouponConstraint
+  CouponScope?: CouponScope
   Random: boolean
   /** @format int64 */
   CreatedAt: number
@@ -41,6 +42,7 @@ export interface CreateCouponRequest extends NotifyRequest {
   Threshold?: string
   Random: boolean
   CouponConstraint: CouponConstraint
+  CouponScope?: CouponScope
 }
 
 export interface CreateCouponResponse {
