@@ -133,7 +133,7 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
     },
     createNTopMostGood (req: CreateNTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
       doActionWithError<CreateNTopMostGoodRequest, CreateNTopMostGoodResponse>(
-        API.CREATE_TOPMOST_GOOD,
+        API.CREATE_N_TOPMOST_GOOD,
         req,
         req.Message,
         (resp: CreateNTopMostGoodResponse): void => {
