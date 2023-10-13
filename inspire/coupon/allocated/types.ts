@@ -1,5 +1,5 @@
 import { BaseRequest } from '../../../request'
-import { CouponConstraint, CouponType } from '../const'
+import { CouponConstraint, CouponScope, CouponType } from '../const'
 
 export interface Coupon {
   ID: string
@@ -34,6 +34,8 @@ export interface Coupon {
   CreatedAt: number
   /** @format int64 */
   UpdatedAt: number
+  Allocated: string
+  CouponScope: CouponScope
 }
 
 export interface CreateCouponRequest extends BaseRequest {
