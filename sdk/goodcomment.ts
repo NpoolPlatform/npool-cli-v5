@@ -10,8 +10,8 @@ const getPageComments = (pageIndex: number, pageEnd: number, done?: (error: bool
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_TOPMOSTS',
-        Message: 'MSG_GET_TOPMOSTS_FAIL',
+        Title: 'MSG_GET_COMMENTS',
+        Message: 'MSG_GET_COMMENTS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -37,14 +37,14 @@ export const createComment = (target: goodcomment.Comment, finish: (error: boole
     ...target,
     Message: {
       Error: {
-        Title: 'MSG_CREATE_TOPMOST',
-        Message: 'MSG_CREATE_TOPMOST_FAIL',
+        Title: 'MSG_CREATE_COMMENT',
+        Message: 'MSG_CREATE_COMMENT_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       },
       Info: {
-        Title: 'MSG_CREATE_TOPMOST',
-        Message: 'MSG_CREATE_TOPMOST_SUCCESS',
+        Title: 'MSG_CREATE_COMMENT',
+        Message: 'MSG_CREATE_COMMENT_SUCCESS',
         Popup: true,
         Type: notify.NotifyType.Success
       }
@@ -59,14 +59,58 @@ export const updateComment = (target: goodcomment.Comment, finish: (error: boole
     ...target,
     Message: {
       Error: {
-        Title: 'MSG_UPDATE_TOPMOST',
-        Message: 'MSG_UPDATE_TOPMOST_FAIL',
+        Title: 'MSG_UPDATE_COMMENT',
+        Message: 'MSG_UPDATE_COMMENT_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       },
       Info: {
-        Title: 'MSG_UPDATE_TOPMOST',
-        Message: 'MSG_UPDATE_TOPMOST_SUCCESS',
+        Title: 'MSG_UPDATE_COMMENT',
+        Message: 'MSG_UPDATE_COMMENT_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
+
+export const deleteComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
+  comment.deleteComment({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_COMMENT',
+        Message: 'MSG_DELETE_COMMENT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_COMMENT',
+        Message: 'MSG_DELETE_COMMENT_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
+
+export const deleteAppGoodComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
+  comment.deleteAppGoodComment({
+    ID: target.ID,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_COMMENT',
+        Message: 'MSG_DELETE_COMMENT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_COMMENT',
+        Message: 'MSG_DELETE_COMMENT_SUCCESS',
         Popup: true,
         Type: notify.NotifyType.Success
       }

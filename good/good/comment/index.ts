@@ -12,7 +12,9 @@ import {
   CreateCommentRequest,
   CreateCommentResponse,
   DeleteCommentRequest,
-  DeleteCommentResponse
+  DeleteCommentResponse,
+  DeleteAppCommentRequest,
+  DeleteAppCommentResponse
 } from './types'
 import { formalizeAppID } from '../../../appuser/app/local'
 
@@ -107,6 +109,19 @@ export const useCommentStore = defineStore('comment', {
         req,
         req.Message,
         (resp: DeleteCommentResponse): void => {
+          this.deleteComments([resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    deleteAppGoodComment (req: DeleteAppCommentRequest, done: (error: boolean, row?: Comment) => void) {
+      doActionWithError<DeleteAppCommentRequest, DeleteAppCommentResponse>(
+        API.DELETE_APP_GOODCOMMENT,
+        req,
+        req.Message,
+        (resp: DeleteAppCommentResponse): void => {
           this.deleteComments([resp.Info])
           done(false, resp.Info)
         }, () => {

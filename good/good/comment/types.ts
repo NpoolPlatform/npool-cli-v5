@@ -9,6 +9,7 @@ export interface Comment {
     EmailAddress: string
     PhoneNO: string
     GoodID: string
+    AppGoodID: string
     GoodName: string
     OrderID: string
     Content: string
@@ -34,11 +35,21 @@ export interface CreateCommentResponse {
 
 export interface DeleteCommentRequest extends BaseRequest {
     ID: string
-    AppID: string
-    UserID: string
+    AppID?: string
+    UserID?: string
 }
 
 export interface DeleteCommentResponse {
+    Info: Comment
+}
+
+export interface DeleteAppCommentRequest extends BaseRequest {
+    ID: string
+    AppID?: string
+    UserID?: string
+}
+
+export interface DeleteAppCommentResponse {
     Info: Comment
 }
 
