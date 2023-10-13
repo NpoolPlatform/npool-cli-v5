@@ -37,6 +37,7 @@ export interface Coupon {
 }
 
 export interface CreateCouponRequest extends BaseRequest {
+  UserID?: string
   TargetUserID: string
   CouponID: string
 }

@@ -36,6 +36,7 @@ export const createAllocatedCoupon = (target: allocatedCoupon.Coupon, finish: (e
   _allocatedCoupon.createCoupon({
     ...target,
     TargetUserID: target.UserID,
+    UserID: undefined as unknown as string,
     Message: {
       Error: {
         Title: 'MSG_CREATE_ALLOCATED_COUPON',

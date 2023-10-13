@@ -33,13 +33,14 @@ export const useCouponStore = defineStore('coupon-pool', {
     },
     valid (): (appID: string | undefined, id: string) => boolean {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
         const coupon = this.coupon(appID, id)
         if (!coupon) {
           return false
         }
         const endAt = coupon.StartAt + coupon.DurationDays * 60 * 60 * 24
         const now = new Date().getTime() / 1000
-        return Number(coupon.Allocated) < Number(coupon.Circulation) && endAt <= now
+        return Number(coupon.Allocated) < Number(coupon.Circulation) && endAt > now
       }
     },
     addCoupons (): (appID: string | undefined, coupons: Array<Coupon>) => void {
