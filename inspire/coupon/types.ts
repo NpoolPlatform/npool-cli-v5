@@ -14,13 +14,13 @@ export interface Coupon {
   DurationDays: number
   Message: string
   Name: string
-  UserID?: string
-  GoodID?: string
-  AppGoodID?: string
-  Threshold?: string
+  UserID: string
+  GoodID: string
+  AppGoodID: string
+  Threshold: string
   Allocated: string
   CouponConstraint: CouponConstraint
-  CouponScope?: CouponScope
+  CouponScope: CouponScope
   Random: boolean
   /** @format int64 */
   CreatedAt: number
@@ -29,7 +29,7 @@ export interface Coupon {
 }
 
 export interface CreateCouponRequest extends NotifyRequest {
-  TargetAppID: string
+  TargetAppID?: string
   CouponType: string
   Denomination: string
   Circulation: string
@@ -40,8 +40,8 @@ export interface CreateCouponRequest extends NotifyRequest {
   TargetUserID?: string
   AppGoodID?: string
   Threshold?: string
-  Random: boolean
-  CouponConstraint: CouponConstraint
+  Random?: boolean
+  CouponConstraint?: CouponConstraint
   CouponScope?: CouponScope
 }
 
@@ -65,7 +65,7 @@ export interface GetCouponsResponse {
 
 export interface UpdateCouponRequest extends NotifyRequest {
   ID: string
-  TargetAppID: string
+  TargetAppID?: string
   Denomination: string
   Circulation: string
   /** @format int64 */

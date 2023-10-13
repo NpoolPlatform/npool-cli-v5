@@ -103,7 +103,7 @@ export const useScopeStore = defineStore('coupon-scope', {
         }, () => {
           done(true)
         })
-    },
+    }
   }
 })
 

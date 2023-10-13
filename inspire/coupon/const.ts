@@ -22,9 +22,9 @@ export enum CouponConstraint {
 export const CouponConstraints = Object.values(CouponConstraint)
 
 export enum CouponScope {
-  AllGood = "AllGood",
-  Whitelist = "Whitelist",
-  Blacklist = "Blacklist",
+  AllGood = 'AllGood',
+  Whitelist = 'Whitelist',
+  Blacklist = 'Blacklist',
 }
 
 export const CouponScopes = Object.values(CouponScope)
