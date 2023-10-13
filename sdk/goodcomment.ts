@@ -101,6 +101,7 @@ export const deleteComment = (target: goodcomment.Comment, finish: (error: boole
 export const deleteAppGoodComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
   comment.deleteAppGoodComment({
     ID: target.ID,
+    TargetUserID: target.UserID,
     Message: {
       Error: {
         Title: 'MSG_DELETE_COMMENT',

@@ -47,6 +47,7 @@ export interface DeleteAppCommentRequest extends BaseRequest {
     ID: string
     AppID?: string
     UserID?: string
+    TargetUserID: string
 }
 
 export interface DeleteAppCommentResponse {
