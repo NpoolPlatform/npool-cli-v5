@@ -19,7 +19,7 @@ export interface Scope {
   UpdatedAt: number
 }
 export interface CreateScopeRequest extends BaseRequest {
-  AppID?: string
+  TargetAppID: string
   CouponID: string
   AppGoodID: string
   CouponScope: CouponScope
@@ -31,7 +31,7 @@ export interface CreateScopeResponse {
 
 export interface DeleteScopeRequest extends BaseRequest {
   ID: string
-  AppID?: string
+  TargetAppID?: string
 }
 
 export interface DeleteScopeResponse {

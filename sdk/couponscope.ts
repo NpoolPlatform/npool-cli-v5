@@ -61,6 +61,7 @@ export const scopes = computed(() => scope.scopes(AppID.value))
 export const createScope = (target: couponscope.Scope, finish: (error: boolean) => void) => {
   scope.createScope({
     ...target,
+    TargetAppID: AppID.value,
     Message: {
       Error: {
         Title: 'MSG_CREATE_COUPON_SCOPE',
@@ -83,6 +84,7 @@ export const createScope = (target: couponscope.Scope, finish: (error: boolean) 
 export const deleteScope = (target: couponscope.Scope, finish: (error: boolean) => void) => {
   scope.deleteScope({
     ID: target?.ID,
+    TargetAppID: target?.AppID,
     Message: {
       Error: {
         Title: 'MSG_DELETE_COUPON_SCOPE',
