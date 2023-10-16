@@ -38,7 +38,7 @@ const getNPageTopMosts = (pageIndex: number, pageEnd: number, done?: (error: boo
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_DEFAULT_TopMostS_FAIL',
+        Title: 'MSG_GET_APP_DEFAULT_TOPMOSTS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
