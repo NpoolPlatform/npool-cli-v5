@@ -61,7 +61,7 @@ export const _coupons = computed(() => _coupon.coupons(AppID.value))
 export const createCoupon = (target: coupon.Coupon, finish: (error: boolean) => void) => {
   _coupon.createCoupon({
     ...target,
-    TargetAppID: AppID,
+    TargetAppID: AppID.value,
     NotifyMessage: {
       Error: {
         Title: 'MSG_CREATE_COUPON',
