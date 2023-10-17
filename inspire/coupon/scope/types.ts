@@ -19,7 +19,7 @@ export interface Scope {
   UpdatedAt: number
 }
 export interface CreateScopeRequest extends BaseRequest {
-  AppID?: string
+  TargetAppID: string
   CouponID: string
   AppGoodID: string
   CouponScope: CouponScope
@@ -31,15 +31,29 @@ export interface CreateScopeResponse {
 
 export interface DeleteScopeRequest extends BaseRequest {
   ID: string
-  AppID?: string
+  TargetAppID?: string
 }
 
 export interface DeleteScopeResponse {
   Info: Scope
 }
 
-export interface GetAppScopesRequest extends BaseRequest {
+export interface GetNAppScopesRequest extends BaseRequest {
   TargetAppID: string
+  /** @format int32 */
+  Offset: number
+  /** @format int32 */
+  Limit: number
+}
+
+export interface GetNAppScopesResponse {
+  Infos: Scope[]
+  /** @format int64 */
+  Total: number
+}
+
+export interface GetAppScopesRequest extends BaseRequest {
+  AppID?: string
   /** @format int32 */
   Offset: number
   /** @format int32 */
@@ -54,6 +68,7 @@ export interface GetAppScopesResponse {
 
 export interface GetScopesRequest extends BaseRequest {
   AppID?: string
+  UserID?: string
   /** @format int32 */
   Offset: number
   /** @format int32 */

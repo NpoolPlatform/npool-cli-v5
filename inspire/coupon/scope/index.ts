@@ -9,7 +9,9 @@ import {
   GetScopesRequest,
   GetScopesResponse,
   DeleteScopeRequest,
-  DeleteScopeResponse
+  DeleteScopeResponse,
+  GetNAppScopesRequest,
+  GetNAppScopesResponse
 } from './types'
 import { doActionWithError } from '../../../request/action'
 import { formalizeAppID } from '../../../appuser/app/local'
@@ -53,6 +55,19 @@ export const useScopeStore = defineStore('coupon-scope', {
     }
   },
   actions: {
+    getNAppScopes (req: GetNAppScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
+      doActionWithError<GetNAppScopesRequest, GetNAppScopesResponse>(
+        API.GET_N_APP_SCOPES,
+        req,
+        req.Message,
+        (resp: GetNAppScopesResponse): void => {
+          this.addScopes(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true)
+        }
+      )
+    },
     getAppScopes (req: GetAppScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
       doActionWithError<GetAppScopesRequest, GetAppScopesResponse>(
         API.GET_APP_SCOPES,
