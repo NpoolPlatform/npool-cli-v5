@@ -32,7 +32,6 @@ export const getScopes = (pageStart: number, pages: number, done?: (error: boole
 
 const getPageAppScopes = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   scope.getAppScopes({
-    TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
     Message: {
@@ -54,6 +53,32 @@ const getPageAppScopes = (pageIndex: number, pageEnd: number, done?: (error: boo
 
 export const getAppScopes = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   getPageAppScopes(pageStart, pages ? pageStart + pages : pages, done)
+}
+
+const getNPageAppScopes = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  scope.getNAppScopes({
+    TargetAppID: AppID.value,
+    Offset: pageIndex * constant.DefaultPageSize,
+    Limit: constant.DefaultPageSize,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_N_APP_SCOPES_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error: boolean, rows?: Array<couponscope.Scope>, total?: number) => {
+    if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
+      done?.(error, totalPages, total as number)
+      return
+    }
+    getNPageAppScopes(++pageIndex, pageEnd, done)
+  })
+}
+
+export const getNAppScopes = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  getNPageAppScopes(pageStart, pages ? pageStart + pages : pages, done)
 }
 
 export const scopes = computed(() => scope.scopes(AppID.value))
