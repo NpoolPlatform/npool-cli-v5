@@ -112,8 +112,8 @@ export interface UpdateAppGoodRequest extends BaseRequest {
   SaleStartAt?: number
   SaleEndAt?: number
   ServiceStartAt?: number
-  TechnicalFeeRatio?: number
-  ElectricityFeeRatio?: number
+  TechnicalFeeRatio?: string
+  ElectricityFeeRatio?: string
   DailyRewardAmount?: string
   Descriptions?: string[]
   DisplayColors?: string[]
