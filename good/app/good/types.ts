@@ -51,6 +51,7 @@ export interface Good {
   UnitAmount: number
   TestOnly: boolean
   Posters: string[]
+  AppGoodPosters: string[]
   Labels: string[]
   VoteCount: number
   Rating: number
