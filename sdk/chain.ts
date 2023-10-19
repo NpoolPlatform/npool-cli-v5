@@ -1,6 +1,4 @@
-import { computed } from 'vue'
 import { chain, constant, notify } from '..'
-import { AppID } from './localapp'
 
 const _chain = chain.useChainStore()
 

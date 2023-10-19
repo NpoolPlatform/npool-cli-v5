@@ -3,7 +3,7 @@ import { API } from './const'
 import {
   Chain,
   GetChainsRequest,
-  GetChainsResponse,
+  GetChainsResponse
 } from './types'
 import { doActionWithError } from '../../request'
 
@@ -12,8 +12,8 @@ export const useChainStore = defineStore('chains', {
     Chains: [] as Array<Chain>
   }),
   getters: {
-    chain (): (id: string) => Chain | undefined {
-      return (id: string) => {
+    chain (): (id: number) => Chain | undefined {
+      return (id: number) => {
         return this.Chains.find((el) => el.ID === id)
       }
     },

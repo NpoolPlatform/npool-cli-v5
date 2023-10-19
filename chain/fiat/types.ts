@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../request'
 
 export interface Fiat {
-  ID: string
+  ID: number
+  EntID: string
   Name: string
   Unit: string
   Logo: string
@@ -33,7 +34,7 @@ export interface GetFiatsResponse {
 }
 
 export interface UpdateFiatRequest extends BaseRequest {
-  ID: string
+  ID: number
   Name: string
 }
 

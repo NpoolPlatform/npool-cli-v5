@@ -1,7 +1,8 @@
+import { GasType } from '../../base'
 import { BaseRequest } from '../../request'
-
 export interface Coin {
-  ID: string
+  ID: number
+  EntID: string
   Name: string
   Logo: string
   Presale: boolean
@@ -30,15 +31,32 @@ export interface Coin {
   DefaultGoodID: string
   NeedMemo: boolean
   Disabled: boolean
+  RefreshCurrency: boolean
+  ChainType: string
+  ChainNativeUnit: string
+  ChainAtomicUnit: string
+  ChainUnitExp: number
+  GasType: GasType
+  ChainID: string
+  ChainNickname: string
+  ChainNativeCoinName: string
   CheckNewAddressBalance: boolean
   CreatedAt: number
   UpdatedAt: number
 }
 
 export interface CreateCoinRequest extends BaseRequest{
-  Name: string
+  Name: string // CoinName
   Unit: string
   ENV: string
+  ChainNickName: string
+  ChainNativeCoinName: string
+  ChainID: string
+  ChainType: string // chain_bases表中的name字段
+  ChainNativeUnit: string
+  ChainAtomicUnit: string
+  ChainUnitExp: string
+  GasType: GasType
 }
 
 export interface CreateCoinResponse {
@@ -56,25 +74,26 @@ export interface GetCoinsResponse {
 }
 
 export interface UpdateCoinRequest extends BaseRequest {
-  ID: string
-  Presale: boolean
-  ReservedAmount: string
-  ForPay: boolean
-  HomePage: string
-  Specs: string
-  FeeCoinTypeID: string
-  WithdrawFeeByStableUSD: boolean
-  WithdrawFeeAmount: string
-  CollectFeeAmount: string
-  HotWalletFeeAmount: string
-  LowFeeAmount: string
+  ID: number
+  Presale?: boolean
+  ReservedAmount?: string
+  ForPay?: boolean
+  HomePage?: string
+  Specs?: string
+  FeeCoinTypeID?: string
+  WithdrawFeeByStableUSD?: boolean
+  WithdrawFeeAmount?: string
+  CollectFeeAmount?: string
+  HotWalletFeeAmount?: string
+  LowFeeAmount?: string
   HotLowFeeAmount?: string
-  HotWalletAccountAmount: string
-  PaymentAccountCollectAmount: string
+  HotWalletAccountAmount?: string
+  PaymentAccountCollectAmount?: string
   LeastTransferAmount?: string
   Env?: string
   NeedMemo?: boolean
   CheckNewAddressBalance?: boolean
+  RefreshCurrency?: boolean
 }
 
 export interface UpdateCoinResponse {

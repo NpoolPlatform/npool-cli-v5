@@ -21,7 +21,8 @@ export enum TxType {
 }
 
 export interface Tx {
-  ID: string
+  ID: number
+  EntID: string
   CoinTypeID: string
   CoinName: string
   CoinLogo: string

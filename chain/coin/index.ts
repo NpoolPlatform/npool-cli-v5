@@ -16,8 +16,8 @@ export const useCoinStore = defineStore('coins', {
     Coins: [] as Array<Coin>
   }),
   getters: {
-    coin (): (id: string) => Coin | undefined {
-      return (id: string) => {
+    coin (): (id: number) => Coin | undefined {
+      return (id: number) => {
         return this.Coins.find((el) => el.ID === id)
       }
     },

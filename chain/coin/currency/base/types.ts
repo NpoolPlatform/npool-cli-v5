@@ -1,7 +1,8 @@
 import { CurrencyFeedType } from '../../../base'
 
 export interface CoinCurrency {
-  ID: string
+  ID: number
+  EntID: string
   CoinTypeID: string
   CoinName: string
   CoinLogo: string

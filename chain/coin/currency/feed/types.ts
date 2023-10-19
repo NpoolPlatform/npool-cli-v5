@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../../request'
 import { CurrencyFeedType } from '../../../base'
 
 export interface CoinFeed {
-  ID: string
+  ID: number
+  EntID: string
   CoinTypeID: string
   CoinName: string
   CoinUnit: string
@@ -39,7 +40,7 @@ export interface GetFeedsResponse {
 }
 
 export interface UpdateFeedRequest extends BaseRequest {
-  ID: string
+  ID: number
   FeedCoinName: string
   Disabled: boolean
 }

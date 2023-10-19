@@ -9,7 +9,7 @@ export const useTxStore = defineStore('transactions', {
   }),
   getters: {
     tx () {
-      return (id: string) => {
+      return (id: number) => {
         return this.Txs.find((el) => el.ID === id)
       }
     },

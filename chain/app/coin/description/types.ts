@@ -2,7 +2,8 @@ import { CoinDescriptionUsedFor } from './const'
 import { BaseRequest, NotifyRequest } from '../../../../request'
 
 export interface CoinDescription {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   CoinTypeID: string
   CoinName: string

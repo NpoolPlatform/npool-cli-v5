@@ -2,6 +2,7 @@ import { BaseRequest } from '../../../request'
 
 export interface AppCoin {
   ID: string
+  EntID: string
   AppID: string
   CoinTypeID: string
   Name: string

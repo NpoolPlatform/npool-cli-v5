@@ -2,11 +2,8 @@ import { BaseRequest } from '../../../request'
 import { CurrencyFeedType } from '../../base'
 
 export interface CoinFiat {
-  /**
-   * @inject_tag: sql:"id"
-   * @format int64
-   */
   ID: number
+  EntID: string
   /** @inject_tag: sql:"coin_type_id" */
   CoinTypeID: string
   /** @inject_tag: sql:"coin_name" */
