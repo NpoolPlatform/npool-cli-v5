@@ -53,7 +53,7 @@ export interface CreateCoinRequest extends BaseRequest{
   ChainType: string // chain_bases表中的name字段
   ChainNativeUnit: string
   ChainAtomicUnit: string
-  ChainUnitExp: string
+  ChainUnitExp: number
   ChainNickName: string
   ChainNativeCoinName: string
   GasType: GasType

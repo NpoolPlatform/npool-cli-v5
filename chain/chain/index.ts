@@ -17,6 +17,11 @@ export const useChainStore = defineStore('chains', {
         return this.Chains.find((el) => el.ID === id)
       }
     },
+    getChainByChainID (): (chainID: string) => Chain | undefined {
+      return (chainID: string) => {
+        return this.Chains.find((el) => el.ChainID === chainID)
+      }
+    },
     chains () {
       return () => {
         return this.Chains

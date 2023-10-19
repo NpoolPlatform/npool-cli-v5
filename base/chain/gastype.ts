@@ -3,3 +3,5 @@ export enum GasType {
     DynamicGas = 'DynamicGas',
     GasUnsupported = 'GasUnsupported'
 }
+
+export const GasTypes = Object.values(GasType)
