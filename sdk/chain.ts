@@ -8,8 +8,8 @@ const getPageChains = (pageIndex: number, pageEnd: number, done?: (error: boolea
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_COUPONS',
-        Message: 'MSG_GET_COUPONS_FAIL',
+        Title: 'MSG_GET_CHAINS',
+        Message: 'MSG_GET_CHAINS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }

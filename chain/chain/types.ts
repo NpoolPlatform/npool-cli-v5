@@ -1,3 +1,4 @@
+import { GasType } from '../../base'
 import { BaseRequest } from '../../request'
 export interface Chain {
     /**
@@ -21,11 +22,11 @@ export interface Chain {
      * @inject_tag: sql:"unit_dec_exp"
      * @format int64
      */
-    UnitDecExp: number
-    /** @inject_tag: sql:"chain_name" */
-    ChainName: string
+    UnitExp: number
+    Nickname: string
     /** @inject_tag: sql:"env" */
     ENV: string
+    GasType: GasType
     /**
      * @inject_tag: sql:"created_at"
      * @format int64
