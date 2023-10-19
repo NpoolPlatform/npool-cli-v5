@@ -35,7 +35,9 @@ export interface GetFiatsResponse {
 
 export interface UpdateFiatRequest extends BaseRequest {
   ID: number
-  Name: string
+  Name?: string
+  Unit?: string
+  Logo?: string
 }
 
 export interface UpdateFiatResponse {

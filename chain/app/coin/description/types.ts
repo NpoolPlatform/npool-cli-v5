@@ -41,7 +41,7 @@ export interface GetCoinDescriptionsResponse {
 }
 
 export interface UpdateCoinDescriptionRequest extends NotifyRequest {
-  ID: string
+  ID: number
   AppID: string
   Title: string
   Message: string
