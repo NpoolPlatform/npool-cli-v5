@@ -23,8 +23,8 @@ export const useCoinDescriptionStore = defineStore('coin-descriptions', {
     CoinDescriptions: new Map<string, Array<CoinDescription>>()
   }),
   getters: {
-    description (): (appID: string | undefined, id: string) => CoinDescription | undefined {
-      return (appID: string | undefined, id: string) => {
+    description (): (appID: string | undefined, id: number) => CoinDescription | undefined {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         return this.CoinDescriptions.get(appID)?.find((el) => el.ID === id)
       }

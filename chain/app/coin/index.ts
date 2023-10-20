@@ -126,7 +126,7 @@ export const useAppCoinStore = defineStore('app-coins', {
       })
       this.AppCoins.set(appID, _coins)
     },
-    delAppCoin (appID: string | undefined, id: string) {
+    delAppCoin (appID: string | undefined, id: number) {
       appID = formalizeAppID(appID)
       let _coins = this.AppCoins.get(appID) as Array<AppCoin>
       if (!_coins) {

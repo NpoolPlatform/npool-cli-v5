@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../request'
 import { CurrencyFeedType } from '../../base'
 
 export interface FiatCurrency {
-  ID: string
+  ID: number
+  EntID: string
   FiatID: string
   FeedType: CurrencyFeedType
   FiatName: string

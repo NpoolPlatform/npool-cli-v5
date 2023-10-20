@@ -16,7 +16,8 @@ export enum Protocol {
 }
 
 export interface API {
-  ID: string
+  ID: number
+  EntID: string
   Protocol: Protocol
   ServiceName: string
   Method: Method
@@ -25,7 +26,7 @@ export interface API {
   Exported: boolean
   PathPrefix: string
   Domains: string[]
-  Depracated: boolean
+  Deprecated: boolean
   /** @format int64 */
   CreatedAt: number
   /** @format int64 */
@@ -48,8 +49,8 @@ export interface GetAPIsResponse {
 }
 
 export interface UpdateAPIRequest extends BaseRequest {
-  ID: string
-  Depracated: boolean
+  ID: number
+  Deprecated: boolean
 }
 
 export interface UpdateAPIResponse {

@@ -3,7 +3,8 @@ import { CurrencyFeedType } from '../../../base'
 
 export interface FiatFeed {
   /** @inject_tag: sql:"id" */
-  ID: string
+  ID: number
+  EntID: string
   /** @inject_tag: sql:"fiat_id" */
   FiatID: string
   /** @inject_tag: sql:"fiat_name" */
@@ -54,7 +55,7 @@ export interface GetFiatFeedsResponse {
 }
 
 export interface UpdateFiatFeedRequest extends BaseRequest {
-  ID: string
+  ID: number
   FeedFiatName: string
   Disabled: boolean
 }

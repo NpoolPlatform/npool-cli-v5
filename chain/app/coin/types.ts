@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface AppCoin {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   CoinTypeID: string
   Name: string
@@ -60,7 +61,7 @@ export interface GetAppCoinsResponse {
 }
 
 export interface UpdateAppCoinRequest extends BaseRequest{
-  ID: string
+  ID: number
   AppID: string
   UserID?: string
   CoinTypeID: string
@@ -102,7 +103,7 @@ export interface CreateAppCoinResponse {
 }
 
 export interface DeleteAppCoinRequest extends BaseRequest {
-  ID: string
+  ID: number
   TargetAppID: string
 }
 
