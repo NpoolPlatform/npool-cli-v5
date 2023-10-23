@@ -21,6 +21,11 @@ export const useCoinStore = defineStore('coins', {
         return this.Coins.find((el) => el.ID === id)
       }
     },
+    getCoinByEntID (): (id: string) => Coin | undefined {
+      return (id: string) => {
+        return this.Coins.find((el) => el.EntID === id)
+      }
+    },
     coins () {
       return () => {
         return this.Coins
