@@ -54,7 +54,7 @@ export interface CreateCoinRequest extends BaseRequest{
   ChainNativeUnit: string
   ChainAtomicUnit: string
   ChainUnitExp: number
-  ChainNickName: string
+  ChainNickName?: string
   ChainNativeCoinName: string
   GasType: GasType
 }
