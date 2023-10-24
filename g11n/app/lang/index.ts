@@ -65,7 +65,7 @@ export const useAppLangStore = defineStore('app-langs', {
       })
       this.AppLangs.set(appID, _langs)
     },
-    delLang (appID: string | undefined, id: string) {
+    delLang (appID: string | undefined, id: number) {
       appID = formalizeAppID(appID)
       const _langs = this.AppLangs.get(appID) as Array<AppLang>
       if (!_langs) {

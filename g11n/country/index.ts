@@ -18,8 +18,8 @@ export const useCountryStore = defineStore('countries', {
     Countries: [] as Array<Country>
   }),
   getters: {
-    country (): (id: string) => Country | undefined {
-      return (id: string) => {
+    country (): (id: number) => Country | undefined {
+      return (id: number) => {
         return this.Countries.find((el) => el.ID === id)
       }
     },

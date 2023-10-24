@@ -39,8 +39,8 @@ export const useAppCountryStore = defineStore('app-countries', {
         this.AppCountries.set(appID, _countries)
       }
     },
-    delCountry (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
+    delCountry (): (appID: string | undefined, id: number) => void {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         const _langs = this.AppCountries.get(appID) as Array<Country>
         if (!_langs) {

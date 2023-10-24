@@ -1,5 +1,6 @@
 export interface AppLang {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   AppName: string
   LangID: string
@@ -13,7 +14,8 @@ export interface AppLang {
 }
 
 export interface Message {
-  ID: string
+  ID: number
+  EntID: string
   AppName: string
   LangID: string
   Lang: string

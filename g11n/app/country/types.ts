@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface Country {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   AppName: string
   CountryID: string
@@ -33,7 +34,7 @@ export interface CreateAppCountryResponse {
 }
 
 export interface DeleteAppCountryRequest extends BaseRequest {
-  ID: string
+  ID: number
   TargetAppID: string
 }
 

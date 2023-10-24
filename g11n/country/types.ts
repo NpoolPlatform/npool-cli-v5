@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../request'
 
 export interface Country {
-  ID: string
+  ID: number
+  EntID: string
   Country: string
   Flag: string
   Code: string
@@ -11,7 +12,7 @@ export interface Country {
 }
 
 export interface CountryReq {
-  ID?: string
+  EntID?: string
   Country: string
   Flag: string
   Code: string
@@ -48,7 +49,7 @@ export interface GetCountriesResponse {
 }
 
 export interface UpdateCountryRequest extends BaseRequest {
-  ID: string
+  ID: number
   Country: string
   Flag: string
   Code: string

@@ -18,8 +18,8 @@ export const useLangStore = defineStore('langs', {
     Langs: [] as Array<Lang>
   }),
   getters: {
-    lang (): (id: string) => Lang | undefined {
-      return (id: string) => {
+    lang (): (id: number) => Lang | undefined {
+      return (id: number) => {
         return this.Langs.find((el) => el.ID === id)
       }
     },

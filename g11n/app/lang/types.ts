@@ -2,7 +2,7 @@ import { BaseRequest } from '../../../request'
 import { AppLang } from '../../base'
 
 export interface UpdateAppLangRequest extends BaseRequest {
-  ID: string
+  ID: number
   Main: boolean
 }
 
@@ -32,7 +32,7 @@ export interface CreateAppLangResponse {
 }
 
 export interface DeleteAppLangRequest extends BaseRequest {
-  ID: string
+  ID: number
   TargetAppID: string
 }
 

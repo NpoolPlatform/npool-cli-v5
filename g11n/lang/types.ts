@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../request'
 
 export interface Lang {
-  ID: string
+  ID: number
+  EntID: string
   Lang: string
   Logo: string
   Name: string
@@ -11,7 +12,7 @@ export interface Lang {
 }
 
 export interface LangReq {
-  ID: string
+  EntID: string
   Lang: string
   Logo: string
   Name: string
@@ -48,7 +49,7 @@ export interface GetLangsResponse {
 }
 
 export interface UpdateLangRequest extends BaseRequest{
-  ID: string
+  ID: number
   Lang: string
   Logo: string
   Name: string

@@ -32,7 +32,7 @@ export interface CreateMessagesResponse {
 }
 
 export interface DeleteMessageRequest extends BaseRequest {
-  ID: string
+  ID: number
 }
 
 export interface DeleteMessageResponse {
@@ -40,7 +40,7 @@ export interface DeleteMessageResponse {
 }
 
 export interface UpdateMessageRequest extends NotifyRequest {
-  ID: string
+  ID: number
   MessageID: string
   Message: string
   GetIndex: number
@@ -52,7 +52,7 @@ export interface UpdateMessageResponse {
 }
 
 export interface MessageReq {
-  ID: string
+  EntID: string
   AppID: string
   LangID: string
   MessageID: string
