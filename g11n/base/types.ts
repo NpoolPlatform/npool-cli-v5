@@ -16,6 +16,7 @@ export interface AppLang {
 export interface Message {
   ID: number
   EntID: string
+  AppID: string
   AppName: string
   LangID: string
   Lang: string
