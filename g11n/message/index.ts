@@ -68,7 +68,7 @@ export const useMessageStore = defineStore('messages', {
       }
       this.Messages.set(appID, _messages)
     },
-    delMessage (appID: string | undefined, id: string) {
+    delMessage (appID: string | undefined, id: number) {
       appID = formalizeAppID(appID)
       const messages = this.Messages.get(appID) as Map<string, Array<Message>>
       if (!messages) {

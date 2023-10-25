@@ -86,7 +86,7 @@ export interface CreateAppMessagesResponse {
 }
 
 export interface DeleteAppMessageRequest extends BaseRequest {
-  ID: string
+  ID: number
   TargetAppID: string
 }
 
@@ -109,7 +109,7 @@ export interface GetAppMessagesResponse {
 export interface UpdateAppMessageRequest extends NotifyRequest {
   TargetAppID: string
   TargetLangID: string
-  ID: string
+  ID: number
   MessageID: string
   Message: string
   GetIndex: number
