@@ -104,7 +104,7 @@ export const useAppLangStore = defineStore('app-langs', {
 
     getNAppLangs (req: GetNAppLangsRequest, done: (error: boolean, rows: Array<AppLang>) => void) {
       doActionWithError<GetNAppLangsRequest, GetNAppLangsResponse>(
-        API.GET_APPLANGS,
+        API.GET_N_APPLANGS,
         req,
         req.Message,
         (resp: GetNAppLangsResponse): void => {
