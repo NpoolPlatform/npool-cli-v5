@@ -6,6 +6,7 @@ export interface AppCoin {
   AppID: string
   CoinTypeID: string
   Name: string
+  CoinName: string
   DisplayNames: string[]
   Logo: string
   Unit: string
