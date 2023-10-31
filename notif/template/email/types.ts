@@ -13,6 +13,8 @@ export interface Template {
   Subject: string
   Body: string
   DefaultToUsername: string
+  CreatedAt: number
+  UpdatedAt: number
 }
 
 export interface CreateAppEmailTemplateRequest extends BaseRequest {

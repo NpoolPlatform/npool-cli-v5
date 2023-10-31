@@ -10,6 +10,8 @@ export interface Contact {
   AccountType: SignMethodType
   UsedFor: EventType
   Sender: string
+  CreatedAt: number
+  UpdatedAt: number
 }
 
 export interface ContactViaEmailRequest extends BaseRequest {
