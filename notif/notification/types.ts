@@ -3,7 +3,8 @@ import { BaseRequest } from '../../request'
 import { NotifChannel } from '../base'
 
 export interface Notif {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   AppName: string
   UserID: string
@@ -23,7 +24,7 @@ export interface Notif {
 }
 
 export interface GetNotifRequest extends BaseRequest{
-  ID: string
+  ID: number
 }
 
 export interface GetNotifResponse {
@@ -31,7 +32,7 @@ export interface GetNotifResponse {
 }
 
 interface _NotifReq {
-  ID: string
+  ID: number
   Notified?: boolean
 }
 

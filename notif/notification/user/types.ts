@@ -3,7 +3,8 @@ import { EventType } from '../../../base'
 import { NotifType } from '../../base'
 
 export interface User {
-  ID: string
+  ID: number
+  EntID: string
   EventType: EventType
   AppID: string
   AppName: string
@@ -30,7 +31,7 @@ export interface CreateNotifUserResponse {
 }
 
 export interface DeleteNotifUserRequest extends BaseRequest {
-  ID: string
+  ID: number
 }
 
 export interface DeleteNotifUserResponse {

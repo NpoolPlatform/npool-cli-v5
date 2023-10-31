@@ -3,7 +3,8 @@ import { EventType } from '../../base'
 import { BaseRequest } from '../../request'
 
 export interface Contact {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   Account: string
   AccountType: SignMethodType
@@ -35,7 +36,7 @@ export interface CreateContactResponse {
 }
 
 export interface GetContactRequest extends BaseRequest {
-  ID: string
+  ID: number
 }
 
 export interface GetContactResponse {
@@ -53,7 +54,7 @@ export interface GetContactsResponse {
 }
 
 export interface UpdateContactRequest extends BaseRequest {
-  ID: string
+  ID: number
   Account: string
   AccountType: SignMethodType
   Sender: string
@@ -88,7 +89,7 @@ export interface GetAppContactsResponse {
 
 export interface UpdateAppContactRequest extends BaseRequest {
   TargetAppID: string
-  ID: string
+  ID: number
   UsedFor: EventType
   Account: string
   AccountType: SignMethodType

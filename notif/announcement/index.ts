@@ -23,8 +23,8 @@ export const useAnnouncementStore = defineStore('announcements', {
     Announcements: new Map<string, Array<Announcement>>()
   }),
   getters: {
-    announcement (): (appID: string | undefined, id: string) => Announcement | undefined {
-      return (appID: string | undefined, id: string) => {
+    announcement (): (appID: string | undefined, id: number) => Announcement | undefined {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         return this.Announcements.get(appID)?.find((el) => el.ID === id)
       }
@@ -49,8 +49,8 @@ export const useAnnouncementStore = defineStore('announcements', {
         this.Announcements.set(appID, _announcements)
       }
     },
-    delAnnouncement (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
+    delAnnouncement (): (appID: string | undefined, id: number) => void {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         let _announcements = this.Announcements.get(appID) as Array<Announcement>
         if (!_announcements) {
