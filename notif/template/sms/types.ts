@@ -2,12 +2,15 @@ import { BaseRequest, NotifyRequest } from '../../../request'
 import { EventType } from '../../../base'
 
 export interface Template {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   LangID: string
   UsedFor: EventType
   Subject: string
   Message: string
+  CreatedAt: number
+  UpdatedAt: number
 }
 
 export interface CreateSMSTemplateRequest extends NotifyRequest {
@@ -22,7 +25,7 @@ export interface CreateSMSTemplateResponse {
 }
 
 export interface GetSMSTemplateRequest {
-  ID: string
+  ID: number
 }
 
 export interface GetSMSTemplateResponse {
@@ -40,7 +43,7 @@ export interface GetSMSTemplatesResponse {
 }
 
 export interface UpdateSMSTemplateRequest extends NotifyRequest {
-  ID: string
+  ID: number
   TargetLangID: string
   Subject: string
   Message: string
@@ -76,7 +79,7 @@ export interface GetAppSMSTemplatesResponse {
 export interface UpdateAppSMSTemplateRequest extends NotifyRequest {
   TargetAppID: string
   TargetLangID: string
-  ID: string
+  ID: number
   AppID: string
   LangID: string
   UsedFor: EventType
@@ -90,7 +93,7 @@ export interface UpdateAppSMSTemplateResponse {
 
 export interface DeleteAppSMSTemplatesRequest extends BaseRequest {
   TargetAppID: string
-  ID: string
+  ID: number
 }
 
 export interface DeleteAppSMSTemplateResponse {
