@@ -43,8 +43,8 @@ export const useEmailTemplateStore = defineStore('email-templates', {
         this.EmailTemplates.set(appID, _templates)
       }
     },
-    delTemplate (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
+    delTemplate (): (appID: string | undefined, id: number) => void {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         const _templates = this.EmailTemplates.get(appID) as Array<Template>
         if (!_templates) {

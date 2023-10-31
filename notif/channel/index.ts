@@ -19,8 +19,8 @@ export const useNotifChannelStore = defineStore('notif-channels', {
     NotifChannels: new Map<string, Array<TNotifChannel>>()
   }),
   getters: {
-    channel (): (appID: string | undefined, id: string) => TNotifChannel | undefined {
-      return (appID: string | undefined, id: string) => {
+    channel (): (appID: string | undefined, id: number) => TNotifChannel | undefined {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         return this.NotifChannels.get(appID)?.find((el) => el.ID === id)
       }
@@ -45,7 +45,7 @@ export const useNotifChannelStore = defineStore('notif-channels', {
       })
       this.NotifChannels.set(appID, _channels)
     },
-    delChannel (appID: string | undefined, id: string) {
+    delChannel (appID: string | undefined, id: number) {
       appID = formalizeAppID(appID)
       let _channels = this.NotifChannels.get(appID) as Array<TNotifChannel>
       if (!_channels) {

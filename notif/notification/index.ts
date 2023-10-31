@@ -19,8 +19,8 @@ export const useNotifStore = defineStore('notifs', {
     Notifs: new Map<string, Array<Notif>>()
   }),
   getters: {
-    notif (): (appID: string | undefined, id: string) => Notif | undefined {
-      return (appID: string | undefined, id: string) => {
+    notif (): (appID: string | undefined, id: number) => Notif | undefined {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         return this.Notifs.get(appID)?.find((el) => el.ID === id)
       }

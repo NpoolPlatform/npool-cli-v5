@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface ReadState {
-  ID: string
+  ID: number
+  EntID: string
   AnnouncementID: string
   AppID: string
   AppName: string
@@ -13,6 +14,7 @@ export interface ReadState {
   Content: string
   /** @format int64 */
   CreatedAt: number
+  UpdatedAt: number
 }
 
 export interface CreateReadStateRequest extends BaseRequest {
