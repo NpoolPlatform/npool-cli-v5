@@ -28,7 +28,7 @@ export const useFrontendTemplateStore = defineStore('front-templates', {
     templates (): (appID?: string) => Array<Template> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
-        return this.FrontendTemplates.get(appID) || []
+        return this.FrontendTemplates.get(appID)?.sort((a, b) => a.UsedFor.localeCompare(b.UsedFor, 'zh-CN')) || []
       }
     },
     addTemplates (): (appID: string | undefined, templates: Array<Template>) => void {
