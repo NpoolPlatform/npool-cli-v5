@@ -26,7 +26,7 @@ export const useEmailTemplateStore = defineStore('email-templates', {
     templates (): (appID?: string) => Array<Template> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
-        return this.EmailTemplates.get(appID) || []
+        return this.EmailTemplates.get(appID)?.sort((a, b) => a.UsedFor.localeCompare(b.UsedFor, 'zh-CN')) || []
       }
     },
     addTemplates (): (appID: string | undefined, templates: Array<Template>) => void {
