@@ -29,6 +29,12 @@ export const useAnnouncementStore = defineStore('announcements', {
         return this.Announcements.get(appID)?.find((el) => el.ID === id)
       }
     },
+    getAnnouncementByEntID (): (appID: string | undefined, entID: string) => Announcement | undefined {
+      return (appID: string | undefined, entID: string) => {
+        appID = formalizeAppID(appID)
+        return this.Announcements.get(appID)?.find((el) => el.EntID === entID)
+      }
+    },
     announcements (): (appID: string | undefined) => Array<Announcement> {
       return (appID: string | undefined) => {
         appID = formalizeAppID(appID)
