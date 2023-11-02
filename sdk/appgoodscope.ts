@@ -4,7 +4,7 @@ import { AppID } from './localapp'
 
 const scope = appgoodscope.useAppGoodScopeStore()
 
-const getPageScopes = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageAppGoodScopes = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   scope.getScopes({
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
@@ -22,12 +22,12 @@ const getPageScopes = (pageIndex: number, pageEnd: number, done?: (error: boolea
       done?.(error, totalPages, total as number)
       return
     }
-    getPageScopes(++pageIndex, pageEnd, done)
+    getPageAppGoodScopes(++pageIndex, pageEnd, done)
   })
 }
 
-export const getScopes = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageScopes(pageStart, pages ? pageStart + pages : pages, done)
+export const getAppGoodScopes = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  getPageAppGoodScopes(pageStart, pages ? pageStart + pages : pages, done)
 }
 
 const getPageAppScopes = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
@@ -54,9 +54,9 @@ const getPageAppScopes = (pageIndex: number, pageEnd: number, done?: (error: boo
 export const getAppScopes = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   getPageAppScopes(pageStart, pages ? pageStart + pages : pages, done)
 }
-export const scopes = computed(() => scope.scopes(AppID.value))
+export const appgoodscopes = computed(() => scope.scopes(AppID.value))
 
-export const createScope = (target: appgoodscope.Scope, finish: (error: boolean) => void) => {
+export const createAppGoodScope = (target: appgoodscope.Scope, finish: (error: boolean) => void) => {
   scope.createScope({
     ...target,
     Message: {
@@ -78,7 +78,7 @@ export const createScope = (target: appgoodscope.Scope, finish: (error: boolean)
   })
 }
 
-export const deleteScope = (target: appgoodscope.Scope, finish: (error: boolean) => void) => {
+export const deleteAppGoodScope = (target: appgoodscope.Scope, finish: (error: boolean) => void) => {
   scope.deleteScope({
     ID: target?.ID,
     Message: {
