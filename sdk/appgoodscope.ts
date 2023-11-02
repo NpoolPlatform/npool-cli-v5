@@ -1,8 +1,8 @@
 import { computed } from 'vue'
-import { couponscope, constant, notify } from '..'
+import { appgoodscope, constant, notify } from '..'
 import { AppID } from './localapp'
 
-const scope = couponscope.useScopeStore()
+const scope = appgoodscope.useAppGoodScopeStore()
 
 const getPageScopes = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   scope.getScopes({
@@ -16,7 +16,7 @@ const getPageScopes = (pageIndex: number, pageEnd: number, done?: (error: boolea
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<couponscope.Scope>, total?: number) => {
+  }, (error: boolean, rows?: Array<appgoodscope.Scope>, total?: number) => {
     if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
       done?.(error, totalPages, total as number)
@@ -30,9 +30,33 @@ export const getScopes = (pageStart: number, pages: number, done?: (error: boole
   getPageScopes(pageStart, pages ? pageStart + pages : pages, done)
 }
 
+const getPageAppScopes = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  scope.getAppScopes({
+    Offset: pageIndex * constant.DefaultPageSize,
+    Limit: constant.DefaultPageSize,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_APP_SCOPES_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error: boolean, rows?: Array<appgoodscope.Scope>, total?: number) => {
+    if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
+      done?.(error, totalPages, total as number)
+      return
+    }
+    getPageAppScopes(++pageIndex, pageEnd, done)
+  })
+}
+
+export const getAppScopes = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  getPageAppScopes(pageStart, pages ? pageStart + pages : pages, done)
+}
 export const scopes = computed(() => scope.scopes(AppID.value))
 
-export const createScope = (target: couponscope.Scope, finish: (error: boolean) => void) => {
+export const createScope = (target: appgoodscope.Scope, finish: (error: boolean) => void) => {
   scope.createScope({
     ...target,
     Message: {
@@ -54,7 +78,7 @@ export const createScope = (target: couponscope.Scope, finish: (error: boolean) 
   })
 }
 
-export const deleteScope = (target: couponscope.Scope, finish: (error: boolean) => void) => {
+export const deleteScope = (target: appgoodscope.Scope, finish: (error: boolean) => void) => {
   scope.deleteScope({
     ID: target?.ID,
     Message: {
