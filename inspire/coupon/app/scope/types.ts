@@ -1,24 +1,27 @@
-import { BaseRequest } from '../../../request'
-import { CouponScope, CouponType } from '../const'
+import { BaseRequest } from '../../../../request'
+import { CouponScope, CouponType } from '../../const'
 
 export interface Scope {
   ID: string
+  AppGoodID: string
+  ScopeID: string
+  GoodName: string
   GoodID: string
-  GoodTitle: string
   CouponID: string
   CouponName: string
   CouponType: CouponType
   CouponScope: CouponScope
   CouponDenomination: string
-  CouponCirculation: string
   /** @format int64 */
   CreatedAt: number
   /** @format int64 */
   UpdatedAt: number
 }
+
 export interface CreateScopeRequest extends BaseRequest {
-  GoodID: string
-  CouponID: string
+  AppID?: string
+  ScopeID: string
+  AppGoodID: string
   CouponScope?: CouponScope
 }
 
@@ -35,6 +38,8 @@ export interface DeleteScopeResponse {
 }
 
 export interface GetScopesRequest extends BaseRequest {
+  AppID?: string
+  UserID?: string
   /** @format int32 */
   Offset: number
   /** @format int32 */
@@ -42,6 +47,20 @@ export interface GetScopesRequest extends BaseRequest {
 }
 
 export interface GetScopesResponse {
+  Infos: Scope[]
+  /** @format int64 */
+  Total: number
+}
+
+export interface GetAppScopesRequest extends BaseRequest {
+  AppID?: string
+  /** @format int32 */
+  Offset: number
+  /** @format int32 */
+  Limit: number
+}
+
+export interface GetAppScopesResponse {
   Infos: Scope[]
   /** @format int64 */
   Total: number

@@ -7,12 +7,14 @@ import {
   GetScopesRequest,
   GetScopesResponse,
   DeleteScopeRequest,
-  DeleteScopeResponse
+  DeleteScopeResponse,
+  GetAppScopesRequest,
+  GetAppScopesResponse
 } from './types'
-import { doActionWithError } from '../../../request/action'
-import { formalizeAppID } from '../../../appuser/app/local'
+import { doActionWithError } from '../../../../request/action'
+import { formalizeAppID } from '../../../../appuser/app/local'
 
-export const useScopeStore = defineStore('coupon-scope', {
+export const useAppGoodScopeStore = defineStore('appgood-scope', {
   state: () => ({
     Scopes: new Map<string, Array<Scope>>()
   }),
@@ -53,7 +55,7 @@ export const useScopeStore = defineStore('coupon-scope', {
   actions: {
     getScopes (req: GetScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
       doActionWithError<GetScopesRequest, GetScopesResponse>(
-        API.GET_SCOPES,
+        API.GET_APPGOODSCOPES,
         req,
         req.Message,
         (resp: GetScopesResponse): void => {
@@ -64,9 +66,22 @@ export const useScopeStore = defineStore('coupon-scope', {
         }
       )
     },
+    getAppScopes (req: GetAppScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
+      doActionWithError<GetAppScopesRequest, GetAppScopesResponse>(
+        API.GET_APP_APPGOODSCOPES,
+        req,
+        req.Message,
+        (resp: GetAppScopesResponse): void => {
+          this.addScopes(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true)
+        }
+      )
+    },
     createScope (req: CreateScopeRequest, done: (error: boolean, row?: Scope) => void) {
       doActionWithError<CreateScopeRequest, CreateScopeResponse>(
-        API.CREATE_SCOPE,
+        API.CREATE_APPGOODSCOPE,
         req,
         req.Message,
         (resp: CreateScopeResponse): void => {
@@ -79,7 +94,7 @@ export const useScopeStore = defineStore('coupon-scope', {
     },
     deleteScope (req: DeleteScopeRequest, done: (error: boolean, row?: Scope) => void) {
       doActionWithError<DeleteScopeRequest, DeleteScopeResponse>(
-        API.DELETE_SCOPE,
+        API.DELETE_APPGOODSCOPE,
         req,
         req.Message,
         (resp: DeleteScopeResponse): void => {
