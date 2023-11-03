@@ -3,7 +3,7 @@ import { API } from './const'
 import {
   CreateScopeRequest,
   CreateScopeResponse,
-  AppGoodScope,
+  Scope,
   GetScopesRequest,
   GetScopesResponse,
   DeleteScopeRequest,
@@ -13,16 +13,16 @@ import { doActionWithError } from '../../../request/action'
 
 export const useScopeStore = defineStore('scope-scope', {
   state: () => ({
-    Scopes: [] as Array<AppGoodScope>
+    Scopes: [] as Array<Scope>
   }),
   getters: {
-    scope (): (id: string) => AppGoodScope | undefined {
+    scope (): (id: string) => Scope | undefined {
       return (id: string) => {
         return this.Scopes.find((el) => el.ID === id)
       }
     },
-    addScopes (): (scopes: Array<AppGoodScope>) => void {
-      return (scopes: Array<AppGoodScope>) => {
+    addScopes (): (scopes: Array<Scope>) => void {
+      return (scopes: Array<Scope>) => {
         scopes.forEach((scope) => {
           const index = this.Scopes.findIndex((el) => el.ID === scope.ID)
           this.Scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, scope)
@@ -35,14 +35,14 @@ export const useScopeStore = defineStore('scope-scope', {
         this.Scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       }
     },
-    scopes (): () => Array<AppGoodScope> {
+    scopes (): () => Array<Scope> {
       return () => {
         return this.Scopes.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     }
   },
   actions: {
-    getScopes (req: GetScopesRequest, done: (error: boolean, rows?: Array<AppGoodScope>) => void) {
+    getScopes (req: GetScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
       doActionWithError<GetScopesRequest, GetScopesResponse>(
         API.GET_SCOPES,
         req,
@@ -55,7 +55,7 @@ export const useScopeStore = defineStore('scope-scope', {
         }
       )
     },
-    createScope (req: CreateScopeRequest, done: (error: boolean, row?: AppGoodScope) => void) {
+    createScope (req: CreateScopeRequest, done: (error: boolean, row?: Scope) => void) {
       doActionWithError<CreateScopeRequest, CreateScopeResponse>(
         API.CREATE_SCOPE,
         req,
@@ -68,7 +68,7 @@ export const useScopeStore = defineStore('scope-scope', {
         }
       )
     },
-    deleteScope (req: DeleteScopeRequest, done: (error: boolean, row?: AppGoodScope) => void) {
+    deleteScope (req: DeleteScopeRequest, done: (error: boolean, row?: Scope) => void) {
       doActionWithError<DeleteScopeRequest, DeleteScopeResponse>(
         API.DELETE_SCOPE,
         req,
