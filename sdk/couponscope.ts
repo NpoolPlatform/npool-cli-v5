@@ -1,6 +1,5 @@
 import { computed } from 'vue'
 import { couponscope, constant, notify } from '..'
-import { AppID } from './localapp'
 
 const scope = couponscope.useScopeStore()
 
@@ -30,7 +29,7 @@ export const getScopes = (pageStart: number, pages: number, done?: (error: boole
   getPageScopes(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const scopes = computed(() => scope.scopes(AppID.value))
+export const scopes = computed(() => scope.scopes())
 
 export const createScope = (target: couponscope.Scope, finish: (error: boolean) => void) => {
   scope.createScope({
