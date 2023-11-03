@@ -10,43 +10,34 @@ import {
   DeleteScopeResponse
 } from './types'
 import { doActionWithError } from '../../../request/action'
-import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useScopeStore = defineStore('coupon-scope', {
+export const useScopeStore = defineStore('scope-scope', {
   state: () => ({
-    Scopes: new Map<string, Array<AppGoodScope>>()
+    Scopes: [] as Array<AppGoodScope>
   }),
   getters: {
-    addScopes (): (appID: string | undefined, scopes: Array<AppGoodScope>) => void {
-      return (appID: string | undefined, scopes: Array<AppGoodScope>) => {
-        appID = formalizeAppID(appID)
-        let _scopes = this.Scopes.get(appID) as Array<AppGoodScope>
-        if (!_scopes) {
-          _scopes = []
-        }
-        scopes.forEach((coupon) => {
-          const index = _scopes.findIndex((el) => el.ID === coupon.ID)
-          _scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, coupon)
+    scope (): (id: string) => AppGoodScope | undefined {
+      return (id: string) => {
+        return this.Scopes.find((el) => el.ID === id)
+      }
+    },
+    addScopes (): (scopes: Array<AppGoodScope>) => void {
+      return (scopes: Array<AppGoodScope>) => {
+        scopes.forEach((scope) => {
+          const index = this.Scopes.findIndex((el) => el.ID === scope.ID)
+          this.Scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, scope)
         })
-        this.Scopes.set(appID, _scopes)
       }
     },
-    delScope (): (appID: string | undefined, scopeID: string) => void {
-      return (appID: string | undefined, scopeID: string) => {
-        appID = formalizeAppID(appID)
-        let _scopes = this.Scopes.get(appID)
-        if (!_scopes) {
-          _scopes = []
-        }
-        const index = _scopes.findIndex((el) => el.ID === scopeID)
-        _scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-        this.Scopes.set(appID, _scopes)
+    delScope (): (scopeID: string) => void {
+      return (scopeID: string) => {
+        const index = this.Scopes.findIndex((el) => el.ID === scopeID)
+        this.Scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       }
     },
-    scopes (): (appID?: string) => Array<AppGoodScope> {
-      return (appID?: string) => {
-        appID = formalizeAppID(appID)
-        return this.Scopes.get(appID)?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+    scopes (): () => Array<AppGoodScope> {
+      return () => {
+        return this.Scopes.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     }
   },
@@ -57,7 +48,7 @@ export const useScopeStore = defineStore('coupon-scope', {
         req,
         req.Message,
         (resp: GetScopesResponse): void => {
-          this.addScopes(undefined, resp.Infos)
+          this.addScopes(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -70,7 +61,7 @@ export const useScopeStore = defineStore('coupon-scope', {
         req,
         req.Message,
         (resp: CreateScopeResponse): void => {
-          this.addScopes(undefined, [resp.Info])
+          this.addScopes([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -83,7 +74,7 @@ export const useScopeStore = defineStore('coupon-scope', {
         req,
         req.Message,
         (resp: DeleteScopeResponse): void => {
-          this.delScope(undefined, req.ID)
+          this.delScope(req.ID)
           done(false, resp.Info)
         }, () => {
           done(true)
