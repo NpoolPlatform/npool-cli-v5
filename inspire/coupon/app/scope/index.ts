@@ -3,7 +3,7 @@ import { API } from './const'
 import {
   CreateScopeRequest,
   CreateScopeResponse,
-  Scope,
+  AppGoodScope,
   GetScopesRequest,
   GetScopesResponse,
   DeleteScopeRequest,
@@ -16,13 +16,13 @@ import { formalizeAppID } from '../../../../appuser/app/local'
 
 export const useAppGoodScopeStore = defineStore('appgood-scope', {
   state: () => ({
-    Scopes: new Map<string, Array<Scope>>()
+    Scopes: new Map<string, Array<AppGoodScope>>()
   }),
   getters: {
-    addScopes (): (appID: string | undefined, scopes: Array<Scope>) => void {
-      return (appID: string | undefined, scopes: Array<Scope>) => {
+    addScopes (): (appID: string | undefined, scopes: Array<AppGoodScope>) => void {
+      return (appID: string | undefined, scopes: Array<AppGoodScope>) => {
         appID = formalizeAppID(appID)
-        let _scopes = this.Scopes.get(appID) as Array<Scope>
+        let _scopes = this.Scopes.get(appID) as Array<AppGoodScope>
         if (!_scopes) {
           _scopes = []
         }
@@ -45,7 +45,7 @@ export const useAppGoodScopeStore = defineStore('appgood-scope', {
         this.Scopes.set(appID, _scopes)
       }
     },
-    scopes (): (appID?: string) => Array<Scope> {
+    scopes (): (appID?: string) => Array<AppGoodScope> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.Scopes.get(appID)?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
@@ -53,7 +53,7 @@ export const useAppGoodScopeStore = defineStore('appgood-scope', {
     }
   },
   actions: {
-    getScopes (req: GetScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
+    getScopes (req: GetScopesRequest, done: (error: boolean, rows?: Array<AppGoodScope>) => void) {
       doActionWithError<GetScopesRequest, GetScopesResponse>(
         API.GET_APPGOODSCOPES,
         req,
@@ -66,7 +66,7 @@ export const useAppGoodScopeStore = defineStore('appgood-scope', {
         }
       )
     },
-    getAppScopes (req: GetAppScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
+    getAppScopes (req: GetAppScopesRequest, done: (error: boolean, rows?: Array<AppGoodScope>) => void) {
       doActionWithError<GetAppScopesRequest, GetAppScopesResponse>(
         API.GET_APP_APPGOODSCOPES,
         req,
@@ -79,7 +79,7 @@ export const useAppGoodScopeStore = defineStore('appgood-scope', {
         }
       )
     },
-    createScope (req: CreateScopeRequest, done: (error: boolean, row?: Scope) => void) {
+    createScope (req: CreateScopeRequest, done: (error: boolean, row?: AppGoodScope) => void) {
       doActionWithError<CreateScopeRequest, CreateScopeResponse>(
         API.CREATE_APPGOODSCOPE,
         req,
@@ -92,7 +92,7 @@ export const useAppGoodScopeStore = defineStore('appgood-scope', {
         }
       )
     },
-    deleteScope (req: DeleteScopeRequest, done: (error: boolean, row?: Scope) => void) {
+    deleteScope (req: DeleteScopeRequest, done: (error: boolean, row?: AppGoodScope) => void) {
       doActionWithError<DeleteScopeRequest, DeleteScopeResponse>(
         API.DELETE_APPGOODSCOPE,
         req,
