@@ -95,6 +95,7 @@ export interface GetEmailTemplatesResponse {
 
 export interface UpdateEmailTemplateRequest extends BaseRequest {
   ID: number
+  EntID: string
   Sender: string
   ReplyTos: string[]
   CCTos: string[]
