@@ -16,7 +16,7 @@ const getPageAppGoodScopes = (pageIndex: number, pageEnd: number, done?: (error:
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<appgoodscope.Scope>, total?: number) => {
+  }, (error: boolean, rows?: Array<appgoodscope.AppGoodScope>, total?: number) => {
     if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
       done?.(error, totalPages, total as number)
@@ -41,7 +41,7 @@ const getPageAppScopes = (pageIndex: number, pageEnd: number, done?: (error: boo
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<appgoodscope.Scope>, total?: number) => {
+  }, (error: boolean, rows?: Array<appgoodscope.AppGoodScope>, total?: number) => {
     if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
       done?.(error, totalPages, total as number)
@@ -56,7 +56,7 @@ export const getAppScopes = (pageStart: number, pages: number, done?: (error: bo
 }
 export const appgoodscopes = computed(() => scope.scopes(AppID.value))
 
-export const createAppGoodScope = (target: appgoodscope.Scope, finish: (error: boolean) => void) => {
+export const createAppGoodScope = (target: appgoodscope.AppGoodScope, finish: (error: boolean) => void) => {
   scope.createScope({
     ...target,
     Message: {
@@ -78,7 +78,7 @@ export const createAppGoodScope = (target: appgoodscope.Scope, finish: (error: b
   })
 }
 
-export const deleteAppGoodScope = (target: appgoodscope.Scope, finish: (error: boolean) => void) => {
+export const deleteAppGoodScope = (target: appgoodscope.AppGoodScope, finish: (error: boolean) => void) => {
   scope.deleteScope({
     ID: target?.ID,
     Message: {
