@@ -19,6 +19,13 @@ export const useAppGoodScopeStore = defineStore('appgood-scope', {
     Scopes: new Map<string, Array<AppGoodScope>>()
   }),
   getters: {
+    scope (): (appID: string | undefined, id: string | undefined) => AppGoodScope | undefined {
+      return (appID: string | undefined, id: string | undefined) => {
+        if (!id) return undefined
+        appID = formalizeAppID(appID)
+        return this.Scopes.get(appID)?.find((el) => el.ID === id)
+      }
+    },
     addScopes (): (appID: string | undefined, scopes: Array<AppGoodScope>) => void {
       return (appID: string | undefined, scopes: Array<AppGoodScope>) => {
         appID = formalizeAppID(appID)
