@@ -32,6 +32,7 @@ export interface CreateNotifUserResponse {
 
 export interface DeleteNotifUserRequest extends BaseRequest {
   ID: number
+  EntID?: string
 }
 
 export interface DeleteNotifUserResponse {

@@ -48,6 +48,7 @@ export interface UpdateAppEmailTemplateRequest extends BaseRequest {
   TargetAppID: string
   TargetLangID: string
   ID: number
+  EntID?: string
   Sender: string
   ReplyTos: string[]
   CCTos: string[]

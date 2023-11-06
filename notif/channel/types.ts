@@ -24,6 +24,7 @@ export interface CreateNotifChannelResponse {
 
 export interface DeleteNotifChannelRequest extends BaseRequest {
   ID: number
+  EntID: string
 }
 
 export interface DeleteNotifChannelResponse {

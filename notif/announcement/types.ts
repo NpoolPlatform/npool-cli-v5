@@ -42,6 +42,7 @@ export interface CreateAnnouncementResponse {
 
 export interface DeleteAnnouncementRequest extends BaseRequest {
   ID: number
+  EntID: string
 }
 
 export interface DeleteAnnouncementResponse {

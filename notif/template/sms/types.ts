@@ -44,6 +44,7 @@ export interface GetSMSTemplatesResponse {
 
 export interface UpdateSMSTemplateRequest extends NotifyRequest {
   ID: number
+  EntID?: string
   TargetLangID: string
   Subject: string
   Message: string
@@ -80,6 +81,7 @@ export interface UpdateAppSMSTemplateRequest extends NotifyRequest {
   TargetAppID: string
   TargetLangID: string
   ID: number
+  EntID?: string
   AppID: string
   LangID: string
   UsedFor: EventType

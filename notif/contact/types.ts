@@ -57,6 +57,7 @@ export interface GetContactsResponse {
 
 export interface UpdateContactRequest extends BaseRequest {
   ID: number
+  EntID?: string
   Account: string
   AccountType: SignMethodType
   Sender: string
@@ -92,6 +93,7 @@ export interface GetAppContactsResponse {
 export interface UpdateAppContactRequest extends BaseRequest {
   TargetAppID: string
   ID: number
+  EntID?: string
   UsedFor: EventType
   Account: string
   AccountType: SignMethodType

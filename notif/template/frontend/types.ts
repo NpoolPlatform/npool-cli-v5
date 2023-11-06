@@ -49,6 +49,7 @@ export interface GetFrontendTemplatesResponse {
 
 export interface UpdateFrontendTemplateRequest extends BaseRequest {
   ID: number
+  EntID?: string
   Title: string
   Content: string
   TargetLangID: string
@@ -96,6 +97,7 @@ export interface GetAppFrontendTemplatesResponse {
 
 export interface UpdateAppFrontendTemplateRequest extends BaseRequest {
   ID: number
+  EntID?: string
   TargetAppID: string
   TargetLangID: string
   Title: string
