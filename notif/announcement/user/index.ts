@@ -39,8 +39,8 @@ export const useAnnouncementUserStore = defineStore('announcement-users', {
         this.AnnouncementUsers.set(appID, _users)
       }
     },
-    delUser (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
+    delUser (): (appID: string | undefined, id: number) => void {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         const _users = this.AnnouncementUsers.get(appID) as Array<User>
         if (!_users) {

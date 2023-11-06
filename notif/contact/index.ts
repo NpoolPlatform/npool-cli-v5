@@ -28,7 +28,7 @@ export const useContactStore = defineStore('contacts', {
     contacts (): (appID?: string) => Array<Contact> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
-        return this.Contacts.get(appID) || []
+        return this.Contacts.get(appID)?.sort((a, b) => a.UsedFor.localeCompare(b.UsedFor, 'zh-CN')) || []
       }
     },
     addContacts (): (appID: string | undefined, contacts: Array<Contact>) => void {

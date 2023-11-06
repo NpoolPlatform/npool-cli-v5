@@ -28,7 +28,7 @@ export const useSMSTemplateStore = defineStore('sms-templates', {
     templates (): (appID?: string) => Array<Template> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
-        return this.SMSTemplates.get(appID) || []
+        return this.SMSTemplates.get(appID)?.sort((a, b) => a.UsedFor.localeCompare(b.UsedFor, 'zh-CN')) || []
       }
     },
     addTemplates (): (appID: string | undefined, templates: Array<Template>) => void {
@@ -45,8 +45,8 @@ export const useSMSTemplateStore = defineStore('sms-templates', {
         this.SMSTemplates.set(appID, _templates)
       }
     },
-    delTemplate (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
+    delTemplate (): (appID: string | undefined, id: number) => void {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         const _templates = this.SMSTemplates.get(appID) as Array<Template>
         if (!_templates) {

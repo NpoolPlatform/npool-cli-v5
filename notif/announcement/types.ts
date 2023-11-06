@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../request'
 import { NotifType, NotifChannel } from '../base'
 export interface Announcement {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   AppName: string
   LangID: string
@@ -40,18 +41,10 @@ export interface CreateAnnouncementResponse {
 }
 
 export interface DeleteAnnouncementRequest extends BaseRequest {
-  ID: string
+  ID: number
 }
 
 export interface DeleteAnnouncementResponse {
-  Info: Announcement
-}
-
-export interface GetAnnouncementRequest extends BaseRequest {
-  ID: string
-}
-
-export interface GetAnnouncementResponse {
   Info: Announcement
 }
 
@@ -96,7 +89,7 @@ export interface GetNAppAnnouncementsResponse {
 }
 
 export interface UpdateAnnouncementRequest extends BaseRequest {
-  ID: string
+  ID: number
   Title: string
   Content: string
   Channel: NotifChannel

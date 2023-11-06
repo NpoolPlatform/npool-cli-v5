@@ -3,8 +3,9 @@ import { EventType } from '../../base'
 import { NotifChannel } from '../base'
 
 export interface TNotifChannel {
+  ID: number
+  EntID: string
   AppID: string
-  ID: string
   AppName: string
   EventType: EventType
   Channel: NotifChannel
@@ -22,7 +23,7 @@ export interface CreateNotifChannelResponse {
 }
 
 export interface DeleteNotifChannelRequest extends BaseRequest {
-  ID: string
+  ID: number
 }
 
 export interface DeleteNotifChannelResponse {

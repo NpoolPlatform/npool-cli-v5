@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../request'
 import { EventType } from '../../../base'
 
 export interface Template {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   LangID: string
   UsedFor: EventType
@@ -12,6 +13,8 @@ export interface Template {
   Subject: string
   Body: string
   DefaultToUsername: string
+  CreatedAt: number
+  UpdatedAt: number
 }
 
 export interface CreateAppEmailTemplateRequest extends BaseRequest {
@@ -44,7 +47,7 @@ export interface GetAppEmailTemplatesResponse {
 export interface UpdateAppEmailTemplateRequest extends BaseRequest {
   TargetAppID: string
   TargetLangID: string
-  ID: string
+  ID: number
   Sender: string
   ReplyTos: string[]
   CCTos: string[]
@@ -73,7 +76,7 @@ export interface CreateEmailTemplateResponse {
 }
 
 export interface GetEmailTemplateRequest extends BaseRequest {
-  ID: string
+  EntID: string
 }
 
 export interface GetEmailTemplateResponse {
@@ -91,7 +94,8 @@ export interface GetEmailTemplatesResponse {
 }
 
 export interface UpdateEmailTemplateRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   Sender: string
   ReplyTos: string[]
   CCTos: string[]

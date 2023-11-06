@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../request'
 import { NotifChannel } from '../../base'
 
 export interface SendState {
-  ID: string
+  ID: number
+  EntID: string
   AnnouncementID: string
   AppID: string
   AppName: string

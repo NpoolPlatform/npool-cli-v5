@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../request'
 import { EventType } from '../../../base'
 
 export interface Template {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   LangID: string
   UsedFor: EventType
@@ -26,7 +27,7 @@ export interface CreateFrontendTemplateResponse {
 }
 
 export interface GetFrontendTemplateRequest extends BaseRequest {
-  ID: string
+  EntID: string
 }
 
 export interface GetFrontendTemplateResponse {
@@ -47,7 +48,7 @@ export interface GetFrontendTemplatesResponse {
 }
 
 export interface UpdateFrontendTemplateRequest extends BaseRequest {
-  ID: string
+  ID: number
   Title: string
   Content: string
   TargetLangID: string
@@ -59,7 +60,7 @@ export interface DeleteFrontendTemplateResponse {
 }
 
 export interface DeleteFrontendTemplateRequest extends BaseRequest {
-  ID: string
+  ID: number
   UsedFor: EventType
 }
 
@@ -94,7 +95,7 @@ export interface GetAppFrontendTemplatesResponse {
 }
 
 export interface UpdateAppFrontendTemplateRequest extends BaseRequest {
-  ID: string
+  ID: number
   TargetAppID: string
   TargetLangID: string
   Title: string

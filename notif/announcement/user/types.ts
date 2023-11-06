@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../request'
 import { NotifType } from '../../base'
 
 export interface User {
-  ID: string
+  ID: number
+  EntID: string
   AnnouncementID: string
   AppID: string
   AppName: string
@@ -29,7 +30,7 @@ export interface CreateAnnouncementUserResponse {
 }
 
 export interface DeleteAnnouncementUserRequest extends BaseRequest {
-  ID: string
+  ID: number
 }
 
 export interface DeleteAnnouncementUserResponse {
