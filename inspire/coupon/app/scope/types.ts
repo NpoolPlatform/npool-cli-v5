@@ -20,7 +20,7 @@ export interface AppGoodScope {
 
 export interface CreateScopeRequest extends BaseRequest {
   AppID?: string
-  ScopeID: string
+  CouponID: string
   AppGoodID: string
   CouponScope?: CouponScope
 }
