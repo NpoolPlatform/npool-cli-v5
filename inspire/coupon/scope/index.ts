@@ -1,93 +1,54 @@
 import { defineStore } from 'pinia'
 import { API } from './const'
 import {
-  GetAppScopesRequest,
-  GetAppScopesResponse,
   CreateScopeRequest,
   CreateScopeResponse,
   Scope,
   GetScopesRequest,
   GetScopesResponse,
   DeleteScopeRequest,
-  DeleteScopeResponse,
-  GetNAppScopesRequest,
-  GetNAppScopesResponse
+  DeleteScopeResponse
 } from './types'
 import { doActionWithError } from '../../../request/action'
-import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useScopeStore = defineStore('coupon-scope', {
+export const useScopeStore = defineStore('scope-scope', {
   state: () => ({
-    Scopes: new Map<string, Array<Scope>>()
+    Scopes: [] as Array<Scope>
   }),
   getters: {
-    addScopes (): (appID: string | undefined, scopes: Array<Scope>) => void {
-      return (appID: string | undefined, scopes: Array<Scope>) => {
-        appID = formalizeAppID(appID)
-        let _scopes = this.Scopes.get(appID) as Array<Scope>
-        if (!_scopes) {
-          _scopes = []
-        }
-        scopes.forEach((coupon) => {
-          const index = _scopes.findIndex((el) => el.ID === coupon.ID)
-          _scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, coupon)
+    scope (): (id: string) => Scope | undefined {
+      return (id: string) => {
+        return this.Scopes.find((el) => el.ID === id)
+      }
+    },
+    addScopes (): (scopes: Array<Scope>) => void {
+      return (scopes: Array<Scope>) => {
+        scopes.forEach((scope) => {
+          const index = this.Scopes.findIndex((el) => el.ID === scope.ID)
+          this.Scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, scope)
         })
-        this.Scopes.set(appID, _scopes)
       }
     },
-    delScope (): (appID: string | undefined, scopeID: string) => void {
-      return (appID: string | undefined, scopeID: string) => {
-        appID = formalizeAppID(appID)
-        let _scopes = this.Scopes.get(appID)
-        if (!_scopes) {
-          _scopes = []
-        }
-        const index = _scopes.findIndex((el) => el.ID === scopeID)
-        _scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-        this.Scopes.set(appID, _scopes)
+    delScope (): (scopeID: string) => void {
+      return (scopeID: string) => {
+        const index = this.Scopes.findIndex((el) => el.ID === scopeID)
+        this.Scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       }
     },
-    scopes (): (appID?: string) => Array<Scope> {
-      return (appID?: string) => {
-        appID = formalizeAppID(appID)
-        return this.Scopes.get(appID)?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+    scopes (): () => Array<Scope> {
+      return () => {
+        return this.Scopes.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     }
   },
   actions: {
-    getNAppScopes (req: GetNAppScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
-      doActionWithError<GetNAppScopesRequest, GetNAppScopesResponse>(
-        API.GET_N_APP_SCOPES,
-        req,
-        req.Message,
-        (resp: GetNAppScopesResponse): void => {
-          this.addScopes(undefined, resp.Infos)
-          done(false, resp.Infos)
-        }, () => {
-          done(true)
-        }
-      )
-    },
-    getAppScopes (req: GetAppScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
-      doActionWithError<GetAppScopesRequest, GetAppScopesResponse>(
-        API.GET_APP_SCOPES,
-        req,
-        req.Message,
-        (resp: GetAppScopesResponse): void => {
-          this.addScopes(undefined, resp.Infos)
-          done(false, resp.Infos)
-        }, () => {
-          done(true)
-        }
-      )
-    },
     getScopes (req: GetScopesRequest, done: (error: boolean, rows?: Array<Scope>) => void) {
       doActionWithError<GetScopesRequest, GetScopesResponse>(
         API.GET_SCOPES,
         req,
         req.Message,
         (resp: GetScopesResponse): void => {
-          this.addScopes(undefined, resp.Infos)
+          this.addScopes(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -100,7 +61,7 @@ export const useScopeStore = defineStore('coupon-scope', {
         req,
         req.Message,
         (resp: CreateScopeResponse): void => {
-          this.addScopes(undefined, [resp.Info])
+          this.addScopes([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -113,7 +74,7 @@ export const useScopeStore = defineStore('coupon-scope', {
         req,
         req.Message,
         (resp: DeleteScopeResponse): void => {
-          this.delScope(undefined, req.ID)
+          this.delScope(req.ID)
           done(false, resp.Info)
         }, () => {
           done(true)
