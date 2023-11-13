@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../request'
 import { CouponScope, CouponType } from '../const'
 
 export interface Scope {
-  ID: string
+  ID: number
+  EntID: string
   GoodID: string
   GoodTitle: string
   CouponID: string
@@ -27,7 +28,8 @@ export interface CreateScopeResponse {
 }
 
 export interface DeleteScopeRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
 }
 
 export interface DeleteScopeResponse {

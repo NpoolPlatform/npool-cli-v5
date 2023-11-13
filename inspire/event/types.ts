@@ -3,7 +3,8 @@ import { BaseRequest } from '../../request'
 import { Coupon } from '../coupon/types'
 
 export interface Event {
-  ID: string
+  ID: number
+  EntID: string
   AppName: string
   EventType: EventType
   Coupons: Coupon[]
@@ -52,7 +53,8 @@ export interface GetEventsResponse {
 }
 
 export interface UpdateEventRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   CouponIDs: string[]
   Credits?: string
   CreditsPerUSD?: string
