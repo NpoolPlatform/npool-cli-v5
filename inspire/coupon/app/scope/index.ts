@@ -19,8 +19,8 @@ export const useAppGoodScopeStore = defineStore('appgood-scope', {
     Scopes: new Map<string, Array<AppGoodScope>>()
   }),
   getters: {
-    scope (): (appID: string | undefined, id: string | undefined) => AppGoodScope | undefined {
-      return (appID: string | undefined, id: string | undefined) => {
+    scope (): (appID: string | undefined, id: number | undefined) => AppGoodScope | undefined {
+      return (appID: string | undefined, id: number | undefined) => {
         if (!id) return undefined
         appID = formalizeAppID(appID)
         return this.Scopes.get(appID)?.find((el) => el.ID === id)
@@ -40,14 +40,14 @@ export const useAppGoodScopeStore = defineStore('appgood-scope', {
         this.Scopes.set(appID, _scopes)
       }
     },
-    delScope (): (appID: string | undefined, scopeID: string) => void {
-      return (appID: string | undefined, scopeID: string) => {
+    delScope (): (appID: string | undefined, id: number) => void {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         let _scopes = this.Scopes.get(appID)
         if (!_scopes) {
           _scopes = []
         }
-        const index = _scopes.findIndex((el) => el.ID === scopeID)
+        const index = _scopes.findIndex((el) => el.ID === id)
         _scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
         this.Scopes.set(appID, _scopes)
       }

@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface Registration {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   InviterID: string
   InviterEmailAddress: string
@@ -31,7 +32,8 @@ export interface GetRegistrationsResponse {
 }
 
 export interface UpdateRegistrationRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   InviterID: string
 }
 
