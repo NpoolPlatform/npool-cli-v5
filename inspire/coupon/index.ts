@@ -31,6 +31,12 @@ export const useCouponStore = defineStore('coupon-pool', {
         return this.Coupons.get(appID)?.find((el) => el.ID === id)
       }
     },
+    getCouponByEntID (): (appID: string | undefined, id: string) => Coupon | undefined {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return this.Coupons.get(appID)?.find((el) => el.EntID === id)
+      }
+    },
     valid (): (appID: string | undefined, id: number) => boolean {
       return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
