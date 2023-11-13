@@ -80,7 +80,7 @@ export const createAppGoodScope = (target: appgoodscope.AppGoodScope, finish: (e
 
 export const deleteAppGoodScope = (target: appgoodscope.AppGoodScope, finish: (error: boolean) => void) => {
   scope.deleteScope({
-    ID: target?.ID,
+    ...target,
     Message: {
       Error: {
         Title: 'MSG_DELETE_COUPON_SCOPE',
