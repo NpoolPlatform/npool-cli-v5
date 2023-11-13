@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../request'
 import { CouponConstraint, CouponScope, CouponType } from '../const'
 
 export interface Coupon {
-  ID: string
+  ID: number
+  EntID: string
   CouponType: CouponType
   AppID: string
   UserID: string

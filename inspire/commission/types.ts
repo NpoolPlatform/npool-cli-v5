@@ -2,7 +2,8 @@ import { BaseRequest } from '../../request'
 import { SettleAmountType, SettleInterval, SettleMode, SettleType } from './const'
 
 export interface Commission {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   UserID: string
   Username: string
@@ -66,7 +67,8 @@ export interface CreateUserCommissionResponse {
 }
 
 export interface UpdateCommissionRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   /** @format int64 */
   StartAt?: number
   Threshold?: string

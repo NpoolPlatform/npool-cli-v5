@@ -1,6 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface InvitationCode {
+  ID: number
+  EntID: string
   AppID: string
   UserID: string
   EmailAddress: string

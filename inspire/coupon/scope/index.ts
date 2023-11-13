@@ -16,8 +16,8 @@ export const useScopeStore = defineStore('scope-scope', {
     Scopes: [] as Array<Scope>
   }),
   getters: {
-    scope (): (id: string) => Scope | undefined {
-      return (id: string) => {
+    scope (): (id: number) => Scope | undefined {
+      return (id: number) => {
         return this.Scopes.find((el) => el.ID === id)
       }
     },
@@ -29,9 +29,9 @@ export const useScopeStore = defineStore('scope-scope', {
         })
       }
     },
-    delScope (): (scopeID: string) => void {
-      return (scopeID: string) => {
-        const index = this.Scopes.findIndex((el) => el.ID === scopeID)
+    delScope (): (id: number) => void {
+      return (id: number) => {
+        const index = this.Scopes.findIndex((el) => el.ID === id)
         this.Scopes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       }
     },
