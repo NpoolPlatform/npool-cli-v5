@@ -50,6 +50,12 @@ export const useAppGoodStore = defineStore('app-goods', {
         return this.good(appID, id)?.Visible
       }
     },
+    testOnly (): (appID: string | undefined, id: string) => boolean | undefined {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return this.good(appID, id)?.TestOnly
+      }
+    },
     canBuy (): (appID: string | undefined, id: string) => boolean | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
