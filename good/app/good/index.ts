@@ -101,14 +101,14 @@ export const useAppGoodStore = defineStore('app-goods', {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         const good = this.good(appID, id)
-        const min = Math.min(good?.PurchaseLimit || 0, Number(good?.GoodSpotQuantity))
+        const min = Math.min(good?.PurchaseLimit || 0, Number(good?.GoodSpotQuantity) + Number(good?.AppSpotQuantity))
         return Math.floor(min)
       }
     },
     spotQuantity (): (appID: string | undefined, id: string) => number {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return Number(this.good(appID, id)?.GoodSpotQuantity)
+        return Number(this.good(appID, id)?.GoodSpotQuantity) + Number(this.good(appID, id)?.AppSpotQuantity)
       }
     },
     techniqueFeeTatio (): (appID: string | undefined, id: string) => number {
@@ -125,7 +125,7 @@ export const useAppGoodStore = defineStore('app-goods', {
           return 'MSG_SOLD_OUT'
         }
         const now = Math.floor(Date.now() / 1000)
-        if (now > good?.SaleEndAt || Number(good?.GoodSpotQuantity) <= 0) {
+        if (now > good?.SaleEndAt || Number(good?.GoodSpotQuantity) + Number(good?.AppSpotQuantity) <= 0) {
           return 'MSG_SOLD_OUT'
         }
         if (now < good?.SaleStartAt) {

@@ -76,6 +76,7 @@ export interface Good {
   UserPurchaseLimit: string
   CancelMode: CancelMode
   CancellableBeforeStart: number
+  AppSpotQuantity: number
   AppGoodLocked: string
   AppGoodWaitStart: string
   AppGoodInService: string
