@@ -64,7 +64,7 @@ export const useAppGoodStore = defineStore('app-goods', {
         if (!this.spotQuantity(appID, id)) {
           return false
         }
-        return good?.Online && good?.Visible
+        return good?.Online
       }
     },
     priceString (): (appID: string | undefined, id: string) => string {
