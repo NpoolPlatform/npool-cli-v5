@@ -1,6 +1,6 @@
 import { BaseRequest } from '../../../request'
 import { BenefitType, GoodCoinInfo, GoodType } from '../../base'
-import { CancelMode } from './const'
+import { CancelMode, GoodStartMode } from './const'
 
 export interface Good {
   ID: string
@@ -81,6 +81,7 @@ export interface Good {
   AppGoodWaitStart: string
   AppGoodInService: string
   AppGoodSold: string
+  StartMode: GoodStartMode
 }
 
 export interface GetAppGoodsRequest extends BaseRequest {
