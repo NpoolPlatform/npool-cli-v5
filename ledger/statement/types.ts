@@ -2,7 +2,8 @@ import { BaseRequest } from '../../request'
 import { IOSubType, IOType } from './const'
 
 export interface Statement {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   CoinTypeID: string
   CoinName: string
@@ -20,7 +21,8 @@ export interface Statement {
 }
 
 export interface MiningReward {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   CoinTypeID: string
   CoinName: string

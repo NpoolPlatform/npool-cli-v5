@@ -2,7 +2,8 @@ import { SignMethodType } from '../../appuser/base'
 import { BaseRequest } from '../../request'
 
 export interface Transfer {
-  ID: string
+  ID: number
+  EntID: string
   CoinTypeID: string
   CoinName: string
   CoinDisplayNames: string[]

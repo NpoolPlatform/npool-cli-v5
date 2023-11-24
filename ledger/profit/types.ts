@@ -17,6 +17,8 @@ export interface GoodProfit {
 }
 
 export interface Profit {
+  ID: number
+  EntID: string
   AppID: string
   UserID: string
   CoinTypeID: string
