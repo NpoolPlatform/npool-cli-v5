@@ -3,7 +3,8 @@ import { BaseRequest } from '../../request'
 import { WithdrawState } from './const'
 
 export interface Withdraw {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   UserID: string
   CoinTypeID: string

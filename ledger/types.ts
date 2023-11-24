@@ -1,6 +1,8 @@
 import { BaseRequest } from '../request'
 
 export interface Ledger {
+  ID: number
+  EntID: string
   CoinTypeID: string
   CoinName: string
   DisplayNames: string[]
