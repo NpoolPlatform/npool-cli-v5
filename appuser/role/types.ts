@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../request'
 
 export interface Role {
-  ID: string
+  ID: number
+  EntID: string
   CreatedBy: string
   Role: string
   Description: string
@@ -13,7 +14,8 @@ export interface Role {
 }
 
 export interface AppRoleUser {
-  ID: string
+  ID: number
+  EntID: string
   CreatedBy: string
   Role: string
   Description: string
@@ -29,7 +31,8 @@ export interface AppRoleUser {
 }
 
 export interface RoleUser {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   RoleID: string
   UserID: string
@@ -66,7 +69,8 @@ export interface CreateRoleUserResponse {
 }
 
 export interface DeleteRoleUserRequest extends BaseRequest{
-  ID: string
+  ID: number
+  EntID: string
   TargetUserID: string
 }
 

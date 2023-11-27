@@ -42,7 +42,7 @@ export const useUserStore = defineStore('users', {
     },
     appUser (): (appID: string, userID: string) => User | undefined {
       return (appID: string, userID: string) => {
-        return this.Users.get(appID)?.find((el) => el.ID === userID)
+        return this.Users.get(appID)?.find((el) => el.EntID === userID)
       }
     },
     appUsers (): (appID: string | undefined) => Array<User> {

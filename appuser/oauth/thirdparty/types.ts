@@ -2,7 +2,8 @@ import { BaseRequest } from '../../../request'
 import { SignMethodType } from '../../base'
 
 export interface OAuthThirdParty {
-  ID: string
+  ID: number
+  EntID: string
   ClientName: SignMethodType
   ClientTag: string
   ClientLogoURL: string
@@ -27,7 +28,8 @@ export interface CreateOAuthThirdPartyResponse {
 }
 
 export interface UpdateOAuthThirdPartyRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   ClientName?: SignMethodType
   ClientTag?: string
   ClientLogoURL?: string
@@ -50,7 +52,8 @@ export interface GetOAuthThirdPartiesResponse {
 }
 
 export interface DeleteOAuthThirdPartyRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
 }
 
 export interface DeleteOAuthThirdPartyResponse {

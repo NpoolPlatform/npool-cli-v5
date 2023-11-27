@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface AppSubscribe {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   AppName: string
   SubscribeAppID: string
@@ -31,7 +32,8 @@ export interface GetAppSubscribesResponse {
 }
 
 export interface DeleteAppSubscribeRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   TargetAppID: string
 }
 

@@ -48,7 +48,7 @@ export const useAuthingStore = defineStore('auths', {
       if (!_auths) {
         _auths = []
       }
-      const index = _auths.findIndex((el) => el.ID === id)
+      const index = _auths.findIndex((el) => el.EntID === id)
       _auths.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.Auths.set(appID, _auths)
     },
@@ -84,7 +84,7 @@ export const useAuthingStore = defineStore('auths', {
         req,
         req.Message,
         (resp: DeleteAppAuthResponse): void => {
-          this.delAuth(req.TargetAppID, req.ID)
+          this.delAuth(req.TargetAppID, req.EntID)
           done(false, resp.Info)
         }, () => {
           done(true)

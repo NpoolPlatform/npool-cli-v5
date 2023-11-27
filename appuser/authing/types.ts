@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../request'
 
 export interface Auth {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   RoleID: string
   UserID: string
@@ -33,7 +34,8 @@ export interface CreateAppAuthResponse {
 
 export interface DeleteAppAuthRequest extends BaseRequest {
   TargetAppID: string
-  ID: string
+  ID: number
+  EntID: string
 }
 
 export interface DeleteAppAuthResponse {
