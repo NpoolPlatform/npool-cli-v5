@@ -66,7 +66,8 @@ export const updateAppUserOrder = (id: string, canceled: boolean) => {
   }
   _order.updateAppUserOrder({
     TargetAppID: AppID.value,
-    ID: id,
+    ID: targetOrder.ID,
+    EntID: targetOrder.EntID,
     TargetUserID: targetOrder.UserID,
     Canceled: canceled,
     Message: {
