@@ -72,3 +72,9 @@ export const formalizeUserID = (userID?: string) => {
   const user = useLocalUserStore()
   return user.User?.EntID
 }
+
+export const formalizeUserUintID = (id?: number) => {
+  if (id) return id
+  const user = useLocalUserStore()
+  return user.User?.ID
+}

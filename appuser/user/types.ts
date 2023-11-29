@@ -47,6 +47,7 @@ export interface LogoutResponse {
 }
 
 export interface UpdateUserRequest extends BaseRequest {
+  ID?: number
   Account?: string
   NewAccount?:string
   AccountType?: SignMethodType
@@ -123,6 +124,7 @@ export interface GetUsersResponse {
 }
 
 export interface UpdateAppUserRequest extends BaseRequest {
+  ID: number
   TargetUserID: string
   Kol?: boolean
   EmailAddress?: string

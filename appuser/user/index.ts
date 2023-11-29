@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useLocalUserStore } from './local'
+import { formalizeUserUintID, useLocalUserStore } from './local'
 import { doAction, doActionWithError } from '../../request'
 import { API } from './const'
 import {
@@ -155,6 +155,7 @@ export const useUserStore = defineStore('users', {
         })
     },
     updateUser (req: UpdateUserRequest, done: (error: boolean, row?: User) => void) {
+      req.ID = formalizeUserUintID()
       doActionWithError<UpdateUserRequest, UpdateUserResponse>(
         API.UPDATE_USER,
         req,
