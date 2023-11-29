@@ -45,7 +45,7 @@ export const useOrderStore = defineStore('orders', {
     order (): (orderID: string) => Order | undefined {
       return (orderID: string) => {
         const appID = formalizeAppID()
-        return this.Orders.get(appID)?.find((el) => el.ID === orderID)
+        return this.Orders.get(appID)?.find((el) => el.EntID === orderID)
       }
     },
     orderState (): (orderID: string) => string {
