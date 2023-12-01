@@ -6,6 +6,8 @@ export interface Auth {
   AppID: string
   RoleID: string
   UserID: string
+  EmailAddress: string
+  PhoneNO: string
   Resource: string
   Method: string
 }
