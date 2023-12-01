@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface AppOAuthThirdParty {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   ThirdPartyID: string
   ClientID: string
@@ -30,7 +31,8 @@ export interface CreateAppOAuthThirdPartyResponse {
 }
 
 export interface UpdateAppOAuthThirdPartyRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   TargetAppID: string
   ThirdPartyID?: string
   ClientID?: string
@@ -53,7 +55,8 @@ export interface GetAppOAuthThirdPartiesResponse {
 }
 
 export interface DeleteAppOAuthThirdPartyRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   TargetAppID: string
 }
 

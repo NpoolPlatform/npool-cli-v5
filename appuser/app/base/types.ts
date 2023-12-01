@@ -1,7 +1,8 @@
 import { CreateInvitationCodeWhen, RecaptchaType, SignMethodType } from '../../base'
 
 export interface App {
-  ID: string
+  ID: number
+  EntID: string
   CreatedBy: string
   Name: string
   Logo: string

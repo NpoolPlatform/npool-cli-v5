@@ -17,7 +17,7 @@ export const useLocalUserStore = defineStore('local-user', {
       return this.User && this.User.Logined && this.User.LoginVerified
     },
     loginedUserID (): string | undefined {
-      return this.User?.ID
+      return this.User?.EntID
     },
     findInvitationCode () : boolean {
       return this.User && this.User.InvitationCode?.length > 0
@@ -55,7 +55,7 @@ export const useLocalUserStore = defineStore('local-user', {
       this.User = user
 
       if (user) {
-        Cookies.set('X-User-ID', user.ID, { expires: '4h', secure: true })
+        Cookies.set('X-User-ID', user.EntID, { expires: '4h', secure: true })
         Cookies.set('X-App-Login-Token', user.LoginToken, { expires: '4h', secure: true })
       }
     },
@@ -69,6 +69,12 @@ export const useLocalUserStore = defineStore('local-user', {
 
 export const formalizeUserID = (userID?: string) => {
   if (userID) return userID
+  const user = useLocalUserStore()
+  return user.User?.EntID
+}
+
+export const formalizeUserUintID = (id?: number) => {
+  if (id) return id
   const user = useLocalUserStore()
   return user.User?.ID
 }

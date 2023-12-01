@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface AuthHistory {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   AppName: string
   AppLogo: string

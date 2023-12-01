@@ -2,7 +2,8 @@ import { BaseRequest } from '../../request'
 import { EntityType, DocumentType, KYCState, ImageType } from './const'
 
 export interface KYC {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   AppName: string
   AppLogo: string

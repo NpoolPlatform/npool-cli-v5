@@ -32,9 +32,9 @@ export const useApplicationStore = defineStore('applications', {
   actions: {
     addApps (apps: Array<App>) {
       apps.forEach((app) => {
-        this.Apps.set(app.ID, app)
+        this.Apps.set(app.EntID, app)
         const localapp = useLocalApplicationStore()
-        if (app.ID === localapp.myAppID) {
+        if (app.EntID === localapp.myAppID) {
           localapp.MyApp = app
         }
       })

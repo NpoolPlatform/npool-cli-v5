@@ -2,7 +2,8 @@ import { SignMethodType, SigninVerifyType } from '../../base'
 import { KYCState } from '../../kyc'
 
 export interface User {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   EmailAddress: string
   PhoneNO: string

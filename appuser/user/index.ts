@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { useLocalUserStore } from './local'
+import { formalizeUserUintID, useLocalUserStore } from './local'
 import { doAction, doActionWithError } from '../../request'
 import { API } from './const'
 import {
@@ -42,7 +42,7 @@ export const useUserStore = defineStore('users', {
     },
     appUser (): (appID: string, userID: string) => User | undefined {
       return (appID: string, userID: string) => {
-        return this.Users.get(appID)?.find((el) => el.ID === userID)
+        return this.Users.get(appID)?.find((el) => el.EntID === userID)
       }
     },
     appUsers (): (appID: string | undefined) => Array<User> {
@@ -155,6 +155,7 @@ export const useUserStore = defineStore('users', {
         })
     },
     updateUser (req: UpdateUserRequest, done: (error: boolean, row?: User) => void) {
+      req.ID = formalizeUserUintID()
       doActionWithError<UpdateUserRequest, UpdateUserResponse>(
         API.UPDATE_USER,
         req,

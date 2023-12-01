@@ -50,6 +50,7 @@ export interface GetAPIsResponse {
 
 export interface UpdateAPIRequest extends BaseRequest {
   ID: number
+  EntID?: string
   Deprecated: boolean
 }
 
