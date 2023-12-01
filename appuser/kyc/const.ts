@@ -9,27 +9,23 @@ export enum API {
 }
 
 export enum DocumentType {
-  DefaultKycDocumentType = 'DefaultKycDocumentType',
   IDCard = 'IDCard',
   DriverLicense ='DriverLicense',
   Passport = 'Passport'
 }
 
 export enum EntityType {
-  DefaultKycEntityType = 'DefaultKycEntityType',
   Individual = 'Individual',
   Organization = 'Organization'
 }
 
 export enum KYCState {
-  DefaultState = 'DefaultState',
   Approved = 'Approved',
   Reviewing = 'Reviewing',
   Rejected = 'Rejected'
 }
 
 export enum ImageType {
-  DefaultKycImageType = 'DefaultKycImageType',
   FrontImg = 'FrontImg',
   BackImg = 'BackImg',
   SelfieImg = 'SelfieImg'

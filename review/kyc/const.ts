@@ -6,7 +6,6 @@ export enum API {
 }
 
 export enum KycState {
-  DefaultReviewState = 'DefaultReviewState',
   Approved = 'Approved',
   Wait = 'Wait',
   Rejected ='Rejected'

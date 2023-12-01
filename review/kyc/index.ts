@@ -13,6 +13,7 @@ import {
 } from './types'
 import { doActionWithError } from '../../request'
 import { formalizeAppID } from '../../appuser/app/local'
+import { KYCState } from '../../appuser/kyc'
 
 export const useKycReviewStore = defineStore('kyc-reviews', {
   state: () => ({
@@ -22,7 +23,14 @@ export const useKycReviewStore = defineStore('kyc-reviews', {
     reviews (): (appID?: string) => Array<KYCReview> {
       return (appID?: string) => {
         appID = formalizeAppID()
-        return this.KYCReviews.get(appID)?.sort((a, b) => b.KycState.localeCompare(a.KycState, 'zh-CN')) || []
+        return this.KYCReviews.get(appID)?.sort((a, b) => {
+          const states = new Map<KYCState, number>([
+            [KYCState.Reviewing, 0],
+            [KYCState.Rejected, 1],
+            [KYCState.Approved, 1]
+          ])
+          return ((states.get(a.KycState) || -1) - (states.get(b.KycState) || -1)) || a.CreatedAt - b.CreatedAt
+        }) || []
       }
     },
     review (): (appID: string | undefined, reviewID: string) => KYCReview | undefined {
