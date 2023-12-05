@@ -62,7 +62,7 @@ export const useUserAccountStore = defineStore('user-accounts', {
       if (!_accounts) {
         _accounts = []
       }
-      const index = _accounts.findIndex((el) => el.ID === accountID)
+      const index = _accounts.findIndex((el) => el.EntID === accountID)
       _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.UserAccounts.set(appID, _accounts)
     },
@@ -84,7 +84,7 @@ export const useUserAccountStore = defineStore('user-accounts', {
         req,
         req.Message,
         (resp: DeleteUserAccountResponse): void => {
-          this.delAccount(undefined, req.ID)
+          this.delAccount(undefined, req.EntID)
           done(false, resp.Info)
         }, () => {
           done(true)

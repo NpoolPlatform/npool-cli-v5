@@ -2,7 +2,8 @@ import { SignMethodType } from '../../../appuser/base'
 import { BaseRequest } from '../../../request'
 
 export interface TransferAccount {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   UserID: string
   TargetUserID: string
@@ -27,7 +28,8 @@ export interface CreateTransferAccountResponse {
 }
 
 export interface DeleteTransferAccountRequest extends BaseRequest {
-  TransferID: string
+  TransferID: number
+  EntID: string
 }
 
 export interface DeleteTransferAccountResponse {

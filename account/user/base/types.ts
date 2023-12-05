@@ -1,7 +1,8 @@
 import { AccountUsedFor } from '../../base'
 
 export interface Account {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   UserID: string
   CoinTypeID: string
