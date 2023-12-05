@@ -1,18 +1,6 @@
 import { BaseRequest } from '../../../request'
 import { SignMethodType } from '../../base'
-
-export interface OAuthThirdParty {
-  ID: number
-  EntID: string
-  ClientName: SignMethodType
-  ClientTag: string
-  ClientLogoURL: string
-  ClientOAuthURL: string
-  ResponseType: string
-  Scope: string
-  CreatedAt: number
-  UpdatedAt: number
-}
+import { OAuthThirdParty } from '../base'
 
 export interface CreateOAuthThirdPartyRequest extends BaseRequest {
   ClientName: SignMethodType

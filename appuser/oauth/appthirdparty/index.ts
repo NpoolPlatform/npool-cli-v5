@@ -2,22 +2,31 @@ import { defineStore } from 'pinia'
 import { APIS as APIEnum } from './const'
 import { doActionWithError } from '../../../request'
 import {
-  AppOAuthThirdParty,
   CreateAppOAuthThirdPartyRequest,
   CreateAppOAuthThirdPartyResponse,
   DeleteAppOAuthThirdPartyRequest,
   DeleteAppOAuthThirdPartyResponse,
   GetAppOAuthThirdPartiesRequest,
   GetAppOAuthThirdPartiesResponse,
+  GetOAuthThirdPartiesRequest,
+  GetOAuthThirdPartiesResponse,
   UpdateAppOAuthThirdPartyRequest,
   UpdateAppOAuthThirdPartyResponse
 } from './types'
+import { formalizeAppID } from '../../app/local'
+import { AppOAuthThirdParty } from '../base/types'
 
 export const useAppOAuthThirdPartyStore = defineStore('app-oauth-third-party', {
   state: () => ({
     AppOAuthThirdParties: new Map<string, Array<AppOAuthThirdParty>>()
   }),
   getters: {
+    thirdParties (): (appID?: string | undefined) => Array<AppOAuthThirdParty> {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.AppOAuthThirdParties.get(appID) || []
+      }
+    }
   },
   actions: {
     createAppOAuthThirdParty (req: CreateAppOAuthThirdPartyRequest, done: (error: boolean, row?: AppOAuthThirdParty) => void) {
@@ -64,6 +73,26 @@ export const useAppOAuthThirdPartyStore = defineStore('app-oauth-third-party', {
         req.Message,
         (resp: GetAppOAuthThirdPartiesResponse): void => {
           this.AppOAuthThirdParties.set(req.TargetAppID, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    getOAuthThirdParties (req: GetOAuthThirdPartiesRequest, done: (error: boolean, rows?: Array<AppOAuthThirdParty>) => void) {
+      doActionWithError<GetOAuthThirdPartiesRequest, GetOAuthThirdPartiesResponse>(
+        APIEnum.GET_OAUTH_THIRD_PARTIES,
+        req,
+        req.Message,
+        (resp: GetAppOAuthThirdPartiesResponse): void => {
+          resp.Infos.forEach((el) => {
+            let thirdParties = this.AppOAuthThirdParties.get(el.AppID)
+            if (!thirdParties) {
+              thirdParties = [] as [] as Array<AppOAuthThirdParty>
+            }
+            thirdParties.push(el)
+            this.AppOAuthThirdParties.set(el.AppID, thirdParties)
+          })
           done(false, resp.Infos)
         }, () => {
           done(true)
