@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { doAction } from '../../request'
+import { doActionWithError } from '../../request'
 import { API } from './const'
 import {
   SendCodeResponse,
@@ -52,13 +52,15 @@ export const useVerifyStore = defineStore('notify-verify', {
           break
       }
     },
-    sendCode (req: SendCodeRequest) {
-      doAction<SendCodeRequest, SendCodeResponse>(
+    sendCode (req: SendCodeRequest, done?: (error: boolean) => void) {
+      doActionWithError<SendCodeRequest, SendCodeResponse>(
         API.SEND_CODE,
         req,
         req.Message,
         (): void => {
-          // TODO
+          done?.(false)
+        }, () => {
+          done?.(true)
         })
     },
     getGoogleToken (req: GetGoogleTokenRequest, done: (token: string) => void) {
