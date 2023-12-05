@@ -2,7 +2,8 @@ import { BaseRequest } from '../../request'
 import { AccountLockedBy } from '../base'
 
 export interface Account {
-  ID: string
+  ID: number
+  EntID: string
   CoinTypeID: string
   CoinName: string
   CoinDisplayNames: string[]
@@ -32,7 +33,8 @@ export interface GetPaymentAccountsResponse {
 }
 
 export interface UpdatePaymentAccountRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   Active: boolean
   Blocked: boolean
   Locked: boolean

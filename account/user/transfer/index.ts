@@ -47,7 +47,7 @@ export const useTransferAccountStore = defineStore('transfer-account', {
         if (!_accounts) {
           _accounts = []
         }
-        const index = _accounts.findIndex((el) => el.ID === accountID)
+        const index = _accounts.findIndex((el) => el.EntID === accountID)
         _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
         this.TransferAccounts.set(appID, _accounts)
       }
@@ -72,7 +72,7 @@ export const useTransferAccountStore = defineStore('transfer-account', {
         req,
         req.Message,
         (resp: DeleteTransferAccountResponse): void => {
-          this.delTransferAccount(undefined, req.TransferID)
+          this.delTransferAccount(undefined, req.EntID)
           done(false, resp.Info)
         }, () => {
           done(true)

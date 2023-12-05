@@ -24,7 +24,8 @@ export interface CreateUserAccountResponse {
 }
 
 export interface DeleteUserAccountRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
 }
 
 export interface DeleteUserAccountResponse {
@@ -32,7 +33,8 @@ export interface DeleteUserAccountResponse {
 }
 
 export interface UpdateUserAccountRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   Labels: string[]
 }
 
@@ -104,7 +106,8 @@ export interface GetNAppUserAccountsResponse {
 }
 
 export interface UpdateAppUserAccountRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   TargetAppID: string
   TargetUserID: string
   Active: boolean
