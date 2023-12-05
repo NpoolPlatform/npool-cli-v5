@@ -52,6 +52,10 @@ export interface User {
   State: KYCState
   KycStateStr: string
   SelectedLangID: string
+  ThirdPartyID: string
+  ThirdPartyUserID: string
+  ThirdPartyUsername: string
+  ThirdPartyAvatar: string
 }
 
 export interface LoginHistory {
