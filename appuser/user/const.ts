@@ -8,7 +8,7 @@ export enum API {
   RESET_USER = '/appuser/v1/reset/user',
   GET_LOGIN_HISTORIES = '/appuser/v1/get/loginhistories',
   UPDATE_USERKOL = '/appuser/v1/update/userkol',
-
+  BIND_USER = '/appuser/v1/bind/user',
   // App admin
   GET_USERS = '/appuser/v1/get/users',
   UPDATE_APP_USER = '/appuser/v1/update/app/user',

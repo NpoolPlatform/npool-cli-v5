@@ -113,6 +113,18 @@ export interface UpdateUserKolResponse {
   Info: User
 }
 
+export interface BindUserRequest extends BaseRequest {
+  Account: string
+  AccountType: SignMethodType
+  NewVerificationCode: string
+  NewAccount: string
+  NewAccountType: SignMethodType
+}
+
+export interface BindUserResponse {
+  Info: User
+}
+
 export interface GetUsersRequest extends BaseRequest{
   Offset: number
   Limit: number

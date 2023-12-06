@@ -26,7 +26,9 @@ import {
   GetUsersRequest,
   GetUsersResponse,
   UpdateAppUserRequest,
-  UpdateAppUserResponse
+  UpdateAppUserResponse,
+  BindUserRequest,
+  BindUserResponse
 } from './types'
 import { LoginHistory, User } from './base'
 import { formalizeAppID } from '../app/local'
@@ -176,6 +178,19 @@ export const useUserStore = defineStore('users', {
         req.Message,
         (): void => {
           done(false)
+        }, () => {
+          done(true)
+        })
+    },
+    bindUser (req: BindUserRequest, done: (error: boolean, user?: User) => void) {
+      doActionWithError<BindUserRequest, BindUserResponse>(
+        API.BIND_USER,
+        req,
+        req.Message,
+        (resp: BindUserResponse): void => {
+          const user = useLocalUserStore()
+          user.setUser(resp.Info)
+          done(false, resp.Info)
         }, () => {
           done(true)
         })
