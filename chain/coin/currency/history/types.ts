@@ -2,11 +2,12 @@ import { BaseRequest } from '../../../../request'
 import { CoinCurrency } from '../base'
 
 export interface GetCurrencyHistoriesRequest extends BaseRequest {
-  CoinTypeIDs: string[]
+  CoinNames?: string[]
+  CoinTypeIDs?: string[]
   /** @format int64 */
   StartAt: number
   /** @format int64 */
-  EndAt: number
+  EndAt?: number
   /** @format int32 */
   Offset: number
   /** @format int32 */

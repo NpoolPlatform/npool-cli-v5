@@ -17,7 +17,7 @@ export const useCodeRepoStore = defineStore('coderepo', {
     }
   },
   actions: {
-    getGoogleToken (req: GetGoogleTokenRequest, done: (token: string) => void) {
+    getGoogleToken (req: GetGoogleTokenRequest, done: (token: string, error: boolean) => void) {
       const recaptcha = req.Recaptcha
       const notification = useNotificationStore()
       if (recaptcha) {
@@ -28,13 +28,14 @@ export const useCodeRepoStore = defineStore('coderepo', {
               void executeRecaptcha(req.Req)
                 .then((token: string) => {
                   this.GoogleToken.set(req.Req, token)
-                  done(token)
+                  done(token, false)
                 })
                 .catch((err: Error) => {
                   if (req.Message?.Error) {
                     req.Message.Error.Description = err.message
                     notification.pushNotification(req.Message.Error)
                   }
+                  done('', true)
                 })
             }
           })
@@ -43,6 +44,7 @@ export const useCodeRepoStore = defineStore('coderepo', {
               req.Message.Error.Description = err.message
               notification.pushNotification(req.Message.Error)
             }
+            done('', true)
           })
       }
     }

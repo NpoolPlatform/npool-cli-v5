@@ -17,6 +17,11 @@ export const useCoinCurrencyHistoryStore = defineStore('coin-currency-histories'
         return this.Histories.filter((el) => !coinTypeID || el.CoinTypeID === coinTypeID)
       }
     },
+    historiesByCoinName (): (coinName: string) => Array<CoinCurrency> {
+      return (coinName: string) => {
+        return this.Histories.filter((el) => el.CoinName === coinName)
+      }
+    },
     addHistories (): (currencies: Array<CoinCurrency>) => void {
       return (feeds: Array<CoinCurrency>) => {
         feeds.forEach((feed) => {
