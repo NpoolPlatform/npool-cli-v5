@@ -1,5 +1,5 @@
 export enum APIS {
-    CREATE_SUBSCRIBE = '/appuser/v1/create/subscribe',
-    GET_SUBSCRIBES = '/appuser/v1/get/subscribes',
-    DELETE_SUBSCRIBE = '/appuser/v1/delete/subscribe'
+    CREATE_SUBSCRIBE = '/appuser/v1/create/subscriber',
+    GET_SUBSCRIBES = '/appuser/v1/get/subscribers',
+    DELETE_SUBSCRIBE = '/appuser/v1/delete/subscriber'
 }
