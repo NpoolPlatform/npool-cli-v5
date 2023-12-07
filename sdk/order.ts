@@ -59,14 +59,15 @@ export const getNAppOrders = (pageStart: number, pages: number, done?: (error: b
 
 export const orders = computed(() => _order.orders(AppID.value))
 
-export const updateAppUserOrder = (id: string, canceled: boolean) => {
+export const updateAppUserOrder = (id: number, canceled: boolean) => {
   const targetOrder = _order.order(id)
   if (!targetOrder) {
     return
   }
   _order.updateAppUserOrder({
     TargetAppID: AppID.value,
-    ID: id,
+    ID: targetOrder.ID,
+    EntID: targetOrder.EntID,
     TargetUserID: targetOrder.UserID,
     Canceled: canceled,
     Message: {

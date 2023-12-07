@@ -42,14 +42,20 @@ export const useOrderStore = defineStore('orders', {
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     },
-    order (): (orderID: string) => Order | undefined {
-      return (orderID: string) => {
+    order (): (orderID: number) => Order | undefined {
+      return (orderID: number) => {
         const appID = formalizeAppID()
         return this.Orders.get(appID)?.find((el) => el.ID === orderID)
       }
     },
-    orderState (): (orderID: string) => string {
-      return (orderID: string) => {
+    getOrderByEntID (): (entID: string) => Order | undefined {
+      return (entID: string) => {
+        const appID = formalizeAppID()
+        return this.Orders.get(appID)?.find((el) => el.EntID === entID)
+      }
+    },
+    orderState (): (orderID: number) => string {
+      return (orderID: number) => {
         const order = this.order(orderID)
         if (!order) {
           return 'MSG_ERROR'
@@ -74,8 +80,8 @@ export const useOrderStore = defineStore('orders', {
         return 'MSG_IN_SERVICE'
       }
     },
-    orderPaid (): (orderID: string) => boolean {
-      return (orderID: string) => {
+    orderPaid (): (orderID: number) => boolean {
+      return (orderID: number) => {
         const order = this.order(orderID)
         if (!order) {
           return false
@@ -83,8 +89,8 @@ export const useOrderStore = defineStore('orders', {
         return !(order.OrderState !== OrderState.CREATED && order.OrderState !== OrderState.WAIT_PAYMENT)
       }
     },
-    validateOrder (): (orderID: string) => boolean {
-      return (orderID: string) => {
+    validateOrder (): (orderID: number) => boolean {
+      return (orderID: number) => {
         const order = this.order(orderID)
         if (!order) {
           return false

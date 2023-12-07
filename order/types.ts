@@ -10,7 +10,8 @@ export interface Coupon {
 }
 
 export interface Order {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   ParentOrderID: string
   ParentOrderGoodID: string
@@ -97,7 +98,8 @@ export interface GetOrdersRequest extends BaseRequest {
 }
 
 export interface UpdateOrderRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   Canceled: boolean
 }
 
@@ -107,7 +109,8 @@ export interface UpdateOrderResponse {
 
 export interface UpdateUserOrderRequest extends BaseRequest {
   TargetUserID: string
-  ID: string
+  ID: number
+  EntID: string
   PaymentID: string
   Canceled: boolean
 }
@@ -119,7 +122,8 @@ export interface UpdateUserOrderResponse {
 export interface UpdateAppUserOrderRequest extends BaseRequest {
   TargetAppID: string
   TargetUserID: string
-  ID: string
+  ID: number
+  EntID: string
   Canceled: boolean
 }
 
@@ -128,7 +132,9 @@ export interface UpdateAppUserOrderResponse {
 }
 
 export interface GetOrderRequest extends BaseRequest {
-  ID: string
+  AppID?: string
+  UserID?: string
+  EntID: string
 }
 
 export interface GetOrderResponse {
