@@ -64,7 +64,7 @@ export const useAppGoodStore = defineStore('app-goods', {
           return false
         }
         const now = Math.floor(Date.now() / 1000)
-        if (good?.SaleEndAt === 0 || good?.SaleStartAt === 0 || now > good?.SaleEndAt) {
+        if (good?.SaleEndAt === 0 || good?.SaleStartAt === 0 || now > good?.SaleEndAt || now < good?.SaleStartAt) {
           return false
         }
         if (!this.spotQuantity(appID, id)) {
