@@ -26,6 +26,31 @@ export const useAppOAuthThirdPartyStore = defineStore('app-oauth-third-party', {
         appID = formalizeAppID(appID)
         return this.AppOAuthThirdParties.get(appID) || []
       }
+    },
+    addThirdParties (): (appID: string | undefined, parties: Array<AppOAuthThirdParty>) => void {
+      return (appID: string | undefined, parties: Array<AppOAuthThirdParty>) => {
+        appID = formalizeAppID(appID)
+        let _users = this.AppOAuthThirdParties.get(appID) as Array<AppOAuthThirdParty>
+        if (!_users) {
+          _users = []
+        }
+        parties.forEach((party) => {
+          const index = _users.findIndex((el) => el.ID === party.ID)
+          _users.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, party)
+        })
+        this.AppOAuthThirdParties.set(appID, _users)
+      }
+    },
+    delThirdParties (): (party: AppOAuthThirdParty) => void {
+      return (party: AppOAuthThirdParty) => {
+        let parties = this.AppOAuthThirdParties.get(party.AppID)
+        if (!parties) {
+          parties = []
+        }
+        const index = parties.findIndex((el) => el.ID === party.ID)
+        parties.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+        this.AppOAuthThirdParties.set(party.AppID, parties)
+      }
     }
   },
   actions: {
@@ -85,14 +110,7 @@ export const useAppOAuthThirdPartyStore = defineStore('app-oauth-third-party', {
         req,
         req.Message,
         (resp: GetAppOAuthThirdPartiesResponse): void => {
-          resp.Infos.forEach((el) => {
-            let thirdParties = this.AppOAuthThirdParties.get(el.AppID)
-            if (!thirdParties) {
-              thirdParties = [] as [] as Array<AppOAuthThirdParty>
-            }
-            thirdParties.push(el)
-            this.AppOAuthThirdParties.set(el.AppID, thirdParties)
-          })
+          this.addThirdParties(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -105,13 +123,7 @@ export const useAppOAuthThirdPartyStore = defineStore('app-oauth-third-party', {
         req,
         req.Message,
         (resp: DeleteAppOAuthThirdPartyResponse): void => {
-          let thirdParties = this.AppOAuthThirdParties.get(req.TargetAppID)
-          if (!thirdParties) {
-            thirdParties = [] as Array<AppOAuthThirdParty>
-          }
-          const index = thirdParties.findIndex((el) => el.ID === req.ID)
-          thirdParties.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-          this.AppOAuthThirdParties.set(req.TargetAppID, thirdParties)
+          this.delThirdParties(resp.Info)
           done(false, resp.Info)
         }, () => {
           done(true)
