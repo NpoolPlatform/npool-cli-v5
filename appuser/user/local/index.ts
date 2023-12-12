@@ -62,6 +62,7 @@ export const useLocalUserStore = defineStore('local-user', {
         console.log('X-User-ID:', Cookies.get('X-User-ID'))
         console.log('X-App-Login-Token:', Cookies.get('X-App-Login-Token'))
       }
+      console.log('cookies: ', Cookies.getAll())
     },
     restUser () {
       console.log('resetUser')
