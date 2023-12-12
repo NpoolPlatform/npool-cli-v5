@@ -53,7 +53,8 @@ export const useLocalUserStore = defineStore('local-user', {
   actions: {
     setUser (user: User) {
       this.User = user
-
+      console.log('user.EntID: ', user.EntID)
+      console.log('user.LoginToken: ', user.LoginToken)
       if (user) {
         Cookies.set('X-User-ID', user.EntID, { expires: '4h', secure: true })
         Cookies.set('X-App-Login-Token', user.LoginToken, { expires: '4h', secure: true })
@@ -61,7 +62,7 @@ export const useLocalUserStore = defineStore('local-user', {
     },
     restUser () {
       Cookies.remove('X-User-ID')
-      Cookies.remove('X-App-Login-Token')
+      Cookies.remove('X-AppLogin-Token')
       this.User = undefined as unknown as User
     }
   }

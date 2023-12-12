@@ -30,12 +30,14 @@ interface LoginedResponse {
 
 const loginInterceptor = (signInPath: string, to: RouteLocationNormalized, next: NavigationGuardNext) => {
   const user = useLocalUserStore()
+  console.log('user.logined: ', user.logined)
   if (user.logined) {
     next()
     return
   }
 
   const userID = Cookies.get('X-User-ID')
+  console.log('UserID__: ', userID)
   const token = Cookies.get('X-App-Login-Token')
   if (!userID || !token || userID.length === 0 || token.length === 0) {
     if (to.meta && to.meta.NeedLogined) {
@@ -51,9 +53,10 @@ const loginInterceptor = (signInPath: string, to: RouteLocationNormalized, next:
   const headers = api.defaults.headers as unknown as Record<string, string>
   headers['X-User-ID'] = userID
   headers['X-App-Login-Token'] = token
-
+  console.log('X-User-ID: ', headers['X-User-ID'])
   api.post<unknown, AxiosResponse<LoginedResponse>>('/appuser/v1/logined')
     .then((resp: AxiosResponse<LoginedResponse>) => {
+      console.log('resp.Info: ', resp.data.Info)
       if (resp.data.Info) {
         user.setUser(resp.data.Info)
       }
