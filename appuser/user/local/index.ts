@@ -56,8 +56,11 @@ export const useLocalUserStore = defineStore('local-user', {
       console.log('user.EntID: ', user.EntID)
       console.log('user.LoginToken: ', user.LoginToken)
       if (user) {
+        console.log('****************')
         Cookies.set('X-User-ID', user.EntID, { expires: '4h', secure: true })
         Cookies.set('X-App-Login-Token', user.LoginToken, { expires: '4h', secure: true })
+        console.log('X-User-ID:', Cookies.get('X-User-ID'))
+        console.log('X-App-Login-Token:', Cookies.get('X-App-Login-Token'))
       }
     },
     restUser () {
