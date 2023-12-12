@@ -30,6 +30,7 @@ interface LoginedResponse {
 
 const loginInterceptor = (signInPath: string, to: RouteLocationNormalized, next: NavigationGuardNext) => {
   const user = useLocalUserStore()
+  console.log('logined: ', user.logined)
   if (user.logined) {
     next()
     return
@@ -63,6 +64,7 @@ const loginInterceptor = (signInPath: string, to: RouteLocationNormalized, next:
       }
       next()
     }).catch(() => {
+      console.log('catch: err')
       user.restUser()
       if (to.meta && to.meta.NeedLogined) {
         next({ path: signInPath, replace: true })
