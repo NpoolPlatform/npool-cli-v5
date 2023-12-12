@@ -64,8 +64,10 @@ const loginInterceptor = (signInPath: string, to: RouteLocationNormalized, next:
         next({ path: signInPath, replace: true })
         return
       }
+      console.log('^^^^^^^^^^^^^')
       next()
     }).catch(() => {
+      console.log('catch: ....')
       user.restUser()
       if (to.meta && to.meta.NeedLogined) {
         next({ path: signInPath, replace: true })
