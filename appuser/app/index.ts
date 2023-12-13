@@ -26,7 +26,7 @@ export const useApplicationStore = defineStore('applications', {
       }
     },
     apps () {
-      return () => Array.from(this.Apps.values())
+      return () => Array.from(this.Apps.values()).sort((a, b) => a.ID > b.ID ? 1 : -1)
     }
   },
   actions: {
@@ -69,6 +69,9 @@ export const useApplicationStore = defineStore('applications', {
         req,
         req.Message,
         (resp: UpdateAppResponse): void => {
+          if (req.NewEntID && req.EntID !== req.NewEntID) { // update EntID
+            this.Apps.delete(req.EntID)
+          }
           this.addApps([resp.Info])
           done(false, resp.Info)
         }, () => {

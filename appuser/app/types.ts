@@ -21,6 +21,7 @@ export interface GetAppsResponse {
 export interface UpdateAppRequest extends BaseRequest {
   ID: number
   EntID: string
+  NewEntID?: string
   CreatedBy?: string
   Name?: string
   Logo: string
