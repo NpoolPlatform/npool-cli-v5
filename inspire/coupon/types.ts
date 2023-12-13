@@ -2,7 +2,8 @@ import { BaseRequest, NotifyRequest } from '../../request'
 import { CouponType, CouponConstraint, CouponScope } from './const'
 
 export interface Coupon {
-  ID: string
+  ID: number
+  EntID: string
   CouponType: CouponType
   AppID: string
   Denomination: string
@@ -64,7 +65,8 @@ export interface GetCouponsResponse {
 }
 
 export interface UpdateCouponRequest extends NotifyRequest {
-  ID: string
+  ID: number
+  EntID: string
   TargetAppID?: string
   Denomination: string
   Circulation: string

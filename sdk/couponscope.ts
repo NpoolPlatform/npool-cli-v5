@@ -55,7 +55,7 @@ export const createScope = (target: couponscope.Scope, finish: (error: boolean) 
 
 export const deleteScope = (target: couponscope.Scope, finish: (error: boolean) => void) => {
   scope.deleteScope({
-    ID: target?.ID,
+    ...target,
     Message: {
       Error: {
         Title: 'MSG_DELETE_COUPON_SCOPE',

@@ -25,14 +25,20 @@ export const useCouponStore = defineStore('coupon-pool', {
         return this.Coupons.get(appID)?.filter((el) => !couponType || el.CouponType === couponType) || []
       }
     },
-    coupon (): (appID: string | undefined, id: string) => Coupon | undefined {
-      return (appID: string | undefined, id: string) => {
+    coupon (): (appID: string | undefined, id: number) => Coupon | undefined {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         return this.Coupons.get(appID)?.find((el) => el.ID === id)
       }
     },
-    valid (): (appID: string | undefined, id: string) => boolean {
+    getCouponByEntID (): (appID: string | undefined, id: string) => Coupon | undefined {
       return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return this.Coupons.get(appID)?.find((el) => el.EntID === id)
+      }
+    },
+    valid (): (appID: string | undefined, id: number) => boolean {
+      return (appID: string | undefined, id: number) => {
         appID = formalizeAppID(appID)
         const coupon = this.coupon(appID, id)
         if (!coupon) {
