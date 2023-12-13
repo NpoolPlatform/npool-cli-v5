@@ -51,7 +51,6 @@ const loginInterceptor = (signInPath: string, to: RouteLocationNormalized, next:
   const headers = api.defaults.headers as unknown as Record<string, string>
   headers['X-User-ID'] = userID
   headers['X-App-Login-Token'] = token
-
   api.post<unknown, AxiosResponse<LoginedResponse>>('/appuser/v1/logined')
     .then((resp: AxiosResponse<LoginedResponse>) => {
       if (resp.data.Info) {

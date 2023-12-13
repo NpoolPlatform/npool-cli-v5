@@ -8,10 +8,10 @@ import {
   DeleteOAuthThirdPartyResponse,
   GetOAuthThirdPartiesRequest,
   GetOAuthThirdPartiesResponse,
-  OAuthThirdParty,
   UpdateOAuthThirdPartyRequest,
   UpdateOAuthThirdPartyResponse
 } from './types'
+import { OAuthThirdParty } from '../base'
 
 export const useOAuthThirdPartyStore = defineStore('oauth-third-party', {
   state: () => ({

@@ -7,7 +7,7 @@ export interface SignupRequest extends BaseRequest{
   PasswordHash: string
   AccountType: SignMethodType
   VerificationCode: string
-  InvitationCode: string
+  InvitationCode?: string
 }
 
 export interface SignupResponse {
@@ -110,6 +110,18 @@ export interface UpdateUserKolRequest extends BaseRequest {
 }
 
 export interface UpdateUserKolResponse {
+  Info: User
+}
+
+export interface BindUserRequest extends BaseRequest {
+  Account: string
+  AccountType: SignMethodType
+  NewVerificationCode: string
+  NewAccount: string
+  NewAccountType: SignMethodType
+}
+
+export interface BindUserResponse {
   Info: User
 }
 

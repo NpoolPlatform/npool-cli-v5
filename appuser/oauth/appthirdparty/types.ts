@@ -1,22 +1,5 @@
 import { BaseRequest } from '../../../request'
-
-export interface AppOAuthThirdParty {
-  ID: number
-  EntID: string
-  AppID: string
-  ThirdPartyID: string
-  ClientID: string
-  ClientSecret: string
-  CallbackURL: string
-  ClientName: string
-  ClientLogoURL: string
-  ClientOAuthURL: string
-  ResponseTypes: string
-  Scope: string
-  Salt: string
-  CreatedAt: number
-  UpdatedAt: number
-}
+import { AppOAuthThirdParty } from '../base'
 
 export interface CreateAppOAuthThirdPartyRequest extends BaseRequest {
   TargetAppID: string
@@ -51,6 +34,16 @@ export interface GetAppOAuthThirdPartiesRequest extends BaseRequest {
 }
 
 export interface GetAppOAuthThirdPartiesResponse {
+  Infos: Array<AppOAuthThirdParty>
+}
+
+export interface GetOAuthThirdPartiesRequest extends BaseRequest {
+  AppID?: string
+  Offset: number
+  Limit: number
+}
+
+export interface GetOAuthThirdPartiesResponse {
   Infos: Array<AppOAuthThirdParty>
 }
 
