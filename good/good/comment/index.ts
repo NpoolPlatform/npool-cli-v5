@@ -26,9 +26,7 @@ export const useCommentStore = defineStore('comment', {
     comment (): (appID: string | undefined, id: string) => Comment | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return this.Comments.get(appID)?.find((el) => {
-          return el.ID === id
-        })
+        return this.Comments.get(appID)?.find((el: Comment) => el.EntID === id)
       }
     },
     comments (): (appID?: string) => Array<Comment> {
@@ -36,34 +34,30 @@ export const useCommentStore = defineStore('comment', {
         appID = formalizeAppID(appID)
         return this.Comments.get(appID) || []
       }
-    },
-    addComments (): (appID: string | undefined, goods: Array<Comment>) => void {
-      return (appID: string | undefined, goods: Array<Comment>) => {
-        appID = formalizeAppID(appID)
-        let _goods = this.Comments.get(appID) as Array<Comment>
-        if (!_goods) {
-          _goods = []
-        }
-        goods.forEach((topmost) => {
-          if (!topmost) return
-          const index = _goods.findIndex((el) => el.ID === topmost.ID)
-          _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, topmost)
-        })
-        this.Comments.set(appID, _goods)
-      }
-    },
-    deleteComments (): (tops: Array<Comment>) => void {
-      return (tops: Array<Comment>) => {
-        tops.forEach((top) => {
-          const _tops = this.comments(top.AppID) || []
-          const index = _tops.findIndex((el) => el.ID === top.ID)
-          _tops.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-          this.Comments.set(top.AppID, _tops)
-        })
-      }
     }
   },
   actions: {
+    addComments (appID: string | undefined, goods: Array<Comment>) {
+      appID = formalizeAppID(appID)
+      let _goods = this.Comments.get(appID) as Array<Comment>
+      if (!_goods) {
+        _goods = []
+      }
+      goods.forEach((topmost) => {
+        if (!topmost) return
+        const index = _goods.findIndex((el) => el.EntID === topmost.EntID)
+        _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, topmost)
+      })
+      this.Comments.set(appID, _goods)
+    },
+    deleteComments (tops: Array<Comment>) {
+      tops.forEach((top) => {
+        const _tops = this.comments(top.AppID) || []
+        const index = _tops.findIndex((el: Comment) => el.EntID === top.EntID)
+        _tops.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+        this.Comments.set(top.AppID, _tops)
+      })
+    },
     createComment (req: CreateCommentRequest, done: (error: boolean, row?: Comment) => void) {
       doActionWithError<CreateCommentRequest, CreateCommentResponse>(
         API.CREATE_GOODCOMMENT,

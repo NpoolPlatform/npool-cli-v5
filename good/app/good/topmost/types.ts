@@ -1,8 +1,9 @@
-import { BaseRequest, NotifyRequest } from 'src/npoolstore/request'
-import { GoodTopMostType } from '../../base'
+import { BaseRequest, NotifyRequest } from '../../../../request'
+import { GoodTopMostType } from '../../../base'
 
 export interface TopMost {
-    ID: string
+    ID: number
+    EntID: string
     AppID: string
     AppName: string
     TopMostType: GoodTopMostType
@@ -21,7 +22,6 @@ export interface TopMost {
 }
 
 export interface CreateTopMostRequest extends NotifyRequest {
-    AppID: string
     TopMostType: GoodTopMostType
     Title: string
     Message: string
@@ -44,8 +44,8 @@ export interface CreateTopMostResponse {
 }
 
 export interface DeleteTopMostRequest extends BaseRequest {
-    ID: string
-    AppID?: string
+    ID: number
+    EntID: string
 }
 
 export interface DeleteTopMostResponse {
@@ -53,8 +53,8 @@ export interface DeleteTopMostResponse {
 }
 
 export interface UpdateTopMostRequest extends NotifyRequest {
-    ID: string
-    AppID?: string
+    ID: number
+    EntID: string
     Title: string
     Message: string
     Posters: string[]
@@ -72,7 +72,6 @@ export interface UpdateTopMostResponse {
 }
 
 export interface GetTopMostsRequest extends BaseRequest {
-    AppID?: string
     Offset: number
     Limit: number
 }
@@ -119,7 +118,8 @@ export interface GetNTopMostsResponse {
 }
 
 export interface UpdateNTopMostRequest extends NotifyRequest {
-    ID: string
+    ID: number
+    EntID: string
     TargetAppID: string
     Title: string
     Message: string

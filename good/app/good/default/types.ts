@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../../request'
 
 export interface Default {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   AppName: string
   GoodID: string
@@ -28,7 +29,8 @@ export interface CreateAppDefaultGoodResponse {
 }
 
 export interface UpdateAppDefaultGoodRequest extends BaseRequest{
-  ID: string
+  ID: number
+  EntID: string
   AppGoodID: string
 }
 
@@ -37,7 +39,8 @@ export interface UpdateAppDefaultGoodResponse {
 }
 
 export interface DeleteAppDefaultGoodRequest extends BaseRequest{
-  ID: string
+  ID: number
+  EntID: string
 }
 
 export interface DeleteAppDefaultGoodResponse {
@@ -67,7 +70,8 @@ export interface CreateNAppDefaultGoodResponse {
 }
 
 export interface UpdateNAppDefaultGoodRequest extends BaseRequest{
-  ID: string
+  ID: number
+  EntID: string
   AppGoodID: string
   TargetAppID: string
 }
@@ -77,7 +81,8 @@ export interface UpdateNAppDefaultGoodResponse {
 }
 
 export interface DeleteNAppDefaultGoodRequest extends BaseRequest{
-  ID: string
+  ID: number
+  EntID: string
   TargetAppID: string
 }
 

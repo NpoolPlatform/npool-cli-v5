@@ -6,8 +6,6 @@ import {
   DeviceInfo,
   CreateDeviceInfoRequest,
   CreateDeviceInfoResponse,
-  GetDeviceInfoRequest,
-  GetDeviceInfoResponse,
   GetDeviceInfosRequest,
   GetDeviceInfosResponse,
   UpdateDeviceInfoRequest,
@@ -21,33 +19,19 @@ export const useDeviceInfoStore = defineStore('deviceinfos', {
   getters: {
     deviceInfo (): (id: string) => DeviceInfo | undefined {
       return (id: string) => {
-        return this.DeviceInfos.find((el) => el.ID === id)
+        return this.DeviceInfos.find((el: DeviceInfo) => el.EntID === id)
       }
     },
     deviceInfos () {
       return () => this.DeviceInfos
-    },
-    addDevices (): (devices: Array<DeviceInfo>) => void {
-      return (devices: Array<DeviceInfo>) => {
-        devices.forEach((device) => {
-          const index = this.DeviceInfos.findIndex((el) => el.ID === device.ID)
-          this.DeviceInfos.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
-        })
-      }
     }
   },
   actions: {
-    getDeviceInfo (req: GetDeviceInfoRequest, done: (error: boolean, device?: DeviceInfo) => void) {
-      doActionWithError<GetDeviceInfoRequest, GetDeviceInfoResponse>(
-        API.GET_DEVICEINFO,
-        req,
-        req.Message,
-        (resp: GetDeviceInfoResponse): void => {
-          this.addDevices([resp.Info])
-          done(false, resp.Info)
-        }, () => {
-          done(true)
-        })
+    addDevices (devices: Array<DeviceInfo>) {
+      devices.forEach((device) => {
+        const index = this.DeviceInfos.findIndex((el: DeviceInfo) => el.EntID === device.EntID)
+        this.DeviceInfos.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
+      })
     },
     getDeviceInfos (req: GetDeviceInfosRequest, done: (error: boolean, devices?: Array<DeviceInfo>) => void) {
       doActionWithError<GetDeviceInfosRequest, GetDeviceInfosResponse>(

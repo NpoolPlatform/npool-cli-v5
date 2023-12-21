@@ -1,8 +1,9 @@
-import { GoodTopMostType } from 'src/npoolstore/good/base'
-import { BaseRequest } from 'src/npoolstore/request'
+import { GoodTopMostType } from '../../../../../good/base'
+import { BaseRequest } from '../../../../../request'
 
 export interface TopMostGood {
-    ID: string
+    ID: number
+    EntID: string
     AppID: string
     AppName: string
     GoodID: string
@@ -25,7 +26,6 @@ export interface TopMostGood {
 }
 
 export interface CreateTopMostGoodRequest extends BaseRequest {
-    AppID: string
     TopMostID: string
     AppGoodID: string
     Posters: string[]
@@ -37,8 +37,8 @@ export interface CreateTopMostGoodResponse {
 }
 
 export interface UpdateTopMostGoodRequest extends BaseRequest {
-    ID: string
-    AppID: string
+    ID: number
+    EntID: string
     Posters: string[]
     Price: string
 }
@@ -48,8 +48,8 @@ export interface UpdateTopMostGoodResponse {
 }
 
 export interface DeleteTopMostGoodRequest extends BaseRequest {
-    ID: string
-    AppID: string
+    ID: number
+    EntID: string
 }
 
 export interface DeleteTopMostGoodResponse {
@@ -57,7 +57,6 @@ export interface DeleteTopMostGoodResponse {
 }
 
 export interface GetTopMostGoodsRequest extends BaseRequest {
-    AppID?: string
     /** @format int32 */
     Offset: number
     /** @format int32 */
@@ -97,7 +96,8 @@ export interface GetNTopMostGoodsResponse {
 }
 
 export interface UpdateNTopMostGoodRequest extends BaseRequest {
-    ID: string
+    ID: number
+    EntID: string
     TargetAppID: string
     Posters: string[]
     Price: string

@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface VendorBrand {
-  ID: string
+  ID: number
+  EntID: string
   Name: string
   Logo: string
 }
@@ -12,14 +13,6 @@ export interface CreateVendorBrandRequest extends BaseRequest {
 }
 
 export interface CreateVendorBrandResponse {
-  Info: VendorBrand
-}
-
-export interface GetVendorBrandRequest extends BaseRequest {
-  ID: string
-}
-
-export interface GetVendorBrandResponse {
   Info: VendorBrand
 }
 
@@ -34,7 +27,8 @@ export interface GetVendorBrandsResponse {
 }
 
 export interface UpdateVendorBrandRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   Name: string
   Logo: string
 }
@@ -44,7 +38,8 @@ export interface UpdateVendorBrandResponse {
 }
 
 export interface DeleteVendorBrandRequest extends BaseRequest {
-    ID: string
+    ID: number
+    EntID: string
 }
 
 export interface DeleteVendorBrandResponse {

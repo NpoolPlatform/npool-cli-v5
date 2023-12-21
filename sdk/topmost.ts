@@ -1,7 +1,7 @@
 import { computed } from 'vue'
 import { topmost, constant, notify } from '..'
 import { AppID } from './localapp'
-import { TopMost } from '../good/app/topmost'
+import { TopMost } from '../good/app/good/topmost'
 
 const top = topmost.useTopMostStore()
 

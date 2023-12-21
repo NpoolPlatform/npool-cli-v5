@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../../request'
 
 export interface VendorLocation {
-  ID: string
+  ID: number
+  EntID: string
   Country: string
   Province: string
   City: string
@@ -9,9 +10,6 @@ export interface VendorLocation {
   BrandID: string
   BrandName: string
   BrandLogo: string
-  CreatedAt: number
-  UpdatedAt: number
-  DeletedAt: number
 }
 
 export interface CreateVendorLocationRequest extends BaseRequest {
@@ -19,21 +17,15 @@ export interface CreateVendorLocationRequest extends BaseRequest {
   Province: string
   City: string
   Address: string
+  BrandID: string
 }
 
 export interface CreateVendorLocationResponse {
   Info: VendorLocation
 }
 
-export interface GetVendorLocationRequest extends BaseRequest {
-  ID: string
-}
-
-export interface GetVendorLocationResponse {
-  Info: VendorLocation
-}
-
 export interface GetVendorLocationsRequest extends BaseRequest {
+  BrandID?: string
   Offset: number
   Limit: number
 }
@@ -44,11 +36,13 @@ export interface GetVendorLocationsResponse {
 }
 
 export interface UpdateVendorLocationRequest extends BaseRequest {
-  ID: string
-  Country: string
-  Province: string
-  City: string
-  Address: string
+  ID: number
+  EntID: string
+  Country?: string
+  Province?: string
+  City?: string
+  Address?: string
+  BrandID?: string
 }
 
 export interface UpdateVendorLocationResponse {

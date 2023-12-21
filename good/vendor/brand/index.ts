@@ -5,8 +5,6 @@ import {
   VendorBrand,
   CreateVendorBrandRequest,
   CreateVendorBrandResponse,
-  GetVendorBrandRequest,
-  GetVendorBrandResponse,
   GetVendorBrandsRequest,
   GetVendorBrandsResponse,
   UpdateVendorBrandRequest,
@@ -22,42 +20,25 @@ export const useVendorBrandStore = defineStore('vendor-brand', {
   getters: {
     vendorBrand (): (id: string) => VendorBrand | undefined {
       return (id: string) => {
-        return this.VendorBrands.find((el) => el.ID === id)
+        return this.VendorBrands.find((el: VendorBrand) => el.EntID === id)
       }
     },
     vendorBrands () {
       return () => this.VendorBrands
-    },
-    addBrands (): (brands: Array<VendorBrand>) => void {
-      return (brands: Array<VendorBrand>) => {
-        brands.forEach((brand) => {
-          const index = this.VendorBrands.findIndex((el) => el.ID === brand.ID)
-          this.VendorBrands.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, brand)
-        })
-      }
-    },
-    deleteBrands (): (brands: Array<VendorBrand>) => void {
-      return (brands: Array<VendorBrand>) => {
-        brands.forEach((brand) => {
-          const index = this.VendorBrands.findIndex((el) => el.ID === brand.ID)
-          this.VendorBrands.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-        })
-      }
     }
   },
   actions: {
-    getVendorBrand (req: GetVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
-      doActionWithError<GetVendorBrandRequest, GetVendorBrandResponse>(
-        API.GET_VENDORBRAND,
-        req,
-        req.Message,
-        (resp: GetVendorBrandResponse): void => {
-          this.addBrands([resp.Info])
-          done(false, resp.Info)
-        }, () => {
-          done(true)
-        }
-      )
+    addBrands (brands: Array<VendorBrand>) {
+      brands.forEach((brand) => {
+        const index = this.VendorBrands.findIndex((el: VendorBrand) => el.EntID === brand.EntID)
+        this.VendorBrands.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, brand)
+      })
+    },
+    deleteBrands (brands: Array<VendorBrand>) {
+      brands.forEach((brand) => {
+        const index = this.VendorBrands.findIndex((el: VendorBrand) => el.EntID === brand.EntID)
+        this.VendorBrands.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      })
     },
     getVendorBrands (req: GetVendorBrandsRequest, done: (error: boolean, rows?: Array<VendorBrand>) => void) {
       doActionWithError<GetVendorBrandsRequest, GetVendorBrandsResponse>(

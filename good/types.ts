@@ -2,7 +2,8 @@ import { BaseRequest } from '../request'
 import { BenefitType, GoodCoinInfo, GoodType, StartMode } from './base'
 
 export interface Good {
-  ID: string
+  ID: number
+  EntID: string
   DeviceInfoID: string
   DeviceType: string
   DeviceManufacturer: string
@@ -90,15 +91,16 @@ export interface GetGoodsResponse {
 }
 
 export interface GetGoodRequest extends BaseRequest {
-  ID: string
+  EntID: string
 }
 
 export interface GetGoodResponse {
   Info: Good
 }
 
-export interface UpdateGoodRequest extends BaseRequest{
-  ID: string
+export interface UpdateGoodRequest extends BaseRequest {
+  ID: number
+  EntID: string
   DeviceInfoID: string
   DurationDays: number
   CoinTypeID: string

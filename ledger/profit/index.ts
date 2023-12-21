@@ -14,7 +14,7 @@ import {
   Profit
 } from './types'
 import { formalizeAppID } from '../../appuser/app/local'
-import { formalizeUserID } from 'src/npoolstore/appuser/user'
+import { formalizeUserID } from '../../appuser/user'
 
 export const useProfitStore = defineStore('ledger-profits', {
   state: () => ({
