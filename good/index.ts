@@ -20,22 +20,20 @@ export const useGoodStore = defineStore('goods', {
   getters: {
     good (): (id: string) => Good | undefined {
       return (id: string) => {
-        return this.Goods.find((el) => el.ID === id)
+        return this.Goods.find((el: Good) => el.EntID === id)
       }
     },
     goods () {
       return () => this.Goods
-    },
-    addGoods (): (devices: Array<Good>) => void {
-      return (devices: Array<Good>) => {
-        devices.forEach((device) => {
-          const index = this.Goods.findIndex((el) => el.ID === device.ID)
-          this.Goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
-        })
-      }
     }
   },
   actions: {
+    addGoods (goods: Array<Good>) {
+      goods.forEach((good) => {
+        const index = this.Goods.findIndex((el: Good) => el.EntID === good.EntID)
+        this.Goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
+      })
+    },
     getGoods (req: GetGoodsRequest, done: (error: boolean, row?: Array<Good>) => void) {
       doActionWithError<GetGoodsRequest, GetGoodsResponse>(
         API.GET_GOODS,

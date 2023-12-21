@@ -1,1 +1,1 @@
-export * from 'src/npoolstore/request/axiosapi'
+export * from '../request/axiosapi'

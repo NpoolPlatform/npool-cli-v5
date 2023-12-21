@@ -1,7 +1,8 @@
-import { BaseRequest } from 'src/npoolstore/request'
+import { BaseRequest } from '../../../request'
 
 export interface Comment {
-    ID: string
+    ID: number
+    EntID: string
     AppID: string
     AppName: string
     UserID: string
@@ -34,7 +35,8 @@ export interface CreateCommentResponse {
 }
 
 export interface DeleteCommentRequest extends BaseRequest {
-    ID: string
+    ID: number
+    EntID: string
     AppID?: string
     UserID?: string
 }
@@ -44,7 +46,8 @@ export interface DeleteCommentResponse {
 }
 
 export interface DeleteAppCommentRequest extends BaseRequest {
-    ID: string
+    ID: number
+    EntID: string
     AppID?: string
     UserID?: string
     TargetUserID: string
@@ -84,7 +87,8 @@ export interface GetMyCommentsResponse {
 }
 
 export interface UpdateCommentRequest extends BaseRequest {
-    ID: string
+    ID: number
+    EntID: string
     AppID: string
     UserID: string
     Content: string

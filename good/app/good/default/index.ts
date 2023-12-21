@@ -30,7 +30,7 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
     default (): (appID: string | undefined, id: string) => Default | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return this.AppDefaultGoods.get(appID)?.find((el) => el.ID === id)
+        return this.AppDefaultGoods.get(appID)?.find((el: Default) => el.EntID === id)
       }
     },
     defaults (): (appID: string | undefined) => Array<Default> {
@@ -44,35 +44,31 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         appID = formalizeAppID(appID)
         return this.AppDefaultGoods.get(appID)?.find((el) => el.CoinUnit === coinUnit)?.GoodID
       }
-    },
-    addDefaults (): (appID: string | undefined, defaults: Array<Default>) => void {
-      return (appID: string | undefined, defaults: Array<Default>) => {
-        appID = formalizeAppID(appID)
-        let _defaults = this.AppDefaultGoods.get(appID) as Array<Default>
-        if (!_defaults) {
-          _defaults = []
-        }
-        defaults.forEach((def) => {
-          const index = _defaults?.findIndex((el) => el.ID === def.ID)
-          _defaults?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, def)
-        })
-        this.AppDefaultGoods.set(appID, _defaults)
-      }
-    },
-    delDefault (): (appID: string | undefined, id: string) => void {
-      return (appID: string | undefined, id: string) => {
-        appID = formalizeAppID(appID)
-        let _defaults = this.AppDefaultGoods.get(appID) as Array<Default>
-        if (!_defaults) {
-          _defaults = []
-        }
-        const index = _defaults?.findIndex((el) => el.ID === id)
-        _defaults?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-        this.AppDefaultGoods.set(appID, _defaults)
-      }
     }
   },
   actions: {
+    addDefaults (appID: string | undefined, defaults: Array<Default>) {
+      appID = formalizeAppID(appID)
+      let _defaults = this.AppDefaultGoods.get(appID) as Array<Default>
+      if (!_defaults) {
+        _defaults = []
+      }
+      defaults.forEach((def) => {
+        const index = _defaults?.findIndex((el) => el.EntID === def.EntID)
+        _defaults?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, def)
+      })
+      this.AppDefaultGoods.set(appID, _defaults)
+    },
+    delDefault (appID: string | undefined, id: string) {
+      appID = formalizeAppID(appID)
+      let _defaults = this.AppDefaultGoods.get(appID) as Array<Default>
+      if (!_defaults) {
+        _defaults = []
+      }
+      const index = _defaults?.findIndex((el) => el.EntID === id)
+      _defaults?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.AppDefaultGoods.set(appID, _defaults)
+    },
     getAppDefaultGoods (req: GetAppDefaultGoodsRequest, done: (error: boolean, rows?: Array<Default>) => void) {
       doActionWithError<GetAppDefaultGoodsRequest, GetAppDefaultGoodsResponse>(
         API.GET_APP_DEFAULT_GOODS,
@@ -105,7 +101,7 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         req,
         req.Message,
         (resp: DeleteAppDefaultGoodResponse): void => {
-          this.delDefault(undefined, resp.Info.ID)
+          this.delDefault(undefined, resp.Info.EntID)
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -145,7 +141,7 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         req,
         req.Message,
         (resp: DeleteNAppDefaultGoodResponse): void => {
-          this.delDefault(req.TargetAppID, req.ID)
+          this.delDefault(req.TargetAppID, req.EntID)
           done(false, resp.Info)
         }, () => {
           done(true)

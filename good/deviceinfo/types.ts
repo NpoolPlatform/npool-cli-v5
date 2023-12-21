@@ -1,7 +1,8 @@
 import { BaseRequest } from '../../request'
 
 export interface DeviceInfo {
-  ID: string
+  ID: number
+  EntID: string
   Type: string
   Manufacturer: string
   PowerConsumption: number
@@ -24,14 +25,6 @@ export interface CreateDeviceInfoResponse {
   Info: DeviceInfo
 }
 
-export interface GetDeviceInfoRequest extends BaseRequest {
-  ID: string
-}
-
-export interface GetDeviceInfoResponse {
-  Info: DeviceInfo
-}
-
 export interface GetDeviceInfosRequest extends BaseRequest {
   Offset: number
   Limit: number
@@ -43,11 +36,12 @@ export interface GetDeviceInfosResponse {
 }
 
 export interface UpdateDeviceInfoRequest extends BaseRequest {
-  ID: string
-  Type: string
-  Manufacturer: string
-  PowerConsumption: number
-  ShipmentAt: number
+  ID: number
+  EntID: string
+  Type?: string
+  Manufacturer?: string
+  PowerConsumption?: number
+  ShipmentAt?: number
   Posters: string[]
 }
 

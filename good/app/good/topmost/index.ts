@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { doActionWithError } from '../../../request'
+import { doActionWithError } from '../../../../request'
 import { API } from './const'
 import {
   TopMost,
@@ -18,7 +18,7 @@ import {
   CreateNTopMostRequest,
   CreateNTopMostResponse
 } from './types'
-import { formalizeAppID } from '../../../appuser/app/local'
+import { formalizeAppID } from '../../../../appuser/app/local'
 
 export const useTopMostStore = defineStore('topmost', {
   state: () => ({
@@ -28,9 +28,7 @@ export const useTopMostStore = defineStore('topmost', {
     topmost (): (appID: string | undefined, id: string) => TopMost | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return this.TopMosts.get(appID)?.find((el) => {
-          return el.ID === id
-        })
+        return this.TopMosts.get(appID)?.find((el: TopMost) => el.EntID === id)
       }
     },
     topmosts (): (appID?: string) => Array<TopMost> {
@@ -38,34 +36,30 @@ export const useTopMostStore = defineStore('topmost', {
         appID = formalizeAppID(appID)
         return this.TopMosts.get(appID) || []
       }
-    },
-    addTopMosts (): (appID: string | undefined, goods: Array<TopMost>) => void {
-      return (appID: string | undefined, goods: Array<TopMost>) => {
-        appID = formalizeAppID(appID)
-        let _goods = this.TopMosts.get(appID) as Array<TopMost>
-        if (!_goods) {
-          _goods = []
-        }
-        goods.forEach((topmost) => {
-          if (!topmost) return
-          const index = _goods.findIndex((el) => el.ID === topmost.ID)
-          _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, topmost)
-        })
-        this.TopMosts.set(appID, _goods)
-      }
-    },
-    deleteTopMosts (): (tops: Array<TopMost>) => void {
-      return (tops: Array<TopMost>) => {
-        tops.forEach((top) => {
-          const _tops = this.topmosts(top.AppID) || []
-          const index = _tops.findIndex((el) => el.ID === top.ID)
-          _tops.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-          this.TopMosts.set(top.AppID, _tops)
-        })
-      }
     }
   },
   actions: {
+    addTopMosts (appID: string | undefined, goods: Array<TopMost>) {
+      appID = formalizeAppID(appID)
+      let _goods = this.TopMosts.get(appID) as Array<TopMost>
+      if (!_goods) {
+        _goods = []
+      }
+      goods.forEach((topmost) => {
+        if (!topmost) return
+        const index = _goods.findIndex((el) => el.EntID === topmost.EntID)
+        _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, topmost)
+      })
+      this.TopMosts.set(appID, _goods)
+    },
+    deleteTopMosts (tops: Array<TopMost>) {
+      tops.forEach((top) => {
+        const _tops = this.topmosts(top.AppID) || []
+        const index = _tops.findIndex((el: TopMost) => el.EntID === top.EntID)
+        _tops.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+        this.TopMosts.set(top.AppID, _tops)
+      })
+    },
     createTopMost (req: CreateTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
       doActionWithError<CreateTopMostRequest, CreateTopMostResponse>(
         API.CREATE_TOPMOST,

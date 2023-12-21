@@ -3,7 +3,8 @@ import { BenefitType, GoodCoinInfo, GoodType } from '../../base'
 import { CancelMode, GoodStartMode } from './const'
 
 export interface Good {
-  ID: string
+  ID: number
+  EntID: string
   AppID: string
   GoodID: string
   Online: boolean
@@ -95,7 +96,7 @@ export interface GetAppGoodsResponse {
 }
 
 export interface GetAppGoodRequest extends BaseRequest {
-  ID: string
+  EntID: string
 }
 
 export interface GetAppGoodResponse {
@@ -103,14 +104,15 @@ export interface GetAppGoodResponse {
 }
 
 export interface UpdateAppGoodRequest extends BaseRequest {
-  ID: string
-  Online: boolean
-  Visible: boolean
-  GoodName: string
+  ID: number
+  EntID: string
+  Online?: boolean
+  Visible?: boolean
+  GoodName?: string
   ProductPage?: string
-  Price: string
-  DisplayIndex: number
-  PurchaseLimit: number
+  Price?: string
+  DisplayIndex?: number
+  PurchaseLimit?: number
   CommissionPercent?: number
   SaleStartAt?: number
   SaleEndAt?: number
@@ -146,7 +148,8 @@ export interface GetNAppGoodsResponse {
 }
 
 export interface UpdateNAppGoodRequest extends BaseRequest {
-  ID: string
+  ID: number
+  EntID: string
   TargetAppID: string
   Online: boolean
   Visible: boolean
