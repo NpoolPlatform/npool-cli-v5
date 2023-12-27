@@ -16,7 +16,10 @@ export const BenefitTypes = Object.values(BenefitType)
 
 export enum StartMode {
   GoodStartModeTBD = 'GoodStartModeTBD',
-  GoodStartModeConfirmed = 'GoodStartModeConfirmed'
+  GoodStartModeConfirmed = 'GoodStartModeConfirmed',
+  GoodStartModeInstantly = 'GoodStartModeInstantly',
+  GoodStartModeNextDay = 'GoodStartModeNextDay',
+  GoodStartModePreset = 'GoodStartModePreset'
 }
 
 export const StartModes = Object.values(StartMode)
@@ -29,7 +32,6 @@ export enum GoodLabel {
 }
 export const GoodLabels = Object.values(GoodLabel)
 
-/** @default "DefaultGoodTopMostType" */
 export enum GoodTopMostType {
   TopMostPromotion = 'TopMostPromotion',
   TopMostNoviceExclusive = 'TopMostNoviceExclusive',
@@ -38,3 +40,24 @@ export enum GoodTopMostType {
   TopMostLoyaltyExclusive = 'TopMostLoyaltyExclusive',
 }
 export const GoodTypeMostTypes = Object.values(GoodTopMostType)
+
+export enum GoodUnitType {
+  GoodUnitByDuration = 'GoodUnitByDuration',
+  GoodUnitByQuantity = 'GoodUnitByQuantity',
+  GoodUnitByDurationAndQuantity = 'GoodUnitByDurationAndQuantity'
+}
+export const GoodUnitTypes = Object.values(GoodUnitType)
+
+export enum GoodUnitCalculateType {
+  GoodUnitCalculateBySelf = 'GoodUnitCalculateBySelf',
+  GoodUnitCalculateByParent = 'GoodUnitCalculateByParent'
+}
+export const GoodUnitCalculateTypes = Object.values(GoodUnitCalculateType)
+
+export enum GoodDurationType {
+  GoodDurationByHour = 'GoodDurationByHour',
+  GoodDurationByDay = 'GoodDurationByDay',
+  GoodDurationByMonth = 'GoodDurationByMonth',
+  GoodDurationByYear = 'GoodDurationByYear'
+}
+export const GoodDurationTypes = Object.values(GoodDurationType)

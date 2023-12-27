@@ -1,5 +1,5 @@
 import { BaseRequest } from '../request'
-import { BenefitType, GoodCoinInfo, GoodType, StartMode } from './base'
+import { BenefitType, GoodDurationType, GoodLabel, GoodType, GoodUnitCalculateType, GoodUnitType, StartMode } from './base'
 
 export interface Good {
   ID: number
@@ -16,36 +16,37 @@ export interface Good {
   CoinName: string
   CoinUnit: string
   CoinPreSale: boolean
-  CoinEnv: string
-  InheritFromGoodID: string
-  InheritFromGoodName: string
-  InheritFromGoodType: GoodType
-  InheritFromGoodBenefitType: BenefitType
   VendorLocationID: string
   VendorLocationCountry: string
   VendorLocationProvince: string
   VendorLocationCity: string
   VendorLocationAddress: string
+  VendorLocationName: string
+  VendorBranchLogo: string
   GoodType: GoodType
   BenefitType: BenefitType
-  Price: string
+  UnitPrice: string
   Title: string
-  Unit: string
-  UnitAmount: number
+  QuantityUnit: string
+  QuantityUnitAmount: number
   TestOnly: boolean
   Posters: string[]
-  Labels: string[]
-  SupportCoins: GoodCoinInfo[]
-  SupportCoinTypeIDs: string[]
+  Labels: GoodLabel[]
   Total: string
   Locked: string
+  SpotQuantity: string
   InService: string
   WaitStart: string
   Sold: string
+  AppReserved: string
   DeliveryAt: number
   BenefitIntervalHours: number
   UnitLockDeposit: string
   StartMode: StartMode
+  UnitType: GoodUnitType
+  QuantityCalculateType: GoodUnitCalculateType
+  DurationType: GoodDurationType
+  DurationCalculateType: GoodUnitCalculateType
   StartAt: number
   CreatedAt: number
   UpdatedAt: number
@@ -56,24 +57,26 @@ export interface CreateGoodRequest extends BaseRequest {
   DeviceInfoID: string
   DurationDays: number
   CoinTypeID: string
-  InheritFromGoodID?: string
   VendorLocationID: string
-  Price: string
+  UnitPrice: string
   BenefitType: string
   GoodType: string
   Title: string
-  Unit: string
-  UnitAmount: number
-  SupportCoinTypeIDs?: string[]
+  QuantityUnit: string
+  QuantityUnitAmount: number
   DeliveryAt: number
   StartAt: number
+  StartMode: StartMode
   TestOnly: boolean
   Total: string
-  Locked?: string
-  InService?: string
-  Sold?: string
   Posters: string[]
-  Labels: string[]
+  Labels: GoodLabel[]
+  BenefitIntervalHours: number
+  UnitLockDeposit: string
+  UnitType: GoodUnitType
+  QuantityCalculateType: GoodUnitCalculateType
+  DurationType: GoodDurationType
+  DurationCalculateType: GoodUnitCalculateType
 }
 
 export interface CreateGoodResponse {
@@ -101,23 +104,27 @@ export interface GetGoodResponse {
 export interface UpdateGoodRequest extends BaseRequest {
   ID: number
   EntID: string
-  DeviceInfoID: string
-  DurationDays: number
-  CoinTypeID: string
-  InheritFromGoodID?: string
-  VendorLocationID: string
-  Price: string
-  Title: string
-  Unit: string
-  UnitAmount: number
-  SupportCoinTypeIDs?: string[]
-  DeliveryAt: number
-  StartAt: number
+  DeviceInfoID?: string
+  DurationDays?: number
+  CoinTypeID?: string
+  VendorLocationID?: string
+  UnitPrice?: string
+  Title?: string
+  QuantityUnit?: string
+  QuantityUnitAmount?: number
+  DeliveryAt?: number
+  StartMode?: StartMode
+  StartAt?: number
   TestOnly?: boolean
-  Total: string
-  Sold?: string
+  Total?: string
   Posters?: string[]
   Labels?: string[]
+  BenefitIntervalHours?: number
+  UnitLockDeposit?: string
+  UnitType?: GoodUnitType
+  QuantityCalculateType?: GoodUnitCalculateType
+  DurationType?: GoodDurationType
+  DurationCalculateType?: GoodUnitCalculateType
 }
 
 export interface UpdateGoodResponse {

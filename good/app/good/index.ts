@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { doActionWithError } from '../../../request'
-import { API, CancelMode } from './const'
+import { API, CancelMode, PriceType } from './const'
 import {
   Good,
   GetAppGoodRequest,
@@ -71,17 +71,44 @@ export const useAppGoodStore = defineStore('app-goods', {
         return good?.Online
       }
     },
+    unitPriceString (): (appID: string | undefined, id: string) => string {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        const good = this.good(appID, id)
+        return Number(good?.UnitPrice).toFixed(4)
+      }
+    },
+    unitPriceFloat (): (appID: string | undefined, id: string) => number {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return Number(this.unitPriceString(appID, id))
+      }
+    },
+    packagePriceString (): (appID: string | undefined, id: string) => string {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        const good = this.good(appID, id)
+        return Number(good?.PackagePrice).toFixed(4)
+      }
+    },
+    packagePriceFloat (): (appID: string | undefined, id: string) => number {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return Number(this.packagePriceString(appID, id))
+      }
+    },
     priceString (): (appID: string | undefined, id: string) => string {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         const good = this.good(appID, id)
-        return Number(good?.Price).toFixed(4)
+        return good?.PackagePrice ? Number(good?.PackagePrice).toFixed(4) : Number(good?.UnitPrice).toFixed(4)
       }
     },
-    priceFloat (): (appID: string | undefined, id: string) => number {
+    priceType (): (appID: string | undefined, id: string) => PriceType {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return Number(this.priceString(appID, id))
+        const good = this.good(appID, id)
+        return good?.PackagePrice ? PriceType.PackagePrice : PriceType.UnitPrice
       }
     },
     effectiveDate (): (appID: string | undefined, id: string) => string {

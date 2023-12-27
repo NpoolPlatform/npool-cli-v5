@@ -1,6 +1,6 @@
 import { BaseRequest } from '../../../request'
-import { BenefitType, GoodCoinInfo, GoodType } from '../../base'
-import { CancelMode, GoodStartMode } from './const'
+import { BenefitType, GoodDurationType, GoodType, GoodUnitCalculateType, GoodUnitType, StartMode } from '../../base'
+import { CancelMode } from './const'
 
 export interface Good {
   ID: number
@@ -9,25 +9,10 @@ export interface Good {
   GoodID: string
   Online: boolean
   Visible: boolean
-  Price: string
+  UnitPrice: string
+  PackagePrice: string
   DisplayIndex: number
   PurchaseLimit: number
-  Commission: boolean
-  BenefitIntervalHours: number
-  PromotionStartAt: number
-  PromotionEndAt: number
-  PromotionMessage: string
-  PromotionPrice: string
-  PromotionPosters: string[]
-  RecommenderID: string
-  RecommenderEmailAddress: string
-  RecommenderPhoneNO: string
-  RecommenderUsername: string
-  RecommenderFirstName: string
-  RecommenderLastName: string
-  RecommendMessage: string
-  RecommendIndex: number
-  RecommendAt: number
   DeviceType: string
   DeviceManufacturer: string
   DevicePowerConsumption: number
@@ -35,9 +20,10 @@ export interface Good {
   DevicePosters: string[]
   DurationDays: number
   VendorLocationCountry: string
+  VendorBrandName: string
+  VendorBrandLogo: string
   CoinTypeID: string
   CoinLogo: string
-  GoodBanner: string
   CoinName: string
   CoinUnit: string
   CoinPreSale: boolean
@@ -47,42 +33,49 @@ export interface Good {
   GoodType: GoodType
   BenefitType: BenefitType
   GoodName: string
-  ProductPage: string
-  Unit: string
-  UnitAmount: number
+  QuantityUnit: string
+  QuantityUnitAmount: string
+  BenefitIntervalHours: number
   TestOnly: boolean
   Posters: string[]
-  AppGoodPosters: string[]
   Labels: string[]
-  VoteCount: number
-  Rating: number
-  SupportCoins: GoodCoinInfo[]
   GoodTotal: string
   GoodSpotQuantity: string
   RquiredGoods: Good[]
   StartAt: number
-  CreatedAt: number
   SaleStartAt: number
   SaleEndAt: number
   ServiceStartAt: number
   TechnicalFeeRatio: string
   ElectricityFeeRatio: string
-  DailyRewardAmount: string
   Descriptions: string[]
+  GoodBanner: string
   DisplayNames: string[]
-  DisplayColors: string[]
   EnablePurchase: boolean
   EnableProductPage: boolean
+  CancelMode: CancelMode
   EnableSetCommission: boolean
   UserPurchaseLimit: string
-  CancelMode: CancelMode
+  DisplayColors: string[]
   CancellableBeforeStart: number
+  ProductPage: string
   AppSpotQuantity: number
   AppGoodLocked: string
   AppGoodWaitStart: string
   AppGoodInService: string
   AppGoodSold: string
-  StartMode: GoodStartMode
+  StartMode: StartMode
+  AppGoodPosters: string[]
+  MinOrderAmount: string
+  MaxOrderAmount: string
+  MaxUserAmount: string
+  MinOrderDuration: number
+  MaxOrderDuration: number
+  UnitType: GoodUnitType
+  QuantityCalculateType: GoodUnitCalculateType
+  DurationType: GoodDurationType
+  DurationCalculateType: GoodUnitCalculateType
+  PackageWithRequireds: boolean
 }
 
 export interface GetAppGoodsRequest extends BaseRequest {
@@ -110,16 +103,15 @@ export interface UpdateAppGoodRequest extends BaseRequest {
   Visible?: boolean
   GoodName?: string
   ProductPage?: string
-  Price?: string
+  UnitPrice?: string
+  PackagePrice?: string
   DisplayIndex?: number
   PurchaseLimit?: number
-  CommissionPercent?: number
   SaleStartAt?: number
   SaleEndAt?: number
   ServiceStartAt?: number
   TechnicalFeeRatio?: string
   ElectricityFeeRatio?: string
-  DailyRewardAmount?: string
   Descriptions?: string[]
   DisplayColors?: string[]
   GoodBanner?: string
@@ -130,6 +122,13 @@ export interface UpdateAppGoodRequest extends BaseRequest {
   UserPurchaseLimit?: string
   CancelMode?: CancelMode
   CancellableBeforeStart?: number
+  Posters: string[]
+  MinOrderAmount?: string
+  MaxOrderAmount?: string
+  MaxUserAmount?: string
+  MinOrderDuration?: string
+  MaxOrderDuration?: string
+  PackageWithRequireds?: boolean
 }
 
 export interface UpdateAppGoodResponse {
@@ -154,7 +153,8 @@ export interface UpdateNAppGoodRequest extends BaseRequest {
   Online: boolean
   Visible: boolean
   GoodName: string
-  Price: string
+  UnitPrice: string
+  PackagePrice: string
   DisplayIndex: number
   PurchaseLimit: number
   SaleStartAt?: number
@@ -169,6 +169,13 @@ export interface UpdateNAppGoodRequest extends BaseRequest {
   EnableProductPage?: boolean
   EnableSetCommission?: boolean
   UserPurchaseLimit?: string
+  Posters: string[]
+  MinOrderAmount?: string
+  MaxOrderAmount?: string
+  MaxUserAmount?: string
+  MinOrderDuration?: number
+  MaxOrderDuration?: number
+  PackageWithRequireds?: boolean
 }
 
 export interface UpdateNAppGoodResponse {
@@ -181,7 +188,8 @@ export interface CreateAppGoodRequest extends BaseRequest {
   Online: boolean
   Visible: boolean
   GoodName: string
-  Price: string
+  UnitPrice: string
+  PackagePrice: string
   DisplayIndex: number
   PurchaseLimit: number
   OpenPurchase?: boolean
@@ -193,6 +201,13 @@ export interface CreateAppGoodRequest extends BaseRequest {
   EnableProductPage?: boolean
   EnableSetCommission?: boolean
   CancelMode?: CancelMode
+  Posters: string[]
+  MinOrderAmount?: string
+  MaxOrderAmount?: string
+  MaxUserAmount?: string
+  MinOrderDuration?: number
+  MaxOrderDuration?: number
+  PackageWithRequireds?: boolean
 }
 
 export interface CreateAppGoodResponse {
