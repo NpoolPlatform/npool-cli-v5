@@ -28,7 +28,7 @@ export interface Good {
   UnitPrice: string
   Title: string
   QuantityUnit: string
-  QuantityUnitAmount: number
+  QuantityUnitAmount: string
   TestOnly: boolean
   Posters: string[]
   Labels: GoodLabel[]
@@ -63,7 +63,7 @@ export interface CreateGoodRequest extends BaseRequest {
   GoodType: string
   Title: string
   QuantityUnit: string
-  QuantityUnitAmount: number
+  QuantityUnitAmount: string
   DeliveryAt: number
   StartAt: number
   StartMode: StartMode
@@ -111,7 +111,7 @@ export interface UpdateGoodRequest extends BaseRequest {
   UnitPrice?: string
   Title?: string
   QuantityUnit?: string
-  QuantityUnitAmount?: number
+  QuantityUnitAmount?: string
   DeliveryAt?: number
   StartMode?: StartMode
   StartAt?: number
