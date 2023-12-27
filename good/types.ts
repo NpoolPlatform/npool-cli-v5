@@ -1,5 +1,5 @@
 import { BaseRequest } from '../request'
-import { BenefitType, GoodDurationType, GoodLabel, GoodType, GoodUnitCalculateType, GoodUnitType, StartMode } from './base'
+import { BenefitType, GoodDurationType, GoodLabel, GoodSettlementType, GoodType, GoodUnitCalculateType, GoodUnitType, StartMode } from './base'
 
 export interface Good {
   ID: number
@@ -47,6 +47,7 @@ export interface Good {
   QuantityCalculateType: GoodUnitCalculateType
   DurationType: GoodDurationType
   DurationCalculateType: GoodUnitCalculateType
+  SettlementType: GoodSettlementType
   StartAt: number
   CreatedAt: number
   UpdatedAt: number
@@ -77,6 +78,7 @@ export interface CreateGoodRequest extends BaseRequest {
   QuantityCalculateType: GoodUnitCalculateType
   DurationType: GoodDurationType
   DurationCalculateType: GoodUnitCalculateType
+  SettlementType: GoodSettlementType
 }
 
 export interface CreateGoodResponse {
@@ -125,6 +127,7 @@ export interface UpdateGoodRequest extends BaseRequest {
   QuantityCalculateType?: GoodUnitCalculateType
   DurationType?: GoodDurationType
   DurationCalculateType?: GoodUnitCalculateType
+  SettlementType?: GoodSettlementType
 }
 
 export interface UpdateGoodResponse {

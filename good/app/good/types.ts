@@ -1,5 +1,5 @@
 import { BaseRequest } from '../../../request'
-import { BenefitType, GoodDurationType, GoodType, GoodUnitCalculateType, GoodUnitType, StartMode } from '../../base'
+import { BenefitType, GoodDurationType, GoodSettlementType, GoodType, GoodUnitCalculateType, GoodUnitType, StartMode } from '../../base'
 import { CancelMode } from './const'
 
 export interface Good {
@@ -76,6 +76,7 @@ export interface Good {
   DurationType: GoodDurationType
   DurationCalculateType: GoodUnitCalculateType
   PackageWithRequireds: boolean
+  SettlementType: GoodSettlementType
 }
 
 export interface GetAppGoodsRequest extends BaseRequest {
