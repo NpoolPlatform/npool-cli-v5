@@ -9,23 +9,18 @@ export interface Coupon {
   Denomination: string
   Circulation: string
   IssuedBy: string
-  /** @format int64 */
   StartAt: number
-  /** @format int64 */
+  EndAt: number
   DurationDays: number
   Message: string
   Name: string
-  UserID: string
-  GoodID: string
-  AppGoodID: string
   Threshold: string
   Allocated: string
   CouponConstraint: CouponConstraint
   CouponScope: CouponScope
   Random: boolean
-  /** @format int64 */
+  CashableProbabilityPerMillion: string
   CreatedAt: number
-  /** @format int64 */
   UpdatedAt: number
 }
 
@@ -35,15 +30,15 @@ export interface CreateCouponRequest extends NotifyRequest {
   Denomination: string
   Circulation: string
   StartAt: number
+  EndAt: number
   DurationDays: number
   Message: string
   Name: string
-  TargetUserID?: string
-  AppGoodID?: string
   Threshold?: string
   Random?: boolean
   CouponConstraint?: CouponConstraint
   CouponScope?: CouponScope
+  CashableProbabilityPerMillion?: string
 }
 
 export interface CreateCouponResponse {
@@ -70,17 +65,15 @@ export interface UpdateCouponRequest extends NotifyRequest {
   TargetAppID?: string
   Denomination: string
   Circulation: string
-  /** @format int64 */
   StartAt: number
-  /** @format int64 */
+  EndAt: number
   DurationDays: number
   Message: string
   Name: string
-  TargetUserID?: string
-  AppGoodID?: string
   Threshold?: string
   Random: boolean
   CouponConstraint: CouponConstraint
+  CashableProbabilityPerMillion?: string
 }
 
 export interface UpdateCouponResponse {
