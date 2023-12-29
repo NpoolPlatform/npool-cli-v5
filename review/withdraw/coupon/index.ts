@@ -14,7 +14,7 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useCouponWithdrawReviewStore = defineStore('withdraw-reviews', {
+export const useCouponWithdrawReviewStore = defineStore('couponwithdraw-reviews', {
   state: () => ({
     CouponWithdrawReviews: new Map<string, Array<CouponWithdrawReview>>()
   }),
@@ -49,7 +49,7 @@ export const useCouponWithdrawReviewStore = defineStore('withdraw-reviews', {
   actions: {
     getCouponWithdrawReviews (req: GetCouponWithdrawReviewsRequest, done: (error: boolean, reviews?: Array<CouponWithdrawReview>) => void) {
       doActionWithError<GetCouponWithdrawReviewsRequest, GetCouponWithdrawReviewsResponse>(
-        API.GET_WITHDRAWREVIEWS,
+        API.GET_COUPONWITHDRAWREVIEWS,
         req,
         req.Message,
         (resp: GetCouponWithdrawReviewsResponse): void => {
@@ -61,7 +61,7 @@ export const useCouponWithdrawReviewStore = defineStore('withdraw-reviews', {
     },
     updateCouponWithdrawReview (req: UpdateCouponWithdrawReviewRequest, done: (error: boolean, review?: CouponWithdrawReview,) => void) {
       doActionWithError<UpdateCouponWithdrawReviewRequest, UpdateCouponWithdrawReviewResponse>(
-        API.UPDATE_WITHDRAWREVIEW,
+        API.UPDATE_COUPONWITHDRAWREVIEW,
         req,
         req.NotifyMessage,
         (resp: UpdateCouponWithdrawReviewResponse): void => {
@@ -73,7 +73,7 @@ export const useCouponWithdrawReviewStore = defineStore('withdraw-reviews', {
     },
     getAppCouponWithdrawReviews (req: GetAppCouponWithdrawReviewsRequest, done: (error: boolean, reviews?: Array<CouponWithdrawReview>) => void) {
       doActionWithError<GetAppCouponWithdrawReviewsRequest, GetAppCouponWithdrawReviewsResponse>(
-        API.GET_APP_WITHDRAWREVIEWAS,
+        API.GET_APP_COUPONWITHDRAWREVIEWAS,
         req,
         req.Message,
         (resp: GetAppCouponWithdrawReviewsResponse): void => {
@@ -85,7 +85,7 @@ export const useCouponWithdrawReviewStore = defineStore('withdraw-reviews', {
     },
     updateAppCouponWithdrawReview (req: UpdateAppCouponWithdrawReviewRequest, done: (error: boolean, review?: CouponWithdrawReview) => void) {
       doActionWithError<UpdateAppCouponWithdrawReviewRequest, UpdateAppCouponWithdrawReviewResponse>(
-        API.UPDATE_APP_WITHDRAWREVIEWA,
+        API.UPDATE_APP_COUPONWITHDRAWREVIEWA,
         req,
         req.NotifyMessage,
         (resp: UpdateAppCouponWithdrawReviewResponse): void => {
