@@ -33,6 +33,7 @@ export interface Order {
   GoodValue: string
   GoodValueUSD: string
   Units: string
+  Duration: number
   PaymentID: string
   PaymentCoinTypeID: string
   PaymentCoinName: string

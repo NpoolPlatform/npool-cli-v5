@@ -18,6 +18,7 @@ import {
 } from './types'
 import { date } from 'quasar'
 import { formalizeAppID } from '../../../appuser/app/local'
+import { GoodDurationType } from '../../base'
 
 export const useAppGoodStore = defineStore('app-goods', {
   state: () => ({
@@ -220,6 +221,22 @@ export const useAppGoodStore = defineStore('app-goods', {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.good(appID, id)?.DisplayColors || []
+      }
+    },
+    durationUnit (): (appID: string | undefined, id: string) => string {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        switch (this.good(appID, id)?.DurationType) {
+          case GoodDurationType.GoodDurationByHour:
+            return 'MSG_HOUR'
+          case GoodDurationType.GoodDurationByDay:
+            return 'MSG_DAY'
+          case GoodDurationType.GoodDurationByMonth:
+            return 'MSG_MONTH'
+          case GoodDurationType.GoodDurationByYear:
+            return 'MSG_YEAR'
+        }
+        return 'MSG_UNKNOWN'
       }
     }
   },
