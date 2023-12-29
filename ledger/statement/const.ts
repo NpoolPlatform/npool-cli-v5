@@ -19,5 +19,6 @@ export enum IOSubType {
   Withdrawal = 'Withdrawal',
   Transfer = 'Transfer',
   CommissionRevoke = 'CommissionRevoke',
-  OrderRevoke = 'OrderRevoke'
+  OrderRevoke = 'OrderRevoke',
+  RandomCouponCash = 'RandomCouponCash'
 }
