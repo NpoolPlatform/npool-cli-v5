@@ -12,7 +12,6 @@ export interface Good {
   UnitPrice: string
   PackagePrice: string
   DisplayIndex: number
-  PurchaseLimit: number
   DeviceType: string
   DeviceManufacturer: string
   DevicePowerConsumption: number
@@ -55,7 +54,6 @@ export interface Good {
   EnableProductPage: boolean
   CancelMode: CancelMode
   EnableSetCommission: boolean
-  UserPurchaseLimit: string
   DisplayColors: string[]
   CancellableBeforeStart: number
   ProductPage: string
@@ -107,7 +105,6 @@ export interface UpdateAppGoodRequest extends BaseRequest {
   UnitPrice?: string
   PackagePrice?: string
   DisplayIndex?: number
-  PurchaseLimit?: number
   SaleStartAt?: number
   SaleEndAt?: number
   ServiceStartAt?: number
@@ -120,7 +117,6 @@ export interface UpdateAppGoodRequest extends BaseRequest {
   EnablePurchase?: boolean
   EnableProductPage?: boolean
   EnableSetCommission?: boolean
-  UserPurchaseLimit?: string
   CancelMode?: CancelMode
   CancellableBeforeStart?: number
   Posters: string[]
@@ -157,7 +153,6 @@ export interface UpdateNAppGoodRequest extends BaseRequest {
   UnitPrice: string
   PackagePrice: string
   DisplayIndex: number
-  PurchaseLimit: number
   SaleStartAt?: number
   SaleEndAt?: number
   ServiceStartAt?: number
@@ -169,7 +164,6 @@ export interface UpdateNAppGoodRequest extends BaseRequest {
   EnablePurchase?: boolean
   EnableProductPage?: boolean
   EnableSetCommission?: boolean
-  UserPurchaseLimit?: string
   Posters: string[]
   MinOrderAmount?: string
   MaxOrderAmount?: string
@@ -192,12 +186,10 @@ export interface CreateAppGoodRequest extends BaseRequest {
   UnitPrice: string
   PackagePrice: string
   DisplayIndex: number
-  PurchaseLimit: number
   OpenPurchase?: boolean
   IntoProductPage?: boolean
   CancelableBefore?: number
   CancellableBeforeStart?: number
-  UserPurchaseLimit?: string
   EnablePurchase?: boolean
   EnableProductPage?: boolean
   EnableSetCommission?: boolean

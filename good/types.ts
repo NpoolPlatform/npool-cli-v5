@@ -10,7 +10,6 @@ export interface Good {
   DevicePowerConsumption: number
   DeviceShipmentAt: number
   DevicePosters: string[]
-  DurationDays: number
   CoinTypeID: string
   CoinLogo: string
   CoinName: string
@@ -56,7 +55,6 @@ export interface Good {
 
 export interface CreateGoodRequest extends BaseRequest {
   DeviceInfoID: string
-  DurationDays: number
   CoinTypeID: string
   VendorLocationID: string
   UnitPrice: string
@@ -107,7 +105,6 @@ export interface UpdateGoodRequest extends BaseRequest {
   ID: number
   EntID: string
   DeviceInfoID?: string
-  DurationDays?: number
   CoinTypeID?: string
   VendorLocationID?: string
   UnitPrice?: string
