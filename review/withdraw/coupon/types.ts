@@ -40,7 +40,7 @@ export interface GetAppCouponWithdrawReviewsResponse {
 }
 
 export interface GetCouponWithdrawReviewsRequest extends BaseRequest {
-  AppID: string
+  AppID?: string
   Offset: number
   Limit: number
 }
