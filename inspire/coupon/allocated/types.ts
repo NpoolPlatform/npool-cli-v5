@@ -12,31 +12,24 @@ export interface Coupon {
   PhoneNO: string
   Denomination: string
   Circulation: string
-  /** @format int64 */
   StartAt: number
-  /** @format int64 */
-  DurationDays: number
-  /** @format int64 */
   EndAt: number
+  DurationDays: number
   CouponID: string
   CouponName: string
   Message: string
   Expired: boolean
   Valid: boolean
   Used: boolean
-  /** @format int64 */
   UsedAt: number
-  UsedByOrderID?: string
-  GoodID?: string
-  Threshold?: string
+  UsedByOrderID: string
+  Threshold: string
   CouponConstraint: CouponConstraint
   Random: boolean
-  /** @format int64 */
-  CreatedAt: number
-  /** @format int64 */
-  UpdatedAt: number
-  Allocated: string
   CouponScope: CouponScope
+  Cashable: boolean
+  CreatedAt: number
+  UpdatedAt: number
 }
 
 export interface CreateCouponRequest extends BaseRequest {
