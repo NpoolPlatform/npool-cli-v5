@@ -31,7 +31,7 @@ export interface DeleteCouponCoinResponse {
 }
 
 export interface GetAppCouponCoinsRequest extends BaseRequest {
-  AppID: string;
+  AppID?: string;
   /** @format int32 */
   Offset: number;
   /** @format int32 */

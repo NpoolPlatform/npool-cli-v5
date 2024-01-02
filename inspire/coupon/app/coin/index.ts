@@ -7,7 +7,9 @@ import {
   GetCouponCoinsResponse,
   DeleteCouponCoinRequest,
   DeleteCouponCoinResponse,
-  CouponCoin
+  CouponCoin,
+  GetAppCouponCoinsRequest,
+  GetAppCouponCoinsResponse
 } from './types'
 import { doActionWithError } from '../../../../request/action'
 import { formalizeAppID } from '../../../../appuser/app/local'
@@ -95,6 +97,19 @@ export const useCouponCoinStore = defineStore('coupon-coin', {
         }, () => {
           done(true)
         })
+    },
+    getAppCouponCoins (req: GetAppCouponCoinsRequest, done: (error: boolean, rows?: Array<CouponCoin>) => void) {
+      doActionWithError<GetAppCouponCoinsRequest, GetAppCouponCoinsResponse>(
+        API.GET_APP_COUPONCOINS,
+        req,
+        req.Message,
+        (resp: GetAppCouponCoinsResponse): void => {
+          this.addCouponCoins(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true)
+        }
+      )
     }
   }
 })
