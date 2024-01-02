@@ -19,7 +19,7 @@ export interface Coupon {
   CouponConstraint: CouponConstraint
   CouponScope: CouponScope
   Random: boolean
-  CashableProbabilityPerMillion: string
+  CashableProbability: string
   CreatedAt: number
   UpdatedAt: number
 }
@@ -38,7 +38,7 @@ export interface CreateCouponRequest extends NotifyRequest {
   Random?: boolean
   CouponConstraint?: CouponConstraint
   CouponScope?: CouponScope
-  CashableProbabilityPerMillion?: string
+  CashableProbability?: string
 }
 
 export interface CreateCouponResponse {
@@ -73,7 +73,7 @@ export interface UpdateCouponRequest extends NotifyRequest {
   Threshold?: string
   Random: boolean
   CouponConstraint: CouponConstraint
-  CashableProbabilityPerMillion?: string
+  CashableProbability?: string
 }
 
 export interface UpdateCouponResponse {

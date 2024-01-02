@@ -3,9 +3,7 @@ export interface CouponCoin {
   ID: number;
   EntID: string;
   AppID: string;
-  CouponID: string;
-  CouponName: string;
-  CouponDenomination: string;
+  AppName: string;
   CoinTypeID: string;
   CoinName: string;
   CoinENV: string;
@@ -14,8 +12,7 @@ export interface CouponCoin {
 }
 
 export interface CreateCouponCoinRequest extends BaseRequest {
-  AppID: string;
-  CouponID: string;
+  TargetAppID: string;
   CoinTypeID: string;
 }
 
@@ -26,11 +23,25 @@ export interface CreateCouponCoinResponse {
 export interface DeleteCouponCoinRequest extends BaseRequest {
   ID: number;
   EntID: string;
-  AppID?: string;
+  TargetAppID: string;
 }
 
 export interface DeleteCouponCoinResponse {
   Info: CouponCoin;
+}
+
+export interface GetAppCouponCoinsRequest extends BaseRequest {
+  TargetAppID: string;
+  /** @format int32 */
+  Offset: number;
+  /** @format int32 */
+  Limit: number;
+}
+
+export interface GetAppCouponCoinsResponse {
+  Infos: CouponCoin[];
+  /** @format int64 */
+  Total: number;
 }
 
 export interface GetCouponCoinsRequest extends BaseRequest {
