@@ -37,6 +37,7 @@ export interface UpdateAppRequest extends BaseRequest {
   MaxTypedCouponsPerOrder?: number
   CreateInvitationCodeWhen?: CreateInvitationCodeWhen
   Maintaining?: boolean
+  CouponWithdrawEnable?: boolean
   CommitButtonTargets?: string[]
 }
 
@@ -57,6 +58,7 @@ export interface CreateAppRequest extends BaseRequest {
   KycEnable: boolean
   SigninVerifyEnable: boolean
   InvitationCodeMust: boolean
+  CouponWithdrawEnable?: boolean
 }
 
 export interface CreateAppResponse {
