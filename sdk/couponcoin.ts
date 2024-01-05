@@ -1,9 +1,11 @@
+import { AppID } from './localapp'
 import { couponcoin, constant, notify } from '..'
 
 const _couponcoin = couponcoin.useCouponCoinStore()
 
 const getPageCouponCoins = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   _couponcoin.getCouponCoins({
+    TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
     Message: {

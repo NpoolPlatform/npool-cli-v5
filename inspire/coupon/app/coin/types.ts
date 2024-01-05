@@ -45,6 +45,7 @@ export interface GetAppCouponCoinsResponse {
 }
 
 export interface GetCouponCoinsRequest extends BaseRequest {
+  TargetAppID: string;
   /** @format int32 */
   Offset: number;
   /** @format int32 */
