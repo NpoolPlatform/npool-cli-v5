@@ -21,4 +21,5 @@ export interface App {
   MaxTypedCouponsPerOrder: number
   Maintaining: boolean
   CommitButtonTargets: string[]
+  CouponWithdrawEnable: boolean
 }
