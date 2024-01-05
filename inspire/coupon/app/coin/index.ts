@@ -66,7 +66,7 @@ export const useCouponCoinStore = defineStore('coupon-coin', {
         req,
         req.Message,
         (resp: GetCouponCoinsResponse): void => {
-          this.addCouponCoins(undefined, resp.Infos)
+          this.addCouponCoins(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -79,7 +79,7 @@ export const useCouponCoinStore = defineStore('coupon-coin', {
         req,
         req.Message,
         (resp: CreateCouponCoinResponse): void => {
-          this.addCouponCoins(undefined, [resp.Info])
+          this.addCouponCoins(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -92,7 +92,7 @@ export const useCouponCoinStore = defineStore('coupon-coin', {
         req,
         req.Message,
         (resp: DeleteCouponCoinResponse): void => {
-          this.delCouponCoin(undefined, req.ID)
+          this.delCouponCoin(req.TargetAppID, req.ID)
           done(false, resp.Info)
         }, () => {
           done(true)
