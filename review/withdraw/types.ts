@@ -1,7 +1,5 @@
 import { BaseRequest, NotifyRequest } from '../../request'
-import { ReviewState } from '../base'
-import { WithdrawReviewTrigger } from './const'
-
+import { ReviewState, ReviewTriggerType } from '../base'
 export interface WithdrawReview {
   WithdrawID: string
   WithdrawState: string
@@ -17,7 +15,7 @@ export interface WithdrawReview {
   UpdatedAt: number
   Message: string
   State: ReviewState
-  Trigger: WithdrawReviewTrigger
+  Trigger: ReviewTriggerType
   Amount: string
   FeeAmount: string
   CoinTypeID: string
