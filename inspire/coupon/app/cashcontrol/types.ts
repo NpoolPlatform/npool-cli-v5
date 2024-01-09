@@ -5,7 +5,6 @@ export interface CashControl {
     ID: number
     EntID: string
     AppID: string
-    AppName: string
     CouponID: string
     CouponName: string
     CouponTypeStr: string
