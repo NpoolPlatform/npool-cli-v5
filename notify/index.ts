@@ -1,24 +1,13 @@
 import { defineStore } from 'pinia'
 import { Notification } from './types'
-import { useI18n } from 'vue-i18n'
 
 export const useNotificationStore = defineStore('notification', {
   state: () => ({
-    Notifications: [] as Array<Notification>,
-    i18n: useI18n()
+    Notifications: [] as Array<Notification>
   }),
   getters: {},
   actions: {
     pushNotification (notification: Notification) {
-      if (notification.Description) {
-        notification.Description = this.i18n.t(notification.Description)
-      }
-      if (notification.Message) {
-        notification.Message = this.i18n.t(notification.Message)
-      }
-      if (notification.Title) {
-        notification.Title = this.i18n.t(notification.Title)
-      }
       this.Notifications.push(notification)
     },
     popNotification (): Notification | undefined {
