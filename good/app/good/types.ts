@@ -1,5 +1,5 @@
 import { BaseRequest } from '../../../request'
-import { BenefitType, GoodDurationType, GoodSettlementType, GoodType, GoodUnitCalculateType, GoodUnitType, StartMode } from '../../base'
+import { BenefitType, GoodDurationType, GoodSettlementType, GoodLabel, GoodType, GoodUnitCalculateType, GoodUnitType, StartMode } from '../../base'
 import { CancelMode } from './const'
 
 export interface Good {
@@ -37,7 +37,7 @@ export interface Good {
   BenefitIntervalHours: number
   TestOnly: boolean
   Posters: string[]
-  Labels: string[]
+  Labels: GoodLabel[]
   GoodTotal: string
   GoodSpotQuantity: string
   RquiredGoods: Good[]

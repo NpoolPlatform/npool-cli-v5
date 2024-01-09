@@ -18,7 +18,7 @@ import {
 } from './types'
 import { date } from 'quasar'
 import { formalizeAppID } from '../../../appuser/app/local'
-import { GoodDurationType } from '../../base'
+import { GoodDurationType, GoodLabel } from '../../base'
 
 export const useAppGoodStore = defineStore('app-goods', {
   state: () => ({
@@ -31,10 +31,14 @@ export const useAppGoodStore = defineStore('app-goods', {
         return this.AppGoods.get(appID)?.find((el: Good) => el.EntID === id)
       }
     },
-    goods (): (appID?: string) => Array<Good> {
-      return (appID?: string) => {
+    goods (): (appID?: string, label?: GoodLabel) => Array<Good> {
+      return (appID?: string, label?: GoodLabel) => {
         appID = formalizeAppID(appID)
-        return this.AppGoods.get(appID)?.sort((a, b) => a.DisplayIndex - b.DisplayIndex) || []
+        return this.AppGoods.get(appID)?.filter((el) => {
+          let ok = true
+          if (label) ok &&= el.Labels.includes(label)
+          return ok
+        }).sort((a, b) => a.DisplayIndex - b.DisplayIndex) || []
       }
     },
     online (): (appID: string | undefined, id: string) => boolean | undefined {

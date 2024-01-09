@@ -12,7 +12,6 @@ export enum CancelMode {
   CancellableBeforeBenefit = 'CancellableBeforeBenefit',
   UnCancellable = 'Uncancellable'
 }
-
 export const CancelModes = Object.values(CancelMode)
 
 export enum PriceType {
