@@ -16,7 +16,10 @@ export const BenefitTypes = Object.values(BenefitType)
 
 export enum StartMode {
   GoodStartModeTBD = 'GoodStartModeTBD',
-  GoodStartModeConfirmed = 'GoodStartModeConfirmed'
+  GoodStartModeConfirmed = 'GoodStartModeConfirmed',
+  GoodStartModeNextDay = 'GoodStartModeNextDay',
+  GoodStartModeInstantly = 'GoodStartModeInstantly',
+  GoodStartModePreset = 'GoodStartModePreset'
 }
 
 export const StartModes = Object.values(StartMode)
@@ -25,11 +28,14 @@ export enum GoodLabel {
   GoodLabelPromotion = 'GoodLabelPromotion',
   GoodLabelNoviceExclusive = 'GoodLabelNoviceExclusive',
   GoodLabelInnovationStarter = 'GoodLabelInnovationStarter',
-  GoodLabelLoyaltyExclusive = 'GoodLabelLoyaltyExclusive'
+  GoodLabelLoyaltyExclusive = 'GoodLabelLoyaltyExclusive',
+  GoodLabelLatestOffer = 'GoodLabelLatestOffer',
+  GoodLabelFirstBatchMining = 'GoodLabelFirstBatchMining',
+  GoodLabelClassicCryptoPower = 'GoodLabelClassicCryptoPower',
+  GoodLabelDelegatedStaking = 'GoodLabelDelegatedStaking'
 }
 export const GoodLabels = Object.values(GoodLabel)
 
-/** @default "DefaultGoodTopMostType" */
 export enum GoodTopMostType {
   TopMostPromotion = 'TopMostPromotion',
   TopMostNoviceExclusive = 'TopMostNoviceExclusive',

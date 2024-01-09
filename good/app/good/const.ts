@@ -12,10 +12,4 @@ export enum CancelMode {
   CancellableBeforeBenefit = 'CancellableBeforeBenefit',
   UnCancellable = 'Uncancellable'
 }
-
-export enum GoodStartMode {
-  GoodStartModeTBD = 'GoodStartModeTBD',
-  GoodStartModeConfirmed = 'GoodStartModeConfirmed'
-}
-
 export const CancelModes = Object.values(CancelMode)

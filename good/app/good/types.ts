@@ -1,6 +1,6 @@
 import { BaseRequest } from '../../../request'
-import { BenefitType, GoodCoinInfo, GoodType } from '../../base'
-import { CancelMode, GoodStartMode } from './const'
+import { BenefitType, GoodCoinInfo, GoodLabel, GoodType, StartMode } from '../../base'
+import { CancelMode } from './const'
 
 export interface Good {
   ID: number
@@ -53,7 +53,7 @@ export interface Good {
   TestOnly: boolean
   Posters: string[]
   AppGoodPosters: string[]
-  Labels: string[]
+  Labels: GoodLabel[]
   VoteCount: number
   Rating: number
   SupportCoins: GoodCoinInfo[]
@@ -82,7 +82,7 @@ export interface Good {
   AppGoodWaitStart: string
   AppGoodInService: string
   AppGoodSold: string
-  StartMode: GoodStartMode
+  StartMode: StartMode
 }
 
 export interface GetAppGoodsRequest extends BaseRequest {
