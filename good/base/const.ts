@@ -27,7 +27,11 @@ export enum GoodLabel {
   GoodLabelPromotion = 'GoodLabelPromotion',
   GoodLabelNoviceExclusive = 'GoodLabelNoviceExclusive',
   GoodLabelInnovationStarter = 'GoodLabelInnovationStarter',
-  GoodLabelLoyaltyExclusive = 'GoodLabelLoyaltyExclusive'
+  GoodLabelLoyaltyExclusive = 'GoodLabelLoyaltyExclusive',
+  GoodLabelLatestOffer = 'GoodLabelLatestOffer',
+  GoodLabelFirstBatchMining = 'GoodLabelFirstBatchMining',
+  GoodLabelClassicCryptoPower = 'GoodLabelClassicCryptoPower',
+  GoodLabelDelegatedStaking = 'GoodLabelDelegatedStaking'
 }
 export const GoodLabels = Object.values(GoodLabel)
 
