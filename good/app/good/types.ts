@@ -27,8 +27,8 @@ export interface Good {
   CoinUnit: string
   CoinPreSale: boolean
   CoinEnv: string
-  CoinSpecs: string
   CoinHomePage: string
+  CoinSpecs: string
   GoodType: GoodType
   BenefitType: BenefitType
   GoodName: string

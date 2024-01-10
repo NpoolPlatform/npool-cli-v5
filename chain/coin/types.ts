@@ -1,5 +1,7 @@
 import { GasType } from '../../base'
 import { BaseRequest } from '../../request'
+import { ConsensusPowerType, ConsensusType } from '../base'
+
 export interface Coin {
   ID: number
   EntID: string
@@ -41,6 +43,8 @@ export interface Coin {
   ChainNickname: string
   ChainNativeCoinName: string
   CheckNewAddressBalance: boolean
+  ConsensusType: ConsensusType
+  ConsensusPowerType: ConsensusPowerType
   CreatedAt: number
   UpdatedAt: number
 }
