@@ -20,7 +20,8 @@ export interface TopMostGood {
     TopMostTitle: string
     TopMostMessage: string
     Posters: string[]
-    Price: string
+    UnitPrice: string
+    PackagePrice: string
     CreatedAt: number
     UpdatedAt: number
 }
@@ -29,7 +30,8 @@ export interface CreateTopMostGoodRequest extends BaseRequest {
     TopMostID: string
     AppGoodID: string
     Posters: string[]
-    Price: string
+    UnitPrice?: string
+    PackagePrice?: string
 }
 
 export interface CreateTopMostGoodResponse {
@@ -40,7 +42,8 @@ export interface UpdateTopMostGoodRequest extends BaseRequest {
     ID: number
     EntID: string
     Posters: string[]
-    Price: string
+    UnitPrice?: string
+    PackagePrice?: string
 }
 
 export interface UpdateTopMostGoodResponse {
@@ -74,7 +77,8 @@ export interface CreateNTopMostGoodRequest extends BaseRequest {
     TopMostID: string
     AppGoodID: string
     Posters: string[]
-    Price: string
+    UnitPrice?: string
+    PackagePrice?: string
 }
 
 export interface CreateNTopMostGoodResponse {
@@ -100,7 +104,8 @@ export interface UpdateNTopMostGoodRequest extends BaseRequest {
     EntID: string
     TargetAppID: string
     Posters: string[]
-    Price: string
+    UnitPrice?: string
+    PackagePrice?: string
 }
 
 export interface UpdateNTopMostGoodResponse {

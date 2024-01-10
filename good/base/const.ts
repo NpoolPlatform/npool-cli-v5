@@ -2,6 +2,7 @@ export enum GoodType {
   PowerRenting = 'PowerRenting',
   MachineRenting = 'MachineRenting',
   MachineHosting = 'MachineHosting',
+  DelegatedStaking = 'DelegatedStaking',
   TechniqueServiceFee = 'TechniqueServiceFee',
   ElectricityFee = 'ElectricityFee',
 }

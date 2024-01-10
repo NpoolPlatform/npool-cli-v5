@@ -40,8 +40,9 @@ export interface Good {
   Labels: GoodLabel[]
   GoodTotal: string
   GoodSpotQuantity: string
-  RquiredGoods: Good[]
   StartAt: number
+  StartMode: StartMode
+  CreatedAt: number
   SaleStartAt: number
   SaleEndAt: number
   ServiceStartAt: number
@@ -53,16 +54,21 @@ export interface Good {
   EnablePurchase: boolean
   EnableProductPage: boolean
   CancelMode: CancelMode
-  EnableSetCommission: boolean
   DisplayColors: string[]
   CancellableBeforeStart: number
   ProductPage: string
+  EnableSetCommission: boolean
+  Likes: number
+  Dislikes: number
+  Score: string
+  ScoreCount: number
+  RecommendCount: number
+  CommentCount: number
   AppSpotQuantity: number
   AppGoodLocked: string
   AppGoodWaitStart: string
   AppGoodInService: string
   AppGoodSold: string
-  StartMode: StartMode
   AppGoodPosters: string[]
   MinOrderAmount: string
   MaxOrderAmount: string
@@ -75,6 +81,7 @@ export interface Good {
   DurationCalculateType: GoodUnitCalculateType
   PackageWithRequireds: boolean
   SettlementType: GoodSettlementType
+  PackagedWithRequireds: boolean
   DealUnitsLastWeek: string
   DealUnitsLastMonth: string
   DealUsersLastWeek: number

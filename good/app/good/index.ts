@@ -31,12 +31,16 @@ export const useAppGoodStore = defineStore('app-goods', {
         return this.AppGoods.get(appID)?.find((el: Good) => el.EntID === id)
       }
     },
-    goods (): (appID?: string, label?: GoodLabel) => Array<Good> {
-      return (appID?: string, label?: GoodLabel) => {
+    goods (): (appID?: string, label?: GoodLabel, ids?: string[], goodIDs?: string[]) => Array<Good> {
+      return (appID?: string, label?: GoodLabel, ids?: string[], goodIDs?: string[]) => {
         appID = formalizeAppID(appID)
         return this.AppGoods.get(appID)?.filter((el) => {
+          if (ids && !ids.length) return false
+          if (goodIDs && !goodIDs.length) return false
           let ok = true
           if (label) ok &&= el.Labels.includes(label)
+          if (ids?.length) ok &&= ids.includes(el.EntID)
+          if (goodIDs?.length) ok &&= goodIDs.includes(el.GoodID)
           return ok
         }).sort((a, b) => a.DisplayIndex - b.DisplayIndex) || []
       }
