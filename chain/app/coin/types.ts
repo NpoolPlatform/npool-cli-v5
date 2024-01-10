@@ -1,4 +1,5 @@
 import { BaseRequest } from '../../../request'
+import { ConsensusPowerType, ConsensusType } from '../../base'
 
 export interface AppCoin {
   ID: number
@@ -49,6 +50,8 @@ export interface AppCoin {
   MaxAmountPerWithdraw: string
   DefaultGoodID: string
   NeedMemo: boolean
+  ConsensusType: ConsensusType
+  ConsensusPowerType: ConsensusPowerType
 }
 
 export interface GetAppCoinsRequest extends BaseRequest {
