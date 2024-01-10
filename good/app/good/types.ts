@@ -75,6 +75,10 @@ export interface Good {
   LastYbutRewardAmount: string
   TotalRewardAmount: string
   AppGoodPosters: string[]
+  DealUnitsLastWeek: string
+  DealUnitsLastMonth: string
+  DealUsersLastWeek: number
+  DealUsersLastMonth: number
 }
 
 export interface GetAppGoodsRequest extends BaseRequest {
