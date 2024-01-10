@@ -78,6 +78,10 @@ export interface Good {
   DurationCalculateType: GoodUnitCalculateType
   PackageWithRequireds: boolean
   SettlementType: GoodSettlementType
+  DealUnitsLastWeek: string
+  DealUnitsLastMonth: string
+  DealUsersLastWeek: number
+  DealUsersLastMonth: number
 }
 
 export interface GetAppGoodsRequest extends BaseRequest {
