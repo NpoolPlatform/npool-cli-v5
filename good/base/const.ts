@@ -42,5 +42,6 @@ export enum GoodTopMostType {
   TopMostBestOffer = 'TopMostBestOffer',
   TopMostInnovationStarter = 'TopMostInnovationStarter',
   TopMostLoyaltyExclusive = 'TopMostLoyaltyExclusive',
+  TopMostLatestOffers = 'TopMostLatestOffers'
 }
 export const GoodTypeMostTypes = Object.values(GoodTopMostType)

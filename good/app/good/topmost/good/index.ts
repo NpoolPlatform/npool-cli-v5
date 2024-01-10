@@ -19,6 +19,7 @@ import {
   CreateNTopMostGoodResponse
 } from './types'
 import { formalizeAppID } from '../../../../../appuser/app/local'
+import { GoodTopMostType } from '../../../../base'
 
 export const useTopMostGoodStore = defineStore('topmostgood', {
   state: () => ({
@@ -31,10 +32,14 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
         return this.TopMostGoods.get(appID)?.find((el: TopMostGood) => el.EntID === id)
       }
     },
-    topmostgoods (): (appID?: string) => Array<TopMostGood> {
-      return (appID?: string) => {
+    topmostgoods (): (appID?: string, topMostType?: GoodTopMostType) => Array<TopMostGood> {
+      return (appID?: string, topMostType?: GoodTopMostType) => {
         appID = formalizeAppID(appID)
-        return this.TopMostGoods.get(appID) || []
+        return this.TopMostGoods.get(appID)?.filter((el) => {
+          let ok = true
+          if (topMostType) ok &&= el.TopMostType === topMostType
+          return ok
+        }) || []
       }
     }
   },

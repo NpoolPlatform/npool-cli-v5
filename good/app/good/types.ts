@@ -12,22 +12,6 @@ export interface Good {
   Price: string
   DisplayIndex: number
   PurchaseLimit: number
-  Commission: boolean
-  BenefitIntervalHours: number
-  PromotionStartAt: number
-  PromotionEndAt: number
-  PromotionMessage: string
-  PromotionPrice: string
-  PromotionPosters: string[]
-  RecommenderID: string
-  RecommenderEmailAddress: string
-  RecommenderPhoneNO: string
-  RecommenderUsername: string
-  RecommenderFirstName: string
-  RecommenderLastName: string
-  RecommendMessage: string
-  RecommendIndex: number
-  RecommendAt: number
   DeviceType: string
   DeviceManufacturer: string
   DevicePowerConsumption: number
@@ -35,54 +19,62 @@ export interface Good {
   DevicePosters: string[]
   DurationDays: number
   VendorLocationCountry: string
+  VendorBrandName: string
+  VendorBrandLogo: string
   CoinTypeID: string
   CoinLogo: string
-  GoodBanner: string
   CoinName: string
   CoinUnit: string
   CoinPreSale: boolean
   CoinEnv: string
-  CoinSpecs: string
   CoinHomePage: string
+  CoinSpecs: string
   GoodType: GoodType
   BenefitType: BenefitType
   GoodName: string
-  ProductPage: string
   Unit: string
   UnitAmount: number
+  BenefitIntervalHours: number
   TestOnly: boolean
   Posters: string[]
-  AppGoodPosters: string[]
   Labels: GoodLabel[]
-  VoteCount: number
-  Rating: number
   SupportCoins: GoodCoinInfo[]
   GoodTotal: string
   GoodSpotQuantity: string
   RquiredGoods: Good[]
   StartAt: number
+  StartMode: StartMode
   CreatedAt: number
   SaleStartAt: number
   SaleEndAt: number
   ServiceStartAt: number
   TechnicalFeeRatio: string
   ElectricityFeeRatio: string
-  DailyRewardAmount: string
   Descriptions: string[]
+  GoodBanner: string
   DisplayNames: string[]
-  DisplayColors: string[]
   EnablePurchase: boolean
   EnableProductPage: boolean
-  EnableSetCommission: boolean
-  UserPurchaseLimit: string
   CancelMode: CancelMode
+  UserPurchaseLimit: string
+  DisplayColors: string[]
   CancellableBeforeStart: number
+  ProductPage: string
+  EnableSetCommission: boolean
+  Likes: number
+  Dislikes: number
+  Score: string
+  ScoreCount: number
+  RecommendCount: number
+  CommentCount: number
   AppSpotQuantity: number
   AppGoodLocked: string
   AppGoodWaitStart: string
   AppGoodInService: string
   AppGoodSold: string
-  StartMode: StartMode
+  LastYbutRewardAmount: string
+  TotalRewardAmount: string
+  AppGoodPosters: string[]
 }
 
 export interface GetAppGoodsRequest extends BaseRequest {

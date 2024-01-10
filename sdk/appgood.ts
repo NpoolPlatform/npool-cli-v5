@@ -16,8 +16,8 @@ const getPageAppGoods = (pageIndex: number, pageEnd: number, done?: (error: bool
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, orders?: Array<appgood.Good>, total?: number) => {
-    if (error || !orders?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+  }, (error: boolean, goods?: Array<appgood.Good>, total?: number) => {
+    if (error || !goods?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
       done?.(error, totalPages, total as number)
       return
