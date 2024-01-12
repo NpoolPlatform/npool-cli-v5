@@ -64,3 +64,12 @@ export interface DeleteCategoryRequest extends BaseRequest{
 export interface DeleteCategoryResponse {
   Info: Category
 }
+
+export interface GetCategoryListRequest extends BaseRequest{
+  AppID?: string
+}
+
+export interface GetCategoryListResponse {
+  Infos: Category[]
+  Total: number
+}

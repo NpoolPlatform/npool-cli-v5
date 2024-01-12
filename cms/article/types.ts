@@ -110,3 +110,15 @@ export interface GetArticleListResponse {
   Infos: Article[]
   Total: number
 }
+
+export interface GetContentListRequest extends BaseRequest{
+  AppID?: string
+  CategoryID?: string
+  Offset: number
+  Limit: number
+}
+
+export interface GetContentListResponse {
+  Infos: Article[]
+  Total: number
+}

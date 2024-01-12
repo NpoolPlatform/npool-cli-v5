@@ -9,7 +9,9 @@ import {
   CreateCategoryRequest,
   CreateCategoryResponse,
   DeleteCategoryRequest,
-  DeleteCategoryResponse
+  DeleteCategoryResponse,
+  GetCategoryListRequest,
+  GetCategoryListResponse
 } from './types'
 import { doActionWithError } from '../../request'
 import { formalizeAppID } from '../../appuser/app/local'
@@ -114,6 +116,19 @@ export const useCategoryStore = defineStore('categories', {
           done(false, resp.Info)
         }, () => {
           done(true, {} as Category)
+        }
+      )
+    },
+    getCategoryList (req: GetCategoryListRequest, done: (error: boolean, rows: Category[]) => void) {
+      doActionWithError<GetCategoryListRequest, GetCategoryListResponse>(
+        API.GET_CATEGORY_LIST,
+        req,
+        req.Message,
+        (resp: GetCategoryListResponse): void => {
+          this.addCategories(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true, [])
         }
       )
     }

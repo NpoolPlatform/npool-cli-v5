@@ -13,7 +13,9 @@ import {
   CreateArticleRequest,
   CreateArticleResponse,
   DeleteArticleRequest,
-  DeleteArticleResponse
+  DeleteArticleResponse,
+  GetContentListRequest,
+  GetContentListResponse
 } from './types'
 import { doActionWithError } from '../../request'
 import { formalizeAppID } from '../../appuser/app/local'
@@ -159,6 +161,19 @@ export const useArticleStore = defineStore('articles', {
           done(false, resp.Info)
         }, () => {
           done(true, {} as Article)
+        }
+      )
+    },
+    getContentList (req: GetContentListRequest, done: (error: boolean, rows: Article[]) => void) {
+      doActionWithError<GetContentListRequest, GetContentListResponse>(
+        API.GET_CONTENT_LIST,
+        req,
+        req.Message,
+        (resp: GetContentListResponse): void => {
+          this.addArticles(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true, [])
         }
       )
     }
