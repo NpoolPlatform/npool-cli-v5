@@ -69,27 +69,27 @@ export const useAnnouncementStore = defineStore('announcements', {
     }
   },
   actions: {
-    getAnnouncements (req: GetAnnouncementsRequest, done: (error: boolean, rows: Array<Announcement>) => void) {
+    getAnnouncements (req: GetAnnouncementsRequest, done: (error: boolean, rows: Array<Announcement>, totalRows?: number) => void) {
       doActionWithError<GetAnnouncementsRequest, GetAnnouncementsResponse>(
         API.GET_ANNOUNCEMENTS,
         req,
         req.Message,
         (resp: GetAnnouncementsResponse): void => {
           this.addAnnouncements(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done(false, resp.Infos, resp.Total)
         }, () => {
           done(true, [] as Array<Announcement>)
         }
       )
     },
-    getAppAnnouncements (req: GetAppAnnouncementsRequest, done: (error: boolean, rows: Array<Announcement>) => void) {
+    getAppAnnouncements (req: GetAppAnnouncementsRequest, done: (error: boolean, rows: Array<Announcement>, totalRows?: number) => void) {
       doActionWithError<GetAppAnnouncementsRequest, GetAppAnnouncementsResponse>(
         API.GET_APP_ANNOUNCEMENTS,
         req,
         req.Message,
         (resp: GetAppAnnouncementsResponse): void => {
           this.addAnnouncements(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done(false, resp.Infos, resp.Total)
         }, () => {
           done(true, [] as Array<Announcement>)
         }
@@ -135,14 +135,14 @@ export const useAnnouncementStore = defineStore('announcements', {
       )
     },
 
-    getNAppAnnouncements (req: GetNAppAnnouncementsRequest, done: (error: boolean, rows: Array<Announcement>) => void) {
+    getNAppAnnouncements (req: GetNAppAnnouncementsRequest, done: (error: boolean, rows: Array<Announcement>, totalRows?: number) => void) {
       doActionWithError<GetNAppAnnouncementsRequest, GetNAppAnnouncementsResponse>(
         API.GET_N_APP_ANNOUNCEMENTS,
         req,
         req.Message,
         (resp: GetNAppAnnouncementsResponse): void => {
           this.addAnnouncements(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done(false, resp.Infos, resp.Total)
         }, () => {
           done(true, [] as Array<Announcement>)
         }
