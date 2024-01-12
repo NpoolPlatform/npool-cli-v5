@@ -1,0 +1,169 @@
+import { defineStore } from 'pinia'
+import { API } from './const'
+import {
+  Article,
+  GetArticlesRequest,
+  GetArticlesResponse,
+  GetArticleContentRequest,
+  GetArticleContentResponse,
+  GetContentRequest,
+  GetContentResponse,
+  UpdateArticleRequest,
+  UpdateArticleResponse,
+  CreateArticleRequest,
+  CreateArticleResponse,
+  DeleteArticleRequest,
+  DeleteArticleResponse
+} from './types'
+import { doActionWithError } from '../../request'
+import { formalizeAppID } from '../../appuser/app/local'
+
+export const useArticleStore = defineStore('articles', {
+  state: () => ({
+    Articles: new Map<string, Array<Article>>(),
+    ArticleContent: undefined as unknown as string
+  }),
+  getters: {
+    article (): (appID: string | undefined, id: number) => Article | undefined {
+      return (appID: string | undefined, id: number) => {
+        appID = formalizeAppID(appID)
+        return this.Articles.get(appID)?.find((el) => el.ID === id)
+      }
+    },
+    getArticleByEntID (): (appID: string | undefined, entID: string) => Article | undefined {
+      return (appID: string | undefined, entID: string) => {
+        appID = formalizeAppID(appID)
+        return this.Articles.get(appID)?.find((el) => el.EntID === entID)
+      }
+    },
+    articles (): (appID: string | undefined) => Array<Article> {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.Articles.get(appID) || []
+      }
+    },
+    articleContent () {
+      return () => this.ArticleContent
+    },
+    addArticles (): (appID: string | undefined, articles: Array<Article>) => void {
+      return (appID: string | undefined, articles: Array<Article>) => {
+        appID = formalizeAppID(appID)
+        let _articles = this.Articles.get(appID) as Array<Article>
+        if (!_articles) {
+          _articles = []
+        }
+        articles.forEach((article) => {
+          const index = _articles.findIndex((el) => el.ID === article.ID)
+          _articles.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1, article)
+        })
+        this.Articles.set(appID, _articles)
+      }
+    },
+    delArticle (): (appID: string | undefined, id: number) => void {
+      return (appID: string | undefined, id: number) => {
+        appID = formalizeAppID(appID)
+        let _articles = this.Articles.get(appID) as Array<Article>
+        if (!_articles) {
+          _articles = []
+        }
+        const index = _articles.findIndex((el) => el.ID === id)
+        _articles.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1)
+        this.Articles.set(appID, _articles)
+      }
+    }
+  },
+  actions: {
+    getArticles (req: GetArticlesRequest, done: (error: boolean, rows: Array<Article>) => void) {
+      doActionWithError<GetArticlesRequest, GetArticlesResponse>(
+        API.GET_ARTICLES,
+        req,
+        req.Message,
+        (resp: GetArticlesResponse): void => {
+          this.addArticles(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true, [] as Array<Article>)
+        }
+      )
+    },
+    getArticleList (req: GetArticlesRequest, done: (error: boolean, rows: Array<Article>) => void) {
+      doActionWithError<GetArticlesRequest, GetArticlesResponse>(
+        API.GET_ARTICLES,
+        req,
+        req.Message,
+        (resp: GetArticlesResponse): void => {
+          this.addArticles(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true, [] as Array<Article>)
+        }
+      )
+    },
+    getArticleContent (req: GetArticleContentRequest, done: (error: boolean, row: string) => void) {
+      doActionWithError<GetArticleContentRequest, GetArticleContentResponse>(
+        API.GET_ARTICLE_CONTENT,
+        req,
+        req.Message,
+        (resp: GetArticleContentResponse): void => {
+          done(false, resp.Info)
+        }, () => {
+          done(true, '')
+        }
+      )
+    },
+    getContent (req: GetContentRequest, done: (error: boolean, row: string) => void) {
+      doActionWithError<GetContentRequest, GetContentResponse>(
+        API.GET_CONTENT + req.ContentURL,
+        req,
+        req.Message,
+        (resp: GetContentResponse): void => {
+          done(false, String(resp))
+        }, () => {
+          done(true, '')
+        }
+      )
+    },
+    updateArticle (req: UpdateArticleRequest, done: (error: boolean, row: Article) => void) {
+      doActionWithError<UpdateArticleRequest, UpdateArticleResponse>(
+        API.UPDATE_ARTICLE,
+        req,
+        req.Message,
+        (resp: UpdateArticleResponse): void => {
+          this.addArticles(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true, {} as Article)
+        }
+      )
+    },
+    createArticle (req: CreateArticleRequest, done: (error: boolean, row: Article) => void) {
+      doActionWithError<CreateArticleRequest, CreateArticleResponse>(
+        API.CREATE_ARTICLE,
+        req,
+        req.Message,
+        (resp: CreateArticleResponse): void => {
+          this.addArticles(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true, {} as Article)
+        }
+      )
+    },
+    deleteArticle (req: DeleteArticleRequest, done: (error: boolean, row: Article) => void) {
+      doActionWithError<DeleteArticleRequest, DeleteArticleResponse>(
+        API.UPDATE_ARTICLE,
+        req,
+        req.Message,
+        (resp: DeleteArticleResponse): void => {
+          this.delArticle(undefined, req.ID)
+          done(false, resp.Info)
+        }, () => {
+          done(true, {} as Article)
+        }
+      )
+    }
+  }
+})
+
+export * from './const'
+export * from './types'
