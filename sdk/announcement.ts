@@ -4,13 +4,9 @@ import { AppID } from './localapp'
 
 const _announcement = announcement.useAnnouncementStore()
 
-const getPageAnnouncements = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number) => void) => {
+const getPageAnnouncements = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   const reqOffset = offset + pageIndex * constant.DefaultPageSize
   const reqLimit = Math.min(limit - pageIndex * constant.DefaultPageSize, constant.DefaultPageSize)
-  if (reqLimit === 0) {
-    done?.(false, limit)
-    return
-  }
   _announcement.getAnnouncements({
     Offset: reqOffset,
     Limit: reqLimit,
@@ -22,17 +18,25 @@ const getPageAnnouncements = (offset: number, limit: number, pageIndex: number, 
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<announcement.Announcement>) => {
+  }, (error: boolean, rows?: Array<announcement.Announcement>, totalRows?: number) => {
     if (error || !rows?.length) {
-      done?.(error, limit - Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize, 0))
+      if (limit === 0) {
+        limit = totalRows as number
+      } else {
+        limit = Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize)
+      }
+      done?.(error, limit, totalRows as number)
       return
     }
-    limit -= reqLimit
+    if (limit <= pageIndex * constant.DefaultPageSize && limit > 0) {
+      done?.(error, totalRows as number - offset, 0)
+      return
+    }
     getPageAnnouncements(offset, limit, ++pageIndex, done)
   })
 }
 
-export const getAnnouncements = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number) => void) => {
+export const getAnnouncements = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   getPageAnnouncements(offset, limit, 0, done)
 }
 
