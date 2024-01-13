@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { appuser, constant, notify } from '..'
+import { appuser, appuserbase, constant, notify } from '..'
 import { AppID } from './localapp'
 import { encryptPassword } from '../utils'
 
@@ -33,8 +33,7 @@ export const getUsers = (pageStart: number, pages: number, done?: (error: boolea
 
 export const _appuserMosts = computed(() => _appuser.appUsers(AppID.value))
 
-export const createUser = (target: appuser.User, finish: (error: boolean) => void) => {
-  const password = '123456789'
+export const createUser = (target: appuser.User, password: string, done: (error: boolean) => void) => {
   _appuser.createAppUser({
     ...target,
     TargetAppID: target.AppID,
@@ -54,6 +53,32 @@ export const createUser = (target: appuser.User, finish: (error: boolean) => voi
       }
     }
   }, (error: boolean) => {
-    finish(error)
+    done(error)
+  })
+}
+
+export const login = (account: string, accountType: appuserbase.SignMethodType, password: string, manMachineSpec: string, envSpec: string, done: (error: boolean) => void) => {
+  _appuser.login({
+    Account: account,
+    AccountType: accountType,
+    PasswordHash: encryptPassword(password),
+    ManMachineSpec: manMachineSpec,
+    EnvironmentSpec: envSpec,
+    Message: {
+      Error: {
+        Title: 'MSG_LOGIN',
+        Message: 'MSG_LOGIN_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_LOGIN',
+        Message: 'MSG_LOGIN_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    done(error)
   })
 }
