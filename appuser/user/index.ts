@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { formalizeUserUintID, useLocalUserStore } from './local'
-import { doAction, doActionWithError } from '../../request'
+import { doActionWithError } from '../../request'
 import { API } from './const'
 import {
   GetLoginHistoriesRequest,
@@ -131,13 +131,15 @@ export const useUserStore = defineStore('users', {
           done(true)
         })
     },
-    signup (req: SignupRequest, done: () => void) {
-      doAction<SignupRequest, SignupResponse>(
+    signup (req: SignupRequest, done: (error: boolean) => void) {
+      doActionWithError<SignupRequest, SignupResponse>(
         API.SIGNUP,
         req,
         req.Message,
         (): void => {
-          done()
+          done(false)
+        }, () => {
+          done(true)
         })
     },
     logout (req: LogoutRequest, done: (error: boolean) => void) {

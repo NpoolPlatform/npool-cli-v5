@@ -82,3 +82,15 @@ export const login = (account: string, accountType: appuserbase.SignMethodType, 
     done(error)
   })
 }
+
+export const signup = (account: string, accountType: appuserbase.SignMethodType, password: string, verificationCode: string, invitationCode?: string, done?: (error: boolean) => void) => {
+  _appuser.signup({
+    Account: account,
+    AccountType: accountType,
+    PasswordHash: encryptPassword(password),
+    VerificationCode: verificationCode,
+    InvitationCode: invitationCode
+  }, () => {
+    done?.(false)
+  })
+}
