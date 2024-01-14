@@ -4,6 +4,7 @@ const VerificationCodeLength = 6
 const MinPasswordLength = 8
 const MaxPasswordLength = 32
 const SecondsEachDay = 24 * 60 * 60
+const InvitationCodeLength = 12
 
 const InvalidID = '00000000-0000-0000-0000-000000000000'
 
@@ -24,5 +25,6 @@ export {
   InvalidID,
   GoogleRecaptchaKey,
   GoogleTokenType,
-  SecondsEachDay
+  SecondsEachDay,
+  InvitationCodeLength
 }
