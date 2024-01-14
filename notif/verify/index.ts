@@ -16,7 +16,7 @@ export const useVerifyStore = defineStore('notify-verify', {
   }),
   getters: {},
   actions: {
-    sendVerificationCode (account: string, accountType: SigninVerifyType, usedFor: EventType, toUsername: string) {
+    sendVerificationCode (account: string, accountType: SigninVerifyType, usedFor: EventType, toUsername: string, done?: (error: boolean) => void) {
       switch (accountType) {
         case SigninVerifyType.Email:
           this.sendCode({
@@ -32,7 +32,7 @@ export const useVerifyStore = defineStore('notify-verify', {
                 Type: NotifyType.Error
               }
             }
-          })
+          }, done)
           break
         case SigninVerifyType.Mobile:
           this.sendCode({
@@ -48,7 +48,7 @@ export const useVerifyStore = defineStore('notify-verify', {
                 Type: NotifyType.Error
               }
             }
-          })
+          }, done)
           break
       }
     },
@@ -63,7 +63,7 @@ export const useVerifyStore = defineStore('notify-verify', {
           done?.(true)
         })
     },
-    getGoogleToken (req: GetGoogleTokenRequest, done: (token: string) => void) {
+    getGoogleToken (req: GetGoogleTokenRequest, done: (error: boolean, token: string) => void) {
       const recaptcha = req.Recaptcha
       const notification = useNotificationStore()
       if (recaptcha) {
@@ -74,7 +74,7 @@ export const useVerifyStore = defineStore('notify-verify', {
               void executeRecaptcha(req.Req)
                 .then((token: string) => {
                   this.GoogleToken.set(req.Req, token)
-                  done(token)
+                  done(false, token)
                 })
                 .catch((err: Error) => {
                   if (req.Message?.Error) {
