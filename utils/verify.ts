@@ -1,4 +1,4 @@
-import { MaxPasswordLength, MinPasswordLength, VerificationCodeLength } from '../const/const'
+import { InvitationCodeLength, MaxPasswordLength, MinPasswordLength, VerificationCodeLength } from '../const/const'
 
 const validateEmailAddress = (addr: string): boolean => {
   const reg = /^[a-zA-Z0-9_][\u002Ea-zA-Z0-9_+.*&^%$#!()-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/
@@ -7,6 +7,17 @@ const validateEmailAddress = (addr: string): boolean => {
 
 const validateVerificationCode = (code: string): boolean => {
   return code.length === VerificationCodeLength
+}
+
+const validateInvitationCode = (code: string): boolean => {
+  if (code.length !== InvitationCodeLength) {
+    return false
+  }
+  const reg = /^[a-zA-Z0-9]{3}-[a-zA-Z0-9]{3}-[a-zA-Z0-9]{4}$/
+  if (!reg.test(code)) {
+    return false
+  }
+  return true
 }
 
 const validatePassword = (password: string): boolean => {
@@ -58,5 +69,6 @@ export {
   validateVerificationCode,
   validatePassword,
   validateMobileNO,
-  validateUsername
+  validateUsername,
+  validateInvitationCode
 }
