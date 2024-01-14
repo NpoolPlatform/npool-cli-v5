@@ -6,7 +6,10 @@ const appCountry = appcountry.useAppCountryStore()
 
 const getPageCountries = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   const reqOffset = offset + pageIndex * constant.DefaultPageSize
-  const reqLimit = Math.min(limit - pageIndex * constant.DefaultPageSize, constant.DefaultPageSize)
+  let reqLimit = constant.DefaultPageSize
+  if (limit > 0) {
+    reqLimit = limit - pageIndex * constant.DefaultPageSize
+  }
   appCountry.getAppCountries({
     Offset: reqOffset,
     Limit: reqLimit,
