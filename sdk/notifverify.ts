@@ -1,10 +1,10 @@
 import { IReCaptchaComposition } from 'vue-recaptcha-v3'
-import { coderepo, notify, constant } from '..'
+import { notifverify, notify, constant, appuserbase, basetypes } from '..'
 
-const _coderepo = coderepo.useCodeRepoStore()
+const _notifverify = notifverify.useVerifyStore()
 
 export const getGoogleToken = (recaptcha: IReCaptchaComposition | undefined, tokenType: constant.GoogleTokenType, done: (error: boolean, token: string) => void) => {
-  _coderepo.getGoogleToken({
+  _notifverify.getGoogleToken({
     Recaptcha: recaptcha,
     Req: tokenType,
     Message: {
@@ -15,7 +15,11 @@ export const getGoogleToken = (recaptcha: IReCaptchaComposition | undefined, tok
         Type: notify.NotifyType.Error
       }
     }
-  }, (token: string, error: boolean) => {
+  }, (error: boolean, token: string) => {
     done(error, token)
   })
+}
+
+export const sendVerificationCode = (account: string, accountType: appuserbase.SigninVerifyType, usedFor: basetypes.EventType, toUsername: string, done: (error: boolean) => void) => {
+  _notifverify.sendVerificationCode(account, accountType, usedFor, toUsername, done)
 }
