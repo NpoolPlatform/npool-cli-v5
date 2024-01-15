@@ -31,7 +31,7 @@ export const getUsers = (pageStart: number, pages: number, done?: (error: boolea
   getPageUsers(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const _appuserMosts = computed(() => _appuser.appUsers(AppID.value))
+export const _appusers = computed(() => _appuser.appUsers(AppID.value))
 
 export const createUser = (target: appuser.User, password: string, done: (error: boolean) => void) => {
   _appuser.createAppUser({
