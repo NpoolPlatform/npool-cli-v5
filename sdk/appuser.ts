@@ -89,7 +89,21 @@ export const signup = (account: string, accountType: appuserbase.SignMethodType,
     AccountType: accountType,
     PasswordHash: encryptPassword(password),
     VerificationCode: verificationCode,
-    InvitationCode: invitationCode
+    InvitationCode: invitationCode,
+    Message: {
+      Error: {
+        Title: 'MSG_SIGNUP',
+        Message: 'MSG_SIGNUP_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_SIGNUP',
+        Message: 'MSG_SIGNUP_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
   }, (error: boolean) => {
     done?.(error)
   })
