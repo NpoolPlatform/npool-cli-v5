@@ -90,7 +90,7 @@ export const signup = (account: string, accountType: appuserbase.SignMethodType,
     PasswordHash: encryptPassword(password),
     VerificationCode: verificationCode,
     InvitationCode: invitationCode
-  }, () => {
-    done?.(false)
+  }, (error: boolean) => {
+    done?.(error)
   })
 }
