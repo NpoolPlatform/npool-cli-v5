@@ -10,6 +10,7 @@ export interface Category {
   Slug: string
   FullSlug: string
   Enabled: boolean
+  Index: number
   CreatedAt: number
   UpdatedAt: number
 }
@@ -20,6 +21,7 @@ export interface CategoryReq {
   Name: string
   Slug: string
   Enabled: boolean
+  Index: number
 }
 
 export interface CreateCategoryRequest extends BaseRequest{
@@ -27,6 +29,7 @@ export interface CreateCategoryRequest extends BaseRequest{
   Name: string
   Slug: string
   Enabled: boolean
+  Index: number
 }
 
 export interface CreateCategoryResponse {
@@ -50,6 +53,7 @@ export interface UpdateCategoryRequest extends BaseRequest{
   Name: string
   Slug: string
   Enabled: boolean
+  Index: number
 }
 
 export interface UpdateCategoryResponse {

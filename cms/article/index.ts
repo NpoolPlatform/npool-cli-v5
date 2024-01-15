@@ -131,6 +131,14 @@ export const useArticleStore = defineStore('articles', {
         req,
         req.Message,
         (resp: UpdateArticleResponse): void => {
+          if (req.ID !== resp.Info.ID) {
+            const oldArticle = this.article(undefined, req.ID)
+            if (oldArticle) {
+              oldArticle.Latest = false
+            }
+            this.delArticle(undefined, req.ID)
+            this.addArticles(undefined, oldArticle ? [oldArticle] : [])
+          }
           this.addArticles(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -153,7 +161,7 @@ export const useArticleStore = defineStore('articles', {
     },
     deleteArticle (req: DeleteArticleRequest, done: (error: boolean, row: Article) => void) {
       doActionWithError<DeleteArticleRequest, DeleteArticleResponse>(
-        API.UPDATE_ARTICLE,
+        API.DELETE_ARTICLE,
         req,
         req.Message,
         (resp: DeleteArticleResponse): void => {
