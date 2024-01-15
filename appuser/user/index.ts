@@ -129,7 +129,7 @@ export const useUserStore = defineStore('users', {
           done(false, resp.Info)
         }, () => {
           const user = useLocalUserStore()
-          user.restUser()
+          user.resetUser()
           done(true)
         })
     },
@@ -152,11 +152,11 @@ export const useUserStore = defineStore('users', {
         (): void => {
           const user = useLocalUserStore()
           this.delAppUser(user.User)
-          user.restUser()
+          user.resetUser()
           done(false)
         }, () => {
           const user = useLocalUserStore()
-          user.restUser()
+          user.resetUser()
           done(true)
         })
     },
