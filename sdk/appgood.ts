@@ -89,20 +89,8 @@ export const getNAppGoods = (offset: number, limit: number, done?: (error: boole
 }
 
 export const appGoods = computed(() => _appgood.goods(AppID.value))
-export const appGoodCancelable = (appGoodID: string) => _appgood.cancelable(AppID.value, appGoodID)
-
-export const appGoodPurchaseLimit = (appGoodID: string) => {
-  const goodPurchaseLimit = _appgood.purchaseLimit(undefined, appGoodID)
-  if (goodPurchaseLimit <= 0) {
-    return 0
-  }
-  const _appGood = _appgood.good(undefined, appGoodID)
-  if (!_appGood) {
-    return 0
-  }
-  let units = 0
-  _order.orders(undefined, formalizeUserID(), appGoodID).filter((el) => el.OrderState !== order.OrderState.CANCELED).forEach((el) => {
-    units += Number(el.Units)
-  })
-  return Math.max(Math.min(Number(_appGood.MaxUserAmount) - units, goodPurchaseLimit), 0)
-}
+export const appGood = (appGoodID: string) => _appgood.good(undefined, appGoodID)
+export const appGoodCancelable = (id: string) => _appgood.cancelable(AppID.value, id)
+export const appGoodCoins = computed(() => _appcoin.coins(undefined).filter((el) => appGoods.value.findIndex((el1) => el.CoinTypeID === el1.CoinTypeID) >= 0))
+export const appGoodVendorBrands = computed(() => _vendorbrand.vendorBrands().filter((el) => appGoods.value.findIndex((el1) => el.Name === el1.VendorBrandName) >= 0))
+export const appGoodDeviceInfos = computed(() => _deviceinfo.deviceInfos().filter((el) => appGoods.value.findIndex((el1) => el.Type === el1.DeviceType) >= 0))
