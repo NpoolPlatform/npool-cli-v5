@@ -1,10 +1,13 @@
 import { computed } from 'vue'
-import { appgood, constant, notify, order } from '..'
+import { appgood, constant, notify, appcoin, vendorbrand, deviceinfo, order } from '..'
 import { AppID } from './localapp'
 import { formalizeUserID } from '../appuser/user'
 
 const _appgood = appgood.useAppGoodStore()
 const _order = order.useOrderStore()
+const _appcoin = appcoin.useAppCoinStore()
+const _vendorbrand = vendorbrand.useVendorBrandStore()
+const _deviceinfo = deviceinfo.useDeviceInfoStore()
 
 const getPageAppGoods = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   const reqOffset = offset + pageIndex * constant.DefaultPageSize
@@ -17,8 +20,8 @@ const getPageAppGoods = (offset: number, limit: number, pageIndex: number, done?
     Limit: reqLimit,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_COUNTRIES',
-        Message: 'MSG_GET_APP_COUNTRIES_FAIL',
+        Title: 'MSG_GET_APP_GOODS',
+        Message: 'MSG_GET_APP_GOODS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -57,8 +60,8 @@ const getNPageAppGoods = (offset: number, limit: number, pageIndex: number, done
     Limit: reqLimit,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_COUNTRIES',
-        Message: 'MSG_GET_APP_COUNTRIES_FAIL',
+        Title: 'MSG_GET_APP_GOODS',
+        Message: 'MSG_GET_APP_GOODS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
