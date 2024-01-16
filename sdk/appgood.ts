@@ -1,8 +1,11 @@
 import { computed } from 'vue'
-import { appgood, constant, notify } from '..'
+import { appgood, constant, notify, appcoin, vendorbrand, deviceinfo } from '..'
 import { AppID } from './localapp'
 
 const _appgood = appgood.useAppGoodStore()
+const _appcoin = appcoin.useAppCoinStore()
+const _vendorbrand = vendorbrand.useVendorBrandStore()
+const _deviceinfo = deviceinfo.useDeviceInfoStore()
 
 const getPageAppGoods = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   const reqOffset = offset + pageIndex * constant.DefaultPageSize
@@ -15,8 +18,8 @@ const getPageAppGoods = (offset: number, limit: number, pageIndex: number, done?
     Limit: reqLimit,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_COUNTRIES',
-        Message: 'MSG_GET_APP_COUNTRIES_FAIL',
+        Title: 'MSG_GET_APP_GOODS',
+        Message: 'MSG_GET_APP_GOODS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -55,8 +58,8 @@ const getNPageAppGoods = (offset: number, limit: number, pageIndex: number, done
     Limit: reqLimit,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_COUNTRIES',
-        Message: 'MSG_GET_APP_COUNTRIES_FAIL',
+        Title: 'MSG_GET_APP_GOODS',
+        Message: 'MSG_GET_APP_GOODS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -85,3 +88,6 @@ export const getNAppGoods = (offset: number, limit: number, done?: (error: boole
 
 export const appGoods = computed(() => _appgood.goods(AppID.value))
 export const appGoodCancelable = (id: string) => _appgood.cancelable(AppID.value, id)
+export const appGoodCoins = computed(() => _appcoin.coins(undefined).filter((el) => appGoods.value.findIndex((el1) => el.CoinTypeID === el1.CoinTypeID) >= 0))
+export const appGoodVendorBrands = computed(() => _vendorbrand.vendorBrands().filter((el) => appGoods.value.findIndex((el1) => el.Name === el1.VendorBrandName) >= 0))
+export const appGoodDeviceInfos = computed(() => _deviceinfo.deviceInfos().filter((el) => appGoods.value.findIndex((el1) => el.Type === el1.DeviceType) >= 0))
