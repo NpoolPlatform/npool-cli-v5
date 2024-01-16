@@ -87,6 +87,7 @@ export const getNAppGoods = (offset: number, limit: number, done?: (error: boole
 }
 
 export const appGoods = computed(() => _appgood.goods(AppID.value))
+export const appGood = (appGoodID: string) => _appgood.good(undefined, appGoodID)
 export const appGoodCancelable = (id: string) => _appgood.cancelable(AppID.value, id)
 export const appGoodCoins = computed(() => _appcoin.coins(undefined).filter((el) => appGoods.value.findIndex((el1) => el.CoinTypeID === el1.CoinTypeID) >= 0))
 export const appGoodVendorBrands = computed(() => _vendorbrand.vendorBrands().filter((el) => appGoods.value.findIndex((el1) => el.Name === el1.VendorBrandName) >= 0))
