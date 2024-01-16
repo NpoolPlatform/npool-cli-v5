@@ -94,3 +94,4 @@ export const appGoodCancelable = (id: string) => _appgood.cancelable(AppID.value
 export const appGoodCoins = computed(() => _appcoin.coins(undefined).filter((el) => appGoods.value.findIndex((el1) => el.CoinTypeID === el1.CoinTypeID) >= 0))
 export const appGoodVendorBrands = computed(() => _vendorbrand.vendorBrands().filter((el) => appGoods.value.findIndex((el1) => el.Name === el1.VendorBrandName) >= 0))
 export const appGoodDeviceInfos = computed(() => _deviceinfo.deviceInfos().filter((el) => appGoods.value.findIndex((el1) => el.Type === el1.DeviceType) >= 0))
+export const appGoodName = (appGoodID: string, index: number) => _appgood.displayName(undefined, appGoodID, index)
