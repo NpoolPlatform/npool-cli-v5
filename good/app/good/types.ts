@@ -69,6 +69,8 @@ export interface Good {
   AppGoodWaitStart: string
   AppGoodInService: string
   AppGoodSold: string
+  LastUnitRewardAmount: string
+  LastRewardAmount: string
   AppGoodPosters: string[]
   MinOrderAmount: string
   MaxOrderAmount: string
@@ -81,7 +83,6 @@ export interface Good {
   DurationCalculateType: GoodUnitCalculateType
   PackageWithRequireds: boolean
   SettlementType: GoodSettlementType
-  PackagedWithRequireds: boolean
   DealUnitsLastWeek: string
   DealUnitsLastMonth: string
   DealUsersLastWeek: number
