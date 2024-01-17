@@ -84,4 +84,5 @@ export const getNAppCoins = (offset: number, limit: number, done?: (error: boole
 }
 
 export const appCoins = computed(() => _appcoin.coins(AppID.value))
-export const coinName = (coinTypeID: string, index: number) => _appcoin.displayName(undefined, coinTypeID, index)
+export const appCoinName = (coinTypeID: string, index: number) => _appcoin.displayName(undefined, coinTypeID, index)
+export const appCoinUnit = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)?.Unit

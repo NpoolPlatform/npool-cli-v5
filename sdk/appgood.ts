@@ -97,21 +97,8 @@ export const appGoodCoins = computed(() => _appcoin.coins(undefined).filter((el)
 export const appGoodVendorBrands = computed(() => _vendorbrand.vendorBrands().filter((el) => appGoods.value.findIndex((el1) => el.Name === el1.VendorBrandName) >= 0))
 export const appGoodDeviceInfos = computed(() => _deviceinfo.deviceInfos().filter((el) => appGoods.value.findIndex((el1) => el.Type === el1.DeviceType) >= 0))
 export const appGoodName = (appGoodID: string, index: number) => _appgood.displayName(undefined, appGoodID, index)
-
-export const appGoodDurationUnit = (appGoodID: string) => {
-  const _appGood = appGood(appGoodID)
-  switch (_appGood?.DurationType) {
-    case goodbase.GoodDurationType.GoodDurationByHour:
-      return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_HOUR' : 'MSG_HOURS'
-    case goodbase.GoodDurationType.GoodDurationByDay:
-      return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_DAY' : 'MSG_DAYS'
-    case goodbase.GoodDurationType.GoodDurationByMonth:
-      return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_MONTH' : 'MSG_MONTHS'
-    case goodbase.GoodDurationType.GoodDurationByYear:
-      return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_YEAR' : 'MSG_YEARS'
-  }
-  return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_DAY' : 'MSG_DAYS'
-}
+export const appGoodQuantityUnitAmount = (appGoodID: string) => appGood(appGoodID)?.QuantityUnitAmount
+export const appGoodQuantityUnit = (appGoodID: string) => appGood(appGoodID)?.QuantityUnit as string
 
 export const appGoodDuration = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)
@@ -129,6 +116,51 @@ export const appGoodUnitDuration = (appGoodID: string) => {
   }
   // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
   return 1
+}
+
+export const appGoodDurationUnit = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  switch (_appGood?.DurationType) {
+    case goodbase.GoodDurationType.GoodDurationByHour:
+      return appGoodUnitDuration(appGoodID) === 1 ? 'MSG_HOUR' : 'MSG_HOURS'
+    case goodbase.GoodDurationType.GoodDurationByDay:
+      return appGoodUnitDuration(appGoodID) === 1 ? 'MSG_DAY' : 'MSG_DAYS'
+    case goodbase.GoodDurationType.GoodDurationByMonth:
+      return appGoodUnitDuration(appGoodID) === 1 ? 'MSG_MONTH' : 'MSG_MONTHS'
+    case goodbase.GoodDurationType.GoodDurationByYear:
+      return appGoodUnitDuration(appGoodID) === 1 ? 'MSG_YEAR' : 'MSG_YEARS'
+  }
+  return appGoodUnitDuration(appGoodID) === 1 ? 'MSG_DAY' : 'MSG_DAYS'
+}
+
+export const appGoodUnitDurationUnit = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  switch (_appGood?.DurationType) {
+    case goodbase.GoodDurationType.GoodDurationByHour:
+      return 'MSG_HOUR'
+    case goodbase.GoodDurationType.GoodDurationByDay:
+      return 'MSG_DAY'
+    case goodbase.GoodDurationType.GoodDurationByMonth:
+      return 'MSG_MONTH'
+    case goodbase.GoodDurationType.GoodDurationByYear:
+      return 'MSG_YEAR'
+  }
+  return 'MSG_DAY'
+}
+
+export const appGoodMultipleDurationUnit = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  switch (_appGood?.DurationType) {
+    case goodbase.GoodDurationType.GoodDurationByHour:
+      return 'MSG_HOURS'
+    case goodbase.GoodDurationType.GoodDurationByDay:
+      return 'MSG_DAYS'
+    case goodbase.GoodDurationType.GoodDurationByMonth:
+      return 'MSG_MONTHS'
+    case goodbase.GoodDurationType.GoodDurationByYear:
+      return 'MSG_YEARS'
+  }
+  return 'MSG_DAYS'
 }
 
 export const appGoodOriginalUnitPrice = (appGoodID: string) => {
@@ -178,4 +210,13 @@ export const appGoodRequiredAppGoods = (appGoodID: string, requiredTypes: goodba
     })
     return ok
   }).slice(0, 2)
+}
+
+export const appGoodEstimatedUnitDailyReward = (appGoodID: string) => appGood(appGoodID)?.LastUnitRewardAmount
+export const appGoodSoldPercent = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (!Number(_appGood?.GoodTotal)) {
+    return 0
+  }
+  return (Number(_appGood?.GoodTotal) - Number(_appGood?.GoodSpotQuantity)) / Number(_appGood?.GoodTotal)
 }

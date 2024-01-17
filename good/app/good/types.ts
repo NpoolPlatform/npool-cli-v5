@@ -83,7 +83,6 @@ export interface Good {
   DurationCalculateType: GoodUnitCalculateType
   PackageWithRequireds: boolean
   SettlementType: GoodSettlementType
-  PackagedWithRequireds: boolean
   DealUnitsLastWeek: string
   DealUnitsLastMonth: string
   DealUsersLastWeek: number
