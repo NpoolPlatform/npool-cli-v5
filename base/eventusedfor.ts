@@ -25,7 +25,8 @@ export enum EventType {
   UpdateGoogleAuth = 'UpdateGoogleAuth',
   OrderCompleted = 'OrderCompleted',
   Announcement = 'Announcement',
-  ProductPage = 'ProductPage'
+  ProductPage = 'ProductPage',
+  ResetPassword = 'ResetPassword'
 }
 
 export const EventTypes = Object.values(EventType)
