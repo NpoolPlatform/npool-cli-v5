@@ -1,12 +1,10 @@
 import { defineStore } from 'pinia'
 import { Cookies } from 'quasar'
-import { useI18n } from 'vue-i18n'
-import { AppLang, Message } from '../base'
+import { AppLang } from '../base'
 
 export const useLocaleStore = defineStore('locale-lang', {
   state: () => ({
-    AppLang: undefined as unknown as AppLang,
-    I18n: useI18n()
+    AppLang: undefined as unknown as AppLang
   }),
   getters: {
     langID () {
@@ -26,14 +24,6 @@ export const useLocaleStore = defineStore('locale-lang', {
       }
       this.AppLang = lang
       Cookies.set('X-Lang-ID', lang.LangID, { expires: '4h', secure: true })
-      this.I18n.locale = lang.Lang
-    },
-    setLocaleMessages (messages: Array<Message>) {
-      const olds = this.I18n.getLocaleMessage(this.AppLang?.Lang)
-      messages.forEach((el) => {
-        olds[el.MessageID] = el.Message
-      })
-      this.I18n.setLocaleMessage(this.AppLang?.Lang, olds)
     }
   }
 })

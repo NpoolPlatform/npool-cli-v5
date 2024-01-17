@@ -23,7 +23,6 @@ import {
   CreateAppMessagesResponse
 } from './types'
 import { doActionWithError } from '../../request'
-import { useLocaleStore } from '../locale'
 import { Message } from '../base'
 import { formalizeAppID } from '../../appuser/app/local'
 
@@ -59,13 +58,6 @@ export const useMessageStore = defineStore('messages', {
         langMessages.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, message)
         _messages.set(message.LangID, langMessages)
       })
-      const locale = useLocaleStore()
-      if (locale.AppLang) {
-        const langMessages = _messages.get(locale.AppLang.LangID) as Array<Message>
-        if (langMessages) {
-          locale.setLocaleMessages(langMessages)
-        }
-      }
       this.Messages.set(appID, _messages)
     },
     delMessage (appID: string | undefined, id: number) {
