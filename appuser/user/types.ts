@@ -94,6 +94,15 @@ export interface ResetUserRequest extends BaseRequest {
 export interface ResetUserResponse {
 }
 
+export interface PreResetUserRequest extends BaseRequest {
+  AppID?: string
+  Account: string
+  AccountType: SignMethodType
+}
+
+export interface PreResetUserResponse {
+  Info: string
+}
 export interface GetLoginHistoriesRequest extends BaseRequest {
   Offset: number
   Limit: number

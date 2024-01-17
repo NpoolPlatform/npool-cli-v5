@@ -28,7 +28,9 @@ import {
   UpdateAppUserRequest,
   UpdateAppUserResponse,
   BindUserRequest,
-  BindUserResponse
+  BindUserResponse,
+  PreResetUserRequest,
+  PreResetUserResponse
 } from './types'
 import { LoginHistory, User } from './base'
 import { formalizeAppID } from '../app/local'
@@ -180,6 +182,17 @@ export const useUserStore = defineStore('users', {
           done(false)
         }, () => {
           done(true)
+        })
+    },
+    preResetUser (req: PreResetUserRequest, done: (error: boolean, token: string) => void) {
+      doActionWithError<PreResetUserRequest, PreResetUserResponse>(
+        API.PRE_RESET_USER,
+        req,
+        req.Message,
+        (resp: PreResetUserResponse): void => {
+          done(false, resp.Info)
+        }, () => {
+          done(true, '')
         })
     },
     bindUser (req: BindUserRequest, done: (error: boolean, user?: User) => void) {
