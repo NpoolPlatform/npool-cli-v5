@@ -48,6 +48,14 @@ export interface CreateArticleResponse {
   Info: Article
 }
 
+export interface GetArticleRequest extends BaseRequest{
+  EntID: string
+}
+
+export interface GetArticleResponse {
+  Info: Article
+}
+
 export interface GetArticlesRequest extends BaseRequest{
   Offset: number
   Limit: number

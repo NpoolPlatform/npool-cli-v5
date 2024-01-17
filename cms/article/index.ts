@@ -2,6 +2,8 @@ import { defineStore } from 'pinia'
 import { API } from './const'
 import {
   Article,
+  GetArticleRequest,
+  GetArticleResponse,
   GetArticlesRequest,
   GetArticlesResponse,
   GetArticleContentRequest,
@@ -75,6 +77,18 @@ export const useArticleStore = defineStore('articles', {
     }
   },
   actions: {
+    getArticle (req: GetArticleRequest, done: (error: boolean, rows: Article) => void) {
+      doActionWithError<GetArticleRequest, GetArticleResponse>(
+        API.GET_ARTICLE,
+        req,
+        req.Message,
+        (resp: GetArticleResponse): void => {
+          done(false, resp.Info)
+        }, () => {
+          done(true, {} as Article)
+        }
+      )
+    },
     getArticles (req: GetArticlesRequest, done: (error: boolean, rows: Array<Article>) => void) {
       doActionWithError<GetArticlesRequest, GetArticlesResponse>(
         API.GET_ARTICLES,
