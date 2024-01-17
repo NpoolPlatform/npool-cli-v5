@@ -32,12 +32,13 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
         return this.TopMostGoods.get(appID)?.find((el: TopMostGood) => el.EntID === id)
       }
     },
-    topmostgoods (): (appID?: string, topMostType?: GoodTopMostType) => Array<TopMostGood> {
-      return (appID?: string, topMostType?: GoodTopMostType) => {
+    topmostgoods (): (appID?: string, topMostType?: GoodTopMostType, appGoodID?: string) => Array<TopMostGood> {
+      return (appID?: string, topMostType?: GoodTopMostType, appGoodID?: string) => {
         appID = formalizeAppID(appID)
         return this.TopMostGoods.get(appID)?.filter((el) => {
           let ok = true
           if (topMostType) ok &&= el.TopMostType === topMostType
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
           return ok
         }) || []
       }

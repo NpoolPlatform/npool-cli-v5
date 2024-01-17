@@ -1,11 +1,13 @@
 import { computed } from 'vue'
-import { appgood, constant, notify, appcoin, vendorbrand, deviceinfo } from '..'
+import { appgood, constant, notify, appcoin, vendorbrand, deviceinfo, goodbase, topmostgood, requiredgood } from '..'
 import { AppID } from './localapp'
 
 const _appgood = appgood.useAppGoodStore()
 const _appcoin = appcoin.useAppCoinStore()
 const _vendorbrand = vendorbrand.useVendorBrandStore()
 const _deviceinfo = deviceinfo.useDeviceInfoStore()
+const _topmostgood = topmostgood.useTopMostGoodStore()
+const _requiredgood = requiredgood.useRequiredStore()
 
 const getPageAppGoods = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   const reqOffset = offset + pageIndex * constant.DefaultPageSize
@@ -93,3 +95,85 @@ export const appGoodCoins = computed(() => _appcoin.coins(undefined).filter((el)
 export const appGoodVendorBrands = computed(() => _vendorbrand.vendorBrands().filter((el) => appGoods.value.findIndex((el1) => el.Name === el1.VendorBrandName) >= 0))
 export const appGoodDeviceInfos = computed(() => _deviceinfo.deviceInfos().filter((el) => appGoods.value.findIndex((el1) => el.Type === el1.DeviceType) >= 0))
 export const appGoodName = (appGoodID: string, index: number) => _appgood.displayName(undefined, appGoodID, index)
+
+export const appGoodDurationUnit = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  switch (_appGood?.DurationType) {
+    case goodbase.GoodDurationType.GoodDurationByHour:
+      return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_HOUR' : 'MSG_HOURS'
+    case goodbase.GoodDurationType.GoodDurationByDay:
+      return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_DAY' : 'MSG_DAYS'
+    case goodbase.GoodDurationType.GoodDurationByMonth:
+      return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_MONTH' : 'MSG_MONTHS'
+    case goodbase.GoodDurationType.GoodDurationByYear:
+      return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_YEAR' : 'MSG_YEARS'
+  }
+  return Number(_appGood?.QuantityUnitAmount) === 1 ? 'MSG_DAY' : 'MSG_DAYS'
+}
+
+export const appGoodDuration = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (_appGood?.MinOrderDuration === _appGood?.MaxOrderDuration) {
+    return _appGood?.MinOrderDuration
+  }
+  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  return _appGood?.MinOrderDuration.toString() + '~' + _appGood?.MaxOrderDuration.toString()
+}
+
+export const appGoodUnitDuration = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (_appGood?.MinOrderDuration === _appGood?.MaxOrderDuration) {
+    return _appGood?.MinOrderDuration || 1
+  }
+  // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
+  return 1
+}
+
+export const appGoodOriginalUnitPrice = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (_appGood?.PackagePrice?.length && Number(_appGood?.PackagePrice) > 0) {
+    return _appGood.PackagePrice
+  }
+  if (_appGood?.UnitPrice?.length && Number(_appGood?.UnitPrice) > 0) {
+    return _appGood.UnitPrice
+  }
+  return '9999999999.999999'
+}
+
+export const appGoodUnitPrice = (appGoodID: string) => {
+  const topMostGoods = _topmostgood.topmostgoods(undefined, undefined, appGoodID)
+  let packagePrice = 0
+  let unitPrice = 0
+
+  topMostGoods.forEach((el) => {
+    if (el.PackagePrice.length && (packagePrice === 0 || Number(el.PackagePrice) > packagePrice)) {
+      packagePrice = Number(el.PackagePrice)
+    }
+    if (el.UnitPrice.length && (unitPrice === 0 || Number(el.UnitPrice) > unitPrice)) {
+      unitPrice = Number(el.UnitPrice)
+    }
+  })
+  if (packagePrice > 0) {
+    return packagePrice
+  }
+  if (unitPrice > 0) {
+    return unitPrice
+  }
+
+  return appGoodOriginalUnitPrice(appGoodID)
+}
+
+export const appGoodRequiredAppGoods = (appGoodID: string, requiredTypes: goodbase.GoodType[]) => {
+  const _appGood = appGood(appGoodID)
+  const _requiredGoods = computed(() => _requiredgood.requireds(_appGood?.GoodID))
+  return _appgood.goods(undefined, undefined, undefined, _requiredGoods.value?.map((el) => el.RequiredGoodID) || []).filter((el) => {
+    if (requiredTypes.length === 0) {
+      return true
+    }
+    let ok = true
+    requiredTypes.forEach((el1) => {
+      ok ||= el1 === el.GoodType
+    })
+    return ok
+  }).slice(0, 2)
+}
