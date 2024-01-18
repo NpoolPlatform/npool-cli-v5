@@ -3,10 +3,15 @@ import { requiredgood, constant, notify } from '..'
 
 const required = requiredgood.useRequiredStore()
 
-const getPageRequiredGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageRequiredGoods = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  const reqOffset = offset + pageIndex * constant.DefaultPageSize
+  let reqLimit = constant.DefaultPageSize
+  if (limit > 0) {
+    reqLimit = limit - pageIndex * constant.DefaultPageSize
+  }
   required.getRequireds({
-    Offset: pageIndex * constant.DefaultPageSize,
-    Limit: constant.DefaultPageSize,
+    Offset: reqOffset,
+    Limit: reqLimit,
     Message: {
       Error: {
         Title: 'MSG_GET_REQUIRED_GOODS',
@@ -15,18 +20,22 @@ const getPageRequiredGoods = (pageIndex: number, pageEnd: number, done?: (error:
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<requiredgood.Required>, total?: number) => {
-    if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
-      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
-      done?.(error, totalPages, total as number)
+  }, (error: boolean, rows?: Array<requiredgood.Required>, totalRows?: number) => {
+    if (error || !rows?.length) {
+      if (limit === 0) {
+        limit = totalRows as number
+      } else {
+        limit = Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize)
+      }
+      done?.(error, limit, totalRows as number)
       return
     }
-    getPageRequiredGoods(++pageIndex, pageEnd, done)
+    getPageRequiredGoods(offset, limit, ++pageIndex, done)
   })
 }
 
-export const getRequiredGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageRequiredGoods(pageStart, pages ? pageStart + pages : pages, done)
+export const getRequiredGoods = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  getPageRequiredGoods(offset, limit, 0, done)
 }
 
 export const requiredGoods = computed(() => required.requireds())
