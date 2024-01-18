@@ -19,7 +19,7 @@ import {
   GetContentListRequest,
   GetContentListResponse
 } from './types'
-import { doActionWithError } from '../../request'
+import { doActionWithError, doGetWithError } from '../../request'
 import { formalizeAppID } from '../../appuser/app/local'
 
 export const useArticleStore = defineStore('articles', {
@@ -128,7 +128,7 @@ export const useArticleStore = defineStore('articles', {
       )
     },
     getContent (req: GetContentRequest, done: (error: boolean, row: string) => void) {
-      doActionWithError<GetContentRequest, GetContentResponse>(
+      doGetWithError<GetContentRequest, GetContentResponse>(
         API.GET_CONTENT + req.ContentURL,
         req,
         req.Message,
