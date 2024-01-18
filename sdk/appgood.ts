@@ -88,6 +88,22 @@ export const getNAppGoods = (offset: number, limit: number, done?: (error: boole
   getNPageAppGoods(offset, limit, 0, done)
 }
 
+export const getAppGood = (appGoodID: string, done?: (error: boolean, good?: appgood.Good) => void) => {
+  _appgood.getAppGood({
+    EntID: appGoodID,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_APP_GOOD',
+        Message: 'MSG_GET_APP_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error: boolean, good?: appgood.Good) => {
+    done?.(error, good)
+  })
+}
+
 export const appGoods = computed(() => _appgood.goods(AppID.value))
 export const appGood = (appGoodID: string) => _appgood.good(undefined, appGoodID)
 export const appGoodCancelable = (id: string) => _appgood.cancelable(AppID.value, id)
