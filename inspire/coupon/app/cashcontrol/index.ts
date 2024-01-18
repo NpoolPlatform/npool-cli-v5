@@ -9,7 +9,9 @@ import {
   DeleteCashControlResponse,
   CashControl,
   GetAppCashControlsRequest,
-  GetAppCashControlsResponse
+  GetAppCashControlsResponse,
+  UpdateCashControlRequest,
+  UpdateCashControlResponse
 } from './types'
 import { doActionWithError } from '../../../../request/action'
 import { formalizeAppID } from '../../../../appuser/app/local'
@@ -76,6 +78,19 @@ export const useCashControlStore = defineStore('cash-control', {
     createCashControl (req: CreateCashControlRequest, done: (error: boolean, row?: CashControl) => void) {
       doActionWithError<CreateCashControlRequest, CreateCashControlResponse>(
         API.CREATE_CASHCONTROL,
+        req,
+        req.Message,
+        (resp: CreateCashControlResponse): void => {
+          this.addCashControls(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    updateCashControl (req: UpdateCashControlRequest, done: (error: boolean, row?: CashControl) => void) {
+      doActionWithError<UpdateCashControlRequest, UpdateCashControlResponse>(
+        API.UPDATE_CASHCONTROL,
         req,
         req.Message,
         (resp: CreateCashControlResponse): void => {

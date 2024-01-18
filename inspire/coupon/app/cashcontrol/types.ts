@@ -36,7 +36,16 @@ export interface DeleteCashControlRequest extends BaseRequest {
 export interface DeleteCashControlResponse {
     Info: CashControl
 }
+export interface UpdateCashControlRequest extends BaseRequest {
+    ID: number
+    EntID: string
+    TargetAppID: string
+    Value: string
+}
 
+export interface UpdateCashControlResponse {
+    Info: CashControl
+}
 export interface GetCashControlsRequest extends BaseRequest {
     TargetAppID: string
     Offset: number

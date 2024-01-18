@@ -99,3 +99,26 @@ export const deleteCashControl = (target: cashcontrol.CashControl, finish: (erro
     finish(error)
   })
 }
+
+export const updateCashControl = (target: cashcontrol.CashControl, finish: (error: boolean) => void) => {
+  _cashcontrol.updateCashControl({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_COUPON_COIN',
+        Message: 'MSG_UPDATE_COUPON_COIN_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_UPDATE_COUPON_COIN',
+        Message: 'MSG_UPDATE_COUPON_COIN_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}
