@@ -1,4 +1,4 @@
-import { CreateInvitationCodeWhen, RecaptchaType, SignMethodType } from '../../base'
+import { CreateInvitationCodeWhen, RecaptchaType, ResetUserMethod, SignMethodType } from '../../base'
 
 export interface App {
   ID: number
@@ -20,6 +20,7 @@ export interface App {
   CreateInvitationCodeWhen: CreateInvitationCodeWhen
   MaxTypedCouponsPerOrder: number
   Maintaining: boolean
+  ResetUserMethod: ResetUserMethod
   CommitButtonTargets: string[]
   CouponWithdrawEnable: boolean
 }
