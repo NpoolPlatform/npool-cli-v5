@@ -1,5 +1,5 @@
 import { BaseRequest } from '../../request'
-import { CreateInvitationCodeWhen, RecaptchaType, SignMethodType } from '../base'
+import { CreateInvitationCodeWhen, RecaptchaType, ResetUserMethod, SignMethodType } from '../base'
 import { App } from './base'
 
 export type GetAppRequest = BaseRequest
@@ -38,6 +38,7 @@ export interface UpdateAppRequest extends BaseRequest {
   CreateInvitationCodeWhen?: CreateInvitationCodeWhen
   Maintaining?: boolean
   CouponWithdrawEnable?: boolean
+  ResetUserMethod?: ResetUserMethod
   CommitButtonTargets?: string[]
 }
 
@@ -59,6 +60,7 @@ export interface CreateAppRequest extends BaseRequest {
   SigninVerifyEnable: boolean
   InvitationCodeMust: boolean
   CouponWithdrawEnable?: boolean
+  ResetUserMethod?: ResetUserMethod
 }
 
 export interface CreateAppResponse {

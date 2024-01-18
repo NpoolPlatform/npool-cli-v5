@@ -15,6 +15,10 @@ export enum SigninVerifyType {
   Email = SignMethodType.Email,
   Google = SignMethodType.Google
 }
+export enum ResetUserMethod {
+  Normal = 'Normal',
+  Link = 'Link'
+}
 
 export const SignMethodTypes = Object.values(SignMethodType)
 
