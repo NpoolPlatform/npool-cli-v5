@@ -211,11 +211,15 @@ export const appGoodUnitPrice = (appGoodID: string) => {
   return appGoodOriginalUnitPrice(appGoodID)
 }
 
-export const appGoodRequiredAppGoods = (appGoodID: string, requiredTypes: goodbase.GoodType[]) => {
+export const appGoodRequiredAppGoods = (appGoodID: string, requiredTypes?: goodbase.GoodType[], must?: boolean) => {
   const _appGood = appGood(appGoodID)
-  const _requiredGoods = _requiredgood.requireds(_appGood?.GoodID)
+  const _requiredGoods = _requiredgood.requireds(_appGood?.GoodID).filter((el) => {
+    let ok = true
+    if (must !== undefined) ok &&= el.Must === must
+    return ok
+  })
   return _appgood.goods(undefined, undefined, undefined, _requiredGoods?.map((el) => el.RequiredGoodID) || []).filter((el) => {
-    if (requiredTypes.length === 0) {
+    if (!requiredTypes?.length) {
       return true
     }
     let ok = false
@@ -223,7 +227,7 @@ export const appGoodRequiredAppGoods = (appGoodID: string, requiredTypes: goodba
       ok ||= el1 === el.GoodType
     })
     return ok
-  }).slice(0, 2)
+  })
 }
 
 export const appGoodEstimatedUnitDailyReward = (appGoodID: string) => appGood(appGoodID)?.LastUnitRewardAmount
