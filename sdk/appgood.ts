@@ -215,12 +215,12 @@ export const appGoodUnitPrice = (appGoodID: string) => {
 
 export const appGoodRequiredAppGoods = (appGoodID: string, requiredTypes: goodbase.GoodType[]) => {
   const _appGood = appGood(appGoodID)
-  const _requiredGoods = computed(() => _requiredgood.requireds(_appGood?.GoodID))
-  return _appgood.goods(undefined, undefined, undefined, _requiredGoods.value?.map((el) => el.RequiredGoodID) || []).filter((el) => {
+  const _requiredGoods = _requiredgood.requireds(_appGood?.GoodID)
+  return _appgood.goods(undefined, undefined, undefined, _requiredGoods?.map((el) => el.RequiredGoodID) || []).filter((el) => {
     if (requiredTypes.length === 0) {
       return true
     }
-    let ok = true
+    let ok = false
     requiredTypes.forEach((el1) => {
       ok ||= el1 === el.GoodType
     })
