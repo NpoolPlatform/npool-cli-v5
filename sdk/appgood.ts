@@ -115,6 +115,7 @@ export const appGoodDeviceInfos = computed(() => _deviceinfo.deviceInfos().filte
 export const appGoodName = (appGoodID: string, index: number) => _appgood.displayName(undefined, appGoodID, index)
 export const appGoodQuantityUnitAmount = (appGoodID: string) => appGood(appGoodID)?.QuantityUnitAmount
 export const appGoodQuantityUnit = (appGoodID: string) => appGood(appGoodID)?.QuantityUnit as string
+export const appGoodRewardDistributionMethod = (appGoodID: string) => appGood(appGoodID)?.BenefitType
 
 export const appGoodDuration = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)
@@ -239,4 +240,34 @@ export const appGoodSoldPercent = (appGoodID: string) => {
     return 0
   }
   return (Number(_appGood?.GoodTotal) - Number(_appGood?.GoodSpotQuantity)) / Number(_appGood?.GoodTotal)
+}
+
+export const appGoodUnitPriceStrings = (appGoodID: string): string[] => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return []
+  }
+  const prices = [_appGood?.UnitPrice]
+  if (_appGood?.SettlementType === goodbase.GoodSettlementType.GoodSettledByCash) {
+    prices[0] += 'USDT'
+    prices[1] = _appGood.QuantityUnitAmount
+    prices[2] = _appGood.QuantityUnit
+    switch (_appGood.DurationType) {
+      case goodbase.GoodDurationType.GoodDurationByHour:
+        prices[3] = 'MSG_HOUR'
+        break
+      case goodbase.GoodDurationType.GoodDurationByDay:
+        prices[3] = 'MSG_DAY'
+        break
+      case goodbase.GoodDurationType.GoodDurationByMonth:
+        prices[3] = 'MSG_MONTH'
+        break
+      case goodbase.GoodDurationType.GoodDurationByYear:
+        prices[3] = 'MSG_YEAR'
+        break
+    }
+  } else {
+    prices[0] += '%'
+  }
+  return prices
 }
