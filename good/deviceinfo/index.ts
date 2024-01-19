@@ -17,9 +17,14 @@ export const useDeviceInfoStore = defineStore('deviceinfos', {
     DeviceInfos: [] as Array<DeviceInfo>
   }),
   getters: {
-    deviceInfo (): (id: string) => DeviceInfo | undefined {
-      return (id: string) => {
-        return this.DeviceInfos.find((el: DeviceInfo) => el.EntID === id)
+    deviceInfo (): (id?: string, deviceType?: string) => DeviceInfo | undefined {
+      return (id?: string, deviceType?: string) => {
+        return this.DeviceInfos.find((el: DeviceInfo) => {
+          let ok = true
+          if (id) ok &&= el.EntID === id
+          if (deviceType) ok &&= el.Type === deviceType
+          return ok
+        })
       }
     },
     deviceInfos () {
