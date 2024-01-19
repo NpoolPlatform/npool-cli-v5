@@ -25,3 +25,12 @@ export enum CouponScope {
 }
 
 export const CouponScopes = Object.values(CouponScope)
+
+export enum ControlType {
+  KycApproved = 'KycApproved',
+  CreditThreshold = 'CreditThreshold',
+  OrderThreshold = 'OrderThreshold',
+  PaymentAmountThreshold = 'PaymentAmountThreshold',
+}
+
+export const ControlTypes = Object.values(ControlType)
