@@ -7,6 +7,8 @@ export interface DeviceInfo {
   Manufacturer: string
   PowerConsumption: number
   ShipmentAt: number
+  Hashrate: number
+  HashrateUnit: string
   Posters: string[]
   CreatedAt: number
   UpdatedAt: number

@@ -189,6 +189,17 @@ export const appGoodOriginalUnitPrice = (appGoodID: string) => {
   return '9999999999.999999'
 }
 
+export const appGoodOrderLimitation = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return 'MSG_UNKNOWN'
+  }
+  if (_appGood?.MinOrderAmount === _appGood?.MaxOrderAmount) {
+    return _appGood?.MinOrderAmount
+  }
+  return _appGood?.MinOrderAmount + '~' + _appGood?.MaxOrderAmount
+}
+
 export const appGoodUnitPrice = (appGoodID: string) => {
   const topMostGoods = _topmostgood.topmostgoods(undefined, undefined, appGoodID)
   let packagePrice = 0
@@ -268,4 +279,28 @@ export const appGoodUnitPriceStrings = (appGoodID: string): string[] => {
     prices[0] += '%'
   }
   return prices
+}
+
+export const appGoodTopMostGoods = (appGoodID: string) => {
+  return _topmostgood.topmostgoods(undefined, undefined, appGoodID)
+}
+
+export const appGoodDeviceHashrate = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return '135 TH/s'
+  }
+  const deviceInfo = _deviceinfo.deviceInfo(undefined, _appGood.DeviceType)
+  if (!deviceInfo) {
+    return '135 TH/s'
+  }
+  return deviceInfo?.Hashrate.toString() + ' ' + deviceInfo?.HashrateUnit
+}
+
+export const appGoodDevicePowerComsuption = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return 3750
+  }
+  return _deviceinfo.deviceInfo(undefined, _appGood.DeviceType)?.PowerConsumption || 3750
 }
