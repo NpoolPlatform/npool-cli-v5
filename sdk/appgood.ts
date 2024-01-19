@@ -116,6 +116,7 @@ export const appGoodName = (appGoodID: string, index: number) => _appgood.displa
 export const appGoodQuantityUnitAmount = (appGoodID: string) => appGood(appGoodID)?.QuantityUnitAmount
 export const appGoodQuantityUnit = (appGoodID: string) => appGood(appGoodID)?.QuantityUnit as string
 export const appGoodRewardDistributionMethod = (appGoodID: string) => appGood(appGoodID)?.BenefitType
+export const appGoodBestSeller = () => [...appGoods.value].sort((a, b) => Number(a.AppGoodSold) - Number(b.AppGoodSold)).slice(0, 5)
 
 export const appGoodDuration = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)
@@ -283,8 +284,13 @@ export const appGoodUnitPriceStrings = (appGoodID: string): string[] => {
   return prices
 }
 
-export const appGoodTopMostGoods = (appGoodID: string) => {
-  return _topmostgood.topmostgoods(undefined, undefined, appGoodID)
+export const appGoodTopMostGoods = (appGoodID?: string, topMostType?: goodbase.GoodTopMostType) => {
+  return _topmostgood.topmostgoods(undefined, topMostType, appGoodID)
+}
+
+export const appGoodTopMostAppGoods = (appGoodID?: string, topMostType?: goodbase.GoodTopMostType) => {
+  const topMostGoods = _topmostgood.topmostgoods(undefined, topMostType, appGoodID)
+  return _appgood.goods(undefined, undefined, undefined, topMostGoods?.map((el) => el.AppGoodID) || [])
 }
 
 export const appGoodDeviceHashrate = (appGoodID: string) => {
