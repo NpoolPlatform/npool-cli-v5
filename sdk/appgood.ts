@@ -115,6 +115,7 @@ export const appGoodQuantityUnitAmount = (appGoodID: string) => appGood(appGoodI
 export const appGoodQuantityUnit = (appGoodID: string) => appGood(appGoodID)?.QuantityUnit as string
 export const appGoodRewardDistributionMethod = (appGoodID: string) => appGood(appGoodID)?.BenefitType
 export const appGoodBestSeller = () => [...appGoods.value].sort((a, b) => Number(a.AppGoodSold) - Number(b.AppGoodSold)).slice(0, 5)
+export const appGoodScore = (appGoodID: string) => Number(appGood(appGoodID)?.Score) || 4.5
 
 export const appGoodDuration = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)
@@ -207,10 +208,10 @@ export const appGoodUnitPrice = (appGoodID: string) => {
   let unitPrice = 0
 
   topMostGoods.forEach((el) => {
-    if (el.PackagePrice.length && (packagePrice === 0 || Number(el.PackagePrice) > packagePrice)) {
+    if (el.PackagePrice?.length && (packagePrice === 0 || Number(el.PackagePrice) > packagePrice)) {
       packagePrice = Number(el.PackagePrice)
     }
-    if (el.UnitPrice.length && (unitPrice === 0 || Number(el.UnitPrice) > unitPrice)) {
+    if (el.UnitPrice?.length && (unitPrice === 0 || Number(el.UnitPrice) > unitPrice)) {
       unitPrice = Number(el.UnitPrice)
     }
   })
