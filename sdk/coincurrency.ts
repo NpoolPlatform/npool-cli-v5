@@ -14,8 +14,8 @@ const getPageCoinCurrencies = (offset: number, limit: number, pageIndex: number,
     Limit: reqLimit,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_COINS',
-        Message: 'MSG_GET_APP_COINS_FAIL',
+        Title: 'MSG_GET_COIN_CURRENCIES',
+        Message: 'MSG_GET_COIN_CURRENCIES_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -40,6 +40,22 @@ const getPageCoinCurrencies = (offset: number, limit: number, pageIndex: number,
 
 export const getCoinCurrencies = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   getPageCoinCurrencies(offset, limit, 0, done)
+}
+
+export const getCoinCurrency = (coinTypeID: string, done?: (error: boolean, currency?: coincurrencybase.CoinCurrency) => void) => {
+  _coincurrency.getCoinCurrency({
+    CoinTypeID: coinTypeID,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_COIN_CURRENCY',
+        Message: 'MSG_GET_COIN_CURRENCY_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error: boolean, currency?: coincurrencybase.CoinCurrency) => {
+    done?.(error, currency)
+  })
 }
 
 export const coinCurrencies = computed(() => _coincurrency.currencies())
