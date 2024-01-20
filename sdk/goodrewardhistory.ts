@@ -44,4 +44,4 @@ export const getRewardHistories = (goodID: string | undefined, startAt: number, 
   getPageRewardHistories(goodID, startAt, endAt, offset, limit, 0, done)
 }
 
-export const rewardHistories = (goodID?: string) => _goodrewardhistory.rewardHistories(goodID)
+export const rewardHistories = (goodID?: string) => _goodrewardhistory.rewardHistories(goodID).sort((a, b) => a.CreatedAt - b.CreatedAt)

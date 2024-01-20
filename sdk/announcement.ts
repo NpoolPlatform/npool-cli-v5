@@ -23,12 +23,14 @@ const getPageAnnouncements = (offset: number, limit: number, pageIndex: number, 
       if (limit === 0) {
         limit = totalRows as number
       } else {
-        limit = Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize)
+        limit = Math.min(limit, totalRows as number - offset)
+        limit = Math.max(limit, 0)
+        limit = Math.min(limit, (pageIndex + 1) * constant.DefaultPageSize)
       }
       done?.(error, limit, totalRows as number)
       return
     }
-    if (limit <= pageIndex * constant.DefaultPageSize && limit > 0) {
+    if (limit <= (pageIndex + 1) * constant.DefaultPageSize && limit > 0) {
       done?.(error, totalRows as number - offset, 0)
       return
     }
