@@ -118,6 +118,60 @@ export const appGoodQuantityUnit = (appGoodID: string) => appGood(appGoodID)?.Qu
 export const appGoodRewardDistributionMethod = (appGoodID: string) => appGood(appGoodID)?.BenefitType
 export const appGoodBestSeller = () => [...appGoods.value].sort((a, b) => Number(a.AppGoodSold) - Number(b.AppGoodSold)).slice(0, 5)
 export const appGoodScore = (appGoodID: string) => Number(appGood(appGoodID)?.Score) || 4.5
+export const appGoodLastUnitReward = (appGoodID: string) => appGood(appGoodID)?.LastUnitRewardAmount
+export const appGoodMinOrderDuration = (appGoodID: string) => Number(appGood(appGoodID)?.MinOrderDuration)
+
+export const appGoodMinOrderDurationDays = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return 365
+  }
+  let minOrderDuration = appGoodMinOrderDuration(appGoodID)
+  switch (_appGood.DurationType) {
+    case goodbase.GoodDurationType.GoodDurationByHour:
+      minOrderDuration /= 24
+      break
+    case goodbase.GoodDurationType.GoodDurationByDay:
+      break
+    case goodbase.GoodDurationType.GoodDurationByMonth:
+      minOrderDuration *= 30
+      break
+    case goodbase.GoodDurationType.GoodDurationByYear:
+      minOrderDuration *= 365
+      break
+  }
+  return minOrderDuration
+}
+
+export const appGoodStaticReturnDays = (appGoodID: string, coinPrice: number) => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return 365
+  }
+  const dailyRewardUSD = Number(_appGood.LastUnitRewardAmount) * coinPrice
+  let price = Number(appGoodUnitPrice(appGoodID))
+  const minOrderDurationDays = appGoodMinOrderDurationDays(appGoodID)
+  const packagePrice = Number(_appGood.PackagePrice)
+  if (packagePrice > 0) {
+    price /= minOrderDurationDays
+  }
+  return Math.floor(price * minOrderDurationDays / dailyRewardUSD)
+}
+
+export const appGoodStaticReturnPercent = (appGoodID: string, coinPrice: number) => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return 115.75
+  }
+  const dailyRewardUSD = Number(_appGood.LastUnitRewardAmount) * coinPrice
+  let price = Number(appGoodUnitPrice(appGoodID))
+  const minOrderDurationDays = appGoodMinOrderDurationDays(appGoodID)
+  const packagePrice = Number(_appGood.PackagePrice)
+  if (packagePrice > 0) {
+    price /= minOrderDurationDays
+  }
+  return (dailyRewardUSD / price * 100).toFixed(2)
+}
 
 export const appGoodDuration = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)

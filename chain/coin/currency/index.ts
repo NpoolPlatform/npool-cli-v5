@@ -36,7 +36,7 @@ export const useCurrencyStore = defineStore('coin-currencies', {
         this.Currencies.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, currency)
       })
     },
-    getCurrencies (req: GetCurrenciesRequest, done: (error: boolean, rows: Array<CoinCurrency>) => void) {
+    getCurrencies (req: GetCurrenciesRequest, done: (error: boolean, rows?: Array<CoinCurrency>) => void) {
       doActionWithError<GetCurrenciesRequest, GetCurrenciesResponse>(
         API.GET_CURRENCIES,
         req,
@@ -45,11 +45,11 @@ export const useCurrencyStore = defineStore('coin-currencies', {
           this.addCurrencies(resp.Infos)
           done(false, resp.Infos)
         }, () => {
-          done(true, [] as Array<CoinCurrency>)
+          done(true)
         }
       )
     },
-    getCoinCurrency (req: GetCurrencyRequest, done: (error: boolean, row: CoinCurrency) => void) {
+    getCoinCurrency (req: GetCurrencyRequest, done: (error: boolean, row?: CoinCurrency) => void) {
       doActionWithError<GetCurrencyRequest, GetCurrencyResponse>(
         API.GET_CURRENCY,
         req,
@@ -58,7 +58,7 @@ export const useCurrencyStore = defineStore('coin-currencies', {
           this.addCurrencies([resp.Info])
           done(false, resp.Info)
         }, () => {
-          done(true, {} as CoinCurrency)
+          done(true)
         }
       )
     }
