@@ -303,7 +303,7 @@ export const appGoodDeviceHashrate = (appGoodID: string) => {
   if (!deviceInfo) {
     return '135 TH/s'
   }
-  return deviceInfo?.Hashrate.toString() + ' ' + deviceInfo?.HashrateUnit
+  return deviceInfo?.Hashrate?.toString() + ' ' + deviceInfo?.HashrateUnit
 }
 
 export const appGoodDevicePowerComsuption = (appGoodID: string) => {
