@@ -1,3 +1,4 @@
+import { GoodDurationType } from '../good/base'
 import { CouponType } from '../inspire/coupon'
 import { BaseRequest } from '../request'
 import { InvestmentType, OrderState, OrderType, PaymentState, PaymentType } from './const'
@@ -28,11 +29,12 @@ export interface Order {
   AppGoodID: string
   GoodName: string
   GoodUnit: string
-  GoodServicePeriodDays: number
   GoodUnitPrice: string
   GoodValue: string
   GoodValueUSD: string
   Units: string
+  Duration: number
+  DurationType: GoodDurationType
   PaymentID: string
   PaymentCoinTypeID: string
   PaymentCoinName: string

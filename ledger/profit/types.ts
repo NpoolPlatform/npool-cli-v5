@@ -1,3 +1,4 @@
+import { GoodDurationType } from 'src/npoolstore/good/base'
 import { BaseRequest } from '../../request'
 
 export interface GoodProfit {
@@ -6,7 +7,9 @@ export interface GoodProfit {
   AppGoodID: string
   GoodName: string
   GoodUnit: string
-  GoodServicePeriodDays: number
+  MinOrderDuration: number
+  MaxOrderDuration: number
+  DurationType: GoodDurationType
   Units: string
   CoinTypeID: string
   CoinName: string

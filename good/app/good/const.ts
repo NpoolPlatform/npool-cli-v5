@@ -13,9 +13,9 @@ export enum CancelMode {
   UnCancellable = 'Uncancellable'
 }
 
-export enum GoodStartMode {
-  GoodStartModeTBD = 'GoodStartModeTBD',
-  GoodStartModeConfirmed = 'GoodStartModeConfirmed'
-}
-
 export const CancelModes = Object.values(CancelMode)
+
+export enum PriceType {
+  UnitPrice = 'UnitPrice',
+  PackagePrice = 'PackagePrice'
+}
