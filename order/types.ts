@@ -29,7 +29,6 @@ export interface Order {
   AppGoodID: string
   GoodName: string
   GoodUnit: string
-  GoodServicePeriodDays: number
   GoodUnitPrice: string
   GoodValue: string
   GoodValueUSD: string
