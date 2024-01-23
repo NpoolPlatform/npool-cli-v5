@@ -133,7 +133,8 @@ export const useAppGoodStore = defineStore('app-goods', {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         const good = this.good(appID, id)
-        const min = Math.min(Number(good?.MaxOrderAmount) || 0, Number(good?.GoodSpotQuantity) + Number(good?.AppSpotQuantity))
+        let min = Math.min(Number(good?.MaxOrderAmount) || 0, Number(good?.GoodSpotQuantity) + Number(good?.AppSpotQuantity))
+        min = Math.min(min, Number(good?.MaxUserAmount) || 0)
         return Math.floor(min)
       }
     },
