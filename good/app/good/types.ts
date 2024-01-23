@@ -42,6 +42,7 @@ export interface Good {
   GoodSpotQuantity: string
   RquiredGoods: Good[]
   StartAt: number
+  StartMode: StartMode
   SaleStartAt: number
   SaleEndAt: number
   ServiceStartAt: number
@@ -62,7 +63,9 @@ export interface Good {
   AppGoodWaitStart: string
   AppGoodInService: string
   AppGoodSold: string
-  StartMode: StartMode
+  LastRewardAmount: string
+  LastUnitRewardAmount: string
+  TotalRewardAmount: string
   AppGoodPosters: string[]
   MinOrderAmount: string
   MaxOrderAmount: string
