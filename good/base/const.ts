@@ -16,7 +16,6 @@ export const BenefitTypes = Object.values(BenefitType)
 
 export enum StartMode {
   GoodStartModeTBD = 'GoodStartModeTBD',
-  GoodStartModeConfirmed = 'GoodStartModeConfirmed',
   GoodStartModeInstantly = 'GoodStartModeInstantly',
   GoodStartModeNextDay = 'GoodStartModeNextDay',
   GoodStartModePreset = 'GoodStartModePreset'
