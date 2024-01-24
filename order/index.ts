@@ -32,12 +32,14 @@ export const useOrderStore = defineStore('orders', {
     Orders: new Map<string, Array<Order>>()
   }),
   getters: {
-    orders (): (appID?: string, userID?: string) => Array<Order> {
-      return (appID?: string, userID?: string) => {
+    orders (): (appID?: string, userID?: string, appGoodID?: string, coinTypeID?: string) => Array<Order> {
+      return (appID?: string, userID?: string, appGoodID?: string, coinTypeID?: string) => {
         appID = formalizeAppID(appID)
         return this.Orders.get(appID)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { doActionWithError } from '../../../request'
-import { API, CancelMode } from './const'
+import { API, CancelMode, PriceType } from './const'
 import {
   Good,
   GetAppGoodRequest,
@@ -18,6 +18,7 @@ import {
 } from './types'
 import { date } from 'quasar'
 import { formalizeAppID } from '../../../appuser/app/local'
+import { GoodDurationType } from '../../base'
 
 export const useAppGoodStore = defineStore('app-goods', {
   state: () => ({
@@ -71,17 +72,44 @@ export const useAppGoodStore = defineStore('app-goods', {
         return good?.Online
       }
     },
+    unitPriceString (): (appID: string | undefined, id: string) => string {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        const good = this.good(appID, id)
+        return Number(good?.UnitPrice).toFixed(4)
+      }
+    },
+    unitPriceFloat (): (appID: string | undefined, id: string) => number {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return Number(this.unitPriceString(appID, id))
+      }
+    },
+    packagePriceString (): (appID: string | undefined, id: string) => string {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        const good = this.good(appID, id)
+        return Number(good?.PackagePrice).toFixed(4)
+      }
+    },
+    packagePriceFloat (): (appID: string | undefined, id: string) => number {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return Number(this.packagePriceString(appID, id))
+      }
+    },
     priceString (): (appID: string | undefined, id: string) => string {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         const good = this.good(appID, id)
-        return Number(good?.Price).toFixed(4)
+        return good?.PackagePrice ? Number(good?.PackagePrice).toFixed(4) : Number(good?.UnitPrice).toFixed(4)
       }
     },
-    priceFloat (): (appID: string | undefined, id: string) => number {
+    priceType (): (appID: string | undefined, id: string) => PriceType {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return Number(this.priceString(appID, id))
+        const good = this.good(appID, id)
+        return good?.PackagePrice ? PriceType.PackagePrice : PriceType.UnitPrice
       }
     },
     effectiveDate (): (appID: string | undefined, id: string) => string {
@@ -105,7 +133,8 @@ export const useAppGoodStore = defineStore('app-goods', {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         const good = this.good(appID, id)
-        const min = Math.min(good?.PurchaseLimit || 0, Number(good?.GoodSpotQuantity) + Number(good?.AppSpotQuantity))
+        let min = Math.min(Number(good?.MaxOrderAmount) || 0, Number(good?.GoodSpotQuantity) + Number(good?.AppSpotQuantity))
+        min = Math.min(min, Number(good?.MaxUserAmount) || 0)
         return Math.floor(min)
       }
     },
@@ -193,6 +222,22 @@ export const useAppGoodStore = defineStore('app-goods', {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.good(appID, id)?.DisplayColors || []
+      }
+    },
+    durationUnit (): (appID: string | undefined, id: string) => string {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        switch (this.good(appID, id)?.DurationType) {
+          case GoodDurationType.GoodDurationByHour:
+            return 'MSG_HOUR'
+          case GoodDurationType.GoodDurationByDay:
+            return 'MSG_DAY'
+          case GoodDurationType.GoodDurationByMonth:
+            return 'MSG_MONTH'
+          case GoodDurationType.GoodDurationByYear:
+            return 'MSG_YEAR'
+        }
+        return 'MSG_UNKNOWN'
       }
     }
   },
