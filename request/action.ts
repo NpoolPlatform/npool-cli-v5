@@ -76,7 +76,7 @@ function doGet<MyRequest, MyResponse> (
   req: MyRequest,
   message: ReqMessage | undefined,
   success: (resp: MyResponse) => void) {
-  const api = createAPI(undefined, undefined, true) as AxiosInstance
+  const api = createAPI() as AxiosInstance
   api
     .get<MyRequest, AxiosResponse<MyResponse>>(url)
     .then((response: AxiosResponse<MyResponse>) => {
@@ -97,7 +97,7 @@ function doGetWithError<MyRequest, MyResponse> (
   message: ReqMessage | undefined,
   success: (resp: MyResponse) => void,
   error: () => void) {
-  const api = createAPI(undefined, undefined, true) as AxiosInstance
+  const api = createAPI() as AxiosInstance
   api
     .get<MyRequest, AxiosResponse<MyResponse>>(url)
     .then((response: AxiosResponse<MyResponse>) => {
