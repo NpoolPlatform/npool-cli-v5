@@ -108,7 +108,7 @@ export const useCategoryStore = defineStore('categories', {
     },
     deleteCategory (req: DeleteCategoryRequest, done: (error: boolean, row: Category) => void) {
       doActionWithError<DeleteCategoryRequest, DeleteCategoryResponse>(
-        API.UPDATE_CATEGORY,
+        API.DELETE_CATEGORY,
         req,
         req.Message,
         (resp: DeleteCategoryResponse): void => {
