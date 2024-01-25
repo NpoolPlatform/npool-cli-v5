@@ -83,12 +83,12 @@ export interface UpdateUserResponse {
 }
 
 export interface ResetUserRequest extends BaseRequest {
-  Account?: string
-  AccountType?: SignMethodType
+  Account: string
+  AccountType: SignMethodType
   VerificationCode?: string
-  PasswordHash?: string
+  PasswordHash: string
   RecoveryCode?: string
-  ResetToken: string
+  ResetToken?: string
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
