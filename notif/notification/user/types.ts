@@ -1,6 +1,5 @@
 import { BaseRequest } from '../../../request'
 import { EventType } from '../../../base'
-import { NotifType } from '../../base'
 
 export interface User {
   ID: number
@@ -14,7 +13,6 @@ export interface User {
   Username: string
   Title: string
   Content: string
-  NotifType: NotifType
   /** @format int64 */
   CreatedAt: number
   /** @format int64 */
