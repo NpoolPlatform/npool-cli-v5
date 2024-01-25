@@ -18,6 +18,13 @@ export enum SigninVerifyType {
 
 export const SignMethodTypes = Object.values(SignMethodType)
 
+export enum ResetUserMethod {
+  Normal = 'Normal',
+  Link = 'Link'
+}
+
+export const ResetUserMethods = Object.values(ResetUserMethod)
+
 export enum RecaptchaType {
   GoogleRecaptchaV3 = 'GoogleRecaptchaV3'
 }
