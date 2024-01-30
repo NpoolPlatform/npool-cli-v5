@@ -30,7 +30,6 @@ const createAPI = (baseURL?: string, appID?: string, simple?: boolean): AxiosIns
   }
 
   const api = axios.create({
-    method: 'POST',
     baseURL: process.env.DEV ? '/api' : Cookies.get('X-Base-URL'),
     headers: headers,
     withCredentials: false,
@@ -41,7 +40,6 @@ const createAPI = (baseURL?: string, appID?: string, simple?: boolean): AxiosIns
   if (simple) {
     api.defaults.headers = {} as unknown as HeadersDefaults
   }
-
   return api
 }
 
