@@ -118,6 +118,7 @@ export const appGoodBestSeller = () => [...appGoods.value].sort((a, b) => Number
 export const appGoodScore = (appGoodID: string) => Number(appGood(appGoodID)?.Score) || 4.5
 export const appGoodLastUnitReward = (appGoodID: string) => appGood(appGoodID)?.LastUnitRewardAmount
 export const appGoodMinOrderDuration = (appGoodID: string) => Number(appGood(appGoodID)?.MinOrderDuration)
+export const appGoodMaxOrderDuration = (appGoodID: string) => Number(appGood(appGoodID)?.MaxOrderDuration)
 
 export const appGoodMinOrderDurationDays = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)
