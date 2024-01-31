@@ -24,7 +24,8 @@ import { formalizeAppID } from '../../appuser/app/local'
 
 export const useArticleStore = defineStore('articles', {
   state: () => ({
-    Articles: new Map<string, Array<Article>>()
+    Articles: new Map<string, Array<Article>>(),
+    Contents: new Map<string, Map<string, string>>()
   }),
   getters: {
     article (): (appID: string | undefined, id: number) => Article | undefined {
@@ -48,7 +49,7 @@ export const useArticleStore = defineStore('articles', {
     articleContent (): (appID: string | undefined, contentUrl: string) => string {
       return (appID: string | undefined, contentUrl: string) => {
         appID = formalizeAppID(appID)
-        return this.Articles.get(appID)?.find((el) => el.ContentURL === contentUrl)?.Content || ''
+        return this.Contents.get(appID)?.get(contentUrl) || ''
       }
     }
   },
@@ -74,6 +75,15 @@ export const useArticleStore = defineStore('articles', {
       const index = _articles.findIndex((el) => el.ID === id)
       _articles.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1)
       this.Articles.set(appID, _articles)
+    },
+    addContent (appID: string | undefined, contentUrl: string, content: string) {
+      appID = formalizeAppID(appID)
+      let _articles = this.Contents.get(appID) as Map<string, string>
+      if (!_articles) {
+        _articles = new Map<string, string>()
+      }
+      _articles.set(contentUrl, content)
+      this.Contents.set(appID, _articles)
     },
     getArticle (req: GetArticleRequest, done: (error: boolean, rows: Article) => void) {
       doActionWithError<GetArticleRequest, GetArticleResponse>(
@@ -131,6 +141,7 @@ export const useArticleStore = defineStore('articles', {
         req,
         req.Message,
         (resp: GetContentResponse): void => {
+          this.addContent(undefined, req.ContentURL, String(resp))
           done?.(false, String(resp))
         }, () => {
           done?.(true)
