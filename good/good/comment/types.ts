@@ -15,6 +15,7 @@ export interface Comment {
     OrderID: string
     Content: string
     ReplyToID: string
+    Score: number
     /** @format int64 */
     CreatedAt: number
     /** @format int64 */
@@ -28,6 +29,7 @@ export interface CreateCommentRequest extends BaseRequest {
     OrderID: string
     Content: string
     ReplyToID: string
+    Score: number
 }
 
 export interface CreateCommentResponse {
@@ -91,7 +93,8 @@ export interface UpdateCommentRequest extends BaseRequest {
     EntID: string
     AppID: string
     UserID: string
-    Content: string
+    Content?: string
+    Score?: number
 }
 
 export interface UpdateCommentResponse {

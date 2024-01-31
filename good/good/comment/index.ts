@@ -29,10 +29,15 @@ export const useCommentStore = defineStore('comment', {
         return this.Comments.get(appID)?.find((el: Comment) => el.EntID === id)
       }
     },
-    comments (): (appID?: string) => Array<Comment> {
-      return (appID?: string) => {
+    comments (): (appID?: string, goodID?: string, appGoodID?: string) => Array<Comment> {
+      return (appID?: string, goodID?: string, appGoodID?: string) => {
         appID = formalizeAppID(appID)
-        return this.Comments.get(appID) || []
+        return this.Comments.get(appID)?.filter((el) => {
+          let ok = true
+          if (goodID) ok &&= el.GoodID === goodID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
+          return ok
+        }) || []
       }
     }
   },

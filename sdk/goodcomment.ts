@@ -1,13 +1,16 @@
-import { computed } from 'vue'
 import { goodcomment, constant, notify } from '..'
-import { AppID } from './localapp'
 
 const comment = goodcomment.useCommentStore()
 
-const getPageComments = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageComments = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  const reqOffset = offset + pageIndex * constant.DefaultPageSize
+  let reqLimit = constant.DefaultPageSize
+  if (limit > 0) {
+    reqLimit = limit - pageIndex * constant.DefaultPageSize
+  }
   comment.getComments({
-    Offset: pageIndex * constant.DefaultPageSize,
-    Limit: constant.DefaultPageSize,
+    Offset: reqOffset,
+    Limit: reqLimit,
     Message: {
       Error: {
         Title: 'MSG_GET_COMMENTS',
@@ -16,21 +19,27 @@ const getPageComments = (pageIndex: number, pageEnd: number, done?: (error: bool
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<goodcomment.Comment>, total?: number) => {
-    if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
-      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
-      done?.(error, totalPages, total as number)
+  }, (error: boolean, rows?: Array<goodcomment.Comment>, totalRows?: number) => {
+    if (error || !rows?.length) {
+      if (limit === 0) {
+        limit = totalRows as number
+      } else {
+        limit = Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize)
+      }
+      done?.(error, limit, totalRows as number)
       return
     }
-    getPageComments(++pageIndex, pageEnd, done)
+    if (limit <= pageIndex * constant.DefaultPageSize && limit > 0) {
+      done?.(error, totalRows as number - offset, 0)
+      return
+    }
+    getPageComments(offset, limit, ++pageIndex, done)
   })
 }
 
-export const getComments = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageComments(pageStart, pages ? pageStart + pages : pages, done)
+export const getComments = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  getPageComments(offset, limit, 0, done)
 }
-
-export const comments = computed(() => comment.comments(AppID.value))
 
 export const createComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
   comment.createComment({
@@ -121,3 +130,6 @@ export const deleteAppGoodComment = (target: goodcomment.Comment, finish: (error
     finish(error)
   })
 }
+
+export const goodComment = (commentID: string) => comment.comment(undefined, commentID)
+export const goodComments = (goodID: string) => comment.comments(undefined, goodID)

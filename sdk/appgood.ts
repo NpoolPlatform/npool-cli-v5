@@ -116,6 +116,7 @@ export const appGoodQuantityUnit = (appGoodID: string) => appGood(appGoodID)?.Qu
 export const appGoodRewardDistributionMethod = (appGoodID: string) => appGood(appGoodID)?.BenefitType
 export const appGoodBestSeller = () => [...appGoods.value].sort((a, b) => Number(a.AppGoodSold) - Number(b.AppGoodSold)).slice(0, 5)
 export const appGoodScore = (appGoodID: string) => Number(appGood(appGoodID)?.Score) || 4.5
+export const appGoodScoreCount = (appGoodID: string) => Number(appGood(appGoodID)?.ScoreCount) || '220+'
 export const appGoodLastUnitReward = (appGoodID: string) => appGood(appGoodID)?.LastUnitRewardAmount
 export const appGoodMinOrderDuration = (appGoodID: string) => Number(appGood(appGoodID)?.MinOrderDuration)
 export const appGoodMaxOrderDuration = (appGoodID: string) => Number(appGood(appGoodID)?.MaxOrderDuration)
