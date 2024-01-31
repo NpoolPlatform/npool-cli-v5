@@ -24,8 +24,7 @@ import { formalizeAppID } from '../../appuser/app/local'
 
 export const useArticleStore = defineStore('articles', {
   state: () => ({
-    Articles: new Map<string, Array<Article>>(),
-    ArticleContent: undefined as unknown as string
+    Articles: new Map<string, Array<Article>>()
   }),
   getters: {
     article (): (appID: string | undefined, id: number) => Article | undefined {
@@ -46,37 +45,36 @@ export const useArticleStore = defineStore('articles', {
         return this.Articles.get(appID) || []
       }
     },
-    articleContent () {
-      return () => this.ArticleContent
-    },
-    addArticles (): (appID: string | undefined, articles: Array<Article>) => void {
-      return (appID: string | undefined, articles: Array<Article>) => {
+    articleContent (): (appID: string | undefined, contentUrl: string) => string {
+      return (appID: string | undefined, contentUrl: string) => {
         appID = formalizeAppID(appID)
-        let _articles = this.Articles.get(appID) as Array<Article>
-        if (!_articles) {
-          _articles = []
-        }
-        articles.forEach((article) => {
-          const index = _articles.findIndex((el) => el.ID === article.ID)
-          _articles.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1, article)
-        })
-        this.Articles.set(appID, _articles)
-      }
-    },
-    delArticle (): (appID: string | undefined, id: number) => void {
-      return (appID: string | undefined, id: number) => {
-        appID = formalizeAppID(appID)
-        let _articles = this.Articles.get(appID) as Array<Article>
-        if (!_articles) {
-          _articles = []
-        }
-        const index = _articles.findIndex((el) => el.ID === id)
-        _articles.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1)
-        this.Articles.set(appID, _articles)
+        return this.Articles.get(appID)?.find((el) => el.ContentURL === contentUrl)?.Content || ''
       }
     }
   },
   actions: {
+    addArticles (appID: string | undefined, articles: Array<Article>) {
+      appID = formalizeAppID(appID)
+      let _articles = this.Articles.get(appID) as Array<Article>
+      if (!_articles) {
+        _articles = []
+      }
+      articles.forEach((article) => {
+        const index = _articles.findIndex((el) => el.ID === article.ID)
+        _articles.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1, article)
+      })
+      this.Articles.set(appID, _articles)
+    },
+    delArticle (appID: string | undefined, id: number) {
+      appID = formalizeAppID(appID)
+      let _articles = this.Articles.get(appID) as Array<Article>
+      if (!_articles) {
+        _articles = []
+      }
+      const index = _articles.findIndex((el) => el.ID === id)
+      _articles.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1)
+      this.Articles.set(appID, _articles)
+    },
     getArticle (req: GetArticleRequest, done: (error: boolean, rows: Article) => void) {
       doActionWithError<GetArticleRequest, GetArticleResponse>(
         API.GET_ARTICLE,
@@ -127,15 +125,15 @@ export const useArticleStore = defineStore('articles', {
         }
       )
     },
-    getContent (req: GetContentRequest, done: (error: boolean, row: string) => void) {
+    getContent (req: GetContentRequest, done?: (error: boolean, row?: string) => void) {
       doGetWithError<GetContentRequest, GetContentResponse>(
         API.GET_CONTENT + req.ContentURL,
         req,
         req.Message,
         (resp: GetContentResponse): void => {
-          done(false, String(resp))
+          done?.(false, String(resp))
         }, () => {
-          done(true, '')
+          done?.(true)
         }
       )
     },
