@@ -1,9 +1,10 @@
-import { article, notify } from '..'
+import { cmsarticle, notify } from '..'
+import { AppID } from './localapp'
 
-const _article = article.useArticleStore()
+const _cmsArticle = cmsarticle.useArticleStore()
 
 export const getCMSContent = (contentURL: string, done?: (error: boolean, content?: string) => void) => {
-  _article.getContent({
+  _cmsArticle.getContent({
     ContentURL: contentURL,
     Message: {
       Error: {
@@ -16,4 +17,4 @@ export const getCMSContent = (contentURL: string, done?: (error: boolean, conten
   }, done)
 }
 
-export const cmsArticleContent = (contentURL: string) => _article.articleContent(undefined, contentURL)
+export const cmsArticleContent = (contentURL: string) => _cmsArticle.articleContent(AppID.value, contentURL)
