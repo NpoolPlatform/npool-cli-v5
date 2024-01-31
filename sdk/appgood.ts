@@ -1,10 +1,8 @@
 import { computed } from 'vue'
 import { appgood, constant, notify, appcoin, vendorbrand, deviceinfo, goodbase, topmostgood, requiredgood } from '..'
 import { AppID } from './localapp'
-import { formalizeUserID } from '../appuser/user'
 
 const _appgood = appgood.useAppGoodStore()
-const _order = order.useOrderStore()
 const _appcoin = appcoin.useAppCoinStore()
 const _vendorbrand = vendorbrand.useVendorBrandStore()
 const _deviceinfo = deviceinfo.useDeviceInfoStore()
