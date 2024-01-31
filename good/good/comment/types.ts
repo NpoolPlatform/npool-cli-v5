@@ -9,10 +9,12 @@ export interface Comment {
     Username: string
     EmailAddress: string
     PhoneNO: string
+    Avatar: string
     GoodID: string
     AppGoodID: string
     GoodName: string
     OrderID: string
+    Title: string
     Content: string
     ReplyToID: string
     Score: number

@@ -133,3 +133,4 @@ export const deleteAppGoodComment = (target: goodcomment.Comment, finish: (error
 
 export const goodComment = (commentID: string) => comment.comment(undefined, commentID)
 export const goodComments = (goodID: string) => comment.comments(undefined, goodID)
+export const goodCommentForOrder = (commentID: string) => comment.commentForOrder(undefined, commentID)

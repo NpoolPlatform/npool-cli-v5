@@ -17,6 +17,7 @@ import {
   DeleteAppCommentResponse
 } from './types'
 import { formalizeAppID } from '../../../appuser/app/local'
+import { NIL as NIL_UUID } from 'uuid'
 
 export const useCommentStore = defineStore('comment', {
   state: () => ({
@@ -38,6 +39,12 @@ export const useCommentStore = defineStore('comment', {
           if (appGoodID) ok &&= el.AppGoodID === appGoodID
           return ok
         }) || []
+      }
+    },
+    commentForOrder (): (appID: string | undefined, commentID: string) => boolean {
+      return (appID: string | undefined, commentID: string) => {
+        appID = formalizeAppID(appID)
+        return this.Comments.get(appID)?.find((el) => el.EntID === commentID)?.OrderID === undefined || this.Comments.get(appID)?.find((el) => el.EntID === commentID)?.OrderID === NIL_UUID
       }
     }
   },
