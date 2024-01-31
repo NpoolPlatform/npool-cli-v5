@@ -109,6 +109,7 @@ export * as cmsarticle from './cms/article'
 export * as cmsacl from './cms/acl'
 export * as cmsmedia from './cms/media'
 export * as cmsbase from './cms/base'
+export * as goodrecommend from './good/good/recommend'
 
 // It must be the last one
 export * as sdk from './sdk'
