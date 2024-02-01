@@ -239,12 +239,12 @@ export const appGoodMultipleDurationUnit = (appGoodID: string) => {
 export const appGoodOriginalUnitPrice = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)
   if (_appGood?.PackagePrice?.length && Number(_appGood?.PackagePrice) > 0) {
-    return _appGood.PackagePrice
+    return Number(_appGood.PackagePrice)
   }
   if (_appGood?.UnitPrice?.length && Number(_appGood?.UnitPrice) > 0) {
-    return _appGood.UnitPrice
+    return Number(_appGood.UnitPrice)
   }
-  return '9999999999.999999'
+  return Number('9999999999.999999')
 }
 
 export const appGoodOrderLimitation = (appGoodID: string) => {
@@ -278,7 +278,7 @@ export const appGoodUnitPrice = (appGoodID: string) => {
     return unitPrice
   }
 
-  return appGoodOriginalUnitPrice(appGoodID)
+  return Number(appGoodOriginalUnitPrice(appGoodID))
 }
 
 export const appGoodRequiredAppGoods = (appGoodID: string, requiredTypes?: goodbase.GoodType[], must?: boolean) => {
@@ -300,6 +300,12 @@ export const appGoodRequiredAppGoods = (appGoodID: string, requiredTypes?: goodb
   })
 }
 
+export const appGoodRequiredAppGood = (appGoodID: string, requiredAppGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  const _requiredAppGood = appGood(requiredAppGoodID)
+  return _requiredgood.requireds(_appGood?.GoodID).find((el) => el.RequiredGoodID === _requiredAppGood?.GoodID)
+}
+
 export const appGoodEstimatedUnitDailyReward = (appGoodID: string) => appGood(appGoodID)?.LastUnitRewardAmount
 export const appGoodSoldPercent = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)
@@ -307,6 +313,31 @@ export const appGoodSoldPercent = (appGoodID: string) => {
     return 0
   }
   return (Number(_appGood?.GoodTotal) - Number(_appGood?.GoodSpotQuantity)) / Number(_appGood?.GoodTotal)
+}
+
+export const appGoodUnitStrings = (appGoodID: string): string[] => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return []
+  }
+  const prices = [_appGood.QuantityUnitAmount]
+  prices[0] = _appGood.QuantityUnitAmount
+  prices[1] = _appGood.QuantityUnit
+  switch (_appGood.DurationType) {
+    case goodbase.GoodDurationType.GoodDurationByHour:
+      prices[2] = 'MSG_HOUR'
+      break
+    case goodbase.GoodDurationType.GoodDurationByDay:
+      prices[2] = 'MSG_DAY'
+      break
+    case goodbase.GoodDurationType.GoodDurationByMonth:
+      prices[2] = 'MSG_MONTH'
+      break
+    case goodbase.GoodDurationType.GoodDurationByYear:
+      prices[2] = 'MSG_YEAR'
+      break
+  }
+  return prices
 }
 
 export const appGoodUnitPriceStrings = (appGoodID: string): string[] => {
