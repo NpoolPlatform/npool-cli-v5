@@ -23,7 +23,7 @@ export const useLocaleStore = defineStore('locale-lang', {
         return
       }
       this.AppLang = lang
-      Cookies.set('X-Lang-ID', lang.LangID, { expires: '4h', secure: true, path: '/' })
+      Cookies.set('X-Lang-ID', lang.LangID, { expires: '96h', secure: true, path: '/' })
     }
   }
 })
