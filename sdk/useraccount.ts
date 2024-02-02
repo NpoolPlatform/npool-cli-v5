@@ -63,4 +63,4 @@ export const createUserAccount = (coinTypeID: string, usedFor: accountbase.Accou
   }, done)
 }
 
-export const userAccounts = (coinTypeID: string, usedFor: accountbase.AccountUsedFor) => _useraccount.accounts(undefined, undefined, coinTypeID, usedFor)
+export const userAccounts = (coinTypeID?: string, usedFor?: accountbase.AccountUsedFor) => _useraccount.accounts(undefined, undefined, coinTypeID, usedFor)
