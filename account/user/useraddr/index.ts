@@ -66,16 +66,16 @@ export const useUserAccountStore = defineStore('user-accounts', {
       _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.UserAccounts.set(appID, _accounts)
     },
-    createUserAccount (req: CreateUserAccountRequest, done: (error: boolean, row?: Account) => void) {
+    createUserAccount (req: CreateUserAccountRequest, done?: (error: boolean, row?: Account) => void) {
       doActionWithError<CreateUserAccountRequest, CreateUserAccountResponse>(
         API.CREATE_USERACCOUNT,
         req,
         req.Message,
         (resp: CreateUserAccountResponse): void => {
           this.addAccounts(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     deleteUserAccount (req: DeleteUserAccountRequest, done: (error: boolean, row?: Account) => void) {

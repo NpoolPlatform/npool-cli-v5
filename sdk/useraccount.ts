@@ -42,7 +42,7 @@ export const getUserAccounts = (usedFor: accountbase.AccountUsedFor, offset: num
   getPageUserAccounts(usedFor, offset, limit, 0, done)
 }
 
-export const createUserAccount = (coinTypeID: string, usedFor: accountbase.AccountUsedFor, address: string, memo: string | undefined, labels: string[], account: string, accountType: appuserbase.SignMethodType, verificationCode: string, done: (error: boolean, row?: useraccountbase.Account) => void) => {
+export const createUserAccount = (coinTypeID: string, usedFor: accountbase.AccountUsedFor, address: string, memo: string | undefined, labels: string[], account: string, accountType: appuserbase.SignMethodType, verificationCode: string, done?: (error: boolean, row?: useraccountbase.Account) => void) => {
   _useraccount.createUserAccount({
     CoinTypeID: coinTypeID,
     UsedFor: usedFor,
