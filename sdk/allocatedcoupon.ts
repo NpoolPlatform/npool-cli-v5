@@ -1,13 +1,17 @@
-import { computed } from 'vue'
-import { allocatedcoupon, constant, notify } from '..'
+import { allocatedcoupon, constant, coupon, notify } from '..'
 import { AppID } from './localapp'
 
 const _allocatedcoupon = allocatedcoupon.useAllocatedCouponStore()
 
-export const getPageAllocatedCoupons = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+export const getPageAllocatedCoupons = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  const reqOffset = offset + pageIndex * constant.DefaultPageSize
+  let reqLimit = constant.DefaultPageSize
+  if (limit > 0) {
+    reqLimit = limit - pageIndex * constant.DefaultPageSize
+  }
   _allocatedcoupon.getCoupons({
-    Offset: pageIndex * constant.DefaultPageSize,
-    Limit: constant.DefaultPageSize,
+    Offset: reqOffset,
+    Limit: reqLimit,
     Message: {
       Error: {
         Title: 'MSG_GET_ALLOCATED_COUPONS',
@@ -16,21 +20,29 @@ export const getPageAllocatedCoupons = (pageIndex: number, pageEnd: number, done
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<allocatedcoupon.Coupon>, total?: number) => {
-    if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
-      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
-      done?.(error, totalPages, total as number)
+  }, (error: boolean, rows?: Array<allocatedcoupon.Coupon>, totalRows?: number) => {
+    if (error || !rows?.length) {
+      if (limit === 0) {
+        limit = totalRows as number
+      } else {
+        limit = Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize)
+      }
+      done?.(error, limit, totalRows as number)
       return
     }
-    getPageAllocatedCoupons(++pageIndex, pageEnd, done)
+    if (limit <= pageIndex * constant.DefaultPageSize && limit > 0) {
+      done?.(error, totalRows as number - offset, 0)
+      return
+    }
+    getPageAllocatedCoupons(offset, limit, ++pageIndex, done)
   })
 }
 
-export const getAllocatedCoupons = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageAllocatedCoupons(pageStart, pages ? pageStart + pages : pages, done)
+export const getAllocatedCoupons = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  getPageAllocatedCoupons(offset, limit, 0, done)
 }
 
-export const _allocatedcoupons = computed(() => _allocatedcoupon.coupons(AppID.value))
+export const _allocatedCoupons = (userID?: string, couponType?: coupon.CouponType) => _allocatedcoupon.coupons(AppID.value, userID, couponType)
 
 export const createAllocatedCoupon = (target: allocatedcoupon.Coupon, finish: (error: boolean) => void) => {
   _allocatedcoupon.createCoupon({

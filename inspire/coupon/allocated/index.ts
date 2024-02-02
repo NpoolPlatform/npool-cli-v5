@@ -11,38 +11,38 @@ import {
 } from './types'
 import { doActionWithError } from '../../../request/action'
 import { formalizeAppID } from '../../../appuser/app/local'
+import { CouponType } from '../const'
 
 export const useAllocatedCouponStore = defineStore('allocated-coupon', {
   state: () => ({
     AllocatedCoupons: new Map<string, Array<Coupon>>()
   }),
   getters: {
-    addCoupons (): (appID: string | undefined, coupons: Array<Coupon>) => void {
-      return (appID: string | undefined, coupons: Array<Coupon>) => {
-        appID = formalizeAppID(appID)
-        let _coupons = this.AllocatedCoupons.get(appID) as Array<Coupon>
-        if (!_coupons) {
-          _coupons = []
-        }
-        coupons.forEach((coupon) => {
-          const index = _coupons.findIndex((el) => el.ID === coupon.ID)
-          _coupons.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, coupon)
-        })
-        this.AllocatedCoupons.set(appID, _coupons)
-      }
-    },
-    coupons (): (appID?: string, userID?: string) => Array<Coupon> {
-      return (appID?: string, userID?: string) => {
+    coupons (): (appID?: string, userID?: string, couponType?: CouponType) => Array<Coupon> {
+      return (appID?: string, userID?: string, couponType?: CouponType) => {
         appID = formalizeAppID(appID)
         return this.AllocatedCoupons.get(appID)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
+          if (couponType) ok &&= el.CouponType === couponType
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     }
   },
   actions: {
+    addCoupons (appID: string | undefined, coupons: Array<Coupon>) {
+      appID = formalizeAppID(appID)
+      let _coupons = this.AllocatedCoupons.get(appID) as Array<Coupon>
+      if (!_coupons) {
+        _coupons = []
+      }
+      coupons.forEach((coupon) => {
+        const index = _coupons.findIndex((el) => el.ID === coupon.ID)
+        _coupons.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, coupon)
+      })
+      this.AllocatedCoupons.set(appID, _coupons)
+    },
     getAppCoupons (req: GetAppCouponsRequest, done: (error: boolean, rows?: Array<Coupon>) => void) {
       doActionWithError<GetAppCouponsRequest, GetAppCouponsResponse>(
         API.GET_APP_ALLOCATEDCOUPONS,

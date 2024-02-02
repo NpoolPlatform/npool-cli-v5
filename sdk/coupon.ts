@@ -1,13 +1,17 @@
-import { computed } from 'vue'
 import { coupon, constant, notify } from '..'
 import { AppID } from './localapp'
 
 const _coupon = coupon.useCouponStore()
 
-const getPageCoupons = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageCoupons = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  const reqOffset = offset + pageIndex * constant.DefaultPageSize
+  let reqLimit = constant.DefaultPageSize
+  if (limit > 0) {
+    reqLimit = limit - pageIndex * constant.DefaultPageSize
+  }
   _coupon.getCoupons({
-    Offset: pageIndex * constant.DefaultPageSize,
-    Limit: constant.DefaultPageSize,
+    Offset: reqOffset,
+    Limit: reqLimit,
     Message: {
       Error: {
         Title: 'MSG_GET_COUPONS',
@@ -16,47 +20,67 @@ const getPageCoupons = (pageIndex: number, pageEnd: number, done?: (error: boole
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<coupon.Coupon>, total?: number) => {
-    if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
-      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
-      done?.(error, totalPages, total as number)
+  }, (error: boolean, rows?: Array<coupon.Coupon>, totalRows?: number) => {
+    if (error || !rows?.length) {
+      if (limit === 0) {
+        limit = totalRows as number
+      } else {
+        limit = Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize)
+      }
+      done?.(error, limit, totalRows as number)
       return
     }
-    getPageCoupons(++pageIndex, pageEnd, done)
+    if (limit <= pageIndex * constant.DefaultPageSize && limit > 0) {
+      done?.(error, totalRows as number - offset, 0)
+      return
+    }
+    getPageCoupons(offset, limit, ++pageIndex, done)
   })
 }
 
-export const getCoupons = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageCoupons(pageStart, pages ? pageStart + pages : pages, done)
+export const getCoupons = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  getPageCoupons(offset, limit, 0, done)
 }
 
-const getPageAppCoupons = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageAppCoupons = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  const reqOffset = offset + pageIndex * constant.DefaultPageSize
+  let reqLimit = constant.DefaultPageSize
+  if (limit > 0) {
+    reqLimit = limit - pageIndex * constant.DefaultPageSize
+  }
   _coupon.getAppCoupons({
     TargetAppID: AppID.value,
-    Offset: pageIndex * constant.DefaultPageSize,
-    Limit: constant.DefaultPageSize,
+    Offset: reqOffset,
+    Limit: reqLimit,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_DEFAULT_GOODS_FAIL',
+        Title: 'MSG_GET_COUPONS',
+        Message: 'MSG_GET_COUPONS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<coupon.Coupon>, total?: number) => {
-    if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
-      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
-      done?.(error, totalPages, total as number)
+  }, (error: boolean, rows?: Array<coupon.Coupon>, totalRows?: number) => {
+    if (error || !rows?.length) {
+      if (limit === 0) {
+        limit = totalRows as number
+      } else {
+        limit = Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize)
+      }
+      done?.(error, limit, totalRows as number)
       return
     }
-    getPageAppCoupons(++pageIndex, pageEnd, done)
+    if (limit <= pageIndex * constant.DefaultPageSize && limit > 0) {
+      done?.(error, totalRows as number - offset, 0)
+      return
+    }
+    getPageAppCoupons(offset, limit, ++pageIndex, done)
   })
 }
 
-export const getAppCoupons = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageAppCoupons(pageStart, pages ? pageStart + pages : pages, done)
+export const getAppCoupons = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
+  getPageAppCoupons(offset, limit, 0, done)
 }
-
-export const _coupons = computed(() => _coupon.coupons(AppID.value))
 
 export const createCoupon = (target: coupon.Coupon, finish: (error: boolean) => void) => {
   _coupon.createCoupon({
@@ -103,3 +127,5 @@ export const updateCoupon = (target: coupon.Coupon, finish: (error: boolean) => 
     finish(error)
   })
 }
+
+export const _coupons = (couponType?: coupon.CouponType) => _coupon.coupons(undefined, couponType)
