@@ -4,35 +4,41 @@ import { AppID } from './localapp'
 
 const notification = notif.useNotifStore()
 
-const getPageNotifications = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number) => void) => {
+const getPageNotifications = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   const reqOffset = offset + pageIndex * constant.DefaultPageSize
   const reqLimit = Math.min(limit - pageIndex * constant.DefaultPageSize, constant.DefaultPageSize)
-  if (reqLimit === 0) {
-    done?.(false, limit)
-    return
-  }
   notification.getNotifs({
     Offset: reqOffset,
     Limit: reqLimit,
     Message: {
       Error: {
-        Title: 'MSG_GET_ANNOUNCEMENTS',
-        Message: 'MSG_GET_ANNOUNCEMENTS_FAIL',
+        Title: 'MSG_GET_NOTIFICATIONS',
+        Message: 'MSG_GET_NOTIFICATIONS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<notif.Notif>) => {
+  }, (error: boolean, rows?: Array<notif.Notif>, totalRows?: number) => {
     if (error || !rows?.length) {
-      done?.(error, limit - Math.max(limit - (pageIndex + 1) * constant.DefaultPageSize, 0))
+      if (limit === 0) {
+        limit = totalRows as number
+      } else {
+        limit = Math.min(limit, totalRows as number - offset)
+        limit = Math.max(limit, 0)
+        limit = Math.min(limit, (pageIndex + 1) * constant.DefaultPageSize)
+      }
+      done?.(error, limit, totalRows as number)
       return
     }
-    limit -= reqLimit
+    if (limit <= (pageIndex + 1) * constant.DefaultPageSize && limit > 0) {
+      done?.(error, totalRows as number - offset, 0)
+      return
+    }
     getPageNotifications(offset, limit, ++pageIndex, done)
   })
 }
 
-export const getNotifications = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number) => void) => {
+export const getNotifications = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   getPageNotifications(offset, limit, 0, done)
 }
 
@@ -43,14 +49,14 @@ export const updateNotifications = (targets: notif.Notif[], finish: (error: bool
     Infos: targets,
     Message: {
       Error: {
-        Title: 'MSG_UPDATE_ANNOUNCEMENT',
-        Message: 'MSG_UPDATE_ANNOUNCEMENT_FAIL',
+        Title: 'MSG_UPDATE_NOTIFICATION',
+        Message: 'MSG_UPDATE_NOTIFICATION_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       },
       Info: {
-        Title: 'MSG_UPDATE_ANNOUNCEMENT',
-        Message: 'MSG_UPDATE_ANNOUNCEMENT_SUCCESS',
+        Title: 'MSG_UPDATE_NOTIFICATION',
+        Message: 'MSG_UPDATE_NOTIFICATION_SUCCESS',
         Popup: true,
         Type: notify.NotifyType.Success
       }
