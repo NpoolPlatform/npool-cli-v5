@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { constant, notify, appcoin } from '..'
 import { AppID } from './localapp'
 
@@ -83,6 +82,6 @@ export const getNAppCoins = (offset: number, limit: number, done?: (error: boole
   getNPageAppCoins(offset, limit, 0, done)
 }
 
-export const appCoins = computed(() => _appcoin.coins(AppID.value))
+export const appCoins = (env?: string, payable?: boolean) => _appcoin.coins(undefined, env, payable)
 export const appCoinName = (coinTypeID: string, index: number) => _appcoin.displayName(undefined, coinTypeID, index)
 export const appCoinUnit = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)?.Unit

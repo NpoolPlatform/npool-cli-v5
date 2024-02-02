@@ -28,10 +28,15 @@ export const useAppCoinStore = defineStore('app-coins', {
         return this.AppCoins.get(appID)?.find((el) => el.CoinTypeID === coinTypeID)
       }
     },
-    coins (): (appID?: string) => Array<AppCoin> {
-      return (appID?: string) => {
+    coins (): (appID?: string, env?: string, payable?: boolean) => Array<AppCoin> {
+      return (appID?: string, env?: string, payable?: boolean) => {
         appID = formalizeAppID(appID)
-        return this.AppCoins.get(appID) || []
+        return this.AppCoins.get(appID)?.filter((el) => {
+          let ok = true
+          if (env) ok &&= el.ENV === env
+          if (payable !== undefined) ok &&= el.ForPay === payable
+          return ok
+        }) || []
       }
     },
     payableCoins (): (appID?: string) => Array<AppCoin> {
@@ -200,5 +205,5 @@ export const useAppCoinStore = defineStore('app-coins', {
   }
 })
 
-export * from './const'
 export * from './types'
+export * from './const'
