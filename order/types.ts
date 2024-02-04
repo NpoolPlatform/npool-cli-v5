@@ -82,13 +82,14 @@ export interface CreateOrderResponse {
 
 export interface OrderReq {
   AppGoodID: string
-  Units: string
+  Units?: string
+  Duration?: number
   Parent?: boolean
 }
 
 export interface CreateOrdersRequest extends BaseRequest {
   PaymentCoinID: string
-  PayWithBalanceAmount: string
+  PayWithBalanceAmount?: string
   CouponIDs: Array<string>
   InvestmentType: InvestmentType
   Orders: Array<OrderReq>
