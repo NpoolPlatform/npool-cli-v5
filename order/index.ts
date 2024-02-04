@@ -8,6 +8,8 @@ import {
   GetOrdersResponse,
   CreateOrderRequest,
   CreateOrderResponse,
+  CreateOrdersRequest,
+  CreateOrdersResponse,
   UpdateOrderRequest,
   UpdateOrderResponse,
   Order,
@@ -115,23 +117,21 @@ export const useOrderStore = defineStore('orders', {
         })
         return units
       }
-    },
-    addOrders (): (appID: string | undefined, orders: Array<Order>) => void {
-      return (appID: string | undefined, orders: Array<Order>) => {
-        appID = formalizeAppID(appID)
-        let _orders = this.Orders.get(appID) as Array<Order>
-        if (!_orders) {
-          _orders = []
-        }
-        orders.forEach((order) => {
-          const index = _orders.findIndex((el) => el.ID === order.ID)
-          _orders.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, order)
-        })
-        this.Orders.set(appID, _orders)
-      }
     }
   },
   actions: {
+    addOrders (appID: string | undefined, orders: Array<Order>) {
+      appID = formalizeAppID(appID)
+      let _orders = this.Orders.get(appID) as Array<Order>
+      if (!_orders) {
+        _orders = []
+      }
+      orders.forEach((order) => {
+        const index = _orders.findIndex((el) => el.ID === order.ID)
+        _orders.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, order)
+      })
+      this.Orders.set(appID, _orders)
+    },
     getOrders (req: GetOrdersRequest, done: (error: boolean, orders?: Array<Order>, total?: number) => void) {
       doActionWithError<GetOrdersRequest, GetOrdersResponse>(
         API.GET_ORDERS,
@@ -157,6 +157,20 @@ export const useOrderStore = defineStore('orders', {
         },
         () => {
           done(true)
+        }
+      )
+    },
+    createOrders (req: CreateOrdersRequest, done?: (error: boolean, orders?: Array<Order>) => void) {
+      doActionWithError<CreateOrdersRequest, CreateOrdersResponse>(
+        API.CREATE_ORDERS,
+        req,
+        req.Message,
+        (resp: CreateOrdersResponse): void => {
+          this.addOrders(undefined, resp.Infos)
+          done?.(false, resp.Infos)
+        },
+        () => {
+          done?.(true)
         }
       )
     },

@@ -94,6 +94,10 @@ export interface CreateOrdersRequest extends BaseRequest {
   Orders: Array<OrderReq>
 }
 
+export interface CreateOrdersResponse {
+  Infos: Array<Order>
+}
+
 export interface GetOrdersRequest extends BaseRequest {
   Offset: number
   Limit: number

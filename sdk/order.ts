@@ -96,3 +96,15 @@ export const createAppUserOrder = (req: order.CreateAppUserOrderRequest) => {
     // TODO
   })
 }
+
+export const createOrders = (req: order.CreateOrdersRequest, done?: (error: boolean, orders?: Array<order.Order>) => void) => {
+  req.Message = {
+    Error: {
+      Title: 'MSG_CREATE_ORDERS',
+      Message: 'MSG_CREATE_ORDERS_FAIL',
+      Popup: true,
+      Type: notify.NotifyType.Error
+    }
+  }
+  _order.createOrders(req, done)
+}
