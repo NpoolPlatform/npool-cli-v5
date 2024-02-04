@@ -57,8 +57,6 @@ export const getNAppOrders = (pageStart: number, pages: number, done?: (error: b
   getPageNAppOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const orders = computed(() => _order.orders(AppID.value))
-
 export const updateAppUserOrder = (id: number, canceled: boolean) => {
   const targetOrder = _order.order(id)
   if (!targetOrder) {
@@ -108,3 +106,7 @@ export const createOrders = (req: order.CreateOrdersRequest, done?: (error: bool
   }
   _order.createOrders(req, done)
 }
+
+export const orders = computed(() => _order.orders(AppID.value))
+export const orderByID = (orderID: string) => _order.getOrderByEntID(orderID)
+export const childOrders = (parentOrderID: string, paid?: boolean) => _order.orders(undefined, undefined, undefined, undefined, parentOrderID, paid)

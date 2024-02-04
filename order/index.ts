@@ -26,7 +26,7 @@ import {
   UpdateAppUserOrderRequest,
   UpdateAppUserOrderResponse
 } from './types'
-import { API, OrderState, OrderTimeoutSeconds } from './const'
+import { API, OrderState, OrderTimeoutSeconds, PaymentState } from './const'
 import { formalizeAppID } from '../appuser/app/local'
 
 export const useOrderStore = defineStore('orders', {
@@ -34,14 +34,16 @@ export const useOrderStore = defineStore('orders', {
     Orders: new Map<string, Array<Order>>()
   }),
   getters: {
-    orders (): (appID?: string, userID?: string, appGoodID?: string, coinTypeID?: string) => Array<Order> {
-      return (appID?: string, userID?: string, appGoodID?: string, coinTypeID?: string) => {
+    orders (): (appID?: string, userID?: string, appGoodID?: string, coinTypeID?: string, parentOrderID?: string, paid?: boolean) => Array<Order> {
+      return (appID?: string, userID?: string, appGoodID?: string, coinTypeID?: string, parentOrderID?: string, paid?: boolean) => {
         appID = formalizeAppID(appID)
         return this.Orders.get(appID)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
           if (appGoodID) ok &&= el.AppGoodID === appGoodID
           if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (parentOrderID) ok &&= el.ParentOrderID === parentOrderID
+          if (paid !== undefined) ok &&= paid ? el.PaymentState === PaymentState.DONE : true
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
