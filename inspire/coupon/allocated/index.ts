@@ -21,12 +21,12 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
     coupons (): (appID?: string, userID?: string, couponType?: CouponType) => Array<Coupon> {
       return (appID?: string, userID?: string, couponType?: CouponType) => {
         appID = formalizeAppID(appID)
-        return this.AllocatedCoupons.get(appID)?.filter((el) => {
+        return (this.AllocatedCoupons.get(appID) || []).filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
           if (couponType) ok &&= el.CouponType === couponType
           return ok
-        }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+        }).sort((a, b) => a.CreatedAt - b.CreatedAt)
       }
     }
   },
@@ -58,7 +58,7 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
     },
     getCoupons (req: GetCouponsRequest, done: (error: boolean, rows?: Array<Coupon>) => void) {
       doActionWithError<GetCouponsRequest, GetCouponsResponse>(
-        API.GET_APP_ALLOCATEDCOUPONS,
+        API.GET_ALLOCATEDCOUPONS,
         req,
         req.Message,
         (resp: GetCouponsResponse): void => {
