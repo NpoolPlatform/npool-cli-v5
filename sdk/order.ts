@@ -110,3 +110,4 @@ export const createOrders = (req: order.CreateOrdersRequest, done?: (error: bool
 export const orders = computed(() => _order.orders(AppID.value))
 export const orderByID = (orderID: string) => _order.getOrderByEntID(orderID)
 export const childOrders = (parentOrderID: string, paid?: boolean) => _order.orders(undefined, undefined, undefined, undefined, parentOrderID, paid)
+export const orderPaymentDeadline = (orderID: string) => (orderByID(orderID)?.CreatedAt || 0) + order.OrderTimeoutSeconds
