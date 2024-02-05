@@ -1,4 +1,4 @@
-import { allocatedcoupon, constant, coupon, notify } from '..'
+import { allocatedcoupon, constant, coupon, notify, utils } from '..'
 import { AppID } from './localapp'
 
 const _allocatedcoupon = allocatedcoupon.useAllocatedCouponStore()
@@ -42,8 +42,6 @@ export const getAllocatedCoupons = (offset: number, limit: number, done?: (error
   getPageAllocatedCoupons(offset, limit, 0, done)
 }
 
-export const _allocatedCoupons = (userID?: string, couponType?: coupon.CouponType) => _allocatedcoupon.coupons(AppID.value, userID, couponType)
-
 export const createAllocatedCoupon = (target: allocatedcoupon.Coupon, finish: (error: boolean) => void) => {
   _allocatedcoupon.createCoupon({
     ...target,
@@ -67,3 +65,9 @@ export const createAllocatedCoupon = (target: allocatedcoupon.Coupon, finish: (e
     finish(error)
   })
 }
+
+export const _allocatedCoupons = (userID?: string, couponType?: coupon.CouponType) => _allocatedcoupon.coupons(AppID.value, userID, couponType)
+export const _allocatedCoupon = (allocatedCouponID: string) => _allocatedcoupon.couponByEntID(undefined, allocatedCouponID)
+export const allocatedCouponStartAt = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.StartAt
+export const allocatedCouponEndAt = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.EndAt
+export const allocatedCouponnDate = (allocatedCouponID: string) => utils.formatTime(allocatedCouponStartAt(allocatedCouponID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(allocatedCouponEndAt(allocatedCouponID) as number, 'YYYY/MM/DD HH:mm')

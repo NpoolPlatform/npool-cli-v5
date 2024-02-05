@@ -28,6 +28,18 @@ export const useAllocatedCouponStore = defineStore('allocated-coupon', {
           return ok
         }).sort((a, b) => a.CreatedAt - b.CreatedAt)
       }
+    },
+    coupon (): (appID: string | undefined, id: number) => Coupon | undefined {
+      return (appID: string | undefined, id: number) => {
+        appID = formalizeAppID(appID)
+        return this.AllocatedCoupons.get(appID)?.find((el) => el.ID === id)
+      }
+    },
+    couponByEntID (): (appID: string | undefined, id: string) => Coupon | undefined {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        return this.AllocatedCoupons.get(appID)?.find((el) => el.EntID === id)
+      }
     }
   },
   actions: {

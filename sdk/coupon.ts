@@ -1,4 +1,4 @@
-import { coupon, constant, notify } from '..'
+import { coupon, constant, notify, utils } from '..'
 import { AppID } from './localapp'
 
 const _coupon = coupon.useCouponStore()
@@ -129,3 +129,9 @@ export const updateCoupon = (target: coupon.Coupon, finish: (error: boolean) => 
 }
 
 export const _coupons = (couponType?: coupon.CouponType) => _coupon.coupons(undefined, couponType)
+export const couponByID = (couponID: string) => _coupon.getCouponByEntID(undefined, couponID)
+export const couponName = (couponID: string) => couponByID(couponID)?.Name || 'MSG_DEFAULT_COUPON_NAME'
+export const couponMessage = (couponID: string) => couponByID(couponID)?.Message || 'MSG_DEFAULT_COUPON_MESSAGE'
+export const couponStartAt = (couponID: string) => couponByID(couponID)?.StartAt
+export const couponEndAt = (couponID: string) => couponByID(couponID)?.EndAt
+export const couponDate = (couponID: string) => utils.formatTime(couponStartAt(couponID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(couponEndAt(couponID) as number, 'YYYY/MM/DD HH:mm')
