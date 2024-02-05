@@ -15,17 +15,19 @@ import {
 } from './types'
 import { doActionWithError } from '../../../request'
 import { formalizeAppID } from '../../../appuser/app/local'
+import { ChainENV } from '../../base'
 
 export const useAppCoinStore = defineStore('app-coins', {
   state: () => ({
     AppCoins: new Map<string, Array<AppCoin>>()
   }),
   getters: {
-    coin (): (appID: string | undefined, coinTypeID: string | undefined) => AppCoin | undefined {
-      return (appID: string | undefined, coinTypeID: string | undefined) => {
+    coin (): (appID: string | undefined, coinTypeID: string, env?: ChainENV) => AppCoin | undefined {
+      return (appID: string | undefined, coinTypeID: string, env?: ChainENV) => {
         if (!coinTypeID) return undefined
+        env = env || ChainENV.Main
         appID = formalizeAppID(appID)
-        return this.AppCoins.get(appID)?.find((el) => el.CoinTypeID === coinTypeID)
+        return this.AppCoins.get(appID)?.find((el) => el.CoinTypeID === coinTypeID && el.ENV === env)
       }
     },
     coins (): (appID?: string, env?: string, payable?: boolean) => Array<AppCoin> {

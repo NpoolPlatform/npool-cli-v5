@@ -21,3 +21,9 @@ export enum ConsensusPowerType {
   ConsensusStorageCapacity = 'ConsensusStorageCapacity'
 }
 export const ConsensusPowerTypes = Object.values(ConsensusPowerType)
+
+export enum ChainENV {
+  Main = 'main',
+  Test = 'test'
+}
+export const ChainENVs = Object.values(ChainENV)
