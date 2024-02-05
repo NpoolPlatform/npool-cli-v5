@@ -1,4 +1,4 @@
-import { constant, notify, appcoin, chainbase } from '..'
+import { constant, notify, appcoin } from '..'
 import { AppID } from './localapp'
 
 const _appcoin = appcoin.useAppCoinStore()
@@ -83,6 +83,6 @@ export const getNAppCoins = (offset: number, limit: number, done?: (error: boole
 }
 
 export const appCoins = (env?: string, payable?: boolean) => _appcoin.coins(undefined, env, payable)
-export const appCoin = (coinTypeID: string, env: chainbase.ChainENV) => _appcoin.coin(undefined, coinTypeID, env)
+export const appCoin = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)
 export const appCoinName = (coinTypeID: string, index: number) => _appcoin.displayName(undefined, coinTypeID, index)
 export const appCoinUnit = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)?.Unit
