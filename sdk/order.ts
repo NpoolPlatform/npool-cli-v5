@@ -183,6 +183,7 @@ export const orderPayable = (orderID: string) => {
     case order.PaymentType.PayWithNoPayment:
     case order.PaymentType.PayWithOffline:
     case order.PaymentType.PayWithParentOrder:
+    case order.PaymentType.PayWithBalanceOnly:
       return false
   }
   if (orderWaitPayment(orderID)) {
