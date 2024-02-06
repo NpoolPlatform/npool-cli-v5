@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { constant, notify, coincurrencybase, coincurrency } from '..'
 
 const _coincurrency = coincurrency.useCurrencyStore()
@@ -58,5 +57,5 @@ export const getCoinCurrency = (coinTypeID: string, done?: (error: boolean, curr
   })
 }
 
-export const coinCurrencies = computed(() => _coincurrency.currencies())
+export const coinCurrencies = () => _coincurrency.currencies()
 export const coinCurrency = (coinTypeID: string) => _coincurrency.currency(coinTypeID)

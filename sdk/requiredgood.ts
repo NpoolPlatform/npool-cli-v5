@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { requiredgood, constant, notify } from '..'
 
 const required = requiredgood.useRequiredStore()
@@ -37,8 +36,6 @@ const getPageRequiredGoods = (offset: number, limit: number, pageIndex: number, 
 export const getRequiredGoods = (offset: number, limit: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   getPageRequiredGoods(offset, limit, 0, done)
 }
-
-export const requiredGoods = computed(() => required.requireds())
 
 export const createRequiredGood = (target: requiredgood.Required, finish: (error: boolean) => void) => {
   required.createRequired({
@@ -105,3 +102,5 @@ export const deleteRequiredGood = (target: requiredgood.Required, finish: (error
     finish(error)
   })
 }
+
+export const requiredGoods = () => required.requireds()

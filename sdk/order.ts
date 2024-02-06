@@ -170,6 +170,13 @@ export const orderWaitPayment = (orderID: string) => {
 }
 
 export const orderPayable = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  if (_order.CreateMethod === order.OrderCreateMethod.OrderCreatedByRenew) {
+    return false
+  }
   if (orderWaitPayment(orderID)) {
     if (orderPaymentDeadline(orderID) > Date.now() / 1000) {
       return true

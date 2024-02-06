@@ -1,7 +1,7 @@
 import { GoodDurationType } from '../good/base'
 import { CouponType } from '../inspire/coupon'
 import { BaseRequest } from '../request'
-import { InvestmentType, OrderState, OrderType, PaymentState, PaymentType } from './const'
+import { InvestmentType, OrderCreateMethod, OrderState, OrderType, PaymentState, PaymentType } from './const'
 
 export interface Coupon {
   CouponID: string
@@ -64,6 +64,7 @@ export interface Order {
   AdminSetCanceled: boolean
   CreatedAt: number
   PaidAt: number
+  CreateMethod: OrderCreateMethod
 }
 
 export interface CreateOrderRequest extends BaseRequest {

@@ -55,3 +55,9 @@ export enum InvestmentType {
   UnionMining = 'UnionMining',
   FullPayment = 'FullPayment'
 }
+
+export enum OrderCreateMethod {
+  OrderCreatedByPurchase = 'OrderCreatedByPurchase',
+  OrderCreatedByAdmin = 'OrderCreatedByAdmin',
+  OrderCreatedByRenew = 'OrderCreatedByRenew'
+}
