@@ -174,7 +174,7 @@ export const orderPayable = (orderID: string) => {
   if (!_order) {
     return false
   }
-  if (_order.CreateMethod === order.OrderCreateMethod.OrderCreatedByRenew) {
+  if (_order.CreateMethod !== order.OrderCreateMethod.OrderCreatedByPurchase) {
     return false
   }
   if (orderWaitPayment(orderID)) {
