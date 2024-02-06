@@ -114,3 +114,57 @@ export const orderPaid = (orderID: string) => _order.orderPaid(orderByID(orderID
 export const orderStartAt = (orderID: string) => orderByID(orderID)?.StartAt
 export const orderEndAt = (orderID: string) => orderByID(orderID)?.EndAt
 export const orderServicePeriod = (orderID: string) => utils.formatTime(orderStartAt(orderID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(orderEndAt(orderID) as number, 'YYYY/MM/DD HH:mm')
+export const orderStateStr = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return 'MSG_INVALID'
+  }
+  switch (_order.OrderState) {
+    case order.OrderState.CREATED:
+    case order.OrderState.WAIT_PAYMENT:
+      return 'MSG_WAIT_PAYMENT'
+    case order.OrderState.PAID:
+    case order.OrderState.WAIT_START:
+      return 'MSG_WAIT_START'
+    case order.OrderState.IN_SERVICE:
+      return 'MSG_IN_SERVICE'
+    case order.OrderState.EXPIRED:
+      return 'MSG_EXPIRED'
+    case order.OrderState.PAYMENT_TIMEOUT:
+      return 'MSG_PAYMENT_TIMEOUT'
+    case order.OrderState.CANCELED:
+      return 'MSG_CANCELED'
+  }
+}
+
+export const orderCancelStateStr = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return 'MSG_INVALID'
+  }
+  if (_order.AdminSetCanceled) {
+    return 'MSG_CANCELED_BY_ADMIN'
+  }
+  if (_order.UserSetCanceled) {
+    return 'MSG_CANCELED_BY_USER'
+  }
+  switch (_order.CancelState) {
+    case order.OrderState.PAYMENT_TIMEOUT:
+      return 'MSG_TIMEOUT'
+    default:
+      return 'MSG_CANCELED_BY_USER'
+  }
+}
+
+export const orderWaitPayment = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  switch (_order.OrderState) {
+    case order.OrderState.CREATED:
+    case order.OrderState.WAIT_PAYMENT:
+      return true
+  }
+  return false
+}

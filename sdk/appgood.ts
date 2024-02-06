@@ -397,3 +397,23 @@ export const appGoodDevicePowerComsuption = (appGoodID: string) => {
   }
   return _deviceinfo.deviceInfo(undefined, _appGood.DeviceType)?.PowerConsumption || 3750
 }
+
+export const appGoodTypeStr = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return 'MSG_RENTAL'
+  }
+  switch (_appGood.GoodType) {
+    case goodbase.GoodType.MachineRenting:
+    case goodbase.GoodType.PowerRenting:
+      return 'MSG_RENTAL'
+    case goodbase.GoodType.MachineHosting:
+      return 'MSG_HOSTING'
+    case goodbase.GoodType.DelegatedStaking:
+      return 'MSG_DELEGATE_STAKING'
+    case goodbase.GoodType.ElectricityFee:
+      return 'MSG_ELECTRICITY_FEE'
+    case goodbase.GoodType.TechniqueServiceFee:
+      return 'MSG_TECHNIQUE_FEE'
+  }
+}
