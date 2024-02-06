@@ -92,7 +92,14 @@ export const useOrderStore = defineStore('orders', {
         if (!order) {
           return false
         }
-        return !(order.OrderState !== OrderState.CREATED && order.OrderState !== OrderState.WAIT_PAYMENT)
+        switch (order.OrderState) {
+          case OrderState.PAID:
+          case OrderState.WAIT_START:
+          case OrderState.IN_SERVICE:
+          case OrderState.EXPIRED:
+            return true
+        }
+        return false
       }
     },
     validateOrder (): (orderID: number) => boolean {
