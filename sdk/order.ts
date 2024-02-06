@@ -171,7 +171,7 @@ export const orderWaitPayment = (orderID: string) => {
 
 export const orderPayable = (orderID: string) => {
   if (orderWaitPayment(orderID)) {
-    if (orderPaymentDeadline(orderID) < Date.now() / 1000) {
+    if (orderPaymentDeadline(orderID) > Date.now() / 1000) {
       return true
     }
   }
