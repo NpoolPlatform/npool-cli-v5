@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { appgood, constant, notify, appcoin, vendorbrand, deviceinfo, goodbase, topmostgood, requiredgood } from '..'
 import { AppID } from './localapp'
 
@@ -104,17 +103,17 @@ export const getAppGood = (appGoodID: string, done?: (error: boolean, good?: app
   })
 }
 
-export const appGoods = computed(() => _appgood.goods(AppID.value))
+export const appGoods = () => _appgood.goods(AppID.value)
 export const appGood = (appGoodID: string) => _appgood.good(undefined, appGoodID)
 export const appGoodCancelable = (id: string) => _appgood.cancelable(AppID.value, id)
-export const appGoodCoins = computed(() => _appcoin.coins(undefined).filter((el) => appGoods.value.findIndex((el1) => el.CoinTypeID === el1.CoinTypeID) >= 0))
-export const appGoodVendorBrands = computed(() => _vendorbrand.vendorBrands().filter((el) => appGoods.value.findIndex((el1) => el.Name === el1.VendorBrandName) >= 0))
-export const appGoodDeviceInfos = computed(() => _deviceinfo.deviceInfos().filter((el) => appGoods.value.findIndex((el1) => el.Type === el1.DeviceType) >= 0))
+export const appGoodCoins = () => _appcoin.coins(undefined).filter((el) => appGoods().findIndex((el1) => el.CoinTypeID === el1.CoinTypeID) >= 0)
+export const appGoodVendorBrands = () => _vendorbrand.vendorBrands().filter((el) => appGoods().findIndex((el1) => el.Name === el1.VendorBrandName) >= 0)
+export const appGoodDeviceInfos = () => _deviceinfo.deviceInfos().filter((el) => appGoods().findIndex((el1) => el.Type === el1.DeviceType) >= 0)
 export const appGoodName = (appGoodID: string, index: number) => _appgood.displayName(undefined, appGoodID, index)
 export const appGoodQuantityUnitAmount = (appGoodID: string) => appGood(appGoodID)?.QuantityUnitAmount
 export const appGoodQuantityUnit = (appGoodID: string) => appGood(appGoodID)?.QuantityUnit as string
 export const appGoodRewardDistributionMethod = (appGoodID: string) => appGood(appGoodID)?.BenefitType
-export const appGoodBestSeller = () => [...appGoods.value].sort((a, b) => Number(a.AppGoodSold) - Number(b.AppGoodSold)).slice(0, 5)
+export const appGoodBestSeller = () => [...appGoods()].sort((a, b) => Number(a.AppGoodSold) - Number(b.AppGoodSold)).slice(0, 5)
 export const appGoodScore = (appGoodID: string) => Number(appGood(appGoodID)?.Score) || 4.5
 export const appGoodScoreCount = (appGoodID: string) => Number(appGood(appGoodID)?.ScoreCount) || '220+'
 export const appGoodLastUnitReward = (appGoodID: string) => appGood(appGoodID)?.LastUnitRewardAmount

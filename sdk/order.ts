@@ -1,5 +1,4 @@
-import { computed } from 'vue'
-import { order, notify, constant } from '../'
+import { order, notify, constant, utils } from '../'
 import { AppID } from './localapp'
 
 const _order = order.useOrderStore()
@@ -107,8 +106,11 @@ export const createOrders = (req: order.CreateOrdersRequest, done?: (error: bool
   _order.createOrders(req, done)
 }
 
-export const orders = computed(() => _order.orders(AppID.value))
+export const orders = () => _order.orders(AppID.value)
 export const orderByID = (orderID: string) => _order.getOrderByEntID(orderID)
 export const childOrders = (parentOrderID: string, paid?: boolean) => _order.orders(undefined, undefined, undefined, undefined, parentOrderID, paid)
 export const orderPaymentDeadline = (orderID: string) => (orderByID(orderID)?.CreatedAt || 0) + order.OrderTimeoutSeconds
 export const orderPaid = (orderID: string) => _order.orderPaid(orderByID(orderID)?.ID as number)
+export const orderStartAt = (orderID: string) => orderByID(orderID)?.StartAt
+export const orderEndAt = (orderID: string) => orderByID(orderID)?.EndAt
+export const orderServicePeriod = (orderID: string) => utils.formatTime(orderStartAt(orderID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(orderEndAt(orderID) as number, 'YYYY/MM/DD HH:mm')
