@@ -114,6 +114,8 @@ export const orderPaid = (orderID: string) => _order.orderPaid(orderByID(orderID
 export const orderStartAt = (orderID: string) => orderByID(orderID)?.StartAt
 export const orderEndAt = (orderID: string) => orderByID(orderID)?.EndAt
 export const orderServicePeriod = (orderID: string) => utils.formatTime(orderStartAt(orderID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(orderEndAt(orderID) as number, 'YYYY/MM/DD HH:mm')
+export const orderPayWithParentOrder = (orderID: string) => orderByID(orderID)?.PayWithParent
+
 export const orderStateStr = (orderID: string) => {
   const _order = orderByID(orderID)
   if (!_order) {
@@ -176,6 +178,12 @@ export const orderPayable = (orderID: string) => {
   }
   if (_order.CreateMethod !== order.OrderCreateMethod.OrderCreatedByPurchase) {
     return false
+  }
+  switch (_order.PaymentType) {
+    case order.PaymentType.PayWithNoPayment:
+    case order.PaymentType.PayWithOffline:
+    case order.PaymentType.PayWithParentOrder:
+      return false
   }
   if (orderWaitPayment(orderID)) {
     if (orderPaymentDeadline(orderID) > Date.now() / 1000) {
