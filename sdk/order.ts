@@ -168,3 +168,12 @@ export const orderWaitPayment = (orderID: string) => {
   }
   return false
 }
+
+export const orderPayable = (orderID: string) => {
+  if (orderWaitPayment(orderID)) {
+    if (orderPaymentDeadline(orderID) < Date.now() / 1000) {
+      return true
+    }
+  }
+  return false
+}
