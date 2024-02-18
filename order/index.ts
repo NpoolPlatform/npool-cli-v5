@@ -197,17 +197,17 @@ export const useOrderStore = defineStore('orders', {
         }
       )
     },
-    getOrder (req: GetOrderRequest, done: (error: boolean, order?: Order) => void) {
+    getOrder (req: GetOrderRequest, done?: (error: boolean, order?: Order) => void) {
       doActionWithError<GetOrderRequest, GetOrderResponse>(
         API.GET_ORDER,
         req,
         req.Message,
         (resp: GetOrderResponse): void => {
           this.addOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         },
         () => {
-          done(true)
+          done?.(true)
         }
       )
     },

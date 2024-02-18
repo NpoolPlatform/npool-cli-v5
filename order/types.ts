@@ -140,8 +140,6 @@ export interface UpdateAppUserOrderResponse {
 }
 
 export interface GetOrderRequest extends BaseRequest {
-  AppID?: string
-  UserID?: string
   EntID: string
 }
 

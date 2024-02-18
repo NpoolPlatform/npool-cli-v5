@@ -106,6 +106,20 @@ export const createOrders = (req: order.CreateOrdersRequest, done?: (error: bool
   _order.createOrders(req, done)
 }
 
+export const getOrder = (orderID: string, done?: (error: boolean, order?: order.Order) => void) => {
+  _order.getOrder({
+    EntID: orderID,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_ORDER',
+        Message: 'MSG_GET_ORDER_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
 export const orders = () => _order.orders(AppID.value)
 export const orderByID = (orderID: string) => _order.getOrderByEntID(orderID)
 export const childOrders = (parentOrderID: string, paid?: boolean) => _order.orders(undefined, undefined, undefined, undefined, parentOrderID, paid)
@@ -193,4 +207,68 @@ export const orderPayable = (orderID: string) => {
     }
   }
   return false
+}
+
+export const orderCreateDate = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.CreatedAt, 'YYYY-MM-DD')
+}
+
+export const orderCreateTime = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.CreatedAt, 'HH:mm:ss')
+}
+
+export const orderPayDate = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.PaidAt, 'YYYY-MM-DD')
+}
+
+export const orderPayTime = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.PaidAt, 'HH:mm:ss')
+}
+
+export const orderStartDate = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.StartAt, 'YYYY-MM-DD')
+}
+
+export const orderStartTime = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.StartAt, 'HH:mm:ss')
+}
+
+export const orderExpiredDate = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.EndAt, 'YYYY-MM-DD')
+}
+
+export const orderExpiredTime = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.EndAt, 'HH:mm:ss')
 }
