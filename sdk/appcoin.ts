@@ -86,3 +86,4 @@ export const appCoins = (env?: string, payable?: boolean) => _appcoin.coins(unde
 export const appCoin = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)
 export const appCoinName = (coinTypeID: string, index: number) => _appcoin.displayName(undefined, coinTypeID, index)
 export const appCoinUnit = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)?.Unit
+export const appCoinLogo = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)?.Logo
