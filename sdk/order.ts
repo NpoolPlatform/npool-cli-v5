@@ -133,6 +133,7 @@ export const orderCreatedByRenew = (orderID: string) => orderByID(orderID)?.Crea
 export const orderPaymentCoinLogo = (orderID: string) => orderByID(orderID)?.PaymentCoinLogo
 export const orderPaymentCoinName = (orderID: string) => orderByID(orderID)?.PaymentCoinName
 export const orderPaymentCoinUSDCurrency = (orderID: string) => orderByID(orderID)?.PaymentCoinUSDCurrency
+export const orderCoinLogo = (orderID: string) => orderByID(orderID)?.CoinLogo
 
 export const orderStateStr = (orderID: string) => {
   const _order = orderByID(orderID)
