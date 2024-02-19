@@ -39,13 +39,13 @@ export const useOrderStore = defineStore('orders', {
         appID = formalizeAppID(appID)
         return this.Orders.get(appID)?.filter((el) => {
           let ok = true
-          if (userID) ok &&= el.UserID === userID
-          if (appGoodID) ok &&= el.AppGoodID === appGoodID
-          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
-          if (parentOrderID) ok &&= el.ParentOrderID === parentOrderID
-          if (paid !== undefined) ok &&= paid ? el.PaymentState === PaymentState.DONE : true
+          if (userID) ok &&= el?.UserID === userID
+          if (appGoodID) ok &&= el?.AppGoodID === appGoodID
+          if (coinTypeID) ok &&= el?.CoinTypeID === coinTypeID
+          if (parentOrderID) ok &&= el?.ParentOrderID === parentOrderID
+          if (paid !== undefined) ok &&= paid ? el?.PaymentState === PaymentState.DONE : true
           return ok
-        }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+        }).sort((a, b) => a?.CreatedAt > b?.CreatedAt ? -1 : 1) || []
       }
     },
     order (): (orderID: number) => Order | undefined {
@@ -57,7 +57,7 @@ export const useOrderStore = defineStore('orders', {
     getOrderByEntID (): (entID: string) => Order | undefined {
       return (entID: string) => {
         const appID = formalizeAppID()
-        return this.Orders.get(appID)?.find((el) => el.EntID === entID)
+        return this.Orders.get(appID)?.find((el) => el?.EntID === entID)
       }
     },
     orderState (): (orderID: number) => string {
@@ -136,6 +136,7 @@ export const useOrderStore = defineStore('orders', {
         _orders = []
       }
       orders.forEach((order) => {
+        if (!order) return
         const index = _orders.findIndex((el) => el.ID === order.ID)
         _orders.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, order)
       })
