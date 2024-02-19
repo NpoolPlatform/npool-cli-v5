@@ -136,6 +136,7 @@ export const orderPaymentCoinName = (orderID: string) => orderByID(orderID)?.Pay
 export const orderPaymentCoinUSDCurrency = (orderID: string) => orderByID(orderID)?.PaymentCoinUSDCurrency
 export const orderCoinLogo = (orderID: string) => orderByID(orderID)?.CoinLogo
 export const orderParentOrderID = (orderID: string) => orderByID(orderID)?.ParentOrderID === NIL_UUID ? undefined : orderByID(orderID)?.ParentOrderID
+export const orderHasChilds = (orderID: string) => childOrders(orderID).length > 0
 
 export const orderStateStr = (orderID: string) => {
   const _order = orderByID(orderID)
