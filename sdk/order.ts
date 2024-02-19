@@ -130,6 +130,9 @@ export const orderEndAt = (orderID: string) => orderByID(orderID)?.EndAt
 export const orderServicePeriod = (orderID: string) => utils.formatTime(orderStartAt(orderID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(orderEndAt(orderID) as number, 'YYYY/MM/DD HH:mm')
 export const orderPayWithParentOrder = (orderID: string) => orderByID(orderID)?.PayWithParent
 export const orderCreatedByRenew = (orderID: string) => orderByID(orderID)?.CreateMethod === order.OrderCreateMethod.OrderCreatedByRenew
+export const orderPaymentCoinLogo = (orderID: string) => orderByID(orderID)?.PaymentCoinLogo
+export const orderPaymentCoinName = (orderID: string) => orderByID(orderID)?.PaymentCoinName
+export const orderPaymentCoinUSDCurrency = (orderID: string) => orderByID(orderID)?.PaymentCoinUSDCurrency
 
 export const orderStateStr = (orderID: string) => {
   const _order = orderByID(orderID)

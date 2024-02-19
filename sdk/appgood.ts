@@ -119,6 +119,7 @@ export const appGoodScoreCount = (appGoodID: string) => Number(appGood(appGoodID
 export const appGoodLastUnitReward = (appGoodID: string) => appGood(appGoodID)?.LastUnitRewardAmount
 export const appGoodMinOrderDuration = (appGoodID: string) => Number(appGood(appGoodID)?.MinOrderDuration)
 export const appGoodMaxOrderDuration = (appGoodID: string) => Number(appGood(appGoodID)?.MaxOrderDuration)
+export const appGoodBanner = (appGoodID: string) => appGood(appGoodID)?.GoodBanner
 
 export const appGoodMinOrderDurationDays = (appGoodID: string) => {
   const _appGood = appGood(appGoodID)
