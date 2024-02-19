@@ -418,3 +418,18 @@ export const appGoodTypeStr = (appGoodID: string) => {
       return 'MSG_TECHNIQUE_FEE'
   }
 }
+
+export const appGoodRewardable = (appGoodID: string) => {
+  const _appGood = appGood(appGoodID)
+  if (!_appGood) {
+    return false
+  }
+  switch (_appGood.GoodType) {
+    case goodbase.GoodType.DelegatedStaking:
+    case goodbase.GoodType.MachineHosting:
+    case goodbase.GoodType.MachineRenting:
+    case goodbase.GoodType.PowerRenting:
+      return true
+  }
+  return false
+}
