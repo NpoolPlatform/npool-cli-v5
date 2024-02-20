@@ -134,3 +134,11 @@ export const deleteAppGoodComment = (target: goodcomment.Comment, finish: (error
 export const goodComment = (commentID: string) => comment.comment(undefined, commentID)
 export const goodComments = (goodID: string) => comment.comments(undefined, goodID)
 export const goodCommentForOrder = (commentID: string) => comment.commentForOrder(undefined, commentID)
+export const goodCommentsNumber = (goodID: string) => goodComments(goodID).length
+
+export const goodCommentsUsersNumber = (goodID: string) => {
+  const comments = goodComments(goodID)
+  const users = new Map<string, boolean>()
+  comments.forEach((el) => users.set(el.UserID, true))
+  return users.size
+}

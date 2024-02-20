@@ -121,7 +121,7 @@ export const getOrder = (orderID: string, done?: (error: boolean, order?: order.
   }, done)
 }
 
-export const orders = () => _order.orders(AppID.value)
+export const orders = (appGoodID?: string) => _order.orders(AppID.value, undefined, appGoodID)
 export const orderByID = (orderID: string) => _order.getOrderByEntID(orderID)
 export const childOrders = (parentOrderID: string, paid?: boolean) => _order.orders(undefined, undefined, undefined, undefined, parentOrderID, paid)
 export const orderPaymentDeadline = (orderID: string) => (orderByID(orderID)?.CreatedAt || 0) + order.OrderTimeoutSeconds
@@ -137,6 +137,8 @@ export const orderPaymentCoinUSDCurrency = (orderID: string) => orderByID(orderI
 export const orderCoinLogo = (orderID: string) => orderByID(orderID)?.CoinLogo
 export const orderParentOrderID = (orderID: string) => orderByID(orderID)?.ParentOrderID === NIL_UUID ? undefined : orderByID(orderID)?.ParentOrderID
 export const orderHasChilds = (orderID: string) => childOrders(orderID).length > 0
+export const purchased = (appGoodID: string) => orders(appGoodID).length > 0
+export const purchasedAtDateTime = (appGoodID: string) => utils.formatTime(orders(appGoodID).sort((a, b) => a.PaidAt - b.PaidAt)[0]?.PaidAt, 'YYYY-MM-DD HH:mm:ss')
 
 export const orderStateStr = (orderID: string) => {
   const _order = orderByID(orderID)
