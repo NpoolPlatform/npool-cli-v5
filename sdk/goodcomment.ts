@@ -135,6 +135,7 @@ export const goodComment = (commentID: string) => comment.comment(undefined, com
 export const goodComments = (goodID: string) => comment.comments(undefined, goodID)
 export const goodCommentForOrder = (commentID: string) => comment.commentForOrder(undefined, commentID)
 export const goodCommentsNumber = (goodID: string) => goodComments(goodID).length
+export const orderFirstCommentExist = (appGoodID: string, orderID: string) => comment.comments(undefined, undefined, appGoodID, orderID).length > 0
 
 export const goodCommentsUsersNumber = (goodID: string) => {
   const comments = goodComments(goodID)
