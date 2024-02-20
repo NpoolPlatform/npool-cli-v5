@@ -18,6 +18,9 @@ export interface Comment {
     Content: string
     ReplyToID: string
     Score: number
+    Anonymous: boolean
+    PurchasedUser: boolean
+    TrialUser: boolean
     /** @format int64 */
     CreatedAt: number
     /** @format int64 */
@@ -25,13 +28,13 @@ export interface Comment {
 }
 
 export interface CreateCommentRequest extends BaseRequest {
-    AppID?: string
-    UserID?: string
-    GoodID: string
-    OrderID: string
+    AppGoodID: string
+    OrderID?: string
+    Title: string,
     Content: string
-    ReplyToID: string
-    Score: number
+    ReplyToID?: string
+    Score?: number
+    Anonymous?: boolean
 }
 
 export interface CreateCommentResponse {

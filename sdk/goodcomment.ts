@@ -41,7 +41,7 @@ export const getComments = (offset: number, limit: number, done?: (error: boolea
   getPageComments(offset, limit, 0, done)
 }
 
-export const createComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
+export const createComment = (target: goodcomment.Comment, finish?: (error: boolean) => void) => {
   comment.createComment({
     ...target,
     Message: {
@@ -59,7 +59,7 @@ export const createComment = (target: goodcomment.Comment, finish: (error: boole
       }
     }
   }, (error: boolean) => {
-    finish(error)
+    finish?.(error)
   })
 }
 
