@@ -24,6 +24,7 @@ export enum KYCState {
   Reviewing = 'Reviewing',
   Rejected = 'Rejected'
 }
+export const KYCStates = Object.values(KYCState)
 
 export enum ImageType {
   FrontImg = 'FrontImg',

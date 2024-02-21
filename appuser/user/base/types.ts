@@ -50,7 +50,6 @@ export interface User {
   InvitationCodeConfirmed: boolean
   LoginVerified: boolean
   State: KYCState
-  KycStateStr: string
   SelectedLangID: string
   ThirdPartyID: string
   ThirdPartyUserID: string
