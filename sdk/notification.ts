@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { notif, constant, notify } from '..'
 import { AppID } from './localapp'
 
@@ -42,8 +41,6 @@ export const getNotifications = (offset: number, limit: number, done?: (error: b
   getPageNotifications(offset, limit, 0, done)
 }
 
-export const notifications = computed(() => notification.notifs(AppID.value, undefined))
-
 export const updateNotifications = (targets: notif.Notif[], finish: (error: boolean) => void) => {
   notification.updateNotifs({
     Infos: targets,
@@ -65,3 +62,5 @@ export const updateNotifications = (targets: notif.Notif[], finish: (error: bool
     finish(error)
   })
 }
+
+export const notifications = (userID?: string) => notification.notifs(AppID.value, userID)

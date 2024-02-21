@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { announcement, constant, notify } from '..'
 import { AppID } from './localapp'
 
@@ -42,7 +41,7 @@ export const getAnnouncements = (offset: number, limit: number, done?: (error: b
   getPageAnnouncements(offset, limit, 0, done)
 }
 
-export const announcements = computed(() => _announcement.announcements(AppID.value))
+export const announcements = () => _announcement.announcements(AppID.value)
 
 export const createAnnouncement = (target: announcement.Announcement, finish: (error: boolean) => void) => {
   _announcement.createAnnouncement({
