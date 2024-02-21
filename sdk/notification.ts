@@ -1,5 +1,6 @@
 import { notif, constant, notify } from '..'
 import { AppID } from './localapp'
+import { loginedUserID } from './localappuser'
 
 const notification = notif.useNotifStore()
 
@@ -64,3 +65,4 @@ export const updateNotifications = (targets: notif.Notif[], finish: (error: bool
 }
 
 export const notifications = (userID?: string) => notification.notifs(AppID.value, userID)
+export const unreadNotifications = () => notification.notifs(AppID.value, loginedUserID(), true)

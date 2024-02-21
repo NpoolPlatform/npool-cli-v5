@@ -35,12 +35,13 @@ export const useNotifStore = defineStore('notifs', {
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 0) || []
       }
     },
-    notifs () : (appID: string | undefined, userID: string | undefined) => Array<Notif> {
-      return (appID: string | undefined, userID: string | undefined) => {
+    notifs () : (appID: string | undefined, userID: string | undefined, unread?: boolean) => Array<Notif> {
+      return (appID: string | undefined, userID: string | undefined, unread?: boolean) => {
         appID = formalizeAppID(appID)
         return this.Notifs.get(appID)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
+          if (unread) ok &&= el.Notified === unread
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 0) || []
       }

@@ -12,3 +12,5 @@ export const kycApproved = () => KYCState.Approved === user.User?.State
 export const mobileBound = () => user.User?.PhoneNO?.length > 0
 export const emailBound = () => user.User?.EmailAddress?.length > 0
 export const googleAuthenticated = () => user.User?.GoogleAuthVerified
+export const userIsSafe = () => kycApproved() && mobileBound() && emailBound() && googleAuthenticated()
+export const userAvatar = () => user.User?.Avatar.length ? 'img:' + user.User?.Avatar : 'account_circle'
