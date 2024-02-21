@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { appcountry, constant, notify } from '..'
 import { AppID } from './localapp'
 
@@ -43,7 +42,7 @@ export const getAppCountries = (offset: number, limit: number, done?: (error: bo
   getPageCountries(offset, limit, 0, done)
 }
 
-export const appCountries = computed(() => appCountry.countries(AppID.value))
+export const appCountries = () => appCountry.countries(AppID.value)
 
 export const createAppCountry = (target: appcountry.Country, finish: (error: boolean) => void) => {
   appCountry.createAppCountry({
