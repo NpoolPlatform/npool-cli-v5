@@ -70,4 +70,8 @@ export const _allocatedCoupons = (userID?: string, couponType?: coupon.CouponTyp
 export const _allocatedCoupon = (allocatedCouponID: string) => _allocatedcoupon.couponByEntID(undefined, allocatedCouponID)
 export const allocatedCouponStartAt = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.StartAt
 export const allocatedCouponEndAt = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.EndAt
-export const allocatedCouponnDate = (allocatedCouponID: string) => utils.formatTime(allocatedCouponStartAt(allocatedCouponID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(allocatedCouponEndAt(allocatedCouponID) as number, 'YYYY/MM/DD HH:mm')
+export const allocatedCouponDate = (allocatedCouponID: string) => utils.formatTime(allocatedCouponStartAt(allocatedCouponID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(allocatedCouponEndAt(allocatedCouponID) as number, 'YYYY/MM/DD HH:mm')
+export const allocatedCouponNumber = (couponType?: coupon.CouponType) => _allocatedCoupons(undefined, couponType).length
+export const usedAllocatedCouponNumber = () => _allocatedCoupons().filter((el) => el.Used).length
+export const validAllocatedCouponNumber = () => _allocatedCoupons().filter((el) => el.Valid).length
+export const expiredAllocatedCouponNumber = () => _allocatedCoupons().filter((el) => el.Expired).length

@@ -1,8 +1,9 @@
 import { NIL as NIL_UUID } from 'uuid'
-import { order, notify, constant, utils } from '../'
+import { order, notify, constant, utils, appcoin } from '../'
 import { AppID } from './localapp'
 
 const _order = order.useOrderStore()
+const _appcoin = appcoin.useAppCoinStore()
 
 const getPageOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   _order.getOrders({
@@ -280,4 +281,16 @@ export const orderExpiredTime = (orderID: string) => {
     return false
   }
   return utils.formatTime(_order.EndAt, 'HH:mm:ss')
+}
+
+export const orderAppCoins = () => {
+  const coins = new Map<string, appcoin.AppCoin>()
+  orders().forEach((el) => {
+    const coin = _appcoin.coin(undefined, el.CoinTypeID)
+    if (!coin) {
+      return
+    }
+    coins.set(el.CoinTypeID, coin)
+  })
+  return Array.from(coins.values())
 }
