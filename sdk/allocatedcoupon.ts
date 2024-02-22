@@ -1,3 +1,4 @@
+import { NIL as NIL_UUID } from 'uuid'
 import { allocatedcoupon, constant, coupon, notify, utils } from '..'
 import { AppID } from './localapp'
 
@@ -73,5 +74,42 @@ export const allocatedCouponEndAt = (allocatedCouponID: string) => _allocatedCou
 export const allocatedCouponDate = (allocatedCouponID: string) => utils.formatTime(allocatedCouponStartAt(allocatedCouponID) as number, 'YYYY/MM/DD HH:mm') + ' ~ ' + utils.formatTime(allocatedCouponEndAt(allocatedCouponID) as number, 'YYYY/MM/DD HH:mm')
 export const allocatedCouponNumber = (couponType?: coupon.CouponType) => _allocatedCoupons(undefined, couponType).length
 export const usedAllocatedCouponNumber = () => _allocatedCoupons().filter((el) => el.Used).length
-export const validAllocatedCouponNumber = () => _allocatedCoupons().filter((el) => el.Valid).length
 export const expiredAllocatedCouponNumber = () => _allocatedCoupons().filter((el) => el.Expired).length
+export const allocatedCouponCashable = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.Cashable
+export const allocatedCouponThreshold = (allocatedCouponID: string) => Number(_allocatedCoupon(allocatedCouponID)?.Threshold)
+export const allocatedCouponUsedAtDateTime = (allocatedCouponID: string) => utils.formatTime(_allocatedCoupon(allocatedCouponID)?.UsedAt || 0, 'YYYY/MM/DD HH:mm:ss')
+export const allocatedCouponUsed = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.Used
+export const allocatedCouponConstraint = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.CouponConstraint
+export const allocatedCouponScope = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.CouponScope
+export const allocatedCouponUsedByOrderID = (allocatedCouponID: string) => _allocatedCoupon(allocatedCouponID)?.UsedByOrderID === NIL_UUID ? undefined : _allocatedCoupon(allocatedCouponID)?.UsedByOrderID
+export const allocatedCouponValid = (allocatedCouponID: string) => !_allocatedCoupon(allocatedCouponID)?.Used && !_allocatedCoupon(allocatedCouponID)?.Expired
+
+export const allocatedCouponConstraintStr = (allocatedCouponID: string) => {
+  const allocatedCoupon = _allocatedCoupon(allocatedCouponID)
+  if (!allocatedCoupon) {
+    return 'MSG_INVALID'
+  }
+  switch (allocatedCoupon.CouponConstraint) {
+    case coupon.CouponConstraint.Normal:
+      return 'MSG_NO_CONSTRAINT'
+    case coupon.CouponConstraint.PaymentThreshold:
+      return 'MSG_PAYMENT_THRESHOLD'
+  }
+  return 'MSG_NO_CONSTRAINT'
+}
+
+export const allocatedCouponScopeStr = (allocatedCouponID: string) => {
+  const allocatedCoupon = _allocatedCoupon(allocatedCouponID)
+  if (!allocatedCoupon) {
+    return 'MSG_INVALID'
+  }
+  switch (allocatedCoupon.CouponScope) {
+    case coupon.CouponScope.AllGood:
+      return 'MSG_ALL_GOOD'
+    case coupon.CouponScope.Blacklist:
+      return 'MSG_NOT_AVAILABLE_SOME_GOOD'
+    case coupon.CouponScope.Whitelist:
+      return 'MSG_AVAILABLE_SOME_GOOD'
+  }
+  return 'MSG_ALL_GOOD'
+}

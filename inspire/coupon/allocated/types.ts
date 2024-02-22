@@ -14,18 +14,15 @@ export interface Coupon {
   Circulation: string
   StartAt: number
   EndAt: number
-  DurationDays: number
   CouponID: string
   CouponName: string
   Message: string
   Expired: boolean
-  Valid: boolean
   Used: boolean
   UsedAt: number
   UsedByOrderID: string
   Threshold: string
   CouponConstraint: CouponConstraint
-  Random: boolean
   CouponScope: CouponScope
   Cashable: boolean
   CreatedAt: number
