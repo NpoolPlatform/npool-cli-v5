@@ -47,6 +47,11 @@ export interface UserTransferExtra {
   TargetAccountName?: string
 }
 
+export interface WithdrawExtra {
+  AccountID?: string
+  Address?: string
+}
+
 export interface GetStatementsRequest extends BaseRequest {
   StartAt?: number
   EndAt?: number

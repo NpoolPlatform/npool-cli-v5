@@ -52,7 +52,8 @@ export const ledgerStatementAddress = (statementID: string) => {
   }
   switch (statement.IOSubType) {
     case ledgerstatement.IOSubType.Withdrawal:
-      return JSON.parse(statement.IOExtra) as unknown
+      return (JSON.parse(statement.IOExtra) as ledgerstatement.WithdrawExtra).Address ||
+             (JSON.parse(statement.IOExtra) as ledgerstatement.WithdrawExtra).AccountID
     case ledgerstatement.IOSubType.Transfer:
       return (JSON.parse(statement.IOExtra) as ledgerstatement.UserTransferExtra).FromAccountName ||
              (JSON.parse(statement.IOExtra) as ledgerstatement.UserTransferExtra).TargetAccountName ||
