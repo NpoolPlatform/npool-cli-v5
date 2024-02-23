@@ -1,6 +1,7 @@
-import { constant, notify, ledger } from '..'
+import { constant, notify, ledger, coincurrency } from '..'
 
 const _ledger = ledger.useLedgerStore()
+const _coincurrency = coincurrency.useCurrencyStore()
 
 const getPageLedgers = (offset: number, limit: number, pageIndex: number, done?: (error: boolean, fetchedRows: number, totalRows: number) => void) => {
   const reqOffset = offset + pageIndex * constant.DefaultPageSize
@@ -43,3 +44,24 @@ export const getLedgers = (offset: number, limit: number, done?: (error: boolean
 
 export const ledgers = () => _ledger.ledgers(undefined, undefined, undefined)
 export const coinBalance = (coinTypeID: string) => _ledger.coinBalance(undefined, undefined, coinTypeID)
+
+export const coinBalances2USDT = () => {
+  let usdtAmount = 0
+  ledgers().forEach((el) => {
+    const currency = _coincurrency.currency(el.CoinTypeID)
+    if (!currency) {
+      return
+    }
+    usdtAmount += currency * Number(el.Spendable)
+  })
+  return usdtAmount
+}
+
+export const coinBalances2BTC = () => {
+  const usdtAmount = coinBalances2USDT()
+  const btcCurrency = _coincurrency.currencyByUnit('BTC')
+  if (!btcCurrency) {
+    return usdtAmount
+  }
+  return usdtAmount / btcCurrency
+}

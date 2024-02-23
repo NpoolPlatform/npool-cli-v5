@@ -43,3 +43,42 @@ export const getLedgerStatements = (offset: number, limit: number, done?: (error
 }
 
 export const ledgerStatements = (userID?: string, coinTypeID?: string, ioType?: ledgerstatement.IOType, ioSubType?: ledgerstatement.IOSubType) => _ledgerstatement.statements(AppID.value, userID, coinTypeID, ioType, ioSubType)
+export const ledgerStatement = (statementID: string) => _ledgerstatement.statement(undefined, statementID)
+
+export const ledgerStatementAddress = (statementID: string) => {
+  const statement = ledgerStatement(statementID)
+  if (!statement) {
+    return '-'
+  }
+  switch (statement.IOSubType) {
+    case ledgerstatement.IOSubType.Withdrawal:
+      return JSON.parse(statement.IOExtra) as unknown
+    case ledgerstatement.IOSubType.Transfer:
+      return (JSON.parse(statement.IOExtra) as ledgerstatement.UserTransferExtra).FromAccountName ||
+             (JSON.parse(statement.IOExtra) as ledgerstatement.UserTransferExtra).TargetAccountName ||
+             (JSON.parse(statement.IOExtra) as ledgerstatement.UserTransferExtra).FromUserID ||
+             (JSON.parse(statement.IOExtra) as ledgerstatement.UserTransferExtra).TargetUserID
+  }
+  return '-'
+}
+
+export const ledgerStatementIncrementSymbol = (statementID: string) => {
+  const statement = ledgerStatement(statementID)
+  if (!statement) {
+    return ''
+  }
+  return statement.IOType === ledgerstatement.IOType.Incoming ? '+' : '-'
+}
+
+export const ledgerStatementDirectionStr = (statementID: string) => {
+  const statement = ledgerStatement(statementID)
+  if (!statement) {
+    return ''
+  }
+  switch (statement.IOSubType) {
+    case ledgerstatement.IOSubType.Withdrawal:
+    case ledgerstatement.IOSubType.Transfer:
+      return statement.IOType === ledgerstatement.IOType.Incoming ? 'MSG_FROM' : 'MSG_TO'
+  }
+  return ''
+}

@@ -87,3 +87,5 @@ export const appCoin = (coinTypeID: string) => _appcoin.coin(undefined, coinType
 export const appCoinName = (coinTypeID: string, index: number) => _appcoin.displayName(undefined, coinTypeID, index)
 export const appCoinUnit = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)?.Unit
 export const appCoinLogo = (coinTypeID: string) => _appcoin.coin(undefined, coinTypeID)?.Logo
+export const appCoinForPay = (coinTypeID: string) => appCoin(coinTypeID)?.ForPay && appCoin(coinTypeID)?.CoinForPay && !appCoin(coinTypeID)?.Disabled && !appCoin(coinTypeID)?.CoinDisabled && !appCoin(coinTypeID)?.Presale
+export const appCoinWithdrawable = (coinTypeID: string) => !appCoin(coinTypeID)?.Disabled && appCoin(coinTypeID)?.CoinDisabled

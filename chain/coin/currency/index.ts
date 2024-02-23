@@ -19,6 +19,11 @@ export const useCurrencyStore = defineStore('coin-currencies', {
         return Number(this.Currencies.find((el) => el.CoinTypeID === coinTypeID)?.MarketValueLow) || 0
       }
     },
+    currencyByUnit () {
+      return (coinUnit: string) => {
+        return Number(this.Currencies.find((el) => el.CoinUnit === coinUnit)?.MarketValueLow) || 0
+      }
+    },
     currencies () {
       return () => this.Currencies
     },

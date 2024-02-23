@@ -40,6 +40,13 @@ export interface MiningReward {
   CreatedAt: number
 }
 
+export interface UserTransferExtra {
+  FromUserID?: string
+  FromAccountName?: string
+  TargetUserID?: string
+  TargetAccountName?: string
+}
+
 export interface GetStatementsRequest extends BaseRequest {
   StartAt?: number
   EndAt?: number

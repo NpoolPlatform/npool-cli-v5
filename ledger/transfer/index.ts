@@ -12,23 +12,20 @@ export const useTransferStore = defineStore('ledger-transfers', {
   state: () => ({
     Transfers: new Map<string, Array<Transfer>>()
   }),
-  getters: {
-    addTransfers (): (appID: string | undefined, transfers: Array<Transfer>) => void {
-      return (appID: string | undefined, transfers: Array<Transfer>) => {
-        appID = formalizeAppID(appID)
-        let _transfers = this.Transfers.get(appID) as Array<Transfer>
-        if (!_transfers) {
-          _transfers = []
-        }
-        transfers.forEach((transfer) => {
-          const index = _transfers.findIndex((el) => el.ID === transfer.ID)
-          _transfers.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, transfer)
-        })
-        this.Transfers.set(appID, _transfers)
-      }
-    }
-  },
+  getters: {},
   actions: {
+    addTransfers (appID: string | undefined, transfers: Array<Transfer>) {
+      appID = formalizeAppID(appID)
+      let _transfers = this.Transfers.get(appID) as Array<Transfer>
+      if (!_transfers) {
+        _transfers = []
+      }
+      transfers.forEach((transfer) => {
+        const index = _transfers.findIndex((el) => el.ID === transfer.ID)
+        _transfers.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, transfer)
+      })
+      this.Transfers.set(appID, _transfers)
+    },
     createTransfer (req: CreateTransferRequest, done: (error: boolean, tran?: Transfer) => void) {
       doActionWithError<CreateTransferRequest, CreateTransferResponse>(
         API.CREATE_TRANSFER,

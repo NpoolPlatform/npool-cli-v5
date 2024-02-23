@@ -29,41 +29,43 @@ export const useTransferAccountStore = defineStore('transfer-account', {
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     },
-    addTransferAccounts (): (appID: string | undefined, accounts: Array<TransferAccount>) => void {
-      return (appID: string | undefined, accounts: Array<TransferAccount>) => {
+    transferAccount (): (appID: string | undefined, accountID: string | undefined) => TransferAccount | undefined {
+      return (appID: string | undefined, accountID: string | undefined) => {
         appID = formalizeAppID(appID)
-        let _accounts = this.TransferAccounts.get(appID)
-        if (!_accounts) {
-          _accounts = []
-        }
-        _accounts.push(...accounts)
-        this.TransferAccounts.set(appID, _accounts)
-      }
-    },
-    delTransferAccount (): (appID: string | undefined, accountID: string) => void {
-      return (appID: string | undefined, accountID: string) => {
-        appID = formalizeAppID(appID)
-        let _accounts = this.TransferAccounts.get(appID)
-        if (!_accounts) {
-          _accounts = []
-        }
-        const index = _accounts.findIndex((el) => el.EntID === accountID)
-        _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-        this.TransferAccounts.set(appID, _accounts)
+        return this.TransferAccounts.get(appID)?.find((el) => accountID === el.EntID)
       }
     }
   },
   actions: {
-    createTransfer (req: CreateTransferAccountRequest, done: (error: boolean, row?: TransferAccount) => void) {
+    addTransferAccounts (appID: string | undefined, accounts: Array<TransferAccount>) {
+      appID = formalizeAppID(appID)
+      let _accounts = this.TransferAccounts.get(appID)
+      if (!_accounts) {
+        _accounts = []
+      }
+      _accounts.push(...accounts)
+      this.TransferAccounts.set(appID, _accounts)
+    },
+    delTransferAccount (appID: string | undefined, accountID: string) {
+      appID = formalizeAppID(appID)
+      let _accounts = this.TransferAccounts.get(appID)
+      if (!_accounts) {
+        _accounts = []
+      }
+      const index = _accounts.findIndex((el) => el.EntID === accountID)
+      _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.TransferAccounts.set(appID, _accounts)
+    },
+    createTransfer (req: CreateTransferAccountRequest, done?: (error: boolean, row?: TransferAccount) => void) {
       doActionWithError<CreateTransferAccountRequest, CreateTransferAccountResponse>(
         API.CREATE_TRANSFER,
         req,
         req.Message,
         (resp: CreateTransferAccountResponse): void => {
           this.addTransferAccounts(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     deleteTransfer (req: DeleteTransferAccountRequest, done: (error: boolean, row?: TransferAccount) => void) {

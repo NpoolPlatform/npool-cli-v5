@@ -19,14 +19,21 @@ export const useWithdrawStore = defineStore('ledger-withdraws', {
     Withdraws: new Map<string, Array<Withdraw>>()
   }),
   getters: {
-    withdraws (): (appID?: string, userID?: string) => Array<Withdraw> {
-      return (appID?: string, userID?: string) => {
+    withdraws (): (appID?: string, userID?: string, coinTypeID?: string) => Array<Withdraw> {
+      return (appID?: string, userID?: string, coinTypeID?: string) => {
         appID = formalizeAppID(appID)
         return this.Withdraws.get(appID)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
           return ok
         })?.sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
+      }
+    },
+    withdraw (): (appID: string | undefined, withdrawID: string) => Withdraw | undefined {
+      return (appID: string | undefined, withdrawID: string) => {
+        appID = formalizeAppID(appID)
+        return this.Withdraws.get(appID)?.find((el) => el.EntID === withdrawID)
       }
     }
   },
