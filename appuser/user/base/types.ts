@@ -55,6 +55,7 @@ export interface User {
   ThirdPartyUserID: string
   ThirdPartyUsername: string
   ThirdPartyAvatar: string
+  ActionCredits: string
 }
 
 export interface LoginHistory {
