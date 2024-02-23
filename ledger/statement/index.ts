@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { doActionWithError } from '../../request'
-import { API } from './const'
+import { API, IOSubType, IOType } from './const'
 import {
   GetStatementsRequest,
   GetStatementsResponse,
@@ -21,13 +21,15 @@ export const useStatementStore = defineStore('ledger-statements', {
     MiningRewards: new Map<string, Array<MiningReward>>()
   }),
   getters: {
-    statements (): (appID?: string, userID?: string, coinTypeID?: string) => Array<Statement> {
-      return (appID?: string, userID?: string, coinTypeID?: string) => {
+    statements (): (appID?: string, userID?: string, coinTypeID?: string, ioType?: IOType, ioSubType?: IOSubType) => Array<Statement> {
+      return (appID?: string, userID?: string, coinTypeID?: string, ioType?: IOType, ioSubType?: IOSubType) => {
         appID = formalizeAppID(appID)
         return this.Statements.get(appID)?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
           if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
+          if (ioType) ok &&= el.IOType === ioType
+          if (ioSubType) ok &&= el.IOSubType === ioSubType
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }

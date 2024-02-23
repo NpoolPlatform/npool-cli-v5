@@ -18,6 +18,19 @@ export interface Registration {
   UpdatedAt: number
 }
 
+export interface GetUserRegistrationsRequest extends BaseRequest {
+  /** @format int32 */
+  Offset: number
+  /** @format int32 */
+  Limit: number
+}
+
+export interface GetUserRegistrationsResponse {
+  Infos: Registration[]
+  /** @format int64 */
+  Total: number
+}
+
 export interface GetRegistrationsRequest extends BaseRequest {
   /** @format int32 */
   Offset: number

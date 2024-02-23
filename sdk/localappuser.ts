@@ -14,3 +14,4 @@ export const emailBound = () => user.User?.EmailAddress?.length > 0
 export const googleAuthenticated = () => user.User?.GoogleAuthVerified
 export const userIsSafe = () => kycApproved() && mobileBound() && emailBound() && googleAuthenticated()
 export const userAvatar = () => user.User?.Avatar.length ? 'img:' + user.User?.Avatar : 'account_circle'
+export const userInvitationCode = () => user.User?.InvitationCode

@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { API } from './const'
 import {
+  GetUserRegistrationsRequest,
+  GetUserRegistrationsResponse,
   GetRegistrationsRequest,
   GetRegistrationsResponse,
   Registration,
@@ -57,6 +59,19 @@ export const useRegistrationStore = defineStore('registrations', {
         req,
         req.Message,
         (resp: GetRegistrationsResponse): void => {
+          this.addRegistrations(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true, [] as Array<Registration>)
+        }
+      )
+    },
+    getUserRegistrations (req: GetUserRegistrationsRequest, done: (error: boolean, rows: Array<Registration>) => void) {
+      doActionWithError<GetUserRegistrationsRequest, GetUserRegistrationsResponse>(
+        API.GET_USER_REGISTRATIONINVITATIONS,
+        req,
+        req.Message,
+        (resp: GetUserRegistrationsResponse): void => {
           this.addRegistrations(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
