@@ -3,6 +3,8 @@ import { useLocalUserStore } from '../appuser/user/local'
 
 const user = useLocalUserStore()
 export const loginedUser = () => user.User
+export const loginedAccount = () => user.User?.LoginAccount
+export const loginAccountType = () => user.User?.LoginAccountType
 export const loginedUserID = () => user.loginedUserID
 export const logined = () => user.logined
 export const kycConfigured = () => KYCStates.includes(user.User?.State)
