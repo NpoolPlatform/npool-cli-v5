@@ -21,10 +21,10 @@ export const shadowAccount = (account: string, accountType: SignMethodType) => {
   let suffix = ''
   let prefix = ''
   if (accountType === SignMethodType.Email) {
-    suffix = account.split('@')[1]
+    suffix = '@' + account.split('@')[1]
   }
   [...account?.split('@')[0]].forEach((c, i) => {
     prefix += i <= 3 ? c : '*'
   })
-  return prefix + '@' + suffix
+  return prefix + suffix
 }
