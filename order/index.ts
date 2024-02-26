@@ -94,7 +94,6 @@ export const useOrderStore = defineStore('orders', {
         }
         switch (order.OrderState) {
           case OrderState.PAID:
-          case OrderState.WAIT_START:
           case OrderState.IN_SERVICE:
           case OrderState.EXPIRED:
             return true

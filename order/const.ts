@@ -19,8 +19,7 @@ export enum OrderState {
   PAYMENT_TIMEOUT = 'OrderStatePaymentTimeout',
   CANCELED = 'OrderStateCanceled',
   IN_SERVICE = 'OrderStateInService',
-  EXPIRED = 'OrderStateExpired',
-  WAIT_START = 'OrderStateWaitStart',
+  EXPIRED = 'OrderStateExpired'
 }
 
 export enum PaymentState {

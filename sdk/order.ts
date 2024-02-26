@@ -140,6 +140,8 @@ export const orderParentOrderID = (orderID: string) => orderByID(orderID)?.Paren
 export const orderHasChilds = (orderID: string) => childOrders(orderID).length > 0
 export const purchased = (appGoodID: string) => orders(appGoodID).length > 0
 export const purchasedAtDateTime = (appGoodID: string) => utils.formatTime(orders(appGoodID).sort((a, b) => a.PaidAt - b.PaidAt)[0]?.PaidAt, 'YYYY-MM-DD HH:mm:ss')
+export const orderNumber = (state: order.OrderState) => orders().filter((el) => el.OrderState === state).length
+export const waitPaymentOrderNumber = () => orderNumber(order.OrderState.CREATED) + orderNumber(order.OrderState.WAIT_PAYMENT)
 
 export const orderStateStr = (orderID: string) => {
   const _order = orderByID(orderID)
@@ -151,7 +153,6 @@ export const orderStateStr = (orderID: string) => {
     case order.OrderState.WAIT_PAYMENT:
       return 'MSG_WAIT_PAYMENT'
     case order.OrderState.PAID:
-    case order.OrderState.WAIT_START:
       return 'MSG_WAIT_START'
     case order.OrderState.IN_SERVICE:
       return 'MSG_IN_SERVICE'
@@ -217,6 +218,14 @@ export const orderPayable = (orderID: string) => {
     }
   }
   return false
+}
+
+export const orderCreateDateTime = (orderID: string) => {
+  const _order = orderByID(orderID)
+  if (!_order) {
+    return false
+  }
+  return utils.formatTime(_order.CreatedAt)
 }
 
 export const orderCreateDate = (orderID: string) => {
