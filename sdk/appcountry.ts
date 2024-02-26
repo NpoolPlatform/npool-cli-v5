@@ -50,14 +50,14 @@ export const createAppCountry = (target: appcountry.Country, finish: (error: boo
     ...target,
     Message: {
       Error: {
-        Title: 'MSG_CREATE_COMMENT',
-        Message: 'MSG_CREATE_COMMENT_FAIL',
+        Title: 'MSG_CREATE_APP_COUNTRY',
+        Message: 'MSG_CREATE_APP_COUNTRY_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       },
       Info: {
-        Title: 'MSG_CREATE_COMMENT',
-        Message: 'MSG_CREATE_COMMENT_SUCCESS',
+        Title: 'MSG_CREATE_APP_COUNTRY',
+        Message: 'MSG_CREATE_APP_COUNTRY_SUCCESS',
         Popup: true,
         Type: notify.NotifyType.Success
       }

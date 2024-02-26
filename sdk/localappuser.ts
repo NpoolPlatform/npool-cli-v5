@@ -29,3 +29,4 @@ export const loginVerifyMethod = () => user.User?.SigninVerifyType
 export const userAddressShort = () => user.User?.AddressFields.filter((el) => el.length > 0).slice(0, 2).join(',')
 export const userAddress = () => user.User?.AddressFields.join(',')
 export const userAddressSet = () => user.User?.AddressFields.findIndex((el) => el.length > 0) >= 0
+export const userSelectedLangID = () => user.User?.SelectedLangID.length > 0 ? user.User?.SelectedLangID : undefined
