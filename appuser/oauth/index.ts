@@ -14,19 +14,19 @@ export const useOAuthStore = defineStore('oauth', {
   getters: {
   },
   actions: {
-    getOAuthLoginURL (req: GetOAuthLoginURLRequest, done: (error: boolean, url?: string) => void) {
+    getOAuthLoginURL (req: GetOAuthLoginURLRequest, done?: (error: boolean, url?: string) => void) {
       doActionWithError<GetOAuthLoginURLRequest, GetOAuthLoginURLResponse>(
         APIEnum.GET_OAUTH_LOGIN_URL,
         req,
         req.Message,
         (resp: GetOAuthLoginURLResponse): void => {
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    oauthLogin (req: OAuthLoginRequest, done: (error: boolean, user?: User) => void) {
+    oauthLogin (req: OAuthLoginRequest, done?: (error: boolean, user?: User) => void) {
       doActionWithError<OAuthLoginRequest, OAuthLoginResponse>(
         APIEnum.OAUTH_LOGIN,
         req,
@@ -34,9 +34,9 @@ export const useOAuthStore = defineStore('oauth', {
         (resp: OAuthLoginResponse): void => {
           const user = useLocalUserStore()
           user.setUser(resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
