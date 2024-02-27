@@ -25,7 +25,7 @@ export const useSubscribeStore = defineStore('app-subscribe', {
     }
   },
   actions: {
-    createSubscribe (req: CreateSubscribeRequest, done: (error: boolean, row?: Subscribe) => void) {
+    createSubscribe (req: CreateSubscribeRequest, done?: (error: boolean, row?: Subscribe) => void) {
       doActionWithError<CreateSubscribeRequest, CreateSubscribeResponse>(
         APIEnum.CREATE_SUBSCRIBE,
         req,
@@ -37,9 +37,9 @@ export const useSubscribeStore = defineStore('app-subscribe', {
           }
           subscribes.push(resp.Info)
           this.Subscribes.set(resp.Info.AppID, subscribes)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },

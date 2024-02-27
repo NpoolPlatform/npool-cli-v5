@@ -12,7 +12,6 @@ export interface Subscribe {
 }
 
 export interface CreateSubscribeRequest extends BaseRequest {
-    AppID?: string
     SubscribeAppID?: string
     EmailAddress: string
 }
@@ -22,7 +21,6 @@ export interface CreateSubscribeResponse {
 }
 
 export interface GetSubscribesRequest extends BaseRequest {
-    AppID?: string
     Offset: number
     Limit: number
 }
