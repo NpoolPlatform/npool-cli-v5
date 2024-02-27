@@ -18,7 +18,7 @@ import {
 } from './types'
 import { date } from 'quasar'
 import { formalizeAppID } from '../../../appuser/app/local'
-import { GoodDurationType, GoodLabel } from '../../base'
+import { GoodDurationType, GoodLabel, GoodType } from '../../base'
 
 export const useAppGoodStore = defineStore('app-goods', {
   state: () => ({
@@ -31,16 +31,18 @@ export const useAppGoodStore = defineStore('app-goods', {
         return this.AppGoods.get(appID)?.find((el: Good) => el.EntID === id)
       }
     },
-    goods (): (appID?: string, label?: GoodLabel, ids?: string[], goodIDs?: string[]) => Array<Good> {
-      return (appID?: string, label?: GoodLabel, ids?: string[], goodIDs?: string[]) => {
+    goods (): (appID?: string, label?: GoodLabel, ids?: string[], goodIDs?: string[], goodType?: GoodType, coinPresale?: boolean) => Array<Good> {
+      return (appID?: string, label?: GoodLabel, ids?: string[], goodIDs?: string[], goodType?: GoodType, coinPresale?: boolean) => {
         appID = formalizeAppID(appID)
         return this.AppGoods.get(appID)?.filter((el) => {
           if (ids && !ids.length) return false
           if (goodIDs && !goodIDs.length) return false
           let ok = true
+          if (goodType) ok &&= el.GoodType === goodType
           if (label) ok &&= el.Labels.includes(label)
           if (ids?.length) ok &&= ids.includes(el.EntID)
           if (goodIDs?.length) ok &&= goodIDs.includes(el.GoodID)
+          if (coinPresale !== undefined) ok &&= el.CoinPreSale === coinPresale
           return ok
         }).sort((a, b) => a.DisplayIndex - b.DisplayIndex) || []
       }
