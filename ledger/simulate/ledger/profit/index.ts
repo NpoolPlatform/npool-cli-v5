@@ -10,7 +10,7 @@ import { formalizeAppID } from '../../../../appuser/app/local'
 
 export const useProfitStore = defineStore('simulate-ledger-profits', {
   state: () => ({
-    Profits: new Map<string, Array<Profit>>(),
+    Profits: new Map<string, Array<Profit>>()
   }),
   getters: {
     profits (): (appID: string | undefined, userID: string | undefined, coinTypeID?: string) => Array<Profit> {
