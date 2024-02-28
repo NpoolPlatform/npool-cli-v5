@@ -1,8 +1,7 @@
 export enum API {
-  GET_STATEMENTS = '/ledger/v1/get/details',
-  GET_APP_STATEMENTS = '/ledger/v1/get/app/details',
-  GET_MININGREWARDS = '/ledger/v1/get/miningrewards',
-  CREATE_APP_USER_DEPOSIT = '/ledger/v1/create/app/user/deposit',
+  GET_SIMULATE_STATEMENTS = '/ledger/v1/get/simulate/details',
+  GET_APP_SIMULATE_STATEMENTS = '/ledger/v1/get/app/simulate/details',
+  GET_SIMULATE_MININGREWARDS = '/ledger/v1/get/simulate/miningrewards',
 }
 
 export enum IOType {
@@ -20,6 +19,5 @@ export enum IOSubType {
   Transfer = 'Transfer',
   CommissionRevoke = 'CommissionRevoke',
   OrderRevoke = 'OrderRevoke',
-  RandomCouponCash = 'RandomCouponCash',
-  RandomCashableSimulateProfit = 'RandomCashableSimulateProfit'
+  RandomCouponCash = 'RandomCouponCash'
 }

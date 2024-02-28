@@ -62,6 +62,7 @@ export interface Order {
   LastBenefitAt: number
   UserSetCanceled: boolean
   AdminSetCanceled: boolean
+  Simulate: boolean
   CreatedAt: number
   PaidAt: number
 }

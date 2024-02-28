@@ -1,4 +1,4 @@
-import { BaseRequest } from '../../request'
+import { BaseRequest } from '../../../../request'
 import { IOSubType, IOType } from './const'
 
 export interface Statement {
@@ -18,6 +18,7 @@ export interface Statement {
   UserID: string
   PhoneNO: string
   EmailAddress: string
+  Cashable: boolean
 }
 
 export interface MiningReward {
@@ -40,47 +41,35 @@ export interface MiningReward {
   CreatedAt: number
 }
 
-export interface GetStatementsRequest extends BaseRequest {
+export interface GetSimulateStatementsRequest extends BaseRequest {
   StartAt?: number
   EndAt?: number
   Offset: number
   Limit: number
 }
-export interface GetStatementsResponse {
+export interface GetSimulateStatementsResponse {
   Infos: Statement[]
   Total: number
 }
 
-export interface GetAppStatementsRequest extends BaseRequest {
+export interface GetAppSimulateStatementsRequest extends BaseRequest {
   TargetAppID: string
   Offset: number
   Limit: number
 }
 
-export interface GetAppStatementsResponse {
+export interface GetAppSimulateStatementsResponse {
   Infos: Array<Statement>
   Total: number
 }
 
-export interface GetMiningRewardsRequest extends BaseRequest {
+export interface GetSimulateMiningRewardsRequest extends BaseRequest {
   StartAt?: number
   EndAt?: number
-  CashableSimulateReward?: boolean
   Offset: number
   Limit: number
 }
-export interface GetMiningRewardsResponse {
+export interface GetSimulateMiningRewardsResponse {
   Infos: MiningReward[]
   Total: number
-}
-
-export interface CreateAppUserDepositRequest extends BaseRequest {
-  CoinTypeID: string
-  Amount: string
-  TargetAppID: string
-  TargetUserID: string
-}
-
-export interface CreateAppUserDepositResponse {
-  Info: Statement
 }
