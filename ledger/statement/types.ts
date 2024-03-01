@@ -65,7 +65,7 @@ export interface GetAppStatementsResponse {
 export interface GetMiningRewardsRequest extends BaseRequest {
   StartAt?: number
   EndAt?: number
-  CashableSimulateReward?: boolean
+  SimulateOnly?: boolean
   Offset: number
   Limit: number
 }

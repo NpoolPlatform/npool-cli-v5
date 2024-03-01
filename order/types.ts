@@ -196,3 +196,22 @@ export interface GetNAppOrdersResponse {
   Infos: Array<Order>
   Total: number
 }
+
+export interface CreateSimulateOrderRequest extends BaseRequest {
+  AppGoodID: string
+  ParentOrderID?: string
+  InvestmentType: InvestmentType
+}
+
+export interface CreateSimulateOrderResponse {
+  Info: Order
+}
+
+export interface CreateSimulateOrdersRequest extends BaseRequest {
+  InvestmentType: InvestmentType
+  Orders: Array<OrderReq>
+}
+
+export interface CreateSimulateOrdersResponse {
+  Infos: Array<Order>
+}

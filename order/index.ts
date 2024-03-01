@@ -22,7 +22,11 @@ import {
   CreateAppUserOrderResponse,
   CreateAppUserOrderRequest,
   UpdateAppUserOrderRequest,
-  UpdateAppUserOrderResponse
+  UpdateAppUserOrderResponse,
+  CreateSimulateOrderRequest,
+  CreateSimulateOrderResponse,
+  CreateSimulateOrdersRequest,
+  CreateSimulateOrdersResponse
 } from './types'
 import { API, OrderState, OrderTimeoutSeconds } from './const'
 import { formalizeAppID } from '../appuser/app/local'
@@ -268,6 +272,35 @@ export const useOrderStore = defineStore('orders', {
         (resp: UpdateAppUserOrderResponse): void => {
           this.addOrders(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
+        },
+        () => {
+          done(true)
+        }
+      )
+    },
+
+    createSimulateOrder (req: CreateSimulateOrderRequest, done: (error: boolean, order?: Order) => void) {
+      doActionWithError<CreateSimulateOrderRequest, CreateSimulateOrderResponse>(
+        API.CREATE_SIMULATE_ORDER,
+        req,
+        req.Message,
+        (resp: CreateSimulateOrderResponse): void => {
+          this.addOrders(undefined, [resp.Info])
+          done(false, resp.Info)
+        },
+        () => {
+          done(true)
+        }
+      )
+    },
+    createSimulateOrders (req: CreateSimulateOrdersRequest, done: (error: boolean, orders?: Order[]) => void) {
+      doActionWithError<CreateSimulateOrdersRequest, CreateSimulateOrdersResponse>(
+        API.CREATE_SIMULATE_ORDERS,
+        req,
+        req.Message,
+        (resp: CreateSimulateOrdersResponse): void => {
+          this.addOrders(undefined, resp.Infos)
+          done(false, resp.Infos)
         },
         () => {
           done(true)
