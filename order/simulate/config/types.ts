@@ -7,7 +7,6 @@ export interface SimulateConfig {
   AppID: string
   SendCouponMode: SendCouponMode
   SendCouponProbability: string
-  EnabledCashableProfit: boolean
   CashableProfitProbability: string
   Enabled: boolean
   CreatedAt: number
@@ -18,7 +17,6 @@ export interface CreateSimulateConfigRequest extends BaseRequest {
   AppID: string
   SendCouponMode: SendCouponMode
   SendCouponProbability: string
-  EnabledCashableProfit: boolean
   CashableProfitProbability: string
   Enabled?: boolean
 }
@@ -33,7 +31,6 @@ export interface UpdateSimulateConfigRequest extends BaseRequest {
   AppID: string
   SendCouponMode?: SendCouponMode
   SendCouponProbability?: string
-  EnabledCashableProfit?: boolean
   CashableProfitProbability?: string
   Enabled?: boolean
 }
@@ -65,7 +62,6 @@ export interface CreateAppSimulateConfigRequest extends BaseRequest {
   TargetAppID: string
   SendCouponMode: SendCouponMode
   SendCouponProbability: string
-  EnabledCashableProfit: boolean
   CashableProfitProbability: string
   Enabled?: boolean
 }
@@ -80,7 +76,6 @@ export interface UpdateAppSimulateConfigRequest extends BaseRequest {
   EntID: string
   SendCouponMode?: SendCouponMode
   SendCouponProbability?: string
-  EnabledCashableProfit?: boolean
   CashableProfitProbability?: string
   Enabled?: boolean
 }
