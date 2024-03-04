@@ -62,6 +62,7 @@ export interface Order {
   LastBenefitAt: number
   UserSetCanceled: boolean
   AdminSetCanceled: boolean
+  Simulate: boolean
   CreatedAt: number
   PaidAt: number
 }
@@ -194,4 +195,23 @@ export interface GetNAppOrdersRequest extends BaseRequest {
 export interface GetNAppOrdersResponse {
   Infos: Array<Order>
   Total: number
+}
+
+export interface CreateSimulateOrderRequest extends BaseRequest {
+  AppGoodID: string
+  ParentOrderID?: string
+  InvestmentType: InvestmentType
+}
+
+export interface CreateSimulateOrderResponse {
+  Info: Order
+}
+
+export interface CreateSimulateOrdersRequest extends BaseRequest {
+  InvestmentType: InvestmentType
+  Orders: Array<OrderReq>
+}
+
+export interface CreateSimulateOrdersResponse {
+  Infos: Array<Order>
 }
