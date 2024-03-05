@@ -59,7 +59,8 @@ export const useCoinUsedForStore = defineStore('coinusedfor', {
         req,
         req.Message,
         (resp: DeleteCoinUsedForResponse): void => {
-          this.addCoinUsedFors([resp.Info])
+          const index = this.CoinUsedFors.findIndex((el) => el.ID === resp.Info.ID)
+          this.CoinUsedFors.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
           done(false, resp.Info)
         }, () => {
           done(true)
