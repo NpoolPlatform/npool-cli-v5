@@ -14,7 +14,7 @@ export interface CoinUsedFor {
     CoinUnit: string
     CoinENV: string
     UsedForStr: string
-    UsedFor: CoinUsedFor
+    UsedFor: CoinUsedForOption
     Priority: number
     CreatedAt: number
     UpdatedAt: number
@@ -40,8 +40,8 @@ export interface DeleteCoinUsedForResponse {
 }
 
 export interface GetCoinUsedForsRequest extends BaseRequest {
-    CoinTypeIDs: string[]
-    UsedFors: CoinUsedForOption[]
+    CoinTypeIDs?: string[]
+    UsedFors?: CoinUsedForOption[]
     Offset: number
     Limit: number
 }
