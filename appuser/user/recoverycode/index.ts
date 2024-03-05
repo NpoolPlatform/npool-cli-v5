@@ -39,6 +39,9 @@ export const useRecoveryCodeStore = defineStore('recoverycode', {
         req,
         req.Message,
         (resp: GenerateRecoveryCodesResponse): void => {
+          if (resp.Infos?.length === 0) {
+            return
+          }
           this.RecoveryCodes = resp.Infos
           done(false, resp.Infos)
         }, () => {
