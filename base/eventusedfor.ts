@@ -29,7 +29,8 @@ export enum EventType {
   ResetPassword = 'ResetPassword',
   OrderChildsRenewNotify = 'OrderChildsRenewNotify',
   OrderChildsRenew = 'OrderChildsRenew',
-  SimulateOrderProfit = 'SimulateOrderProfit'
+  SimulateOrderProfit = 'SimulateOrderProfit',
+  WithdrawReviewNotify = 'WithdrawReviewNotify'
 }
 
 export const EventTypes = Object.values(EventType)
