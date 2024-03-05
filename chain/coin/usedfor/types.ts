@@ -5,6 +5,8 @@ export enum CoinUsedForOption {
     CoinUsedForGoodFee = 'CoinUsedForGoodFee',
 }
 
+export const CoinUsedFors = Object.values(CoinUsedForOption)
+
 export interface CoinUsedFor {
     ID: number
     EntID: string
