@@ -44,9 +44,8 @@ export const useCouponStore = defineStore('coupon-pool', {
         if (!coupon) {
           return false
         }
-        const endAt = coupon.StartAt + coupon.DurationDays * 60 * 60 * 24
         const now = new Date().getTime() / 1000
-        return Number(coupon.Allocated) < Number(coupon.Circulation) && endAt > now
+        return Number(coupon.Allocated) < Number(coupon.Circulation) && coupon.EndAt > now
       }
     },
     addCoupons (): (appID: string | undefined, coupons: Array<Coupon>) => void {
