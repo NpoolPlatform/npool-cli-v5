@@ -1,4 +1,5 @@
 import { CreateInvitationCodeWhen, RecaptchaType, ResetUserMethod, SignMethodType } from '../../base'
+import { SettleAmountType, SettleInterval, SettleMode, CommissionType } from '../../../inspire/app/config/const'
 
 export interface App {
   ID: number
@@ -23,4 +24,11 @@ export interface App {
   ResetUserMethod: ResetUserMethod
   CommitButtonTargets: string[]
   CouponWithdrawEnable: boolean
+  // inspire appconfig
+  SettleMode: SettleMode
+  SettleAmountType: SettleAmountType
+  SettleInterval: SettleInterval
+  CommissionType: CommissionType
+  SettleBenefit: boolean
+  StartAt: number
 }
