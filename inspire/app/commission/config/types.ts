@@ -14,6 +14,7 @@ export interface AppCommissionConfig {
   StartAt: number
   /** @format int64 */
   EndAt: number
+  Disabled: boolean
   /** @format int64 */
   CreatedAt: number
   /** @format int64 */
@@ -23,9 +24,10 @@ export interface AppCommissionConfig {
 export interface CreateAppCommissionConfigRequest extends BaseRequest {
   ThresholdAmount: string
   AmountOrPercent: string
-  StartAt: number
+  StartAt?: number
   Invites: number
   SettleType: SettleType
+  Disabled?: boolean
 }
 
 export interface CreateAppCommissionConfigResponse {
@@ -36,9 +38,10 @@ export interface CreateNAppCommissionConfigRequest extends BaseRequest {
   TargetAppID: string
   ThresholdAmount: string
   AmountOrPercent: string
-  StartAt: number
+  StartAt?: number
   Invites: number
   SettleType: SettleType
+  Disabled?: boolean
 }
 
 export interface CreateNAppCommissionConfigResponse {
@@ -53,6 +56,7 @@ export interface UpdateAppCommissionConfigRequest extends BaseRequest {
   /** @format int64 */
   Invites?: number
   ThresholdAmount?: string
+  Disabled?: boolean
 }
 
 export interface UpdateAppCommissionConfigResponse {
@@ -68,6 +72,7 @@ export interface UpdateNAppCommissionConfigRequest extends BaseRequest {
   /** @format int64 */
   Invites?: number
   ThresholdAmount?: string
+  Disabled?: boolean
 }
 
 export interface UpdateNAppCommissionConfigResponse {

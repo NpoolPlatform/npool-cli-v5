@@ -19,6 +19,7 @@ export interface AppGoodCommissionConfig {
   StartAt: number
   /** @format int64 */
   EndAt: number
+  Disabled: boolean
   /** @format int64 */
   CreatedAt: number
   /** @format int64 */
@@ -30,9 +31,10 @@ export interface CreateAppGoodCommissionConfigRequest extends BaseRequest {
   AppGoodID: string
   ThresholdAmount: string
   AmountOrPercent: string
-  StartAt: number
+  StartAt?: number
   Invites: number
   SettleType: SettleType
+  Disabled?: boolean
 }
 
 export interface CreateAppGoodCommissionConfigResponse {
@@ -44,9 +46,10 @@ export interface CreateNAppGoodCommissionConfigRequest extends BaseRequest {
   AppGoodID: string
   ThresholdAmount: string
   AmountOrPercent: string
-  StartAt: number
+  StartAt?: number
   Invites: number
   SettleType: SettleType
+  Disabled?: boolean
 }
 
 export interface CreateNAppGoodCommissionConfigResponse {
@@ -61,6 +64,7 @@ export interface UpdateAppGoodCommissionConfigRequest extends BaseRequest {
   /** @format int64 */
   Invites?: number
   ThresholdAmount?: string
+  Disabled?: boolean
 }
 
 export interface UpdateAppGoodCommissionConfigResponse {
@@ -76,6 +80,7 @@ export interface UpdateNAppGoodCommissionConfigRequest extends BaseRequest {
   /** @format int64 */
   Invites?: number
   ThresholdAmount?: string
+  Disabled?: boolean
 }
 
 export interface UpdateNAppGoodCommissionConfigResponse {

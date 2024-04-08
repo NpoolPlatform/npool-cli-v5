@@ -25,8 +25,8 @@ export interface CreateAppConfigRequest extends BaseRequest {
   SettleAmountType: SettleAmountType
   SettleInterval: SettleInterval
   CommissionType: CommissionType
-  SettleBenefit: boolean
-  StartAt: number
+  SettleBenefit?: boolean
+  StartAt?: number
 }
 
 export interface CreateAppConfigResponse {
@@ -39,8 +39,8 @@ export interface CreateNAppConfigRequest extends BaseRequest {
   SettleAmountType: SettleAmountType
   SettleInterval: SettleInterval
   CommissionType: CommissionType
-  SettleBenefit: boolean
-  StartAt: number
+  SettleBenefit?: boolean
+  StartAt?: number
 }
 
 export interface CreateNAppConfigResponse {
