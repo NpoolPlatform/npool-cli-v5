@@ -1,5 +1,4 @@
 import { CreateInvitationCodeWhen, RecaptchaType, ResetUserMethod, SignMethodType } from '../../base'
-import { SettleAmountType, SettleInterval, SettleMode, CommissionType } from '../../../inspire/app/config/const'
 
 export interface App {
   ID: number
