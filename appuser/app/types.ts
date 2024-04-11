@@ -1,7 +1,6 @@
 import { BaseRequest } from '../../request'
 import { CreateInvitationCodeWhen, RecaptchaType, ResetUserMethod, SignMethodType } from '../base'
 import { App } from './base'
-import { SettleAmountType, SettleInterval, SettleMode, CommissionType } from '../../inspire/app/config/const'
 
 export type GetAppRequest = BaseRequest
 
@@ -62,13 +61,6 @@ export interface CreateAppRequest extends BaseRequest {
   InvitationCodeMust: boolean
   CouponWithdrawEnable?: boolean
   ResetUserMethod?: ResetUserMethod
-  // inspire appconfig
-  SettleMode: SettleMode
-  SettleAmountType: SettleAmountType
-  SettleInterval: SettleInterval
-  CommissionType: CommissionType
-  SettleBenefit: boolean
-  StartAt: number
 }
 
 export interface CreateAppResponse {

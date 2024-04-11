@@ -16,6 +16,8 @@ export interface AppCommissionConfig {
   EndAt: number
   Disabled: boolean
   /** @format int64 */
+  Level: number
+  /** @format int64 */
   CreatedAt: number
   /** @format int64 */
   UpdatedAt: number
@@ -27,7 +29,8 @@ export interface CreateAppCommissionConfigRequest extends BaseRequest {
   StartAt?: number
   Invites: number
   SettleType: SettleType
-  Disabled?: boolean
+  Disabled: boolean
+  Level: number
 }
 
 export interface CreateAppCommissionConfigResponse {
@@ -41,7 +44,8 @@ export interface CreateNAppCommissionConfigRequest extends BaseRequest {
   StartAt?: number
   Invites: number
   SettleType: SettleType
-  Disabled?: boolean
+  Disabled: boolean
+  Level: number
 }
 
 export interface CreateNAppCommissionConfigResponse {
@@ -57,6 +61,8 @@ export interface UpdateAppCommissionConfigRequest extends BaseRequest {
   Invites?: number
   ThresholdAmount?: string
   Disabled?: boolean
+  /** @format int64 */
+  Level?: number
 }
 
 export interface UpdateAppCommissionConfigResponse {
@@ -73,6 +79,8 @@ export interface UpdateNAppCommissionConfigRequest extends BaseRequest {
   Invites?: number
   ThresholdAmount?: string
   Disabled?: boolean
+  /** @format int64 */
+  Level?: number
 }
 
 export interface UpdateNAppCommissionConfigResponse {

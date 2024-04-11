@@ -15,6 +15,8 @@ export interface AppConfig {
   /** @format int64 */
   EndAt: number
   /** @format int64 */
+  MaxLevelCount: number
+  /** @format int64 */
   CreatedAt: number
   /** @format int64 */
   UpdatedAt: number
@@ -25,8 +27,9 @@ export interface CreateAppConfigRequest extends BaseRequest {
   SettleAmountType: SettleAmountType
   SettleInterval: SettleInterval
   CommissionType: CommissionType
-  SettleBenefit?: boolean
+  SettleBenefit: boolean
   StartAt?: number
+  MaxLevelCount: number
 }
 
 export interface CreateAppConfigResponse {
@@ -39,8 +42,9 @@ export interface CreateNAppConfigRequest extends BaseRequest {
   SettleAmountType: SettleAmountType
   SettleInterval: SettleInterval
   CommissionType: CommissionType
-  SettleBenefit?: boolean
+  SettleBenefit: boolean
   StartAt?: number
+  MaxLevelCount: number
 }
 
 export interface CreateNAppConfigResponse {

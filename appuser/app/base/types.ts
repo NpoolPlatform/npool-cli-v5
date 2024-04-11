@@ -24,11 +24,4 @@ export interface App {
   ResetUserMethod: ResetUserMethod
   CommitButtonTargets: string[]
   CouponWithdrawEnable: boolean
-  // inspire appconfig
-  SettleMode: SettleMode
-  SettleAmountType: SettleAmountType
-  SettleInterval: SettleInterval
-  CommissionType: CommissionType
-  SettleBenefit: boolean
-  StartAt: number
 }
