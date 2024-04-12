@@ -125,26 +125,3 @@ export interface GetNAppGoodCommissionConfigsResponse {
   /** @format int64 */
   Total: number
 }
-
-export interface CloneAppGoodCommissionConfigsRequest extends BaseRequest {
-  FromAppGoodID: string
-  ToAppGoodID: string
-  Value: string
-  ScalePercent: string
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CloneAppGoodCommissionConfigsResponse {
-}
-
-export interface CloneNAppGoodCommissionConfigsRequest extends BaseRequest {
-  TargetAppID: string
-  FromAppGoodID: string
-  ToAppGoodID: string
-  Value: string
-  ScalePercent: string
-}
-
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface CloneNAppGoodCommissionConfigsResponse {
-}

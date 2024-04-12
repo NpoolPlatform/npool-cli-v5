@@ -11,11 +11,7 @@ import {
   CreateAppGoodCommissionConfigResponse,
   CreateNAppGoodCommissionConfigRequest,
   CreateNAppGoodCommissionConfigResponse,
-  CloneAppGoodCommissionConfigsRequest,
-  CloneAppGoodCommissionConfigsResponse,
   AppGoodCommissionConfig,
-  CloneNAppGoodCommissionConfigsRequest,
-  CloneNAppGoodCommissionConfigsResponse,
   GetNAppGoodCommissionConfigsRequest,
   GetNAppGoodCommissionConfigsResponse
 } from './types'
@@ -116,30 +112,6 @@ export const useAppGoodCommissionConfigStore = defineStore('appgoodcommissioncon
         (resp: CreateNAppGoodCommissionConfigResponse): void => {
           this.addCommissionConfigs(undefined, [resp.Info])
           done(false, resp.Info)
-        }, () => {
-          done(true)
-        }
-      )
-    },
-    cloneAppGoodCommissionConfigs (req: CloneAppGoodCommissionConfigsRequest, done: (error: boolean) => void) {
-      doActionWithError<CloneAppGoodCommissionConfigsRequest, CloneAppGoodCommissionConfigsResponse>(
-        API.CLONE_APP_GOOD_COMMISSION_CONFIGS,
-        req,
-        req.Message,
-        (): void => {
-          done(false)
-        }, () => {
-          done(true)
-        }
-      )
-    },
-    cloneNAppGoodCommissionConfigs (req: CloneNAppGoodCommissionConfigsRequest, done: (error: boolean) => void) {
-      doActionWithError<CloneNAppGoodCommissionConfigsRequest, CloneNAppGoodCommissionConfigsResponse>(
-        API.CLONE_N_APP_GOOD_COMMISSION_CONFIGS,
-        req,
-        req.Message,
-        (): void => {
-          done(false)
         }, () => {
           done(true)
         }
