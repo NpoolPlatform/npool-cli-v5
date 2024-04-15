@@ -3,17 +3,17 @@ import { API } from './const'
 import {
   UpdateAppConfigRequest,
   UpdateAppConfigResponse,
-  UpdateNAppConfigRequest,
-  UpdateNAppConfigResponse,
+  AdminUpdateAppConfigRequest,
+  AdminUpdateAppConfigResponse,
   GetAppConfigsRequest,
   GetAppConfigsResponse,
   CreateAppConfigRequest,
   CreateAppConfigResponse,
-  CreateNAppConfigRequest,
-  CreateNAppConfigResponse,
+  AdminCreateAppConfigRequest,
+  AdminCreateAppConfigResponse,
   AppConfig,
-  GetNAppConfigsRequest,
-  GetNAppConfigsResponse
+  AdminGetAppConfigsRequest,
+  AdminGetAppConfigsResponse
 } from './types'
 import { doActionWithError } from '../../../request/action'
 import { formalizeAppID } from '../../../appuser/app/local'
@@ -75,12 +75,12 @@ export const useAppConfigStore = defineStore('appconfigs', {
         }
       )
     },
-    updateNAppConfig (req: UpdateNAppConfigRequest, done: (error: boolean, row?: AppConfig) => void) {
-      doActionWithError<UpdateNAppConfigRequest, UpdateNAppConfigResponse>(
-        API.UPDATE_N_APP_CONFIG,
+    adminUpdateAppConfig (req: AdminUpdateAppConfigRequest, done: (error: boolean, row?: AppConfig) => void) {
+      doActionWithError<AdminUpdateAppConfigRequest, AdminUpdateAppConfigResponse>(
+        API.ADMIN_UPDATE_APP_CONFIG,
         req,
         req.Message,
-        (resp: UpdateNAppConfigResponse): void => {
+        (resp: AdminUpdateAppConfigResponse): void => {
           this.addAppConfigs(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -101,12 +101,12 @@ export const useAppConfigStore = defineStore('appconfigs', {
         }
       )
     },
-    createNAppConfig (req: CreateNAppConfigRequest, done: (error: boolean, row?: AppConfig) => void) {
-      doActionWithError<CreateNAppConfigRequest, CreateNAppConfigResponse>(
-        API.CREATE_N_APP_CONFIG,
+    adminCreateAppConfig (req: AdminCreateAppConfigRequest, done: (error: boolean, row?: AppConfig) => void) {
+      doActionWithError<AdminCreateAppConfigRequest, AdminCreateAppConfigResponse>(
+        API.ADMIN_CREATE_APP_CONFIG,
         req,
         req.Message,
-        (resp: CreateNAppConfigResponse): void => {
+        (resp: AdminCreateAppConfigResponse): void => {
           this.addAppConfigs(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -114,12 +114,12 @@ export const useAppConfigStore = defineStore('appconfigs', {
         }
       )
     },
-    getNAppConfigs (req: GetNAppConfigsRequest, done: (error: boolean, rows?: Array<AppConfig>) => void) {
-      doActionWithError<GetNAppConfigsRequest, GetNAppConfigsResponse>(
-        API.GET_N_APP_CONFIGS,
+    adminGetAppConfigs (req: AdminGetAppConfigsRequest, done: (error: boolean, rows?: Array<AppConfig>) => void) {
+      doActionWithError<AdminGetAppConfigsRequest, AdminGetAppConfigsResponse>(
+        API.ADMIN_GET_APP_CONFIGS,
         req,
         req.Message,
-        (resp: GetNAppConfigsResponse): void => {
+        (resp: AdminGetAppConfigsResponse): void => {
           this.addAppConfigs(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {

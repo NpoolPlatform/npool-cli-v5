@@ -37,7 +37,7 @@ export interface CreateAppCommissionConfigResponse {
   Info: AppCommissionConfig
 }
 
-export interface CreateNAppCommissionConfigRequest extends BaseRequest {
+export interface AdminCreateAppCommissionConfigRequest extends BaseRequest {
   TargetAppID: string
   ThresholdAmount: string
   AmountOrPercent: string
@@ -48,7 +48,7 @@ export interface CreateNAppCommissionConfigRequest extends BaseRequest {
   Level: number
 }
 
-export interface CreateNAppCommissionConfigResponse {
+export interface AdminCreateAppCommissionConfigResponse {
   Info: AppCommissionConfig
 }
 
@@ -69,7 +69,7 @@ export interface UpdateAppCommissionConfigResponse {
   Info: AppCommissionConfig
 }
 
-export interface UpdateNAppCommissionConfigRequest extends BaseRequest {
+export interface AdminUpdateAppCommissionConfigRequest extends BaseRequest {
   ID: number
   EntID: string
   TargetAppID: string
@@ -83,7 +83,7 @@ export interface UpdateNAppCommissionConfigRequest extends BaseRequest {
   Level?: number
 }
 
-export interface UpdateNAppCommissionConfigResponse {
+export interface AdminUpdateAppCommissionConfigResponse {
   Info: AppCommissionConfig
 }
 
@@ -102,7 +102,7 @@ export interface GetAppCommissionConfigsResponse {
   Total: number
 }
 
-export interface GetNAppCommissionConfigsRequest extends BaseRequest {
+export interface AdminGetAppCommissionConfigsRequest extends BaseRequest {
   TargetAppID: string
   /** @format int64 */
   EndAt?: number
@@ -112,7 +112,7 @@ export interface GetNAppCommissionConfigsRequest extends BaseRequest {
   Limit: number
 }
 
-export interface GetNAppCommissionConfigsResponse {
+export interface AdminGetAppCommissionConfigsResponse {
   Infos: AppCommissionConfig[]
   /** @format int64 */
   Total: number

@@ -3,17 +3,17 @@ import { API } from './const'
 import {
   UpdateAppCommissionConfigRequest,
   UpdateAppCommissionConfigResponse,
-  UpdateNAppCommissionConfigRequest,
-  UpdateNAppCommissionConfigResponse,
+  AdminUpdateAppCommissionConfigRequest,
+  AdminUpdateAppCommissionConfigResponse,
   GetAppCommissionConfigsRequest,
   GetAppCommissionConfigsResponse,
   CreateAppCommissionConfigRequest,
   CreateAppCommissionConfigResponse,
-  CreateNAppCommissionConfigRequest,
-  CreateNAppCommissionConfigResponse,
+  AdminCreateAppCommissionConfigRequest,
+  AdminCreateAppCommissionConfigResponse,
   AppCommissionConfig,
-  GetNAppCommissionConfigsRequest,
-  GetNAppCommissionConfigsResponse
+  AdminGetAppCommissionConfigsRequest,
+  AdminGetAppCommissionConfigsResponse
 } from './types'
 import { doActionWithError } from '../../../../request/action'
 import { formalizeAppID } from '../../../../appuser/app/local'
@@ -75,12 +75,12 @@ export const useAppCommissionConfigStore = defineStore('appcommissionconfigs', {
         }
       )
     },
-    updateNAppCommissionConfig (req: UpdateNAppCommissionConfigRequest, done: (error: boolean, row?: AppCommissionConfig) => void) {
-      doActionWithError<UpdateNAppCommissionConfigRequest, UpdateNAppCommissionConfigResponse>(
-        API.UPDATE_N_APP_COMMISSION_CONFIG,
+    adminUpdateAppCommissionConfig (req: AdminUpdateAppCommissionConfigRequest, done: (error: boolean, row?: AppCommissionConfig) => void) {
+      doActionWithError<AdminUpdateAppCommissionConfigRequest, AdminUpdateAppCommissionConfigResponse>(
+        API.ADMIN_UPDATE_APP_COMMISSION_CONFIG,
         req,
         req.Message,
-        (resp: UpdateNAppCommissionConfigResponse): void => {
+        (resp: AdminUpdateAppCommissionConfigResponse): void => {
           this.addCommissionConfigs(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -101,12 +101,12 @@ export const useAppCommissionConfigStore = defineStore('appcommissionconfigs', {
         }
       )
     },
-    createNAppCommissionConfig (req: CreateNAppCommissionConfigRequest, done: (error: boolean, row?: AppCommissionConfig) => void) {
-      doActionWithError<CreateNAppCommissionConfigRequest, CreateNAppCommissionConfigResponse>(
-        API.CREATE_N_APP_COMMISSION_CONFIG,
+    adminCreateAppCommissionConfig (req: AdminCreateAppCommissionConfigRequest, done: (error: boolean, row?: AppCommissionConfig) => void) {
+      doActionWithError<AdminCreateAppCommissionConfigRequest, AdminCreateAppCommissionConfigResponse>(
+        API.ADMIN_CREATE_APP_COMMISSION_CONFIG,
         req,
         req.Message,
-        (resp: CreateNAppCommissionConfigResponse): void => {
+        (resp: AdminCreateAppCommissionConfigResponse): void => {
           this.addCommissionConfigs(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -114,12 +114,12 @@ export const useAppCommissionConfigStore = defineStore('appcommissionconfigs', {
         }
       )
     },
-    getNAppCommissionConfigs (req: GetNAppCommissionConfigsRequest, done: (error: boolean, rows?: Array<AppCommissionConfig>) => void) {
-      doActionWithError<GetNAppCommissionConfigsRequest, GetNAppCommissionConfigsResponse>(
-        API.GET_N_APP_COMMISSION_CONFIGS,
+    adminGetAppCommissionConfigs (req: AdminGetAppCommissionConfigsRequest, done: (error: boolean, rows?: Array<AppCommissionConfig>) => void) {
+      doActionWithError<AdminGetAppCommissionConfigsRequest, AdminGetAppCommissionConfigsResponse>(
+        API.ADMIN_GET_APP_COMMISSION_CONFIGS,
         req,
         req.Message,
-        (resp: GetNAppCommissionConfigsResponse): void => {
+        (resp: AdminGetAppCommissionConfigsResponse): void => {
           this.addCommissionConfigs(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {

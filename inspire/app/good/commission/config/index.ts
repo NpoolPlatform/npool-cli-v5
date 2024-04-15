@@ -3,17 +3,17 @@ import { API } from './const'
 import {
   UpdateAppGoodCommissionConfigRequest,
   UpdateAppGoodCommissionConfigResponse,
-  UpdateNAppGoodCommissionConfigRequest,
-  UpdateNAppGoodCommissionConfigResponse,
+  AdminUpdateAppGoodCommissionConfigRequest,
+  AdminUpdateAppGoodCommissionConfigResponse,
   GetAppGoodCommissionConfigsRequest,
   GetAppGoodCommissionConfigsResponse,
   CreateAppGoodCommissionConfigRequest,
   CreateAppGoodCommissionConfigResponse,
-  CreateNAppGoodCommissionConfigRequest,
-  CreateNAppGoodCommissionConfigResponse,
+  AdminCreateAppGoodCommissionConfigRequest,
+  AdminCreateAppGoodCommissionConfigResponse,
   AppGoodCommissionConfig,
-  GetNAppGoodCommissionConfigsRequest,
-  GetNAppGoodCommissionConfigsResponse
+  AdminGetAppGoodCommissionConfigsRequest,
+  AdminGetAppGoodCommissionConfigsResponse
 } from './types'
 import { doActionWithError } from '../../../../../request/action'
 import { formalizeAppID } from '../../../../../appuser/app/local'
@@ -78,12 +78,12 @@ export const useAppGoodCommissionConfigStore = defineStore('appgoodcommissioncon
         }
       )
     },
-    updateNAppGoodCommissionConfig (req: UpdateNAppGoodCommissionConfigRequest, done: (error: boolean, row?: AppGoodCommissionConfig) => void) {
-      doActionWithError<UpdateNAppGoodCommissionConfigRequest, UpdateNAppGoodCommissionConfigResponse>(
-        API.UPDATE_N_APP_GOOD_COMMISSION_CONFIG,
+    adminUpdateAppGoodCommissionConfig (req: AdminUpdateAppGoodCommissionConfigRequest, done: (error: boolean, row?: AppGoodCommissionConfig) => void) {
+      doActionWithError<AdminUpdateAppGoodCommissionConfigRequest, AdminUpdateAppGoodCommissionConfigResponse>(
+        API.ADMIN_UPDATE_APP_GOOD_COMMISSION_CONFIG,
         req,
         req.Message,
-        (resp: UpdateNAppGoodCommissionConfigResponse): void => {
+        (resp: AdminUpdateAppGoodCommissionConfigResponse): void => {
           this.addCommissionConfigs(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -104,12 +104,12 @@ export const useAppGoodCommissionConfigStore = defineStore('appgoodcommissioncon
         }
       )
     },
-    createNAppGoodCommissionConfig (req: CreateNAppGoodCommissionConfigRequest, done: (error: boolean, row?: AppGoodCommissionConfig) => void) {
-      doActionWithError<CreateNAppGoodCommissionConfigRequest, CreateNAppGoodCommissionConfigResponse>(
-        API.CREATE_N_APP_GOOD_COMMISSION_CONFIG,
+    adminCreateAppGoodCommissionConfig (req: AdminCreateAppGoodCommissionConfigRequest, done: (error: boolean, row?: AppGoodCommissionConfig) => void) {
+      doActionWithError<AdminCreateAppGoodCommissionConfigRequest, AdminCreateAppGoodCommissionConfigResponse>(
+        API.ADMIN_CREATE_APP_GOOD_COMMISSION_CONFIG,
         req,
         req.Message,
-        (resp: CreateNAppGoodCommissionConfigResponse): void => {
+        (resp: AdminCreateAppGoodCommissionConfigResponse): void => {
           this.addCommissionConfigs(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -117,12 +117,12 @@ export const useAppGoodCommissionConfigStore = defineStore('appgoodcommissioncon
         }
       )
     },
-    getNAppGoodCommissionConfigs (req: GetNAppGoodCommissionConfigsRequest, done: (error: boolean, rows?: Array<AppGoodCommissionConfig>) => void) {
-      doActionWithError<GetNAppGoodCommissionConfigsRequest, GetNAppGoodCommissionConfigsResponse>(
-        API.GET_N_APP_GOOD_COMMISSION_CONFIGS,
+    adminGetAppGoodCommissionConfigs (req: AdminGetAppGoodCommissionConfigsRequest, done: (error: boolean, rows?: Array<AppGoodCommissionConfig>) => void) {
+      doActionWithError<AdminGetAppGoodCommissionConfigsRequest, AdminGetAppGoodCommissionConfigsResponse>(
+        API.ADMIN_GET_APP_GOOD_COMMISSION_CONFIGS,
         req,
         req.Message,
-        (resp: GetNAppGoodCommissionConfigsResponse): void => {
+        (resp: AdminGetAppGoodCommissionConfigsResponse): void => {
           this.addCommissionConfigs(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {

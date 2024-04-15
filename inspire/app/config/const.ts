@@ -1,10 +1,10 @@
 export enum API {
   UPDATE_APP_CONFIG = '/inspire/v1/update/app/config',
-  UPDATE_N_APP_CONFIG = '/inspire/v1/update/n/app/config',
+  ADMIN_UPDATE_APP_CONFIG = '/inspire/v1/admin/update/app/config',
   CREATE_APP_CONFIG = '/inspire/v1/create/app/config',
   GET_APP_CONFIGS = '/inspire/v1/get/app/configs',
-  CREATE_N_APP_CONFIG = '/inspire/v1/create/n/app/config',
-  GET_N_APP_CONFIGS = '/inspire/v1/get/n/app/configs'
+  ADMIN_CREATE_APP_CONFIG = '/inspire/v1/admin/create/app/config',
+  ADMIN_GET_APP_CONFIGS = '/inspire/v1/admin/get/app/configs'
 }
 
 export enum CommissionType {

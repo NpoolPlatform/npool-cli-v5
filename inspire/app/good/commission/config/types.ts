@@ -44,7 +44,7 @@ export interface CreateAppGoodCommissionConfigResponse {
   Info: AppGoodCommissionConfig
 }
 
-export interface CreateNAppGoodCommissionConfigRequest extends BaseRequest {
+export interface AdminCreateAppGoodCommissionConfigRequest extends BaseRequest {
   TargetAppID: string
   AppGoodID: string
   ThresholdAmount: string
@@ -56,7 +56,7 @@ export interface CreateNAppGoodCommissionConfigRequest extends BaseRequest {
   Level: number
 }
 
-export interface CreateNAppGoodCommissionConfigResponse {
+export interface AdminCreateAppGoodCommissionConfigResponse {
   Info: AppGoodCommissionConfig
 }
 
@@ -77,7 +77,7 @@ export interface UpdateAppGoodCommissionConfigResponse {
   Info: AppGoodCommissionConfig
 }
 
-export interface UpdateNAppGoodCommissionConfigRequest extends BaseRequest {
+export interface AdminUpdateAppGoodCommissionConfigRequest extends BaseRequest {
   ID: number
   EntID: string
   TargetAppID: string
@@ -91,7 +91,7 @@ export interface UpdateNAppGoodCommissionConfigRequest extends BaseRequest {
   Level?: number
 }
 
-export interface UpdateNAppGoodCommissionConfigResponse {
+export interface AdminUpdateAppGoodCommissionConfigResponse {
   Info: AppGoodCommissionConfig
 }
 
@@ -110,7 +110,7 @@ export interface GetAppGoodCommissionConfigsResponse {
   Total: number
 }
 
-export interface GetNAppGoodCommissionConfigsRequest extends BaseRequest {
+export interface AdminGetAppGoodCommissionConfigsRequest extends BaseRequest {
   TargetAppID: string
   /** @format int64 */
   EndAt?: number
@@ -120,7 +120,7 @@ export interface GetNAppGoodCommissionConfigsRequest extends BaseRequest {
   Limit: number
 }
 
-export interface GetNAppGoodCommissionConfigsResponse {
+export interface AdminGetAppGoodCommissionConfigsResponse {
   Infos: AppGoodCommissionConfig[]
   /** @format int64 */
   Total: number

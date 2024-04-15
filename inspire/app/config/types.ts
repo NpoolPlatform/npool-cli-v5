@@ -36,7 +36,7 @@ export interface CreateAppConfigResponse {
   Info: AppConfig
 }
 
-export interface CreateNAppConfigRequest extends BaseRequest {
+export interface AdminCreateAppConfigRequest extends BaseRequest {
   TargetAppID: string
   SettleMode: SettleMode
   SettleAmountType: SettleAmountType
@@ -47,7 +47,7 @@ export interface CreateNAppConfigRequest extends BaseRequest {
   MaxLevelCount: number
 }
 
-export interface CreateNAppConfigResponse {
+export interface AdminCreateAppConfigResponse {
   Info: AppConfig
 }
 
@@ -62,7 +62,7 @@ export interface UpdateAppConfigResponse {
   Info: AppConfig
 }
 
-export interface UpdateNAppConfigRequest extends BaseRequest {
+export interface AdminUpdateAppConfigRequest extends BaseRequest {
   ID: number
   EntID: string
   TargetAppID: string
@@ -70,7 +70,7 @@ export interface UpdateNAppConfigRequest extends BaseRequest {
   StartAt?: number
 }
 
-export interface UpdateNAppConfigResponse {
+export interface AdminUpdateAppConfigResponse {
   Info: AppConfig
 }
 
@@ -89,7 +89,7 @@ export interface GetAppConfigsResponse {
   Total: number
 }
 
-export interface GetNAppConfigsRequest extends BaseRequest {
+export interface AdminGetAppConfigsRequest extends BaseRequest {
   TargetAppID: string
   /** @format int32 */
   Offset: number
@@ -97,7 +97,7 @@ export interface GetNAppConfigsRequest extends BaseRequest {
   Limit: number
 }
 
-export interface GetNAppConfigsResponse {
+export interface AdminGetAppConfigsResponse {
   Infos: AppConfig[]
   /** @format int64 */
   Total: number

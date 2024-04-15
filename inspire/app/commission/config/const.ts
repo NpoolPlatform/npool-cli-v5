@@ -1,10 +1,10 @@
 export enum API {
   UPDATE_APP_COMMISSION_CONFIG = '/inspire/v1/update/app/commission/config',
-  UPDATE_N_APP_COMMISSION_CONFIG = '/inspire/v1/update/n/app/commission/config',
+  ADMIN_UPDATE_APP_COMMISSION_CONFIG = '/inspire/v1/admin/update/app/commission/config',
   CREATE_APP_COMMISSION_CONFIG = '/inspire/v1/create/app/commission/config',
   GET_APP_COMMISSION_CONFIGS = '/inspire/v1/get/app/commission/configs',
-  CREATE_N_APP_COMMISSION_CONFIG = '/inspire/v1/create/n/app/commission/config',
-  GET_N_APP_COMMISSION_CONFIGS = '/inspire/v1/get/n/app/commission/configs'
+  ADMIN_CREATE_APP_COMMISSION_CONFIG = '/inspire/v1/admin/create/app/commission/config',
+  ADMIN_GET_APP_COMMISSION_CONFIGS = '/inspire/v1/admin/get/app/commission/configs'
 }
 
 export enum SettleType {
