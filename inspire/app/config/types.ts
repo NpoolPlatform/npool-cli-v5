@@ -15,7 +15,7 @@ export interface AppConfig {
   /** @format int64 */
   EndAt: number
   /** @format int64 */
-  MaxLevelCount: number
+  MaxLevel: number
   /** @format int64 */
   CreatedAt: number
   /** @format int64 */
@@ -29,7 +29,7 @@ export interface CreateAppConfigRequest extends BaseRequest {
   CommissionType: CommissionType
   SettleBenefit: boolean
   StartAt?: number
-  MaxLevelCount: number
+  MaxLevel: number
 }
 
 export interface CreateAppConfigResponse {
@@ -44,7 +44,7 @@ export interface AdminCreateAppConfigRequest extends BaseRequest {
   CommissionType: CommissionType
   SettleBenefit: boolean
   StartAt?: number
-  MaxLevelCount: number
+  MaxLevel: number
 }
 
 export interface AdminCreateAppConfigResponse {
