@@ -119,8 +119,6 @@ export const useStatementStore = defineStore('simulate-ledger-statements', {
         req,
         req.Message,
         (resp: GetAppSimulateStatementsResponse): void => {
-          console.log('ddddddddddddddddddddddddddddddddddddddd')
-          console.log(resp.Infos)
           this.addStatements(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
