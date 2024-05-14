@@ -6,7 +6,7 @@ export enum MiningpoolType {
 export const MiningpoolTypes = Object.values(MiningpoolType)
 
 export enum CoinType {
-  BitCoin = 'BitCoin',
+  BitCoin = 'CoinTypeBitCoin',
 }
 
 export const CoinTypes = Object.values(CoinType)

@@ -3,6 +3,10 @@ import { defineStore } from 'pinia'
 import { API } from './const'
 import {
   Pool,
+  AdminCreatePoolRequest,
+  AdminCreatePoolResponse,
+  AdminUpdatePoolRequest,
+  AdminUpdatePoolResponse,
   AdminGetPoolsRequest,
   AdminGetPoolsResponse
 } from './types'
@@ -12,6 +16,11 @@ export const useMiningpoolPoolStore = defineStore('miningpool-pools', {
     Pools: [] as Array<Pool>
   }),
   getters: {
+    pool (): (id: string) => Pool | undefined {
+      return (id: string) => {
+        return this.Pools.find((el: Pool) => el.EntID === id)
+      }
+    },
     pools () {
       return () => {
         return this.Pools
@@ -19,15 +28,13 @@ export const useMiningpoolPoolStore = defineStore('miningpool-pools', {
     }
   },
   actions: {
-    addPools (pools: Array<Pool>) {
-      const _pools = this.Pools
-      pools.forEach((pool) => {
-        if (!pool) return
-        const index = _pools?.findIndex((el) => el.ID === pool.ID)
-        _pools.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, pool)
+    addPools (goods: Array<Pool>) {
+      goods.forEach((good) => {
+        const index = this.Pools.findIndex((el: Pool) => el.EntID === good.EntID)
+        this.Pools.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
       })
     },
-    getPools (req: AdminGetPoolsRequest, done: (error: boolean, rows?: Array<Pool>) => void) {
+    getPools (req: AdminGetPoolsRequest, done: (error: boolean, row?: Array<Pool>) => void) {
       doActionWithError<AdminGetPoolsRequest, AdminGetPoolsResponse>(
         API.ADMIN_GET_POOLS,
         req,
@@ -35,6 +42,30 @@ export const useMiningpoolPoolStore = defineStore('miningpool-pools', {
         (resp: AdminGetPoolsResponse): void => {
           this.addPools(resp.Infos)
           done(false, resp.Infos)
+        }, () => {
+          done(true)
+        })
+    },
+    updatePool (req: AdminUpdatePoolRequest, done: (error: boolean, row?: Pool) => void) {
+      doActionWithError<AdminUpdatePoolRequest, AdminUpdatePoolResponse>(
+        API.ADMIN_UPDATE_POOL,
+        req,
+        req.Message,
+        (resp: AdminUpdatePoolResponse): void => {
+          this.addPools([resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        })
+    },
+    createPool (req: AdminCreatePoolRequest, done: (error: boolean, row?: Pool) => void) {
+      doActionWithError<AdminCreatePoolRequest, AdminCreatePoolResponse>(
+        API.ADMIN_CREATE_POOL,
+        req,
+        req.Message,
+        (resp: AdminCreatePoolResponse): void => {
+          this.addPools([resp.Info])
+          done(false, resp.Info)
         }, () => {
           done(true)
         })
