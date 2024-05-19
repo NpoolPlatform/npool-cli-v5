@@ -20,9 +20,6 @@ export interface FractionRule {
   WithdrawInterval: number
   MinAmount: string
   WithdrawRate: string
-  MiningpoolTypeStr: string
-  MiningpoolType: MiningpoolType
-  CoinType: CoinType
 }
 
 export interface Pool {

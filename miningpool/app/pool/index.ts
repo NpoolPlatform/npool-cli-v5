@@ -1,6 +1,7 @@
 import { doActionWithError } from '../../../request'
 import { defineStore } from 'pinia'
 import { API } from './const'
+import { formalizeAppID } from '../../../appuser/app/local'
 import {
   Pool,
   AdminCreatePoolRequest,
@@ -17,31 +18,49 @@ import {
 
 export const useMiningpoolAppPoolStore = defineStore('miningpool-app-pools', {
   state: () => ({
-    Pools: [] as Array<Pool>
+    Pools: new Map<string, Array<Pool>>()
   }),
   getters: {
-    pools () {
-      return () => {
-        return this.Pools
+    pools (): (appID?: string) => Array<Pool> {
+      return (appID?: string) => {
+        appID = formalizeAppID(appID)
+        return this.Pools.get(appID) || []
       }
     }
   },
   actions: {
-    addPools (pools: Array<Pool>) {
-      const _pools = this.Pools
+    addPools (appID: string | undefined, pools: Array<Pool>) {
+      appID = formalizeAppID(appID)
+      let _pools = this.Pools.get(appID) as Array<Pool>
+      if (!_pools) {
+        _pools = []
+      }
       pools.forEach((pool) => {
-        if (!pool) return
-        const index = _pools?.findIndex((el) => el.ID === pool.ID)
+        const index = _pools.findIndex((el) => el.ID === pool.ID)
         _pools.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, pool)
       })
+      this.Pools.set(appID, _pools)
+    },
+    delAppPool (appID: string | undefined, id: string) {
+      appID = formalizeAppID(appID)
+      let _pools = this.Pools.get(appID) as Array<Pool>
+      if (!_pools) {
+        _pools = []
+      }
+      const index = _pools.findIndex((el) => el.EntID === id)
+      console.log('sssssssss', index)
+      console.log('sssssssss', _pools)
+      _pools.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      console.log('sssssssss', _pools)
+      this.Pools.set(appID, _pools)
     },
     adminCreatePool (req: AdminCreatePoolRequest, done: (error: boolean, row: Pool) => void) {
       doActionWithError<AdminCreatePoolRequest, AdminCreatePoolResponse>(
-        API.ADMIN_GET_POOLS,
+        API.ADMIN_CREATE_POOL,
         req,
         req.Message,
         (resp: AdminCreatePoolResponse): void => {
-          this.addPools([resp.Info])
+          this.addPools(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true, {} as Pool)
@@ -53,7 +72,7 @@ export const useMiningpoolAppPoolStore = defineStore('miningpool-app-pools', {
         req,
         req.Message,
         (resp: GetPoolResponse): void => {
-          this.addPools([resp.Info])
+          this.addPools(req.AppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true, {} as Pool)
@@ -61,11 +80,11 @@ export const useMiningpoolAppPoolStore = defineStore('miningpool-app-pools', {
     },
     getPools (req: GetPoolsRequest, done: (error: boolean, rows?: Array<Pool>) => void) {
       doActionWithError<GetPoolsRequest, GetPoolsResponse>(
-        API.ADMIN_GET_POOLS,
+        API.GET_POOLS,
         req,
         req.Message,
         (resp: GetPoolsResponse): void => {
-          this.addPools(resp.Infos)
+          this.addPools(req.AppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -77,7 +96,7 @@ export const useMiningpoolAppPoolStore = defineStore('miningpool-app-pools', {
         req,
         req.Message,
         (resp: AdminGetPoolsResponse): void => {
-          this.addPools(resp.Infos)
+          this.addPools(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -85,11 +104,11 @@ export const useMiningpoolAppPoolStore = defineStore('miningpool-app-pools', {
     },
     adminDeletePool (req: AdminDeletePoolRequest, done: (error: boolean, row: Pool) => void) {
       doActionWithError<AdminDeletePoolRequest, AdminDeletePoolResponse>(
-        API.ADMIN_GET_POOLS,
+        API.ADMIN_DELETE_POOL,
         req,
         req.Message,
         (resp: AdminDeletePoolResponse): void => {
-          this.addPools([resp.Info])
+          this.delAppPool(req.TargetAppID, req.EntID)
           done(false, resp.Info)
         }, () => {
           done(true, {} as Pool)
