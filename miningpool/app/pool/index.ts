@@ -48,10 +48,7 @@ export const useMiningpoolAppPoolStore = defineStore('miningpool-app-pools', {
         _pools = []
       }
       const index = _pools.findIndex((el) => el.EntID === id)
-      console.log('sssssssss', index)
-      console.log('sssssssss', _pools)
       _pools.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      console.log('sssssssss', _pools)
       this.Pools.set(appID, _pools)
     },
     adminCreatePool (req: AdminCreatePoolRequest, done: (error: boolean, row: Pool) => void) {
