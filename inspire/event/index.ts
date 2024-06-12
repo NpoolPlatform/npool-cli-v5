@@ -7,6 +7,12 @@ import {
   CreateEventResponse,
   GetEventsRequest,
   GetEventsResponse,
+  AdminGetEventsRequest,
+  AdminGetEventsResponse,
+  AdminUpdateEventRequest,
+  AdminUpdateEventResponse,
+  AdminCreateEventRequest,
+  AdminCreateEventResponse,
   Event
 } from './types'
 import { doActionWithError } from '../../request/action'
@@ -52,6 +58,19 @@ export const useEventStore = defineStore('event', {
         }
       )
     },
+    adminGetEvents (req: AdminGetEventsRequest, done: (error: boolean, rows?: Array<Event>) => void) {
+      doActionWithError<AdminGetEventsRequest, AdminGetEventsResponse>(
+        API.ADMIN_GET_EVENTINSPIRES,
+        req,
+        req.Message,
+        (resp: AdminGetEventsResponse): void => {
+          this.addEvents(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true)
+        }
+      )
+    },
     updateEvent (req: UpdateEventRequest, done: (error: boolean, row?: Event) => void) {
       doActionWithError<UpdateEventRequest, UpdateEventResponse>(
         API.UPDATE_EVENTINSPIRE,
@@ -71,6 +90,32 @@ export const useEventStore = defineStore('event', {
         req,
         req.Message,
         (resp: CreateEventResponse): void => {
+          this.addEvents(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminUpdateEvent (req: AdminUpdateEventRequest, done: (error: boolean, row?: Event) => void) {
+      doActionWithError<AdminUpdateEventRequest, AdminUpdateEventResponse>(
+        API.ADMIN_UPDATE_EVENTINSPIRE,
+        req,
+        req.Message,
+        (resp: AdminUpdateEventResponse): void => {
+          this.addEvents(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminCreateEvent (req: AdminCreateEventRequest, done: (error: boolean, row?: Event) => void) {
+      doActionWithError<AdminCreateEventRequest, AdminCreateEventResponse>(
+        API.ADMIN_CREATE_EVENTINSPIRE,
+        req,
+        req.Message,
+        (resp: AdminCreateEventResponse): void => {
           this.addEvents(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {

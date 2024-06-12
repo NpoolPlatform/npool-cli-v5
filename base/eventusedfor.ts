@@ -30,7 +30,21 @@ export enum EventType {
   OrderChildsRenewNotify = 'OrderChildsRenewNotify',
   OrderChildsRenew = 'OrderChildsRenew',
   SimulateOrderProfit = 'SimulateOrderProfit',
-  WithdrawReviewNotify = 'WithdrawReviewNotify'
+  WithdrawReviewNotify = 'WithdrawReviewNotify',
+  ConsecutiveLogin = 'ConsecutiveLogin',
+  GoodSocialSharing = 'GoodSocialSharing',
+  FirstOrderCompleted = 'FirstOrderCompleted',
+  SetAddress = 'SetAddress',
+  Set2FA = 'Set2FA',
+  FirstBenefit = 'FirstBenefit',
+  WriteComment = 'WriteComment',
+  WriteRecommend = 'WriteRecommend',
+  GoodScoring = 'GoodScoring',
+  SubmitTicket = 'SubmitTicket',
+  IntallApp = 'IntallApp',
+  SetNFTAvatar = 'SetNFTAvatar',
+  SetPersonalImage = 'SetPersonalImage',
+  InternalTransfer = 'InternalTransfer'
 }
 
 export const EventTypes = Object.values(EventType)
