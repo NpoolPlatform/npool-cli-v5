@@ -3,14 +3,8 @@ import { doActionWithError } from '../request'
 import { API } from './const'
 import {
   Good,
-  CreateGoodRequest,
-  CreateGoodResponse,
-  GetGoodRequest,
-  GetGoodResponse,
   GetGoodsRequest,
-  GetGoodsResponse,
-  UpdateGoodRequest,
-  UpdateGoodResponse
+  GetGoodsResponse
 } from './types'
 
 export const useGoodStore = defineStore('goods', {
@@ -42,42 +36,6 @@ export const useGoodStore = defineStore('goods', {
         (resp: GetGoodsResponse): void => {
           this.addGoods(resp.Infos)
           done(false, resp.Infos)
-        }, () => {
-          done(true)
-        })
-    },
-    getGood (req: GetGoodRequest, done: (error: boolean, row?: Good) => void) {
-      doActionWithError<GetGoodRequest, GetGoodResponse>(
-        API.GET_GOOD,
-        req,
-        req.Message,
-        (resp: GetGoodResponse): void => {
-          this.addGoods([resp.Info])
-          done(false, resp.Info)
-        }, () => {
-          done(true)
-        })
-    },
-    updateGood (req: UpdateGoodRequest, done: (error: boolean, row?: Good) => void) {
-      doActionWithError<UpdateGoodRequest, UpdateGoodResponse>(
-        API.UPDATE_GOOD,
-        req,
-        req.Message,
-        (resp: UpdateGoodResponse): void => {
-          this.addGoods([resp.Info])
-          done(false, resp.Info)
-        }, () => {
-          done(true)
-        })
-    },
-    createGood (req: CreateGoodRequest, done: (error: boolean, row?: Good) => void) {
-      doActionWithError<CreateGoodRequest, CreateGoodResponse>(
-        API.CREATE_GOOD,
-        req,
-        req.Message,
-        (resp: CreateGoodResponse): void => {
-          this.addGoods([resp.Info])
-          done(false, resp.Info)
         }, () => {
           done(true)
         })
