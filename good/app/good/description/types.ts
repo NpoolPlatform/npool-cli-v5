@@ -1,7 +1,13 @@
 import { BaseRequest } from '../../../../request'
 import { GoodType } from '../../../base'
 
-export interface Description {
+export interface DescriptionInfo {
+  AppGoodID: string
+  Description: string
+  Index: number
+}
+
+export interface Description extends DescriptionInfo {
   ID: number
   EntID: string
   AppID: string
@@ -9,10 +15,7 @@ export interface Description {
   GoodID: string
   GoodName: string
   GoodType: GoodType
-  AppGoodID: string
   AppGoodName: string
-  Description: string
-  Index: number
   CreatedAt: number
   UpdatedAt: number
 }
