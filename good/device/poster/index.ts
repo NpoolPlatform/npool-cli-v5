@@ -14,7 +14,7 @@ import {
   AdminDeleteDevicePosterResponse
 } from './types'
 
-export const useDevicePosterStore = defineStore('device-DevicePosters', {
+export const useDevicePosterStore = defineStore('device-posters', {
   state: () => ({
     DevicePosters: [] as Array<DevicePoster>
   }),
