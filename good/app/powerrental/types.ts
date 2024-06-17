@@ -6,7 +6,9 @@ import { MiningGoodStockInfo } from '../../good/stock'
 import { DescriptionInfo } from '../good/description'
 import { DisplayColorInfo } from '../good/display/color'
 import { DisplayNameInfo } from '../good/display/name'
+import { LabelInfo } from '../good/label'
 import { Poster } from '../good/poster'
+import { StockInfo } from '../good/stock/mining'
 
 export interface AppPowerRental {
   ID: number
@@ -100,6 +102,8 @@ export interface AppPowerRental {
   Posters: Poster[]
   DisplayNames: DisplayNameInfo[]
   DisplayColors: DisplayColorInfo[]
+  AppMiningGoodStocks: StockInfo[]
+  Labels: LabelInfo[]
 
   CreatedAt: number
   UpdatedAt: number
@@ -128,11 +132,32 @@ export interface UpdateAppPowerRentalRequest extends BaseRequest {
   EntID: string
   AppID: string
   AppGoodID: string
+
+  Purchasable?: boolean
+  EnableProductPage?: boolean
   ProductPage?: string
+  Online?: boolean
+  Visible?: boolean
   Name?: string
+  DisplayIndex?: number
   Banner?: string
-  UnitValue?: string
+
+  ServiceStartAt?: number
+  CancelMode?: CancelMode
+  CancelableBeforeStartSeconds?: number
+  EnableSetCommission?: boolean
+  MinOrderAmount?: string
+  MaxOrderAmount?: string
+  MaxUserAmount?: string
   MinOrderDurationSeconds?: number
+  MaxOrderDurationSeconds?: number
+  UnitPrice?: string
+  SaleStartAt?: number
+  SaleEndAt?: number
+  SaleMode?: GoodSaleMode
+  FixedDuration?: boolean
+  PackageWithRequireds?: boolean
+  StartMode?: StartMode
 }
 
 export interface UpdateAppPowerRentalResponse {
@@ -142,11 +167,32 @@ export interface UpdateAppPowerRentalResponse {
 export interface AdminCreateAppPowerRentalRequest extends BaseRequest {
   TargetAppID: string
   GoodID: string
+
+  Purchasable?: boolean
+  EnableProductPage?: boolean
   ProductPage?: string
+  Online?: boolean
+  Visible?: boolean
   Name: string
-  Banner: string
-  UnitValue: string
+  DisplayIndex?: number
+  Banner?: string
+
+  ServiceStartAt: number
+  CancelMode?: CancelMode
+  CancelableBeforeStartSeconds?: number
+  EnableSetCommission?: boolean
+  MinOrderAmount: string
+  MaxOrderAmount: string
+  MaxUserAmount?: string
   MinOrderDurationSeconds: number
+  MaxOrderDurationSeconds?: number
+  UnitPrice: string
+  SaleStartAt: number
+  SaleEndAt: number
+  SaleMode: GoodSaleMode
+  FixedDuration?: boolean
+  PackageWithRequireds?: boolean
+  StartMode?: StartMode
 }
 
 export interface AdminCreateAppPowerRentalResponse {
@@ -169,11 +215,32 @@ export interface AdminUpdateAppPowerRentalRequest extends BaseRequest {
   EntID: string
   TargetAppID: string
   AppGoodID: string
+
+  Purchasable?: boolean
+  EnableProductPage?: boolean
   ProductPage?: string
+  Online?: boolean
+  Visible?: boolean
   Name?: string
+  DisplayIndex?: number
   Banner?: string
-  UnitValue?: string
+
+  ServiceStartAt?: number
+  CancelMode?: CancelMode
+  CancelableBeforeStartSeconds?: number
+  EnableSetCommission?: boolean
+  MinOrderAmount?: string
+  MaxOrderAmount?: string
+  MaxUserAmount?: string
   MinOrderDurationSeconds?: number
+  MaxOrderDurationSeconds?: number
+  UnitPrice?: string
+  SaleStartAt?: number
+  SaleEndAt?: number
+  SaleMode?: GoodSaleMode
+  FixedDuration?: boolean
+  PackageWithRequireds?: boolean
+  StartMode?: StartMode
 }
 
 export interface AdminUpdateAppPowerRentalResponse {
