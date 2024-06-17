@@ -15,7 +15,7 @@ import {
   AdminDeletePowerRentalResponse
 } from './types'
 
-export const usePowerRentalStore = defineStore('fees', {
+export const usePowerRentalStore = defineStore('powerrentals', {
   state: () => ({
     PowerRentals: [] as Array<PowerRental>
   }),
