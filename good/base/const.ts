@@ -1,10 +1,12 @@
 export enum GoodType {
-  PowerRenting = 'PowerRenting',
-  MachineRenting = 'MachineRenting',
-  MachineHosting = 'MachineHosting',
+  PowerRental = 'PowerRental',
+  MachineRental = 'MachineRental',
+  MachineCustody = 'MachineCustody',
+  LegacyPowerRental = 'LegacyPowerRental',
   TechniqueServiceFee = 'TechniqueServiceFee',
   ElectricityFee = 'ElectricityFee',
-  DelegatedStaking = 'DelegatedStaking'
+  DelegatedStaking = 'DelegatedStaking',
+  FbmCrowdFunding = 'FbmCrowdFunding'
 }
 export const GoodTypes = Object.values(GoodType)
 
