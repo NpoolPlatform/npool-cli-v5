@@ -3,6 +3,10 @@ import { BenefitType, CancelMode, GoodDurationType, GoodSaleMode, GoodStockMode,
 import { GoodCoin } from '../../good/coin'
 import { RewardInfo } from '../../good/coin/reward/types'
 import { MiningGoodStockInfo } from '../../good/stock'
+import { DescriptionInfo } from '../good/description'
+import { DisplayColorInfo } from '../good/display/color'
+import { DisplayNameInfo } from '../good/display/name'
+import { Poster } from '../good/poster'
 
 export interface AppPowerRental {
   ID: number
@@ -90,8 +94,12 @@ export interface AppPowerRental {
   AppGoodStartMode: StartMode
 
   GoodCoins: GoodCoin[]
+  Descriptions: DescriptionInfo[]
   MiningGoodStocks: MiningGoodStockInfo[]
   Rewards: RewardInfo[]
+  Posters: Poster[]
+  DisplayNames: DisplayNameInfo[]
+  DisplayColors: DisplayColorInfo[]
 
   CreatedAt: number
   UpdatedAt: number
