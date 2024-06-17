@@ -70,3 +70,20 @@ export enum GoodSettlementType {
   GoodSettledByProfitPercent = 'GoodSettledByProfitPercent'
 }
 export const GoodSettlementTypes = Object.values(GoodSettlementType)
+
+export enum GoodStockMode {
+  GoodStockByMiningPool = 'GoodStockByMiningPool',
+  GoodStockByUnique = 'GoodStockByUnique'
+}
+export const GoodStockModes = Object.values(GoodStockMode)
+
+export enum BenefitState {
+  BenefitWait = 'BenefitWait',
+  BenefitTransferring = 'BenefitTransferring',
+  BenefitBookKeeping = 'BenefitBookKeeping',
+  BenefitUserBookKeeping = 'BenefitUserBookKeeping',
+  BenefitSimulateBookKeeping = 'BenefitSimulateBookKeeping',
+  BenefitDone = 'BenefitDone',
+  BenefitFail = 'BenefitFail'
+}
+export const BenefitStates = Object.values(BenefitState)
