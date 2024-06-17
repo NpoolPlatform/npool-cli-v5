@@ -3,12 +3,14 @@ import { API } from './const'
 import { doActionWithError } from '../../../request'
 import {
   VendorLocation,
-  CreateVendorLocationRequest,
-  CreateVendorLocationResponse,
+  AdminCreateVendorLocationRequest,
+  AdminCreateVendorLocationResponse,
   GetVendorLocationsRequest,
   GetVendorLocationsResponse,
-  UpdateVendorLocationRequest,
-  UpdateVendorLocationResponse
+  AdminUpdateVendorLocationRequest,
+  AdminUpdateVendorLocationResponse,
+  AdminDeleteVendorLocationRequest,
+  AdminDeleteVendorLocationResponse
 } from './types'
 
 export const useVendorLocationStore = defineStore('vendor-locations', {
@@ -44,24 +46,36 @@ export const useVendorLocationStore = defineStore('vendor-locations', {
           done(true)
         })
     },
-    updateVendorLocation (req: UpdateVendorLocationRequest, done: (error: boolean, row?: VendorLocation) => void) {
-      doActionWithError<UpdateVendorLocationRequest, UpdateVendorLocationResponse>(
-        API.UPDATE_VENDORLOCATION,
+    updateVendorLocation (req: AdminUpdateVendorLocationRequest, done: (error: boolean, row?: VendorLocation) => void) {
+      doActionWithError<AdminUpdateVendorLocationRequest, AdminUpdateVendorLocationResponse>(
+        API.ADMIN_UPDATE_VENDORLOCATION,
         req,
         req.Message,
-        (resp: UpdateVendorLocationResponse): void => {
+        (resp: AdminUpdateVendorLocationResponse): void => {
           this.addLocations([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
         })
     },
-    createVendorLocation (req: CreateVendorLocationRequest, done: (error: boolean, row?: VendorLocation) => void) {
-      doActionWithError<CreateVendorLocationRequest, CreateVendorLocationResponse>(
-        API.CREATE_VENDORLOCATION,
+    createVendorLocation (req: AdminCreateVendorLocationRequest, done: (error: boolean, row?: VendorLocation) => void) {
+      doActionWithError<AdminCreateVendorLocationRequest, AdminCreateVendorLocationResponse>(
+        API.ADMIN_CREATE_VENDORLOCATION,
         req,
         req.Message,
-        (resp: CreateVendorLocationResponse): void => {
+        (resp: AdminCreateVendorLocationResponse): void => {
+          this.addLocations([resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        })
+    },
+    deleteVendorLocation (req: AdminDeleteVendorLocationRequest, done: (error: boolean, row?: VendorLocation) => void) {
+      doActionWithError<AdminDeleteVendorLocationRequest, AdminDeleteVendorLocationResponse>(
+        API.ADMIN_DELETE_VENDORLOCATION,
+        req,
+        req.Message,
+        (resp: AdminDeleteVendorLocationResponse): void => {
           this.addLocations([resp.Info])
           done(false, resp.Info)
         }, () => {

@@ -1,4 +1,4 @@
-import { GoodTopMostType } from '../../../../../good/base'
+import { GoodTopMostType, GoodType } from '../../../../../good/base'
 import { BaseRequest } from '../../../../../request'
 
 export interface TopMostGood {
@@ -7,6 +7,7 @@ export interface TopMostGood {
     AppID: string
     AppName: string
     GoodID: string
+    GoodType: GoodType
     GoodName: string
     AppGoodID: string
     AppGoodName: string

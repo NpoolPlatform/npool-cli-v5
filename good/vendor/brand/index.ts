@@ -3,14 +3,14 @@ import { API } from './const'
 import { doActionWithError } from '../../../request'
 import {
   VendorBrand,
-  CreateVendorBrandRequest,
-  CreateVendorBrandResponse,
+  AdminCreateVendorBrandRequest,
+  AdminCreateVendorBrandResponse,
   GetVendorBrandsRequest,
   GetVendorBrandsResponse,
-  UpdateVendorBrandRequest,
-  UpdateVendorBrandResponse,
-  DeleteVendorBrandRequest,
-  DeleteVendorBrandResponse
+  AdminUpdateVendorBrandRequest,
+  AdminUpdateVendorBrandResponse,
+  AdminDeleteVendorBrandRequest,
+  AdminDeleteVendorBrandResponse
 } from './types'
 
 export const useVendorBrandStore = defineStore('vendor-brand', {
@@ -53,12 +53,12 @@ export const useVendorBrandStore = defineStore('vendor-brand', {
         }
       )
     },
-    updateVendorBrand (req: UpdateVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
-      doActionWithError<UpdateVendorBrandRequest, UpdateVendorBrandResponse>(
-        API.UPDATE_VENDORBRAND,
+    updateVendorBrand (req: AdminUpdateVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
+      doActionWithError<AdminUpdateVendorBrandRequest, AdminUpdateVendorBrandResponse>(
+        API.ADMIN_UPDATE_VENDORBRAND,
         req,
         req.Message,
-        (resp: UpdateVendorBrandResponse): void => {
+        (resp: AdminUpdateVendorBrandResponse): void => {
           this.addBrands([resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -66,12 +66,12 @@ export const useVendorBrandStore = defineStore('vendor-brand', {
         }
       )
     },
-    createVendorBrand (req: CreateVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
-      doActionWithError<CreateVendorBrandRequest, CreateVendorBrandResponse>(
-        API.CREATE_VENDORBRAND,
+    createVendorBrand (req: AdminCreateVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
+      doActionWithError<AdminCreateVendorBrandRequest, AdminCreateVendorBrandResponse>(
+        API.ADMIN_CREATE_VENDORBRAND,
         req,
         req.Message,
-        (resp: CreateVendorBrandResponse): void => {
+        (resp: AdminCreateVendorBrandResponse): void => {
           this.addBrands([resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -79,12 +79,12 @@ export const useVendorBrandStore = defineStore('vendor-brand', {
         }
       )
     },
-    deleteVendorBrand (req: DeleteVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
-      doActionWithError<DeleteVendorBrandRequest, DeleteVendorBrandResponse>(
-        API.DELETE_VENDORBRAND,
+    deleteVendorBrand (req: AdminDeleteVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
+      doActionWithError<AdminDeleteVendorBrandRequest, AdminDeleteVendorBrandResponse>(
+        API.ADMIN_DELETE_VENDORBRAND,
         req,
         req.Message,
-        (resp: DeleteVendorBrandResponse): void => {
+        (resp: AdminDeleteVendorBrandResponse): void => {
           this.deleteBrands([resp.Info])
           done(false, resp.Info)
         }, () => {

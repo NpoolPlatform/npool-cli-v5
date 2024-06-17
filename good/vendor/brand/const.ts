@@ -1,7 +1,6 @@
 export enum API {
-    GET_VENDORBRAND = '/good/v1/get/vendorbrand',
-    CREATE_VENDORBRAND = '/good/v1/create/vendorbrand',
+    ADMIN_CREATE_VENDORBRAND = '/good/v1/admin/create/vendorbrand',
     GET_VENDORBRANDS = '/good/v1/get/vendorbrands',
-    UPDATE_VENDORBRAND = '/good/v1/update/vendorbrand',
-    DELETE_VENDORBRAND = '/good/v1/delete/vendorbrand',
+    ADMIN_UPDATE_VENDORBRAND = '/good/v1/admin/update/vendorbrand',
+    ADMIN_DELETE_VENDORBRAND = '/good/v1/admin/delete/vendorbrand',
 }
