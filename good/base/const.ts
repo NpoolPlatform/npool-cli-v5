@@ -65,7 +65,8 @@ export enum GoodDurationType {
 export const GoodDurationTypes = Object.values(GoodDurationType)
 
 export enum GoodSettlementType {
-  GoodSettledByCash = 'GoodSettledByCash',
-  GoodSettledByProfit = 'GoodSettledByProfit'
+  GoodSettledByPaymentPercent = 'GoodSettledByPaymentPercent',
+  GoodSettledByPaymentAmount = 'GoodSettledByPaymentAmount',
+  GoodSettledByProfitPercent = 'GoodSettledByProfitPercent'
 }
 export const GoodSettlementTypes = Object.values(GoodSettlementType)
