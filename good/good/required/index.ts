@@ -1,24 +1,20 @@
 import { defineStore } from 'pinia'
-import { doActionWithError } from '../../../../request'
+import { doActionWithError } from '../../../request'
 import { API } from './const'
 import {
   Required,
   GetRequiredsRequest,
   GetRequiredsResponse,
-  UpdateRequiredRequest,
-  UpdateRequiredResponse,
-  CreateRequiredRequest,
-  CreateRequiredResponse,
-  DeleteRequiredRequest,
-  DeleteRequiredResponse,
+  AdminCreateRequiredRequest,
+  AdminCreateRequiredResponse,
+  AdminDeleteRequiredRequest,
+  AdminDeleteRequiredResponse,
   AdminUpdateRequiredRequest,
-  AdminUpdateRequiredResponse,
-  AdminGetRequiredsRequest,
-  AdminGetRequiredsResponse
+  AdminUpdateRequiredResponse
 } from './types'
-import { formalizeAppID } from '../../../../appuser/app/local'
+import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useRequiredStore = defineStore('app-good-requireds', {
+export const useRequiredStore = defineStore('good-requireds', {
   state: () => ({
     Requireds: new Map<string, Array<Required>>()
   }),
@@ -52,12 +48,12 @@ export const useRequiredStore = defineStore('app-good-requireds', {
       _requireds.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.Requireds.set(required.AppID, _requireds)
     },
-    createRequired (req: CreateRequiredRequest, done: (error: boolean, row?: Required) => void) {
-      doActionWithError<CreateRequiredRequest, CreateRequiredResponse>(
-        API.CREATE_REQUIRED_APP_GOOD,
+    adminCreateRequired (req: AdminCreateRequiredRequest, done: (error: boolean, row?: Required) => void) {
+      doActionWithError<AdminCreateRequiredRequest, AdminCreateRequiredResponse>(
+        API.ADMIN_CREATE_REQUIRED_GOOD,
         req,
         req.Message,
-        (resp: CreateRequiredResponse): void => {
+        (resp: AdminCreateRequiredResponse): void => {
           this.addRequireds([resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -67,7 +63,7 @@ export const useRequiredStore = defineStore('app-good-requireds', {
     },
     getRequireds (req: GetRequiredsRequest, done: (error: boolean, rows?: Array<Required>, total?: number) => void) {
       doActionWithError<GetRequiredsRequest, GetRequiredsResponse>(
-        API.GET_REQUIRED_APP_GOODS,
+        API.GET_REQUIRED_GOODS,
         req,
         req.Message,
         (resp: GetRequiredsResponse): void => {
@@ -78,25 +74,12 @@ export const useRequiredStore = defineStore('app-good-requireds', {
         }
       )
     },
-    updateRequired (req: UpdateRequiredRequest, done: (error: boolean, row?: Required) => void) {
-      doActionWithError<UpdateRequiredRequest, UpdateRequiredResponse>(
-        API.UPDATE_REQUIRED_APP_GOOD,
+    adminDeleteRequired (req: AdminDeleteRequiredRequest, done: (error: boolean, row?: Required) => void) {
+      doActionWithError<AdminDeleteRequiredRequest, AdminDeleteRequiredResponse>(
+        API.ADMIN_DELETE_REQUIRED_GOOD,
         req,
         req.Message,
-        (resp: UpdateRequiredResponse): void => {
-          this.addRequireds([resp.Info])
-          done(false, resp.Info)
-        }, () => {
-          done(true)
-        }
-      )
-    },
-    deleteRequired (req: DeleteRequiredRequest, done: (error: boolean, row?: Required) => void) {
-      doActionWithError<DeleteRequiredRequest, DeleteRequiredResponse>(
-        API.DELETE_REQUIRED_APP_GOOD,
-        req,
-        req.Message,
-        (resp: DeleteRequiredResponse): void => {
+        (resp: AdminDeleteRequiredResponse): void => {
           this._deleteRequired(resp.Info)
           done(false, resp.Info)
         }, () => {
@@ -106,25 +89,12 @@ export const useRequiredStore = defineStore('app-good-requireds', {
     },
     adminUpdateRequired (req: AdminUpdateRequiredRequest, done: (error: boolean, row?: Required) => void) {
       doActionWithError<AdminUpdateRequiredRequest, AdminUpdateRequiredResponse>(
-        API.ADMIN_UPDATE_REQUIRED_APP_GOOD,
+        API.ADMIN_UPDATE_REQUIRED_GOOD,
         req,
         req.Message,
         (resp: AdminUpdateRequiredResponse): void => {
           this.addRequireds([resp.Info])
           done(false, resp.Info)
-        }, () => {
-          done(true)
-        }
-      )
-    },
-    adminGetRequireds (req: AdminGetRequiredsRequest, done: (error: boolean, rows?: Array<Required>, total?: number) => void) {
-      doActionWithError<AdminGetRequiredsRequest, AdminGetRequiredsResponse>(
-        API.ADMIN_GET_REQUIRED_APP_GOODS,
-        req,
-        req.Message,
-        (resp: AdminGetRequiredsResponse): void => {
-          this.addRequireds(resp.Infos)
-          done(false, resp.Infos)
         }, () => {
           done(true)
         }
