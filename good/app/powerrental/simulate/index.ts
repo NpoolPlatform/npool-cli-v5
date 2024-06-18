@@ -3,53 +3,47 @@ import { doActionWithError } from '../../../../request'
 import { API } from './const'
 import {
   Simulate,
-  GetAppSimulateGoodsRequest,
-  GetAppSimulateGoodsResponse,
-  CreateAppSimulateGoodRequest,
-  CreateAppSimulateGoodResponse,
-  DeleteAppSimulateGoodRequest,
-  DeleteAppSimulateGoodResponse,
-  UpdateAppSimulateGoodRequest,
-  UpdateAppSimulateGoodResponse,
-  CreateNAppSimulateGoodRequest,
-  CreateNAppSimulateGoodResponse,
-  GetNAppSimulateGoodsRequest,
-  GetNAppSimulateGoodsResponse,
-  DeleteNAppSimulateGoodRequest,
-  DeleteNAppSimulateGoodResponse,
-  UpdateNAppSimulateGoodRequest,
-  UpdateNAppSimulateGoodResponse
+  GetSimulatesRequest,
+  GetSimulatesResponse,
+  CreateSimulateRequest,
+  CreateSimulateResponse,
+  DeleteSimulateRequest,
+  DeleteSimulateResponse,
+  UpdateSimulateRequest,
+  UpdateSimulateResponse,
+  AdminCreateSimulateRequest,
+  AdminCreateSimulateResponse,
+  AdminGetSimulatesRequest,
+  AdminGetSimulatesResponse,
+  AdminDeleteSimulateRequest,
+  AdminDeleteSimulateResponse,
+  AdminUpdateSimulateRequest,
+  AdminUpdateSimulateResponse
 } from './types'
 import { formalizeAppID } from '../../../../appuser/app/local'
 
-export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
+export const useSimulateStore = defineStore('app-simulate-goods', {
   state: () => ({
-    AppSimulateGoods: new Map<string, Array<Simulate>>()
+    Simulates: new Map<string, Array<Simulate>>()
   }),
   getters: {
     simulate (): (appID: string | undefined, id: string) => Simulate | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return this.AppSimulateGoods.get(appID)?.find((el: Simulate) => el.EntID === id)
+        return this.Simulates.get(appID)?.find((el: Simulate) => el.EntID === id)
       }
     },
     simulates (): (appID: string | undefined) => Array<Simulate> {
       return (appID: string | undefined) => {
         appID = formalizeAppID(appID)
-        return this.AppSimulateGoods.get(appID) || []
-      }
-    },
-    coinUnitSimulateGoodID (): (appID: string | undefined, coinUnit: string) => string | undefined {
-      return (appID: string | undefined, coinUnit: string) => {
-        appID = formalizeAppID(appID)
-        return this.AppSimulateGoods.get(appID)?.find((el) => el.CoinUnit === coinUnit)?.GoodID
+        return this.Simulates.get(appID) || []
       }
     }
   },
   actions: {
     addSimulates (appID: string | undefined, simulates: Array<Simulate>) {
       appID = formalizeAppID(appID)
-      let _simulates = this.AppSimulateGoods.get(appID) as Array<Simulate>
+      let _simulates = this.Simulates.get(appID) as Array<Simulate>
       if (!_simulates) {
         _simulates = []
       }
@@ -57,24 +51,24 @@ export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
         const index = _simulates?.findIndex((el) => el.EntID === def.EntID)
         _simulates?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, def)
       })
-      this.AppSimulateGoods.set(appID, _simulates)
+      this.Simulates.set(appID, _simulates)
     },
     delSimulate (appID: string | undefined, id: string) {
       appID = formalizeAppID(appID)
-      let _simulates = this.AppSimulateGoods.get(appID) as Array<Simulate>
+      let _simulates = this.Simulates.get(appID) as Array<Simulate>
       if (!_simulates) {
         _simulates = []
       }
       const index = _simulates?.findIndex((el) => el.EntID === id)
       _simulates?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      this.AppSimulateGoods.set(appID, _simulates)
+      this.Simulates.set(appID, _simulates)
     },
-    getAppSimulateGoods (req: GetAppSimulateGoodsRequest, done: (error: boolean, rows?: Array<Simulate>) => void) {
-      doActionWithError<GetAppSimulateGoodsRequest, GetAppSimulateGoodsResponse>(
-        API.GET_APP_SIMULATE_GOODS,
+    getSimulates (req: GetSimulatesRequest, done: (error: boolean, rows?: Array<Simulate>) => void) {
+      doActionWithError<GetSimulatesRequest, GetSimulatesResponse>(
+        API.GET_APP_POWERRENTAL_SIMULATES,
         req,
         req.Message,
-        (resp: GetAppSimulateGoodsResponse): void => {
+        (resp: GetSimulatesResponse): void => {
           this.addSimulates(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
@@ -82,12 +76,12 @@ export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    createAppSimulateGood (req: CreateAppSimulateGoodRequest, done: (error: boolean, row?: Simulate) => void) {
-      doActionWithError<CreateAppSimulateGoodRequest, CreateAppSimulateGoodResponse>(
-        API.CREATE_APP_SIMULATE_GOOD,
+    createSimulate (req: CreateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+      doActionWithError<CreateSimulateRequest, CreateSimulateResponse>(
+        API.CREATE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
-        (resp: CreateAppSimulateGoodResponse): void => {
+        (resp: CreateSimulateResponse): void => {
           this.addSimulates(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -95,12 +89,12 @@ export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    deleteAppSimulateGood (req: DeleteAppSimulateGoodRequest, done: (error: boolean, row?: Simulate) => void) {
-      doActionWithError<DeleteAppSimulateGoodRequest, DeleteAppSimulateGoodResponse>(
-        API.DELETE_APP_SIMULATE_GOOD,
+    deleteSimulate (req: DeleteSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+      doActionWithError<DeleteSimulateRequest, DeleteSimulateResponse>(
+        API.DELETE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
-        (resp: DeleteAppSimulateGoodResponse): void => {
+        (resp: DeleteSimulateResponse): void => {
           this.delSimulate(undefined, resp.Info.EntID)
           done(false, resp.Info)
         }, () => {
@@ -108,12 +102,12 @@ export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    updateAppSimulateGood (req: UpdateAppSimulateGoodRequest, done: (error: boolean, row?: Simulate) => void) {
-      doActionWithError<UpdateAppSimulateGoodRequest, UpdateAppSimulateGoodResponse>(
-        API.UPDATE_APP_SIMULATE_GOOD,
+    updateSimulate (req: UpdateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+      doActionWithError<UpdateSimulateRequest, UpdateSimulateResponse>(
+        API.UPDATE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
-        (resp: UpdateAppSimulateGoodResponse): void => {
+        (resp: UpdateSimulateResponse): void => {
           this.addSimulates(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -122,12 +116,12 @@ export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
       )
     },
 
-    getNAppSimulateGoods (req: GetNAppSimulateGoodsRequest, done: (error: boolean, rows?: Array<Simulate>) => void) {
-      doActionWithError<GetNAppSimulateGoodsRequest, GetNAppSimulateGoodsResponse>(
-        API.GET_N_APP_SIMULATE_GOODS,
+    getNSimulates (req: AdminGetSimulatesRequest, done: (error: boolean, rows?: Array<Simulate>) => void) {
+      doActionWithError<AdminGetSimulatesRequest, AdminGetSimulatesResponse>(
+        API.ADMIN_GET_APP_POWERRENTAL_SIMULATES,
         req,
         req.Message,
-        (resp: GetNAppSimulateGoodsResponse): void => {
+        (resp: AdminGetSimulatesResponse): void => {
           this.addSimulates(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
@@ -135,12 +129,12 @@ export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    deleteNAppSimulateGood (req: DeleteNAppSimulateGoodRequest, done: (error: boolean, row?: Simulate) => void) {
-      doActionWithError<DeleteNAppSimulateGoodRequest, DeleteNAppSimulateGoodResponse>(
-        API.DELETE_N_APP_SIMULATE_GOOD,
+    deleteNSimulate (req: AdminDeleteSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+      doActionWithError<AdminDeleteSimulateRequest, AdminDeleteSimulateResponse>(
+        API.ADMIN_DELETE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
-        (resp: DeleteNAppSimulateGoodResponse): void => {
+        (resp: AdminDeleteSimulateResponse): void => {
           this.delSimulate(req.TargetAppID, req.EntID)
           done(false, resp.Info)
         }, () => {
@@ -148,12 +142,12 @@ export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    createNAppSimulateGood (req: CreateNAppSimulateGoodRequest, done: (error: boolean, row?: Simulate) => void) {
-      doActionWithError<CreateNAppSimulateGoodRequest, CreateNAppSimulateGoodResponse>(
-        API.CREATE_N_APP_SIMULATE_GOOD,
+    createNSimulate (req: AdminCreateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+      doActionWithError<AdminCreateSimulateRequest, AdminCreateSimulateResponse>(
+        API.ADMIN_CREATE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
-        (resp: CreateNAppSimulateGoodResponse): void => {
+        (resp: AdminCreateSimulateResponse): void => {
           this.addSimulates(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -161,12 +155,12 @@ export const useAppSimulateGoodStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    updateNAppSimulateGood (req: UpdateNAppSimulateGoodRequest, done: (error: boolean, row?: Simulate) => void) {
-      doActionWithError<UpdateNAppSimulateGoodRequest, UpdateNAppSimulateGoodResponse>(
-        API.UPDATE_N_APP_SIMULATE_GOOD,
+    updateNSimulate (req: AdminUpdateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+      doActionWithError<AdminUpdateSimulateRequest, AdminUpdateSimulateResponse>(
+        API.ADMIN_UPDATE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
-        (resp: UpdateNAppSimulateGoodResponse): void => {
+        (resp: AdminUpdateSimulateResponse): void => {
           this.addSimulates(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
