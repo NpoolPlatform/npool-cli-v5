@@ -74,16 +74,16 @@ export const useAppConfigStore = defineStore('app-order-configs', {
           done(true)
         })
     },
-    getAppConfig (req: GetAppConfigRequest, done: (error: boolean, row?: AppConfig) => void) {
+    getAppConfig (req: GetAppConfigRequest, done?: (error: boolean, row?: AppConfig) => void) {
       doActionWithError<GetAppConfigRequest, GetAppConfigResponse>(
         API.GET_APP_CONFIG,
         req,
         req.Message,
         (resp: GetAppConfigResponse): void => {
           this.addAppConfigs(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     updateAppConfig (req: UpdateAppConfigRequest, done: (error: boolean, row?: AppConfig) => void) {
