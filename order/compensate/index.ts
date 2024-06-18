@@ -32,17 +32,13 @@ export const useCompensateStore = defineStore('compensates', {
     }
   },
   actions: {
-    addCompensates (appID: string | undefined, compensates: Array<Compensate>) {
-      appID = formalizeAppID(appID)
-      let _simulateConfigs = this.Compensates.get(appID) as Array<Compensate>
-      if (!_simulateConfigs) {
-        _simulateConfigs = []
-      }
+    addCompensates (compensates: Array<Compensate>) {
       compensates.forEach((compensate) => {
-        const index = _simulateConfigs.findIndex((el) => el.ID === compensate.ID)
-        _simulateConfigs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, compensate)
+        const _compensates = this.Compensates.get(compensate.AppID) || []
+        const index = _compensates.findIndex((el) => el.ID === compensate.ID)
+        _compensates.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, compensate)
+        this.Compensates.set(compensate.AppID, _compensates)
       })
-      this.Compensates.set(appID, _simulateConfigs)
     },
     delCompensate (appID: string | undefined, id: number) {
       appID = formalizeAppID(appID)
@@ -60,7 +56,7 @@ export const useCompensateStore = defineStore('compensates', {
         req,
         req.Message,
         (resp: AdminGetCompensatesResponse): void => {
-          this.addCompensates(req.TargetAppID, resp.Infos)
+          this.addCompensates(resp.Infos)
           done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
@@ -72,7 +68,7 @@ export const useCompensateStore = defineStore('compensates', {
         req,
         req.Message,
         (resp: GetCompensatesResponse): void => {
-          this.addCompensates(undefined, resp.Infos)
+          this.addCompensates(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -84,7 +80,7 @@ export const useCompensateStore = defineStore('compensates', {
         req,
         req.Message,
         (resp: GetMyCompensatesResponse): void => {
-          this.addCompensates(undefined, resp.Infos)
+          this.addCompensates(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
