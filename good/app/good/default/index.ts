@@ -3,53 +3,53 @@ import { doActionWithError } from '../../../../request'
 import { API } from './const'
 import {
   Default,
-  GetAppDefaultGoodsRequest,
-  GetAppDefaultGoodsResponse,
-  CreateAppDefaultGoodRequest,
-  CreateAppDefaultGoodResponse,
-  DeleteAppDefaultGoodRequest,
-  DeleteAppDefaultGoodResponse,
-  UpdateAppDefaultGoodRequest,
-  UpdateAppDefaultGoodResponse,
-  CreateNAppDefaultGoodRequest,
-  CreateNAppDefaultGoodResponse,
-  GetNAppDefaultGoodsRequest,
-  GetNAppDefaultGoodsResponse,
-  DeleteNAppDefaultGoodRequest,
-  DeleteNAppDefaultGoodResponse,
-  UpdateNAppDefaultGoodRequest,
-  UpdateNAppDefaultGoodResponse
+  GetDefaultsRequest,
+  GetDefaultsResponse,
+  CreateDefaultRequest,
+  CreateDefaultResponse,
+  DeleteDefaultRequest,
+  DeleteDefaultResponse,
+  UpdateDefaultRequest,
+  UpdateDefaultResponse,
+  AdminCreateDefaultRequest,
+  AdminCreateDefaultResponse,
+  AdminGetDefaultsRequest,
+  AdminGetDefaultsResponse,
+  AdminDeleteDefaultRequest,
+  AdminDeleteDefaultResponse,
+  AdminUpdateDefaultRequest,
+  AdminUpdateDefaultResponse
 } from './types'
 import { formalizeAppID } from '../../../../appuser/app/local'
 
-export const useAppDefaultGoodStore = defineStore('app-default-goods', {
+export const useDefaultStore = defineStore('app-default-goods', {
   state: () => ({
-    AppDefaultGoods: new Map<string, Array<Default>>()
+    Defaults: new Map<string, Array<Default>>()
   }),
   getters: {
     default (): (appID: string | undefined, id: string) => Default | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return this.AppDefaultGoods.get(appID)?.find((el: Default) => el.EntID === id)
+        return this.Defaults.get(appID)?.find((el: Default) => el.EntID === id)
       }
     },
     defaults (): (appID: string | undefined) => Array<Default> {
       return (appID: string | undefined) => {
         appID = formalizeAppID(appID)
-        return this.AppDefaultGoods.get(appID) || []
+        return this.Defaults.get(appID) || []
       }
     },
     coinUnitDefaultGoodID (): (appID: string | undefined, coinUnit: string) => string | undefined {
       return (appID: string | undefined, coinUnit: string) => {
         appID = formalizeAppID(appID)
-        return this.AppDefaultGoods.get(appID)?.find((el) => el.CoinUnit === coinUnit)?.GoodID
+        return this.Defaults.get(appID)?.find((el) => el.CoinUnit === coinUnit)?.GoodID
       }
     }
   },
   actions: {
     addDefaults (appID: string | undefined, defaults: Array<Default>) {
       appID = formalizeAppID(appID)
-      let _defaults = this.AppDefaultGoods.get(appID) as Array<Default>
+      let _defaults = this.Defaults.get(appID) as Array<Default>
       if (!_defaults) {
         _defaults = []
       }
@@ -57,24 +57,24 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         const index = _defaults?.findIndex((el) => el.EntID === def.EntID)
         _defaults?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, def)
       })
-      this.AppDefaultGoods.set(appID, _defaults)
+      this.Defaults.set(appID, _defaults)
     },
     delDefault (appID: string | undefined, id: string) {
       appID = formalizeAppID(appID)
-      let _defaults = this.AppDefaultGoods.get(appID) as Array<Default>
+      let _defaults = this.Defaults.get(appID) as Array<Default>
       if (!_defaults) {
         _defaults = []
       }
       const index = _defaults?.findIndex((el) => el.EntID === id)
       _defaults?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      this.AppDefaultGoods.set(appID, _defaults)
+      this.Defaults.set(appID, _defaults)
     },
-    getAppDefaultGoods (req: GetAppDefaultGoodsRequest, done: (error: boolean, rows?: Array<Default>) => void) {
-      doActionWithError<GetAppDefaultGoodsRequest, GetAppDefaultGoodsResponse>(
-        API.GET_APP_DEFAULT_GOODS,
+    getDefaults (req: GetDefaultsRequest, done: (error: boolean, rows?: Array<Default>) => void) {
+      doActionWithError<GetDefaultsRequest, GetDefaultsResponse>(
+        API.GET_DEFAULT_APP_GOODS,
         req,
         req.Message,
-        (resp: GetAppDefaultGoodsResponse): void => {
+        (resp: GetDefaultsResponse): void => {
           this.addDefaults(undefined, resp.Infos)
           done(false, resp.Infos)
         }, () => {
@@ -82,12 +82,12 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         }
       )
     },
-    createAppDefaultGood (req: CreateAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
-      doActionWithError<CreateAppDefaultGoodRequest, CreateAppDefaultGoodResponse>(
-        API.CREATE_APP_DEFAULT_GOOD,
+    createDefault (req: CreateDefaultRequest, done: (error: boolean, row?: Default) => void) {
+      doActionWithError<CreateDefaultRequest, CreateDefaultResponse>(
+        API.CREATE_DEFAULT_APP_GOOD,
         req,
         req.Message,
-        (resp: CreateAppDefaultGoodResponse): void => {
+        (resp: CreateDefaultResponse): void => {
           this.addDefaults(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -95,12 +95,12 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         }
       )
     },
-    deleteAppDefaultGood (req: DeleteAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
-      doActionWithError<DeleteAppDefaultGoodRequest, DeleteAppDefaultGoodResponse>(
-        API.DELETE_APP_DEFAULT_GOOD,
+    deleteDefault (req: DeleteDefaultRequest, done: (error: boolean, row?: Default) => void) {
+      doActionWithError<DeleteDefaultRequest, DeleteDefaultResponse>(
+        API.DELETE_DEFAULT_APP_GOOD,
         req,
         req.Message,
-        (resp: DeleteAppDefaultGoodResponse): void => {
+        (resp: DeleteDefaultResponse): void => {
           this.delDefault(undefined, resp.Info.EntID)
           done(false, resp.Info)
         }, () => {
@@ -108,12 +108,12 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         }
       )
     },
-    updateAppDefaultGood (req: UpdateAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
-      doActionWithError<UpdateAppDefaultGoodRequest, UpdateAppDefaultGoodResponse>(
-        API.UPDATE_APP_DEFAULT_GOOD,
+    updateDefault (req: UpdateDefaultRequest, done: (error: boolean, row?: Default) => void) {
+      doActionWithError<UpdateDefaultRequest, UpdateDefaultResponse>(
+        API.UPDATE_DEFAULT_APP_GOOD,
         req,
         req.Message,
-        (resp: UpdateAppDefaultGoodResponse): void => {
+        (resp: UpdateDefaultResponse): void => {
           this.addDefaults(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -122,12 +122,12 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
       )
     },
 
-    getNAppDefaultGoods (req: GetNAppDefaultGoodsRequest, done: (error: boolean, rows?: Array<Default>) => void) {
-      doActionWithError<GetNAppDefaultGoodsRequest, GetNAppDefaultGoodsResponse>(
-        API.GET_N_APP_DEFAULT_GOODS,
+    adminGetDefaults (req: AdminGetDefaultsRequest, done: (error: boolean, rows?: Array<Default>) => void) {
+      doActionWithError<AdminGetDefaultsRequest, AdminGetDefaultsResponse>(
+        API.ADMIN_GET_DEFAULT_APP_GOODS,
         req,
         req.Message,
-        (resp: GetNAppDefaultGoodsResponse): void => {
+        (resp: AdminGetDefaultsResponse): void => {
           this.addDefaults(req.TargetAppID, resp.Infos)
           done(false, resp.Infos)
         }, () => {
@@ -135,12 +135,12 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         }
       )
     },
-    deleteNAppDefaultGood (req: DeleteNAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
-      doActionWithError<DeleteNAppDefaultGoodRequest, DeleteNAppDefaultGoodResponse>(
-        API.DELETE_N_APP_DEFAULT_GOOD,
+    adminDeleteDefault (req: AdminDeleteDefaultRequest, done: (error: boolean, row?: Default) => void) {
+      doActionWithError<AdminDeleteDefaultRequest, AdminDeleteDefaultResponse>(
+        API.ADMIN_DELETE_DEFAULT_APP_GOOD,
         req,
         req.Message,
-        (resp: DeleteNAppDefaultGoodResponse): void => {
+        (resp: AdminDeleteDefaultResponse): void => {
           this.delDefault(req.TargetAppID, req.EntID)
           done(false, resp.Info)
         }, () => {
@@ -148,12 +148,12 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         }
       )
     },
-    createNAppDefaultGood (req: CreateNAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
-      doActionWithError<CreateNAppDefaultGoodRequest, CreateNAppDefaultGoodResponse>(
-        API.CREATE_N_APP_DEFAULT_GOOD,
+    adminCreateDefault (req: AdminCreateDefaultRequest, done: (error: boolean, row?: Default) => void) {
+      doActionWithError<AdminCreateDefaultRequest, AdminCreateDefaultResponse>(
+        API.ADMIN_CREATE_DEFAULT_APP_GOOD,
         req,
         req.Message,
-        (resp: CreateNAppDefaultGoodResponse): void => {
+        (resp: AdminCreateDefaultResponse): void => {
           this.addDefaults(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -161,12 +161,12 @@ export const useAppDefaultGoodStore = defineStore('app-default-goods', {
         }
       )
     },
-    updateNAppDefaultGood (req: UpdateNAppDefaultGoodRequest, done: (error: boolean, row?: Default) => void) {
-      doActionWithError<UpdateNAppDefaultGoodRequest, UpdateNAppDefaultGoodResponse>(
-        API.UPDATE_N_APP_DEFAULT_GOOD,
+    adminUpdateDefault (req: AdminUpdateDefaultRequest, done: (error: boolean, row?: Default) => void) {
+      doActionWithError<AdminUpdateDefaultRequest, AdminUpdateDefaultResponse>(
+        API.ADMIN_UPDATE_DEFAULT_APP_GOOD,
         req,
         req.Message,
-        (resp: UpdateNAppDefaultGoodResponse): void => {
+        (resp: AdminUpdateDefaultResponse): void => {
           this.addDefaults(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {
