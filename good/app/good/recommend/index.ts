@@ -22,7 +22,7 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../../appuser/app/local'
 
-export const useRecommendStore = defineStore('app-good-comments', {
+export const useRecommendStore = defineStore('app-good-recommends', {
   state: () => ({
     Recommends: new Map<string, Array<Recommend>>()
   }),
