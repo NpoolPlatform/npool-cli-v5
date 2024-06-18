@@ -1,13 +1,11 @@
 import { computed } from 'vue'
-import { appgood, constant, notify, order } from '..'
+import { appgood, constant, notify } from '..'
 import { AppID } from './localapp'
-import { formalizeUserID } from '../appuser/user'
 
-const _appgood = appgood.useAppGoodStore()
-const _order = order.useOrderStore()
+const appGood = appgood.useAppGoodStore()
 
 const getPageAppGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  _appgood.getAppGoods({
+  appGood.getAppGoods({
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
     Message: {
@@ -32,8 +30,8 @@ export const getAppGoods = (pageStart: number, pages: number, done?: (error: boo
   getPageAppGoods(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-const getNPageAppGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  _appgood.getNAppGoods({
+const adminGetPageAppGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  appGood.adminGetAppGoods({
     TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
@@ -51,29 +49,12 @@ const getNPageAppGoods = (pageIndex: number, pageEnd: number, done?: (error: boo
       done?.(error, totalPages, total as number)
       return
     }
-    getNPageAppGoods(++pageIndex, pageEnd, done)
+    adminGetPageAppGoods(++pageIndex, pageEnd, done)
   })
 }
 
-export const getNAppGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getNPageAppGoods(pageStart, pages ? pageStart + pages : pages, done)
+export const adminGetAppGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  adminGetPageAppGoods(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const appGoods = computed(() => _appgood.goods(AppID.value))
-export const appGoodCancelable = (appGoodID: string) => _appgood.cancelable(AppID.value, appGoodID)
-
-export const appGoodPurchaseLimit = (appGoodID: string) => {
-  const goodPurchaseLimit = _appgood.purchaseLimit(undefined, appGoodID)
-  if (goodPurchaseLimit <= 0) {
-    return 0
-  }
-  const _appGood = _appgood.good(undefined, appGoodID)
-  if (!_appGood) {
-    return 0
-  }
-  let units = 0
-  _order.orders(undefined, formalizeUserID(), appGoodID).filter((el) => el.OrderState !== order.OrderState.CANCELED).forEach((el) => {
-    units += Number(el.Units)
-  })
-  return Math.max(Math.min(Number(_appGood.MaxUserAmount) - units, goodPurchaseLimit), 0)
-}
+export const appGoods = computed(() => appGood.goods(AppID.value))
