@@ -21,7 +21,7 @@ import {
 
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAppConfigStore = defineStore('appConfigs', {
+export const useAppConfigStore = defineStore('app-order-configs', {
   state: () => ({
     AppConfigs: new Map<string, Array<AppConfig>>()
   }),
@@ -62,7 +62,7 @@ export const useAppConfigStore = defineStore('appConfigs', {
       _coins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.AppConfigs.set(appID, _coins)
     },
-    gadminGetAppConfigs (req: AdminGetAppConfigsRequest, done: (error: boolean, rows?: Array<AppConfig>, total?: number) => void) {
+    adminGetAppConfigs (req: AdminGetAppConfigsRequest, done: (error: boolean, rows?: Array<AppConfig>, total?: number) => void) {
       doActionWithError<AdminGetAppConfigsRequest, AdminGetAppConfigsResponse>(
         API.ADMIN_GET_APP_CONFIGS,
         req,
