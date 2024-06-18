@@ -30,8 +30,8 @@ export const getOrders = (pageStart: number, pages: number, done?: (error: boole
   getPageOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-const getPageNAppOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  _order.getNAppOrders({
+const adminGetPageOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  _order.adminGetOrders({
     TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
@@ -49,50 +49,12 @@ const getPageNAppOrders = (pageIndex: number, pageEnd: number, done?: (error: bo
       done?.(error, totalPages, total as number)
       return
     }
-    getPageNAppOrders(pageIndex + 1, pageEnd, done)
+    adminGetPageOrders(pageIndex + 1, pageEnd, done)
   })
 }
 
-export const getNAppOrders = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageNAppOrders(pageStart, pages ? pageStart + pages : pages, done)
+export const adminGetOrders = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  adminGetPageOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
 
 export const orders = computed(() => _order.orders(AppID.value))
-
-export const updateAppUserOrder = (id: number, canceled: boolean) => {
-  const targetOrder = _order.order(id)
-  if (!targetOrder) {
-    return
-  }
-  _order.updateAppUserOrder({
-    TargetAppID: AppID.value,
-    ID: targetOrder.ID,
-    EntID: targetOrder.EntID,
-    TargetUserID: targetOrder.UserID,
-    Canceled: canceled,
-    Message: {
-      Error: {
-        Title: 'MSG_UPDATE_ORDER',
-        Message: 'MSG_UPDATE_ORDER_FAIL',
-        Popup: true,
-        Type: notify.NotifyType.Error
-      }
-    }
-  }, () => {
-    // TODO
-  })
-}
-
-export const createAppUserOrder = (req: order.CreateAppUserOrderRequest) => {
-  req.Message = {
-    Error: {
-      Title: 'MSG_CREATE_ORDER',
-      Message: 'MSG_CREATE_ORDER_FAIL',
-      Popup: true,
-      Type: notify.NotifyType.Error
-    }
-  }
-  _order.createAppUserOrder(req, () => {
-    // TODO
-  })
-}
