@@ -1,8 +1,8 @@
 import { computed } from 'vue'
-import { goodcomment, constant, notify } from '..'
+import { appgoodcomment, constant, notify } from '..'
 import { AppID } from './localapp'
 
-const comment = goodcomment.useCommentStore()
+const comment = appgoodcomment.useCommentStore()
 
 const getPageComments = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   comment.getComments({
@@ -16,7 +16,7 @@ const getPageComments = (pageIndex: number, pageEnd: number, done?: (error: bool
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<goodcomment.Comment>, total?: number) => {
+  }, (error: boolean, rows?: Array<appgoodcomment.Comment>, total?: number) => {
     if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
       done?.(error, totalPages, total as number)
@@ -32,7 +32,7 @@ export const getComments = (pageStart: number, pages: number, done?: (error: boo
 
 export const comments = computed(() => comment.comments(AppID.value))
 
-export const createComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
+export const createComment = (target: appgoodcomment.Comment, finish: (error: boolean) => void) => {
   comment.createComment({
     ...target,
     Message: {
@@ -54,7 +54,7 @@ export const createComment = (target: goodcomment.Comment, finish: (error: boole
   })
 }
 
-export const updateComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
+export const updateComment = (target: appgoodcomment.Comment, finish: (error: boolean) => void) => {
   comment.updateComment({
     ...target,
     Message: {
@@ -76,7 +76,7 @@ export const updateComment = (target: goodcomment.Comment, finish: (error: boole
   })
 }
 
-export const deleteComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
+export const deleteComment = (target: appgoodcomment.Comment, finish: (error: boolean) => void) => {
   comment.deleteComment({
     ...target,
     Message: {
@@ -98,7 +98,7 @@ export const deleteComment = (target: goodcomment.Comment, finish: (error: boole
   })
 }
 
-export const deleteUserGoodComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
+export const deleteUserGoodComment = (target: appgoodcomment.Comment, finish: (error: boolean) => void) => {
   comment.deleteUserComment({
     ID: target.ID,
     EntID: target.EntID,
