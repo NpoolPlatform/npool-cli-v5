@@ -48,6 +48,7 @@ export enum PaymentType {
   PayWithTransferOnly = 'PayWithTransferOnly',
   PayWithTransferAndBalance = 'PayWithTransferAndBalance',
   PayWithParentOrder = 'PayWithParentOrder',
+  PayWithOtherOrder = 'PayWithOtherOrder',
   PayWithOffline = 'PayWithOffline',
   PayWithNoPayment = 'PayWithNoPayment'
 }
@@ -55,4 +56,10 @@ export enum PaymentType {
 export enum InvestmentType {
   UnionMining = 'UnionMining',
   FullPayment = 'FullPayment'
+}
+
+export enum OrderCreateMethod {
+  OrderCreatedByPurchase = 'OrderCreatedByPurchase',
+  OrderCreatedByAdmin = 'OrderCreatedByAdmin',
+  OrderCreatedByRenew = 'OrderCreatedByRenew'
 }
