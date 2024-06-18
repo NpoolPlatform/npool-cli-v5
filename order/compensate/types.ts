@@ -1,4 +1,4 @@
-import { BaseRequest } from 'src/npoolstore/request'
+import { BaseRequest } from '../../request'
 import { GoodType } from '../../good/base'
 import { CompensateType } from './const'
 
