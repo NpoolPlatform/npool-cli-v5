@@ -13,7 +13,7 @@ import {
 
 import { formalizeAppID } from '../../appuser/app/local'
 
-export const useOutOfGasStore = defineStore('outOfGass', {
+export const useOutOfGasStore = defineStore('outOfGases', {
   state: () => ({
     OutOfGases: new Map<string, Array<OutOfGas>>()
   }),
@@ -24,7 +24,7 @@ export const useOutOfGasStore = defineStore('outOfGass', {
         return this.OutOfGases.get(appID)?.find((el) => el.EntID === id)
       }
     },
-    outOfGass (): (appID?: string) => Array<OutOfGas> {
+    outOfGases (): (appID?: string) => Array<OutOfGas> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.OutOfGases.get(appID) || []
@@ -32,17 +32,13 @@ export const useOutOfGasStore = defineStore('outOfGass', {
     }
   },
   actions: {
-    addOutOfGases (appID: string | undefined, outOfGass: Array<OutOfGas>) {
-      appID = formalizeAppID(appID)
-      let _simulateConfigs = this.OutOfGases.get(appID) as Array<OutOfGas>
-      if (!_simulateConfigs) {
-        _simulateConfigs = []
-      }
-      outOfGass.forEach((outOfGas) => {
-        const index = _simulateConfigs.findIndex((el) => el.ID === outOfGas.ID)
-        _simulateConfigs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, outOfGas)
+    addOutOfGases (outOfGases: Array<OutOfGas>) {
+      outOfGases.forEach((outOfGas) => {
+        const _outOfGases = this.OutOfGases.get(outOfGas.AppID) || []
+        const index = _outOfGases.findIndex((el) => el.ID === outOfGas.ID)
+        _outOfGases.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, outOfGas)
+        this.OutOfGases.set(outOfGas.AppID, _outOfGases)
       })
-      this.OutOfGases.set(appID, _simulateConfigs)
     },
     delOutOfGas (appID: string | undefined, id: number) {
       appID = formalizeAppID(appID)
@@ -60,7 +56,7 @@ export const useOutOfGasStore = defineStore('outOfGass', {
         req,
         req.Message,
         (resp: AdminGetOutOfGasesResponse): void => {
-          this.addOutOfGases(req.TargetAppID, resp.Infos)
+          this.addOutOfGases(resp.Infos)
           done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
@@ -72,7 +68,7 @@ export const useOutOfGasStore = defineStore('outOfGass', {
         req,
         req.Message,
         (resp: GetOutOfGasesResponse): void => {
-          this.addOutOfGases(undefined, resp.Infos)
+          this.addOutOfGases(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
@@ -84,7 +80,7 @@ export const useOutOfGasStore = defineStore('outOfGass', {
         req,
         req.Message,
         (resp: GetMyOutOfGasesResponse): void => {
-          this.addOutOfGases(undefined, resp.Infos)
+          this.addOutOfGases(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
