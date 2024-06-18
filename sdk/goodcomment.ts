@@ -98,8 +98,8 @@ export const deleteComment = (target: goodcomment.Comment, finish: (error: boole
   })
 }
 
-export const deleteAppGoodComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
-  comment.deleteAppGoodComment({
+export const deleteUserGoodComment = (target: goodcomment.Comment, finish: (error: boolean) => void) => {
+  comment.deleteUserComment({
     ID: target.ID,
     EntID: target.EntID,
     TargetUserID: target.UserID,
