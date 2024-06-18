@@ -62,7 +62,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     createComment (req: CreateCommentRequest, done: (error: boolean, row?: Comment) => void) {
       doActionWithError<CreateCommentRequest, CreateCommentResponse>(
-        API.CREATE_GOODCOMMENT,
+        API.CREATE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: CreateCommentResponse): void => {
@@ -75,7 +75,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     getComments (req: GetCommentsRequest, done: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
       doActionWithError<GetCommentsRequest, GetCommentsResponse>(
-        API.GET_GOODCOMMENTS,
+        API.GET_GOOD_COMMENTS,
         req,
         req.Message,
         (resp: GetCommentsResponse): void => {
@@ -88,7 +88,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     updateComment (req: UpdateCommentRequest, done: (error: boolean, row?: Comment) => void) {
       doActionWithError<UpdateCommentRequest, UpdateCommentResponse>(
-        API.UPDATE_GOODCOMMENT,
+        API.UPDATE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: UpdateCommentResponse): void => {
@@ -101,7 +101,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     deleteComment (req: DeleteCommentRequest, done: (error: boolean, row?: Comment) => void) {
       doActionWithError<DeleteCommentRequest, DeleteCommentResponse>(
-        API.DELETE_GOODCOMMENT,
+        API.DELETE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: DeleteCommentResponse): void => {
@@ -114,7 +114,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     getMyComments (req: GetMyCommentsRequest, done: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
       doActionWithError<GetMyCommentsRequest, GetMyCommentsResponse>(
-        API.GET_MY_GOODCOMMENTS,
+        API.GET_MY_GOOD_COMMENTS,
         req,
         req.Message,
         (resp: GetMyCommentsResponse): void => {
@@ -127,7 +127,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     updateUserComment (req: UpdateUserCommentRequest, done: (error: boolean, row?: Comment) => void) {
       doActionWithError<UpdateUserCommentRequest, UpdateUserCommentResponse>(
-        API.UPDATE_USER_GOODCOMMENT,
+        API.UPDATE_USER_GOOD_COMMENT,
         req,
         req.Message,
         (resp: UpdateUserCommentResponse): void => {
@@ -140,7 +140,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     deleteUserComment (req: DeleteUserCommentRequest, done: (error: boolean, row?: Comment) => void) {
       doActionWithError<DeleteUserCommentRequest, DeleteUserCommentResponse>(
-        API.DELETE_USER_GOODCOMMENT,
+        API.DELETE_USER_GOOD_COMMENT,
         req,
         req.Message,
         (resp: DeleteUserCommentResponse): void => {
@@ -153,7 +153,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     adminUpdateComment (req: AdminUpdateCommentRequest, done: (error: boolean, row?: Comment) => void) {
       doActionWithError<AdminUpdateCommentRequest, AdminUpdateCommentResponse>(
-        API.ADMIN_UPDATE_GOODCOMMENT,
+        API.ADMIN_UPDATE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: AdminUpdateCommentResponse): void => {
@@ -166,7 +166,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     adminDeleteComment (req: AdminDeleteCommentRequest, done: (error: boolean, row?: Comment) => void) {
       doActionWithError<AdminDeleteCommentRequest, AdminDeleteCommentResponse>(
-        API.ADMIN_DELETE_GOODCOMMENT,
+        API.ADMIN_DELETE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: AdminDeleteCommentResponse): void => {
@@ -179,7 +179,7 @@ export const useCommentStore = defineStore('app-good-comments', {
     },
     adminGetComments (req: AdminGetCommentsRequest, done: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
       doActionWithError<AdminGetCommentsRequest, AdminGetCommentsResponse>(
-        API.ADMIN_GET_GOODCOMMENTS,
+        API.ADMIN_GET_GOOD_COMMENTS,
         req,
         req.Message,
         (resp: AdminGetCommentsResponse): void => {
