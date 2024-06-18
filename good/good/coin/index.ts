@@ -14,28 +14,28 @@ import {
   AdminDeleteGoodCoinResponse
 } from './types'
 
-export const useGoodCoinStore = defineStore('device-manufacturers', {
+export const useGoodCoinStore = defineStore('goodCoin-manufacturers', {
   state: () => ({
     GoodCoins: [] as Array<GoodCoin>
   }),
   getters: {
-    GoodCoin (): (id: string) => GoodCoin | undefined {
+    goodCoin (): (id: string) => GoodCoin | undefined {
       return (id: string) => {
         return this.GoodCoins.find((el: GoodCoin) => el.EntID === id)
       }
     },
-    GoodCoins () {
+    goodCoins () {
       return () => this.GoodCoins
     }
   },
   actions: {
-    addGoodCoins (devices: Array<GoodCoin>) {
-      devices.forEach((device) => {
-        const index = this.GoodCoins.findIndex((el: GoodCoin) => el.EntID === device.EntID)
-        this.GoodCoins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
+    addGoodCoins (goodCoins: Array<GoodCoin>) {
+      goodCoins.forEach((goodCoin) => {
+        const index = this.GoodCoins.findIndex((el: GoodCoin) => el.EntID === goodCoin.EntID)
+        this.GoodCoins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, goodCoin)
       })
     },
-    getGoodCoins (req: GetGoodCoinsRequest, done: (error: boolean, devices?: Array<GoodCoin>) => void) {
+    getGoodCoins (req: GetGoodCoinsRequest, done: (error: boolean, goodCoins?: Array<GoodCoin>) => void) {
       doActionWithError<GetGoodCoinsRequest, GetGoodCoinsResponse>(
         API.GET_GOOD_COINS,
         req,
@@ -47,7 +47,7 @@ export const useGoodCoinStore = defineStore('device-manufacturers', {
           done(true)
         })
     },
-    adminUpdateGoodCoin (req: AdminUpdateGoodCoinRequest, done: (error: boolean, device?: GoodCoin) => void) {
+    adminUpdateGoodCoin (req: AdminUpdateGoodCoinRequest, done: (error: boolean, goodCoin?: GoodCoin) => void) {
       doActionWithError<AdminUpdateGoodCoinRequest, AdminUpdateGoodCoinResponse>(
         API.ADMIN_UPDATE_GOOD_COIN,
         req,
@@ -59,7 +59,7 @@ export const useGoodCoinStore = defineStore('device-manufacturers', {
           done(true)
         })
     },
-    createGoodCoin (req: AdminCreateGoodCoinRequest, done: (error: boolean, device?: GoodCoin) => void) {
+    createGoodCoin (req: AdminCreateGoodCoinRequest, done: (error: boolean, goodCoin?: GoodCoin) => void) {
       doActionWithError<AdminCreateGoodCoinRequest, AdminCreateGoodCoinResponse>(
         API.ADMIN_CREATE_GOOD_COIN,
         req,
@@ -71,7 +71,7 @@ export const useGoodCoinStore = defineStore('device-manufacturers', {
           done(true)
         })
     },
-    deleteGoodCoin (req: AdminDeleteGoodCoinRequest, done: (error: boolean, device?: GoodCoin) => void) {
+    deleteGoodCoin (req: AdminDeleteGoodCoinRequest, done: (error: boolean, goodCoin?: GoodCoin) => void) {
       doActionWithError<AdminDeleteGoodCoinRequest, AdminDeleteGoodCoinResponse>(
         API.ADMIN_DELETE_GOOD_COIN,
         req,
