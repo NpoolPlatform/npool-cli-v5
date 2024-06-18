@@ -2,46 +2,46 @@ import { defineStore } from 'pinia'
 import { doActionWithError } from '../../../request'
 import { API } from './const'
 import {
-  AppFee,
-  GetAppFeeRequest,
-  GetAppFeeResponse,
-  GetAppFeesRequest,
-  GetAppFeesResponse,
-  AdminGetAppFeesRequest,
-  AdminGetAppFeesResponse,
-  UpdateAppFeeRequest,
-  UpdateAppFeeResponse,
-  AdminCreateAppFeeRequest,
-  AdminCreateAppFeeResponse,
-  AdminUpdateAppFeeRequest,
-  AdminUpdateAppFeeResponse,
-  AdminDeleteAppFeeRequest,
-  AdminDeleteAppFeeResponse
+  AppPowerRental,
+  GetAppPowerRentalRequest,
+  GetAppPowerRentalResponse,
+  GetAppPowerRentalsRequest,
+  GetAppPowerRentalsResponse,
+  AdminGetAppPowerRentalsRequest,
+  AdminGetAppPowerRentalsResponse,
+  UpdateAppPowerRentalRequest,
+  UpdateAppPowerRentalResponse,
+  AdminCreateAppPowerRentalRequest,
+  AdminCreateAppPowerRentalResponse,
+  AdminUpdateAppPowerRentalRequest,
+  AdminUpdateAppPowerRentalResponse,
+  AdminDeleteAppPowerRentalRequest,
+  AdminDeleteAppPowerRentalResponse
 } from './types'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAppFeeStore = defineStore('app-fees', {
+export const useAppPowerRentalStore = defineStore('app-fees', {
   state: () => ({
-    AppFees: new Map<string, Array<AppFee>>()
+    AppPowerRentals: new Map<string, Array<AppPowerRental>>()
   }),
   getters: {
-    appFee (): (appID: string | undefined, id: string) => AppFee | undefined {
+    appFee (): (appID: string | undefined, id: string) => AppPowerRental | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
-        return this.AppFees.get(appID)?.find((el: AppFee) => el.EntID === id)
+        return this.AppPowerRentals.get(appID)?.find((el: AppPowerRental) => el.EntID === id)
       }
     },
-    goods (): (appID?: string) => Array<AppFee> {
+    goods (): (appID?: string) => Array<AppPowerRental> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
-        return this.AppFees.get(appID) || []
+        return this.AppPowerRentals.get(appID) || []
       }
     }
   },
   actions: {
-    addAppFees (appID: string | undefined, goods: Array<AppFee>) {
+    addAppPowerRentals (appID: string | undefined, goods: Array<AppPowerRental>) {
       appID = formalizeAppID(appID)
-      let _goods = this.AppFees.get(appID) as Array<AppFee>
+      let _goods = this.AppPowerRentals.get(appID) as Array<AppPowerRental>
       if (!_goods) {
         _goods = []
       }
@@ -50,97 +50,97 @@ export const useAppFeeStore = defineStore('app-fees', {
         const index = _goods.findIndex((el) => el.EntID === good.EntID)
         _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
       })
-      this.AppFees.set(appID, _goods)
+      this.AppPowerRentals.set(appID, _goods)
     },
-    deleteAppFee (appID: string | undefined, good: AppFee) {
+    deleteAppPowerRental (appID: string | undefined, good: AppPowerRental) {
       appID = formalizeAppID(appID)
-      let _goods = this.AppFees.get(appID) as Array<AppFee>
+      let _goods = this.AppPowerRentals.get(appID) as Array<AppPowerRental>
       if (!_goods) {
         _goods = []
       }
       const index = _goods.findIndex((el) => el.EntID === good.EntID)
       _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      this.AppFees.set(appID, _goods)
+      this.AppPowerRentals.set(appID, _goods)
     },
-    getAppFee (req: GetAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
-      doActionWithError<GetAppFeeRequest, GetAppFeeResponse>(
-        API.GET_APP_FEE,
+    getAppPowerRental (req: GetAppPowerRentalRequest, done: (error: boolean, row?: AppPowerRental) => void) {
+      doActionWithError<GetAppPowerRentalRequest, GetAppPowerRentalResponse>(
+        API.GET_APP_POWERRENTAL,
         req,
         req.Message,
-        (resp: GetAppFeeResponse): void => {
-          this.addAppFees(undefined, [resp.Info])
+        (resp: GetAppPowerRentalResponse): void => {
+          this.addAppPowerRentals(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
         })
     },
-    getAppFees (req: GetAppFeesRequest, done: (error: boolean, rows?: Array<AppFee>, total?: number) => void) {
-      doActionWithError<GetAppFeesRequest, GetAppFeesResponse>(
-        API.GET_APP_FEES,
+    getAppPowerRentals (req: GetAppPowerRentalsRequest, done: (error: boolean, rows?: Array<AppPowerRental>, total?: number) => void) {
+      doActionWithError<GetAppPowerRentalsRequest, GetAppPowerRentalsResponse>(
+        API.GET_APP_POWERRENTALS,
         req,
         req.Message,
-        (resp: GetAppFeesResponse): void => {
-          this.addAppFees(undefined, resp.Infos)
+        (resp: GetAppPowerRentalsResponse): void => {
+          this.addAppPowerRentals(undefined, resp.Infos)
           done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
         })
     },
-    updateAppFee (req: UpdateAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
-      doActionWithError<UpdateAppFeeRequest, UpdateAppFeeResponse>(
-        API.UPDATE_APP_FEE,
+    updateAppPowerRental (req: UpdateAppPowerRentalRequest, done: (error: boolean, row?: AppPowerRental) => void) {
+      doActionWithError<UpdateAppPowerRentalRequest, UpdateAppPowerRentalResponse>(
+        API.UPDATE_APP_POWERRENTAL,
         req,
         req.Message,
-        (resp: UpdateAppFeeResponse): void => {
-          this.addAppFees(undefined, [resp.Info])
+        (resp: UpdateAppPowerRentalResponse): void => {
+          this.addAppPowerRentals(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
         })
     },
-    adminCreateAppFees (req: AdminCreateAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
-      doActionWithError<AdminCreateAppFeeRequest, AdminCreateAppFeeResponse>(
-        API.ADMIN_CREATE_APP_FEE,
+    adminCreateAppPowerRentals (req: AdminCreateAppPowerRentalRequest, done: (error: boolean, row?: AppPowerRental) => void) {
+      doActionWithError<AdminCreateAppPowerRentalRequest, AdminCreateAppPowerRentalResponse>(
+        API.ADMIN_CREATE_APP_POWERRENTAL,
         req,
         req.Message,
-        (resp: AdminCreateAppFeeResponse): void => {
-          this.addAppFees(undefined, [resp.Info])
+        (resp: AdminCreateAppPowerRentalResponse): void => {
+          this.addAppPowerRentals(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
         })
     },
-    adminGetAppFees (req: AdminGetAppFeesRequest, done: (error: boolean, rows?: Array<AppFee>, total?: number) => void) {
-      doActionWithError<AdminGetAppFeesRequest, AdminGetAppFeesResponse>(
-        API.ADMIN_GET_APP_FEES,
+    adminGetAppPowerRentals (req: AdminGetAppPowerRentalsRequest, done: (error: boolean, rows?: Array<AppPowerRental>, total?: number) => void) {
+      doActionWithError<AdminGetAppPowerRentalsRequest, AdminGetAppPowerRentalsResponse>(
+        API.ADMIN_GET_APP_POWERRENTALS,
         req,
         req.Message,
-        (resp: AdminGetAppFeesResponse): void => {
-          this.addAppFees(undefined, resp.Infos)
+        (resp: AdminGetAppPowerRentalsResponse): void => {
+          this.addAppPowerRentals(undefined, resp.Infos)
           done(false, resp.Infos, resp.Total)
         }, () => {
           done(true)
         })
     },
-    adminUpdateAppFees (req: AdminUpdateAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
-      doActionWithError<AdminUpdateAppFeeRequest, AdminUpdateAppFeeResponse>(
-        API.ADMIN_UPDATE_APP_FEE,
+    adminUpdateAppPowerRentals (req: AdminUpdateAppPowerRentalRequest, done: (error: boolean, row?: AppPowerRental) => void) {
+      doActionWithError<AdminUpdateAppPowerRentalRequest, AdminUpdateAppPowerRentalResponse>(
+        API.ADMIN_UPDATE_APP_POWERRENTAL,
         req,
         req.Message,
-        (resp: AdminUpdateAppFeeResponse): void => {
-          this.addAppFees(undefined, [resp.Info])
+        (resp: AdminUpdateAppPowerRentalResponse): void => {
+          this.addAppPowerRentals(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
         })
     },
-    adminDeleteAppFees (req: AdminDeleteAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
-      doActionWithError<AdminDeleteAppFeeRequest, AdminDeleteAppFeeResponse>(
-        API.ADMIN_DELETE_APP_FEE,
+    adminDeleteAppPowerRentals (req: AdminDeleteAppPowerRentalRequest, done: (error: boolean, row?: AppPowerRental) => void) {
+      doActionWithError<AdminDeleteAppPowerRentalRequest, AdminDeleteAppPowerRentalResponse>(
+        API.ADMIN_DELETE_APP_POWERRENTAL,
         req,
         req.Message,
-        (resp: AdminDeleteAppFeeResponse): void => {
-          this.deleteAppFee(undefined, resp.Info)
+        (resp: AdminDeleteAppPowerRentalResponse): void => {
+          this.deleteAppPowerRental(undefined, resp.Info)
           done(false, resp.Info)
         }, () => {
           done(true)
