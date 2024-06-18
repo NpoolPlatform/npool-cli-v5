@@ -31,8 +31,8 @@ export const getTopMostGoods = (pageStart: number, pages: number, done?: (error:
   getPageTopMostGoods(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-const getNPageTopMostGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  top.getNTopMostGoods({
+const adminGetPageTopMostGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  top.adminGetTopMostGoods({
     TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
@@ -49,15 +49,15 @@ const getNPageTopMostGoods = (pageIndex: number, pageEnd: number, done?: (error:
       done?.(error, totalPages, total as number)
       return
     }
-    getNPageTopMostGoods(++pageIndex, pageEnd, done)
+    adminGetPageTopMostGoods(++pageIndex, pageEnd, done)
   })
 }
 
-export const getNTopMostGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getNPageTopMostGoods(pageStart, pages ? pageStart + pages : pages, done)
+export const adminGetTopMostGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  adminGetPageTopMostGoods(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const topMostGoods = computed(() => top.topmostgoods(AppID.value))
+export const topMostGoods = computed(() => top.topMostGoods(AppID.value))
 
 export const createTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
   top.createTopMostGood({
@@ -81,8 +81,8 @@ export const createTopMostGood = (target: TopMostGood, finish: (error: boolean) 
   })
 }
 
-export const createNTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
-  top.createNTopMostGood({
+export const adminCreateTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+  top.adminCreateTopMostGood({
     ...target,
     TargetAppID: AppID.value,
     Message: {
@@ -126,8 +126,8 @@ export const updateTopMostGood = (target: TopMostGood, finish: (error: boolean) 
   })
 }
 
-export const updateNTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
-  top.updateNTopMostGood({
+export const adminUpdateTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+  top.adminUpdateTopMostGood({
     ...target,
     TargetAppID: target.AppID,
     Message: {

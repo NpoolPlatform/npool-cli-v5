@@ -116,7 +116,7 @@ export const useSimulateStore = defineStore('app-simulate-goods', {
       )
     },
 
-    getNSimulates (req: AdminGetSimulatesRequest, done: (error: boolean, rows?: Array<Simulate>) => void) {
+    adminGetSimulates (req: AdminGetSimulatesRequest, done: (error: boolean, rows?: Array<Simulate>) => void) {
       doActionWithError<AdminGetSimulatesRequest, AdminGetSimulatesResponse>(
         API.ADMIN_GET_APP_POWERRENTAL_SIMULATES,
         req,
@@ -129,7 +129,7 @@ export const useSimulateStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    deleteNSimulate (req: AdminDeleteSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    dadminDeleteSimulate (req: AdminDeleteSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
       doActionWithError<AdminDeleteSimulateRequest, AdminDeleteSimulateResponse>(
         API.ADMIN_DELETE_APP_POWERRENTAL_SIMULATE,
         req,
@@ -142,7 +142,7 @@ export const useSimulateStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    createNSimulate (req: AdminCreateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    adminCreateSimulate (req: AdminCreateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
       doActionWithError<AdminCreateSimulateRequest, AdminCreateSimulateResponse>(
         API.ADMIN_CREATE_APP_POWERRENTAL_SIMULATE,
         req,
@@ -155,7 +155,7 @@ export const useSimulateStore = defineStore('app-simulate-goods', {
         }
       )
     },
-    updateNSimulate (req: AdminUpdateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    adminUpdateSimulate (req: AdminUpdateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
       doActionWithError<AdminUpdateSimulateRequest, AdminUpdateSimulateResponse>(
         API.ADMIN_UPDATE_APP_POWERRENTAL_SIMULATE,
         req,
