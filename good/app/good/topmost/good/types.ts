@@ -1,5 +1,6 @@
 import { GoodTopMostType, GoodType } from '../../../../../good/base'
 import { BaseRequest } from '../../../../../request'
+import { PosterInfo } from '../poster'
 
 export interface TopMostGood {
     ID: number
@@ -11,18 +12,14 @@ export interface TopMostGood {
     GoodName: string
     AppGoodID: string
     AppGoodName: string
-    CoinTypeID: string
-    CoinName: string
-    CoinLogo: string
-    CoinEnv: string
-    CoinUnit: string
     TopMostID: string
     TopMostType: GoodTopMostType
     TopMostTitle: string
     TopMostMessage: string
-    Posters: string[]
+    TopMostTargetUrl: string
+    Posters: PosterInfo[]
     UnitPrice: string
-    PackagePrice: string
+    DisplayIndex: number
     CreatedAt: number
     UpdatedAt: number
 }
@@ -30,9 +27,8 @@ export interface TopMostGood {
 export interface CreateTopMostGoodRequest extends BaseRequest {
     TopMostID: string
     AppGoodID: string
-    Posters: string[]
-    UnitPrice?: string
-    PackagePrice?: string
+    UnitPrice: string
+    DisplayIndex?: number
 }
 
 export interface CreateTopMostGoodResponse {
@@ -42,9 +38,8 @@ export interface CreateTopMostGoodResponse {
 export interface UpdateTopMostGoodRequest extends BaseRequest {
     ID: number
     EntID: string
-    Posters: string[]
     UnitPrice?: string
-    PackagePrice?: string
+    DisplayIndex?: number
 }
 
 export interface UpdateTopMostGoodResponse {
@@ -61,54 +56,56 @@ export interface DeleteTopMostGoodResponse {
 }
 
 export interface GetTopMostGoodsRequest extends BaseRequest {
-    /** @format int32 */
     Offset: number
-    /** @format int32 */
     Limit: number
 }
 
 export interface GetTopMostGoodsResponse {
     Infos: TopMostGood[]
-    /** @format int64 */
     Total: number
 }
 
-export interface CreateNTopMostGoodRequest extends BaseRequest {
+export interface AdminCreateTopMostGoodRequest extends BaseRequest {
     TargetAppID: string
     TopMostID: string
     AppGoodID: string
-    Posters: string[]
-    UnitPrice?: string
-    PackagePrice?: string
+    UnitPrice: string
+    DisplayIndex?: number
 }
 
-export interface CreateNTopMostGoodResponse {
+export interface AdminCreateTopMostGoodResponse {
     Info: TopMostGood
 }
 
-export interface GetNTopMostGoodsRequest extends BaseRequest {
-    TargetAppID: string
-    /** @format int32 */
-    Offset: number
-    /** @format int32 */
-    Limit: number
-}
-
-export interface GetNTopMostGoodsResponse {
-    Infos: TopMostGood[]
-    /** @format int64 */
-    Total: number
-}
-
-export interface UpdateNTopMostGoodRequest extends BaseRequest {
+export interface AdminUpdateTopMostGoodRequest extends BaseRequest {
     ID: number
     EntID: string
     TargetAppID: string
-    Posters: string[]
     UnitPrice?: string
-    PackagePrice?: string
+    DisplayIndex?: number
 }
 
-export interface UpdateNTopMostGoodResponse {
+export interface AdminUpdateTopMostGoodResponse {
     Info: TopMostGood
+}
+
+export interface AdminDeleteTopMostGoodRequest extends BaseRequest {
+    ID: number
+    EntID: string
+    TargetAppID: string
+}
+
+export interface AdminDeleteTopMostGoodResponse {
+    Info: TopMostGood
+}
+
+export interface AdminGetTopMostGoodsRequest extends BaseRequest {
+    TargetAppID: string
+    Offset: number
+    Limit: number
+}
+
+export interface AdminGetTopMostGoodsResponse {
+    Infos: TopMostGood[]
+    Total: number
 }

@@ -1,5 +1,6 @@
 import { BaseRequest, NotifyRequest } from '../../../../request'
 import { GoodTopMostType } from '../../../base'
+import { PosterInfo } from './poster'
 
 export interface TopMost {
     ID: number
@@ -9,14 +10,10 @@ export interface TopMost {
     TopMostType: GoodTopMostType
     Title: string
     Message: string
-    Posters: string[]
+    TargetUrl: string
     StartAt: number
     EndAt: number
-    ThresholdCredits: string
-    RegisterElapsedSeconds: number
-    ThresholdPurchases: number
-    ThresholdPaymentAmount: string
-    KycMust: boolean
+    Posters: PosterInfo[]
     CreatedAt: number
     UpdatedAt: number
 }
@@ -25,18 +22,9 @@ export interface CreateTopMostRequest extends NotifyRequest {
     TopMostType: GoodTopMostType
     Title: string
     Message: string
-    Posters: string[]
-    /** @format int64 */
+    TargetUrl?: string
     StartAt: number
-    /** @format int64 */
     EndAt: number
-    ThresholdCredits: string
-    /** @format int64 */
-    RegisterElapsedSeconds: number
-    /** @format int64 */
-    ThresholdPurchases: number
-    ThresholdPaymentAmount: string
-    KycMust: boolean
 }
 
 export interface CreateTopMostResponse {
@@ -55,16 +43,11 @@ export interface DeleteTopMostResponse {
 export interface UpdateTopMostRequest extends NotifyRequest {
     ID: number
     EntID: string
-    Title: string
-    Message: string
-    Posters: string[]
-    StartAt: number
-    EndAt: number
-    ThresholdCredits: string
-    RegisterElapsedSeconds: number
-    ThresholdPurchases: number
-    ThresholdPaymentAmount: string
-    KycMust: boolean
+    Title?: string
+    Message?: string
+    TargetUrl?: string
+    StartAt?: number
+    EndAt?: number
 }
 
 export interface UpdateTopMostResponse {
@@ -81,62 +64,52 @@ export interface GetTopMostsResponse {
     Total: number
 }
 
-export interface CreateNTopMostRequest extends NotifyRequest {
+export interface AdminCreateTopMostRequest extends NotifyRequest {
     TargetAppID: string
     TopMostType: GoodTopMostType
     Title: string
     Message: string
-    Posters: string[]
-    /** @format int64 */
+    TargetUrl?: string
     StartAt: number
-    /** @format int64 */
     EndAt: number
-    ThresholdCredits: string
-    /** @format int64 */
-    RegisterElapsedSeconds: number
-    /** @format int64 */
-    ThresholdPurchases: number
-    ThresholdPaymentAmount: string
-    KycMust: boolean
 }
 
-export interface CreateNTopMostResponse {
+export interface AdminCreateTopMostResponse {
     Info: TopMost
 }
-export interface GetNTopMostsRequest extends BaseRequest {
-    TargetAppID: string
-    /** @format int32 */
-    Offset: number
-    /** @format int32 */
-    Limit: number
-}
 
-export interface GetNTopMostsResponse {
-    Infos: TopMost[]
-    /** @format int64 */
-    Total: number
-}
-
-export interface UpdateNTopMostRequest extends NotifyRequest {
+export interface AdminDeleteTopMostRequest extends BaseRequest {
     ID: number
     EntID: string
     TargetAppID: string
-    Title: string
-    Message: string
-    Posters: string[]
-    /** @format int64 */
-    StartAt: number
-    /** @format int64 */
-    EndAt: number
-    ThresholdCredits: string
-    /** @format int64 */
-    RegisterElapsedSeconds: number
-    /** @format int64 */
-    ThresholdPurchases: number
-    ThresholdPaymentAmount: string
-    KycMust: boolean
 }
 
-export interface UpdateNTopMostResponse {
+export interface AdminDeleteTopMostResponse {
     Info: TopMost
+}
+
+export interface AdminUpdateTopMostRequest extends NotifyRequest {
+    ID: number
+    EntID: string
+    TargetAppID: string
+    Title?: string
+    Message?: string
+    TargetUrl?: string
+    StartAt?: number
+    EndAt?: number
+}
+
+export interface AdminUpdateTopMostResponse {
+    Info: TopMost
+}
+
+export interface AdminGetTopMostsRequest extends BaseRequest {
+    TargetAppID: string
+    Offset: number
+    Limit: number
+}
+
+export interface AdminGetTopMostsResponse {
+    Infos: TopMost[]
+    Total: number
 }

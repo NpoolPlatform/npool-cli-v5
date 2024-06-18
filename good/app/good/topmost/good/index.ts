@@ -9,29 +9,31 @@ import {
   UpdateTopMostGoodResponse,
   CreateTopMostGoodRequest,
   CreateTopMostGoodResponse,
-  GetNTopMostGoodsRequest,
-  GetNTopMostGoodsResponse,
-  UpdateNTopMostGoodRequest,
-  UpdateNTopMostGoodResponse,
   DeleteTopMostGoodRequest,
   DeleteTopMostGoodResponse,
-  CreateNTopMostGoodRequest,
-  CreateNTopMostGoodResponse
+  AdminCreateTopMostGoodRequest,
+  AdminCreateTopMostGoodResponse,
+  AdminGetTopMostGoodsRequest,
+  AdminGetTopMostGoodsResponse,
+  AdminUpdateTopMostGoodRequest,
+  AdminUpdateTopMostGoodResponse,
+  AdminDeleteTopMostGoodRequest,
+  AdminDeleteTopMostGoodResponse
 } from './types'
 import { formalizeAppID } from '../../../../../appuser/app/local'
 
-export const useTopMostGoodStore = defineStore('topmostgood', {
+export const useTopMostGoodStore = defineStore('topMostGood', {
   state: () => ({
     TopMostGoods: new Map<string, Array<TopMostGood>>()
   }),
   getters: {
-    topmostgood (): (appID: string | undefined, id: string) => TopMostGood | undefined {
+    topMostGood (): (appID: string | undefined, id: string) => TopMostGood | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.TopMostGoods.get(appID)?.find((el: TopMostGood) => el.EntID === id)
       }
     },
-    topmostgoods (): (appID?: string) => Array<TopMostGood> {
+    topMostGoods (): (appID?: string) => Array<TopMostGood> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.TopMostGoods.get(appID) || []
@@ -54,7 +56,7 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
     },
     deleteTopMostGoods (tops: Array<TopMostGood>) {
       tops.forEach((top) => {
-        const _tops = this.topmostgoods(top.AppID) || []
+        const _tops = this.topMostGoods(top.AppID) || []
         const index = _tops.findIndex((el: TopMostGood) => el.EntID === top.EntID)
         _tops.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
         this.TopMostGoods.set(top.AppID, _tops)
@@ -112,25 +114,12 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
         }
       )
     },
-    getNTopMostGoods (req: GetNTopMostGoodsRequest, done: (error: boolean, rows?: Array<TopMostGood>, total?: number) => void) {
-      doActionWithError<GetNTopMostGoodsRequest, GetNTopMostGoodsResponse>(
-        API.GET_N_TOPMOST_GOODS,
+    adminCreateTopMostGood (req: AdminCreateTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+      doActionWithError<AdminCreateTopMostGoodRequest, AdminCreateTopMostGoodResponse>(
+        API.ADMIN_CREATE_TOPMOST_GOOD,
         req,
         req.Message,
-        (resp: GetNTopMostGoodsResponse): void => {
-          this.addTopMostGoods(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos, resp.Total)
-        }, () => {
-          done(true)
-        }
-      )
-    },
-    createNTopMostGood (req: CreateNTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
-      doActionWithError<CreateNTopMostGoodRequest, CreateNTopMostGoodResponse>(
-        API.CREATE_N_TOPMOST_GOOD,
-        req,
-        req.Message,
-        (resp: CreateNTopMostGoodResponse): void => {
+        (resp: AdminCreateTopMostGoodResponse): void => {
           this.addTopMostGoods(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
@@ -138,13 +127,39 @@ export const useTopMostGoodStore = defineStore('topmostgood', {
         }
       )
     },
-    updateNTopMostGood (req: UpdateNTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
-      doActionWithError<UpdateNTopMostGoodRequest, UpdateNTopMostGoodResponse>(
-        API.UPDATE_N_TOPMOST_GOOD,
+    adminGetTopMostGoods (req: AdminGetTopMostGoodsRequest, done: (error: boolean, rows?: Array<TopMostGood>, total?: number) => void) {
+      doActionWithError<AdminGetTopMostGoodsRequest, AdminGetTopMostGoodsResponse>(
+        API.ADMIN_GET_TOPMOST_GOODS,
         req,
         req.Message,
-        (resp: UpdateNTopMostGoodResponse): void => {
-          this.addTopMostGoods(req.TargetAppID, [resp.Info])
+        (resp: AdminGetTopMostGoodsResponse): void => {
+          this.addTopMostGoods(undefined, resp.Infos)
+          done(false, resp.Infos, resp.Total)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminUpdateTopMostGood (req: AdminUpdateTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+      doActionWithError<AdminUpdateTopMostGoodRequest, AdminUpdateTopMostGoodResponse>(
+        API.ADMIN_UPDATE_TOPMOST_GOOD,
+        req,
+        req.Message,
+        (resp: AdminUpdateTopMostGoodResponse): void => {
+          this.addTopMostGoods(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminDeleteTopMostGood (req: AdminDeleteTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+      doActionWithError<AdminDeleteTopMostGoodRequest, AdminDeleteTopMostGoodResponse>(
+        API.ADMIN_DELETE_TOPMOST_GOOD,
+        req,
+        req.Message,
+        (resp: AdminDeleteTopMostGoodResponse): void => {
+          this.deleteTopMostGoods([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
