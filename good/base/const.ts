@@ -110,3 +110,12 @@ export enum GoodCommentHideReason {
   GoodCommentHideByFalseDescription = 'GoodCommentHideByFalseDescription'
 }
 export const GoodCommentHideReasons = Object.values(GoodCommentHideReason)
+
+export enum GoodTopMostConstraint {
+  TopMostCreditThreshold = 'TopMostCreditThreshold',
+  TopMostRegisterBefore = 'TopMostRegisterBefore',
+  TopMostOrderThreshold = 'TopMostOrderThreshold',
+  TopMostPaymentAmount = 'TopMostPaymentAmount',
+  TopMostKycMust = 'TopMostKycMust'
+}
+export const GoodTopMostConstraints = Object.values(GoodTopMostConstraint)
