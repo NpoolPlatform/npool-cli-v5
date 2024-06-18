@@ -103,3 +103,10 @@ export enum GoodSaleMode {
   GoodSaleModeTestnetPresale = 'GoodSaleModeTestnetPresale'
 }
 export const GoodSaleModes = Object.values(GoodSaleMode)
+
+export enum GoodCommentHideReason {
+  GoodCommentHideBySpam = 'GoodCommentHideBySpam',
+  GoodCommentHideByNotThisGood = 'GoodCommentHideByNotThisGood',
+  GoodCommentHideByFalseDescription = 'GoodCommentHideByFalseDescription'
+}
+export const GoodCommentHideReasons = Object.values(GoodCommentHideReason)
