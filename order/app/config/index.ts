@@ -21,7 +21,7 @@ import {
 
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAppConfigStore = defineStore('app-order-configs', {
+export const useAppConfigStore = defineStore('appOrderConfigs', {
   state: () => ({
     AppConfigs: new Map<string, Array<AppConfig>>()
   }),
