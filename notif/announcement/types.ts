@@ -1,5 +1,6 @@
 import { BaseRequest } from '../../request'
 import { NotifType, NotifChannel } from '../base'
+
 export interface Announcement {
   ID: number
   EntID: string
