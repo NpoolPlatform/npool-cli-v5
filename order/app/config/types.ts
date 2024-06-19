@@ -4,6 +4,7 @@ import { SimulateOrderCouponMode } from './const'
 export interface AppConfig {
   ID: number
   EntID: string
+  AppID: string
   EnableSimulateOrder: boolean
   SimulateOrderCouponMode: SimulateOrderCouponMode
   SimulateOrderCouponProbability: string
