@@ -82,42 +82,42 @@ export const useDefaultStore = defineStore('app-default-goods', {
         }
       )
     },
-    createDefault (req: CreateDefaultRequest, done: (error: boolean, row?: Default) => void) {
+    createDefault (req: CreateDefaultRequest, done?: (error: boolean, row?: Default) => void) {
       doActionWithError<CreateDefaultRequest, CreateDefaultResponse>(
         API.CREATE_DEFAULT_APP_GOOD,
         req,
         req.Message,
         (resp: CreateDefaultResponse): void => {
           this.addDefaults(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteDefault (req: DeleteDefaultRequest, done: (error: boolean, row?: Default) => void) {
+    deleteDefault (req: DeleteDefaultRequest, done?: (error: boolean, row?: Default) => void) {
       doActionWithError<DeleteDefaultRequest, DeleteDefaultResponse>(
         API.DELETE_DEFAULT_APP_GOOD,
         req,
         req.Message,
         (resp: DeleteDefaultResponse): void => {
           this.delDefault(undefined, resp.Info.EntID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateDefault (req: UpdateDefaultRequest, done: (error: boolean, row?: Default) => void) {
+    updateDefault (req: UpdateDefaultRequest, done?: (error: boolean, row?: Default) => void) {
       doActionWithError<UpdateDefaultRequest, UpdateDefaultResponse>(
         API.UPDATE_DEFAULT_APP_GOOD,
         req,
         req.Message,
         (resp: UpdateDefaultResponse): void => {
           this.addDefaults(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
@@ -135,42 +135,42 @@ export const useDefaultStore = defineStore('app-default-goods', {
         }
       )
     },
-    adminDeleteDefault (req: AdminDeleteDefaultRequest, done: (error: boolean, row?: Default) => void) {
+    adminDeleteDefault (req: AdminDeleteDefaultRequest, done?: (error: boolean, row?: Default) => void) {
       doActionWithError<AdminDeleteDefaultRequest, AdminDeleteDefaultResponse>(
         API.ADMIN_DELETE_DEFAULT_APP_GOOD,
         req,
         req.Message,
         (resp: AdminDeleteDefaultResponse): void => {
           this.delDefault(req.TargetAppID, req.EntID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminCreateDefault (req: AdminCreateDefaultRequest, done: (error: boolean, row?: Default) => void) {
+    adminCreateDefault (req: AdminCreateDefaultRequest, done?: (error: boolean, row?: Default) => void) {
       doActionWithError<AdminCreateDefaultRequest, AdminCreateDefaultResponse>(
         API.ADMIN_CREATE_DEFAULT_APP_GOOD,
         req,
         req.Message,
         (resp: AdminCreateDefaultResponse): void => {
           this.addDefaults(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdateDefault (req: AdminUpdateDefaultRequest, done: (error: boolean, row?: Default) => void) {
+    adminUpdateDefault (req: AdminUpdateDefaultRequest, done?: (error: boolean, row?: Default) => void) {
       doActionWithError<AdminUpdateDefaultRequest, AdminUpdateDefaultResponse>(
         API.ADMIN_UPDATE_DEFAULT_APP_GOOD,
         req,
         req.Message,
         (resp: AdminUpdateDefaultResponse): void => {
           this.addDefaults(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }

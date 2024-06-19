@@ -58,7 +58,7 @@ export const adminGetAppDefaultGoods = (pageStart: number, pages: number, done?:
 
 export const appDefaultGoods = computed(() => appDefaultGood.defaults(AppID.value))
 
-export const adminUpdateDefaultGood = (target: appdefaultgood.Default) => {
+export const adminUpdateAppDefaultGood = (target: appdefaultgood.Default, done?: (error: boolean, defautle?: appdefaultgood.Default) => void) => {
   appDefaultGood.adminUpdateDefault({
     ...target,
     TargetAppID: AppID.value,
@@ -76,12 +76,30 @@ export const adminUpdateDefaultGood = (target: appdefaultgood.Default) => {
         Type: notify.NotifyType.Success
       }
     }
-  }, () => {
-    // TODO
-  })
+  }, done)
 }
 
-export const adminCreateDefaultGood = (target: appdefaultgood.Default) => {
+export const updateAppDefaultGood = (target: appdefaultgood.Default, done?: (error: boolean, defautle?: appdefaultgood.Default) => void) => {
+  appDefaultGood.updateDefault({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_APP_DEFAULT_GOOD',
+        Message: 'MSG_UPDATE_APP_DEFAULT_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_UPDATE_APP_DEFAULT_GOOD',
+        Message: 'MSG_UPDATE_APP_DEFAULT_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
+export const adminCreateAppDefaultGood = (target: appdefaultgood.Default, done?: (error: boolean, defautle?: appdefaultgood.Default) => void) => {
   appDefaultGood.adminCreateDefault({
     ...target,
     TargetAppID: AppID.value,
@@ -99,7 +117,66 @@ export const adminCreateDefaultGood = (target: appdefaultgood.Default) => {
         Type: notify.NotifyType.Success
       }
     }
-  }, () => {
-    // TODO
-  })
+  }, done)
+}
+
+export const createAppDefaultGood = (target: appdefaultgood.Default, done?: (error: boolean, defautle?: appdefaultgood.Default) => void) => {
+  appDefaultGood.createDefault({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_APP_DEFAULT_GOOD',
+        Message: 'MSG_CREATE_APP_DEFAULT_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_APP_DEFAULT_GOOD',
+        Message: 'MSG_CREATE_APP_DEFAULT_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
+export const adminDeleteAppDefaultGood = (target: appdefaultgood.Default, done?: (error: boolean, defautle?: appdefaultgood.Default) => void) => {
+  appDefaultGood.adminDeleteDefault({
+    ...target,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_APP_DEFAULT_GOOD',
+        Message: 'MSG_DELETE_APP_DEFAULT_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_APP_DEFAULT_GOOD',
+        Message: 'MSG_DELETE_APP_DEFAULT_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
+export const deleteAppDefaultGood = (target: appdefaultgood.Default, done?: (error: boolean, defautle?: appdefaultgood.Default) => void) => {
+  appDefaultGood.deleteDefault({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_APP_DEFAULT_GOOD',
+        Message: 'MSG_DELETE_APP_DEFAULT_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_APP_DEFAULT_GOOD',
+        Message: 'MSG_DELETE_APP_DEFAULT_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
 }

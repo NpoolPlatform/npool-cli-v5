@@ -2,10 +2,10 @@ import { computed } from 'vue'
 import { appgood, constant, notify } from '..'
 import { AppID } from './localapp'
 
-const appGood = appgood.useAppGoodStore()
+const _appGood = appgood.useAppGoodStore()
 
 const getPageAppGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  appGood.getAppGoods({
+  _appGood.getAppGoods({
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
     Message: {
@@ -31,7 +31,7 @@ export const getAppGoods = (pageStart: number, pages: number, done?: (error: boo
 }
 
 const adminGetPageAppGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  appGood.adminGetAppGoods({
+  _appGood.adminGetAppGoods({
     TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
@@ -57,4 +57,6 @@ export const adminGetAppGoods = (pageStart: number, pages: number, done?: (error
   adminGetPageAppGoods(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const appGoods = computed(() => appGood.goods(AppID.value))
+export const appGoods = computed(() => _appGood.goods(AppID.value))
+export const appGood = (appGoodID: string) => appGoods.value.find((el) => el.EntID === appGoodID)
+export const appGoodDisplayName = (appGoodID: string, index: number) => appGood(appGoodID)?.DisplayNames[index] || appGood(appGoodID)?.AppGoodName || ''
