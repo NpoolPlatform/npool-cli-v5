@@ -74,9 +74,7 @@ export interface CreateUserFeeOrderRequest extends BaseRequest {
   AppGoodID: string
   ParentOrderID: string
   DurationSeconds: number
-  Balances: PaymentBalance[]
-  PaymentTransferCoinTypeID?: string
-  CouponIDs: string[]
+  OrderType: OrderType
 }
 
 export interface CreateUserFeeOrderResponse {
@@ -100,10 +98,8 @@ export interface CreateUserFeeOrdersRequest extends BaseRequest {
   TargetUserID: string
   ParentOrderID: string
   DurationSeconds: number
-  Balances: PaymentBalance[]
-  PaymentTransferCoinTypeID?: string
-  CouponIDs: string[]
   AppGoodIDs: string[]
+  OrderType: OrderType
 }
 
 export interface CreateUserFeeOrdersResponse {

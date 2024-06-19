@@ -1,4 +1,5 @@
 import { BaseRequest } from '../../../request'
+import { CancelMode, GoodDurationType, GoodSettlementType, GoodType } from '../../base'
 
 export interface AppFee {
   ID: number
@@ -6,12 +7,16 @@ export interface AppFee {
   AppID: string
   AppName: string
   GoodID: string
+  GoodType: GoodType
   GoodName: string
   AppGoodID: string
   AppGoodName: string
   ProductPage: string
+  SettlementType: GoodSettlementType
   Banner: string
   UnitValue: string
+  DurationDisplayType: GoodDurationType
+  CancelMode: CancelMode
   MinOrderDurationSeconds: number
   CreatedAt: number
   UpdatedAt: number
