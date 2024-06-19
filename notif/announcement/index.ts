@@ -20,7 +20,8 @@ import { formalizeAppID } from '../../appuser/app/local'
 
 export const useAnnouncementStore = defineStore('announcements', {
   state: () => ({
-    Announcements: new Map<string, Array<Announcement>>()
+    Announcements: new Map<string, Array<Announcement>>(),
+    PageStarts: new Map<string, number>()
   }),
   getters: {
     announcement (): (appID: string | undefined, id: number) => Announcement | undefined {
@@ -65,6 +66,12 @@ export const useAnnouncementStore = defineStore('announcements', {
         const index = _announcements.findIndex((el) => el.ID === id)
         _announcements.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1)
         this.Announcements.set(appID, _announcements)
+      }
+    },
+    pageStart (): (appID: string | undefined) => number {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.PageStarts.get(appID) || 0
       }
     }
   },
@@ -147,6 +154,11 @@ export const useAnnouncementStore = defineStore('announcements', {
           done(true, [] as Array<Announcement>)
         }
       )
+    },
+
+    setPageStart (appID: string | undefined, pageStart: number) {
+      appID = formalizeAppID(appID)
+      this.PageStarts.set(appID, pageStart)
     }
   }
 })

@@ -12,3 +12,12 @@ export interface BaseRequest {
 export interface NotifyRequest {
   NotifyMessage?: ReqMessage
 }
+
+export interface BasePager {
+  LoadingPages: number[]
+  LoadedPages: number[]
+  PageStart: number
+  PageLimit: number
+  TotalPages: number
+  TotalRows: number
+}
