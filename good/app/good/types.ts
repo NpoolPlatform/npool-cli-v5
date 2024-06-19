@@ -23,6 +23,7 @@ export interface Good {
   AppGoodName: string
   DisplayIndex: number
   Banner: string
+  DisplayNames: string[]
   CreatedAt: number
   UpdatedAt: number
 }
