@@ -68,28 +68,28 @@ export const usePowerRentalOrderStore = defineStore('power-rental-orders', {
       _coins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.PowerRentalOrders.set(appID, _coins)
     },
-    createPowerRentalOrder (req: CreatePowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {
+    createPowerRentalOrder (req: CreatePowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
       doActionWithError<CreatePowerRentalOrderRequest, CreatePowerRentalOrderResponse>(
         API.CREATE_POWERRENTAL_ORDER,
         req,
         req.Message,
         (resp: CreatePowerRentalOrderResponse): void => {
           this.addPowerRentalOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createUserPowerRentalOrder (req: CreateUserPowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {
+    createUserPowerRentalOrder (req: CreateUserPowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
       doActionWithError<CreateUserPowerRentalOrderRequest, CreateUserPowerRentalOrderResponse>(
         API.CREATE_USER_POWERRENTAL_ORDER,
         req,
         req.Message,
         (resp: CreateUserPowerRentalOrderResponse): void => {
           this.addPowerRentalOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     updatePowerRentalOrder (req: UpdatePowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {

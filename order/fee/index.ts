@@ -74,28 +74,28 @@ export const useFeeOrderStore = defineStore('fee-orders', {
       _coins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.FeeOrders.set(appID, _coins)
     },
-    createFeeOrder (req: CreateFeeOrderRequest, done: (error: boolean, row?: FeeOrder) => void) {
+    createFeeOrder (req: CreateFeeOrderRequest, done?: (error: boolean, row?: FeeOrder) => void) {
       doActionWithError<CreateFeeOrderRequest, CreateFeeOrderResponse>(
         API.CREATE_FEE_ORDER,
         req,
         req.Message,
         (resp: CreateFeeOrderResponse): void => {
           this.addFeeOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createUserFeeOrder (req: CreateUserFeeOrderRequest, done: (error: boolean, row?: FeeOrder) => void) {
+    createUserFeeOrder (req: CreateUserFeeOrderRequest, done?: (error: boolean, row?: FeeOrder) => void) {
       doActionWithError<CreateUserFeeOrderRequest, CreateUserFeeOrderResponse>(
         API.CREATE_USER_FEE_ORDER,
         req,
         req.Message,
         (resp: CreateUserFeeOrderResponse): void => {
           this.addFeeOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     createFeeOrders (req: CreateFeeOrdersRequest, done: (error: boolean, rows?: Array<FeeOrder>) => void) {
