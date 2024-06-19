@@ -28,8 +28,10 @@ const getPageNotifs = (pageIndex: number, pageEnd: number, done?: (error: boolea
   }, (error: boolean, notifs?: Array<notif.Notif>, total?: number) => {
     if (error || !notifs?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / _notif.pageLimit(AppID.value))
-      _notif.setTotalPages(undefined, totalPages)
-      _notif.setTotalRows(undefined, total || 0)
+      if (total) {
+        _notif.setTotalPages(undefined, totalPages)
+        _notif.setTotalRows(undefined, total || 0)
+      }
       _notif.setPageStart(undefined, Math.max(--pageIndex, 0))
       done?.(error, totalPages, total as number)
       return
@@ -47,3 +49,5 @@ export const getNotifs = (pageStart: number | undefined, pages: number, done?: (
 
 export const notifications = computed(() => _notif.notifs(undefined, undefined))
 export const totalNotifications = computed(() => _notif.totalRows(undefined))
+
+export const setNotificationPageLimit = (pageLimit: number) => _notif.setPageLimit(undefined, pageLimit)
