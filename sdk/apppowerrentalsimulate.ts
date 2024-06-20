@@ -37,7 +37,7 @@ const gadminGetPageAppPowerRentalSimulates = (pageIndex: number, pageEnd: number
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_SIMULATE_APP_POWERRENTAL_SIMULATES_FAIL',
+        Title: 'MSG_GET_APP_POWERRENTAL_SIMULATES_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -58,48 +58,65 @@ export const adminGetAppPowerRentalSimulates = (pageStart: number, pages: number
 
 export const appPowerRentalSimulates = computed(() => appPowerRentalSimulate.simulates(AppID.value))
 
-export const adminUpdateAppPowerRentalSimulate = (target: apppowerrentalsimulate.Simulate) => {
+export const adminUpdateAppPowerRentalSimulate = (target: apppowerrentalsimulate.Simulate, done?: (error: boolean, simulate?: apppowerrentalsimulate.Simulate) => void) => {
   appPowerRentalSimulate.adminUpdateSimulate({
     ...target,
     TargetAppID: AppID.value,
     Message: {
       Error: {
-        Title: 'MSG_UPDATE_APP_SIMULATE_APP_POWERRENTAL_SIMULATE',
-        Message: 'MSG_UPDATE_APP_SIMULATE_APP_POWERRENTAL_SIMULATE_FAIL',
+        Title: 'MSG_UPDATE_APP_POWERRENTAL_SIMULATE',
+        Message: 'MSG_UPDATE_APP_POWERRENTAL_SIMULATE_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       },
       Info: {
-        Title: 'MSG_UPDATE_APP_SIMULATE_APP_POWERRENTAL_SIMULATE',
-        Message: 'MSG_UPDATE_APP_SIMULATE_APP_POWERRENTAL_SIMULATE_SUCCESS',
+        Title: 'MSG_UPDATE_APP_POWERRENTAL_SIMULATE',
+        Message: 'MSG_UPDATE_APP_POWERRENTAL_SIMULATE_SUCCESS',
         Popup: true,
         Type: notify.NotifyType.Success
       }
     }
-  }, () => {
-    // TODO
-  })
+  }, done)
 }
 
-export const adminCreateAppPowerRentalSimulate = (target: apppowerrentalsimulate.Simulate) => {
+export const adminCreateAppPowerRentalSimulate = (target: apppowerrentalsimulate.Simulate, done?: (error: boolean, simulate?: apppowerrentalsimulate.Simulate) => void) => {
   appPowerRentalSimulate.adminCreateSimulate({
     ...target,
     TargetAppID: AppID.value,
     Message: {
       Error: {
-        Title: 'MSG_CREATE_APP_SIMULATE_APP_POWERRENTAL_SIMULATE',
-        Message: 'MSG_CREATE_APP_SIMULATE_APP_POWERRENTAL_SIMULATE_FAIL',
+        Title: 'MSG_CREATE_APP_POWERRENTAL_SIMULATE',
+        Message: 'MSG_CREATE_APP_POWERRENTAL_SIMULATE_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       },
       Info: {
-        Title: 'MSG_CREATE_APP_SIMULATE_APP_POWERRENTAL_SIMULATE',
-        Message: 'MSG_CREATE_APP_SIMULATE_APP_POWERRENTAL_SIMULATE_SUCCESS',
+        Title: 'MSG_CREATE_APP_POWERRENTAL_SIMULATE',
+        Message: 'MSG_CREATE_APP_POWERRENTAL_SIMULATE_SUCCESS',
         Popup: true,
         Type: notify.NotifyType.Success
       }
     }
-  }, () => {
-    // TODO
-  })
+  }, done)
+}
+
+export const adminDeleteAppPowerRentalSimulate = (target: apppowerrentalsimulate.Simulate, done?: (error: boolean, simulate?: apppowerrentalsimulate.Simulate) => void) => {
+  appPowerRentalSimulate.adminDeleteSimulate({
+    ...target,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_APP_POWERRENTAL_SIMULATE',
+        Message: 'MSG_DELETE_APP_POWERRENTAL_SIMULATE_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_APP_POWERRENTAL_SIMULATE',
+        Message: 'MSG_DELETE_APP_POWERRENTAL_SIMULATE_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
 }
