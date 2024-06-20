@@ -67,3 +67,5 @@ export const appPowerRentalMaxPurchasedUnits = (appGoodID: string) => {
   const maxUserAmount = Number(_appPowerRental.MaxUserAmount)
   return Math.min(stockUnits, maxOrderAmount, maxUserAmount)
 }
+export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
+export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchase && el.AppGoodPurchasable))

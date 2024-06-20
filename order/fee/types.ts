@@ -169,9 +169,7 @@ export interface AdminCreateFeeOrderRequest extends BaseRequest {
   AppGoodID: string
   ParentOrderID: string
   DurationSeconds: number
-  Balances: PaymentBalance[]
-  PaymentTransferCoinTypeID?: string
-  CouponIDs: string[]
+  OrderType: OrderType
 }
 
 export interface AdminCreateFeeOrderResponse {
@@ -183,10 +181,8 @@ export interface AdminCreateFeeOrdersRequest extends BaseRequest {
   TargetUserID: string
   ParentOrderID: string
   DurationSeconds: number
-  Balances: PaymentBalance[]
-  PaymentTransferCoinTypeID?: string
-  CouponIDs: string[]
   AppGoodIDs: string[]
+  OrderType: OrderType
 }
 
 export interface AdminCreateFeeOrdersResponse {

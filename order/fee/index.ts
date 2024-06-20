@@ -170,28 +170,28 @@ export const useFeeOrderStore = defineStore('fee-orders', {
           done(true)
         })
     },
-    getMyFeeOrders (req: GetMyFeeOrdersRequest, done: (error: boolean, rows?: Array<FeeOrder>, total?: number) => void) {
+    getMyFeeOrders (req: GetMyFeeOrdersRequest, done?: (error: boolean, rows?: Array<FeeOrder>, total?: number) => void) {
       doActionWithError<GetMyFeeOrdersRequest, GetMyFeeOrdersResponse>(
         API.GET_MY_FEE_ORDERS,
         req,
         req.Message,
         (resp: GetMyFeeOrdersResponse): void => {
           this.addFeeOrders(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminCreateFeeOrder (req: AdminCreateFeeOrderRequest, done: (error: boolean, row?: FeeOrder) => void) {
+    adminCreateFeeOrder (req: AdminCreateFeeOrderRequest, done?: (error: boolean, row?: FeeOrder) => void) {
       doActionWithError<AdminCreateFeeOrderRequest, AdminCreateFeeOrderResponse>(
         API.ADMIN_CREATE_FEE_ORDER,
         req,
         req.Message,
         (resp: AdminCreateFeeOrderResponse): void => {
           this.addFeeOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     adminCreateFeeOrders (req: AdminCreateFeeOrdersRequest, done: (error: boolean, rows?: Array<FeeOrder>) => void) {
