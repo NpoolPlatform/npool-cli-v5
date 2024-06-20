@@ -83,3 +83,15 @@ export const createUserFeeOrder = (request: feeorder.CreateUserFeeOrderRequest, 
   }
   _feeOrder.createUserFeeOrder(request, done)
 }
+
+export const adminCreateFeeOrder = (request: feeorder.AdminCreateFeeOrderRequest, done?: (error: boolean, feeOrder?: feeorder.FeeOrder) => void) => {
+  request.Message = {
+    Error: {
+      Title: 'MSG_CREATE_FEE_ORDERS',
+      Message: 'MSG_CREATE_FEE_ORDERS_FAIL',
+      Popup: true,
+      Type: notify.NotifyType.Error
+    }
+  }
+  _feeOrder.adminCreateFeeOrder(request, done)
+}

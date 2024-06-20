@@ -152,16 +152,16 @@ export const usePowerRentalOrderStore = defineStore('power-rental-orders', {
           done(true)
         })
     },
-    adminCreatePowerRentalOrder (req: AdminCreatePowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {
+    adminCreatePowerRentalOrder (req: AdminCreatePowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
       doActionWithError<AdminCreatePowerRentalOrderRequest, AdminCreatePowerRentalOrderResponse>(
         API.ADMIN_CREATE_POWERRENTAL_ORDER,
         req,
         req.Message,
         (resp: AdminCreatePowerRentalOrderResponse): void => {
           this.addPowerRentalOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     adminUpdatePowerRentalOrder (req: AdminUpdatePowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {

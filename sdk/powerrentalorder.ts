@@ -83,3 +83,15 @@ export const createUserPowerRentalOrder = (request: powerrentalorder.CreateUserP
   }
   _powerRentalOrder.createUserPowerRentalOrder(request, done)
 }
+
+export const adminCreatePowerRentalOrder = (request: powerrentalorder.AdminCreatePowerRentalOrderRequest, done?: (error: boolean, powerRentalOrder?: powerrentalorder.PowerRentalOrder) => void) => {
+  request.Message = {
+    Error: {
+      Title: 'MSG_CREATE_POWERRENTAL_ORDERS',
+      Message: 'MSG_CREATE_POWERRENTAL_ORDERS_FAIL',
+      Popup: true,
+      Type: notify.NotifyType.Error
+    }
+  }
+  _powerRentalOrder.adminCreatePowerRentalOrder(request, done)
+}
