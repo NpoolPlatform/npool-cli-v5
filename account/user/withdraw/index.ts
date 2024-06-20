@@ -6,14 +6,8 @@ import {
   DeleteUserAccountResponse,
   GetUserAccountsRequest,
   GetUserAccountsResponse,
-  GetDepositAccountRequest,
-  GetDepositAccountResponse,
   GetAppUserAccountsRequest,
   GetAppUserAccountsResponse,
-  GetDepositAccountsRequest,
-  GetDepositAccountsResponse,
-  GetAppDepositAccountsRequest,
-  GetAppDepositAccountsResponse,
   GetNAppUserAccountsRequest,
   GetNAppUserAccountsResponse,
   UpdateAppUserAccountRequest,
@@ -24,16 +18,17 @@ import { Account } from '../base'
 import { API } from './const'
 import { formalizeAppID } from '../../../appuser/app/local'
 import { AccountUsedFor } from '../../base'
+import { UserAccounts } from './state'
 
-export const useUserAccountStore = defineStore('user-accounts', {
+export const useUserAccountStore = defineStore('userWithdrawAccounts', {
   state: () => ({
-    UserAccounts: new Map<string, Array<Account>>()
+    UserAccounts: new Map<string, UserAccounts>()
   }),
   getters: {
     accounts (): (appID?: string, userID?: string, coinTypeID?: string, usedFor?: AccountUsedFor) => Array<Account> {
       return (appID?: string, userID?: string, coinTypeID?: string, usedFor?: AccountUsedFor) => {
         appID = formalizeAppID(appID)
-        return this.UserAccounts.get(appID)?.filter((el) => {
+        return this.UserAccounts.get(appID)?.Accounts?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
           if (usedFor) ok &&= el.UsedFor === usedFor
@@ -41,32 +36,67 @@ export const useUserAccountStore = defineStore('user-accounts', {
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
+    },
+    pageStart (): (appID: string | undefined) => number {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.UserAccounts.get(appID)?.pageStart() || 0
+      }
+    },
+    pageLimit (): (appID: string | undefined) => number {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.UserAccounts.get(appID)?.pageLimit() || 10
+      }
+    },
+    pageLoaded (): (appID: string | undefined, page: number) => boolean {
+      return (appID: string | undefined, page: number) => {
+        appID = formalizeAppID(appID)
+        return this.UserAccounts.get(appID)?.pageLoaded(page) || false
+      }
+    },
+    pageLoading (): (appID: string | undefined, page: number) => boolean {
+      return (appID: string | undefined, page: number) => {
+        appID = formalizeAppID(appID)
+        return this.UserAccounts.get(appID)?.pageLoading(page) || false
+      }
+    },
+    totalRows (): (appID: string | undefined) => number {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.UserAccounts.get(appID)?.totalRows() || 0
+      }
+    },
+    totalPages (): (appID: string | undefined) => number {
+      return (appID: string | undefined) => {
+        appID = formalizeAppID(appID)
+        return this.UserAccounts.get(appID)?.totalPages() || 0
+      }
     }
   },
   actions: {
     addAccounts  (appID: string | undefined, accounts: Array<Account>) {
       appID = formalizeAppID(appID)
-      let _accounts = this.UserAccounts.get(appID) as Array<Account>
-      if (!_accounts) {
-        _accounts = []
-      }
+      const userAccounts = this.UserAccounts.get(appID) || {} as UserAccounts
+      const _accounts = userAccounts.Accounts || []
       accounts.forEach((account) => {
         const index = _accounts?.findIndex((el) => el.ID === account.ID)
         _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
       })
-      this.UserAccounts.set(appID, _accounts)
+      userAccounts.Accounts = _accounts
+      this.UserAccounts.set(appID, userAccounts)
     },
     delAccount  (appID: string | undefined, accountID: string) {
       appID = formalizeAppID(appID)
-      let _accounts = this.UserAccounts.get(appID)
-      if (!_accounts) {
-        _accounts = []
-      }
+      const userAccounts = this.UserAccounts.get(appID) || {} as UserAccounts
+      const _accounts = userAccounts.Accounts || []
       const index = _accounts.findIndex((el) => el.EntID === accountID)
       _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      this.UserAccounts.set(appID, _accounts)
+      userAccounts.Accounts = _accounts
+      this.UserAccounts.set(appID, userAccounts)
     },
     createUserAccount (req: CreateUserAccountRequest, done: (error: boolean, row?: Account) => void) {
+      req.UsedFor = AccountUsedFor.UserWithdraw
       doActionWithError<CreateUserAccountRequest, CreateUserAccountResponse>(
         API.CREATE_USERACCOUNT,
         req,
@@ -91,6 +121,7 @@ export const useUserAccountStore = defineStore('user-accounts', {
         })
     },
     getUserAccounts (req: GetUserAccountsRequest, done: (error: boolean, rows?: Array<Account>) => void) {
+      req.UsedFor = AccountUsedFor.UserWithdraw
       doActionWithError<GetUserAccountsRequest, GetUserAccountsResponse>(
         API.GET_USERACCOUNTS,
         req,
@@ -98,18 +129,6 @@ export const useUserAccountStore = defineStore('user-accounts', {
         (resp: GetUserAccountsResponse): void => {
           this.addAccounts(undefined, resp.Infos)
           done(false, resp.Infos)
-        }, () => {
-          done(true)
-        })
-    },
-    getDepositAccount (req: GetDepositAccountRequest, done: (error: boolean, row?: Account) => void) {
-      doActionWithError<GetDepositAccountRequest, GetDepositAccountResponse>(
-        API.GET_DEPOSITACCOUNT,
-        req,
-        req.Message,
-        (resp: GetDepositAccountResponse): void => {
-          this.addAccounts(undefined, [resp.Info])
-          done(false, resp.Info)
         }, () => {
           done(true)
         })
@@ -127,31 +146,7 @@ export const useUserAccountStore = defineStore('user-accounts', {
           done(true)
         })
     },
-    getDepositAccounts (req: GetDepositAccountsRequest, done: (error: boolean, rows?: Array<Account>) => void) {
-      doActionWithError<GetDepositAccountsRequest, GetDepositAccountsResponse>(
-        API.GET_APP_USERACCOUNTS,
-        req,
-        req.Message,
-        (resp: GetDepositAccountsResponse): void => {
-          this.addAccounts(undefined, resp.Infos)
-          done(false, resp.Infos)
-        }, () => {
-          done(true)
-        })
-    },
 
-    getAppDepositAccounts (req: GetAppDepositAccountsRequest, done: (error: boolean, rows?: Array<Account>) => void) {
-      doActionWithError<GetAppDepositAccountsRequest, GetAppDepositAccountsResponse>(
-        API.GET_APP_DEPOSITACCOUNTS,
-        req,
-        req.Message,
-        (resp: GetAppDepositAccountsResponse): void => {
-          this.addAccounts(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
-        }, () => {
-          done(true)
-        })
-    },
     getNAppUserAccounts (req: GetNAppUserAccountsRequest, done: (error: boolean, rows?: Array<Account>) => void) {
       doActionWithError<GetNAppUserAccountsRequest, GetNAppUserAccountsResponse>(
         API.GET_N_APP_USERACCOUNTS,
@@ -175,6 +170,41 @@ export const useUserAccountStore = defineStore('user-accounts', {
         }, () => {
           done(true)
         })
+    },
+
+    initializePager (appID: string | undefined) {
+      appID = formalizeAppID(appID)
+      if (!this.UserAccounts.get(appID)) {
+        this.UserAccounts.set(appID, new UserAccounts())
+      }
+    },
+    incrementPageStart (appID: string | undefined) {
+      appID = formalizeAppID(appID)
+      this.UserAccounts.get(appID)?.incrementPageStart()
+    },
+    subtractPageStart (appID: string | undefined) {
+      appID = formalizeAppID(appID)
+      this.UserAccounts.get(appID)?.subtractPageStart()
+    },
+    setPageLimit (appID: string | undefined, pageLimit: number) {
+      appID = formalizeAppID(appID)
+      this.UserAccounts.get(appID)?.setPageLimit(pageLimit)
+    },
+    loadPage (appID: string | undefined, page: number) {
+      appID = formalizeAppID(appID)
+      this.UserAccounts.get(appID)?.loadPage(page)
+    },
+    loadedPage (appID: string | undefined, page: number) {
+      appID = formalizeAppID(appID)
+      this.UserAccounts.get(appID)?.loadedPage(page)
+    },
+    setTotalPages (appID: string | undefined, pages: number) {
+      appID = formalizeAppID(appID)
+      this.UserAccounts.get(appID)?.setTotalPages(pages)
+    },
+    setTotalRows (appID: string | undefined, rows: number) {
+      appID = formalizeAppID(appID)
+      this.UserAccounts.get(appID)?.setTotalRows(rows)
     }
   }
 })
