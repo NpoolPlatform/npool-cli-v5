@@ -53,15 +53,6 @@ export interface GetUserAccountsResponse {
   Total: number
 }
 
-export interface GetDepositAccountRequest extends BaseRequest {
-  CoinTypeID: string
-  UsedFor?: AccountUsedFor
-}
-
-export interface GetDepositAccountResponse {
-  Info: Account
-}
-
 export interface GetAppUserAccountsRequest extends BaseRequest {
   Offset: number
   Limit: number
@@ -69,28 +60,6 @@ export interface GetAppUserAccountsRequest extends BaseRequest {
 
 export interface GetAppUserAccountsResponse {
   Infos: Account[]
-  Total: number
-}
-
-export interface GetDepositAccountsRequest extends BaseRequest {
-  Offset: number
-  Limit: number
-}
-
-export interface GetDepositAccountsResponse {
-  Infos: Account[]
-  Total: number
-}
-
-export interface GetAppDepositAccountsRequest extends BaseRequest {
-  TargetAppID: string
-  Offset: number
-  Limit: number
-
-}
-
-export interface GetAppDepositAccountsResponse {
-  Infos: Array<Account>
   Total: number
 }
 
