@@ -8,22 +8,25 @@ export const useNpoolAPIStore = defineStore('npool-api', {
     APIs: [] as Array<API>
   }),
   getters: {
+    apis (): Array<API> {
+      return this.APIs
+    }
   },
   actions: {
-    getAPIs (req: GetAPIsRequest, done: (error: boolean, rows?: Array<API>) => void) {
+    getAPIs (req: GetAPIsRequest, done?: (error: boolean, rows?: Array<API>) => void) {
       doActionWithError<GetAPIsRequest, GetAPIsResponse>(
         APIEnum.GET_APIS,
         req,
         req.Message,
         (resp: GetAPIsResponse): void => {
           this.APIs.push(...resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateAPI (req: UpdateAPIRequest, done: (error: boolean, row?: API) => void) {
+    updateAPI (req: UpdateAPIRequest, done?: (error: boolean, row?: API) => void) {
       doActionWithError<UpdateAPIRequest, UpdateAPIResponse>(
         APIEnum.UPDATE_API,
         req,
@@ -31,9 +34,9 @@ export const useNpoolAPIStore = defineStore('npool-api', {
         (resp: UpdateAPIResponse): void => {
           const index = this.APIs.findIndex((el) => el.ID === resp.Info.ID)
           this.APIs.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
