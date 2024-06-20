@@ -63,108 +63,121 @@ export const useSimulateStore = defineStore('app-simulate-goods', {
       _simulates?.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.Simulates.set(appID, _simulates)
     },
-    getSimulates (req: GetSimulatesRequest, done: (error: boolean, rows?: Array<Simulate>) => void) {
+    getSimulates (req: GetSimulatesRequest, done?: (error: boolean, rows?: Array<Simulate>) => void) {
       doActionWithError<GetSimulatesRequest, GetSimulatesResponse>(
         API.GET_APP_POWERRENTAL_SIMULATES,
         req,
         req.Message,
         (resp: GetSimulatesResponse): void => {
           this.addSimulates(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    createSimulate (req: CreateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    createSimulate (req: CreateSimulateRequest, done?: (error: boolean, row?: Simulate) => void) {
       doActionWithError<CreateSimulateRequest, CreateSimulateResponse>(
         API.CREATE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
         (resp: CreateSimulateResponse): void => {
           this.addSimulates(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteSimulate (req: DeleteSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    deleteSimulate (req: DeleteSimulateRequest, done?: (error: boolean, row?: Simulate) => void) {
       doActionWithError<DeleteSimulateRequest, DeleteSimulateResponse>(
         API.DELETE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
         (resp: DeleteSimulateResponse): void => {
           this.delSimulate(undefined, resp.Info.EntID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateSimulate (req: UpdateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    updateSimulate (req: UpdateSimulateRequest, done?: (error: boolean, row?: Simulate) => void) {
       doActionWithError<UpdateSimulateRequest, UpdateSimulateResponse>(
         API.UPDATE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
         (resp: UpdateSimulateResponse): void => {
           this.addSimulates(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
 
-    adminGetSimulates (req: AdminGetSimulatesRequest, done: (error: boolean, rows?: Array<Simulate>) => void) {
+    adminGetSimulates (req: AdminGetSimulatesRequest, done?: (error: boolean, rows?: Array<Simulate>) => void) {
       doActionWithError<AdminGetSimulatesRequest, AdminGetSimulatesResponse>(
         API.ADMIN_GET_APP_POWERRENTAL_SIMULATES,
         req,
         req.Message,
         (resp: AdminGetSimulatesResponse): void => {
           this.addSimulates(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true, [])
+          done?.(true, [])
         }
       )
     },
-    dadminDeleteSimulate (req: AdminDeleteSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    dadminDeleteSimulate (req: AdminDeleteSimulateRequest, done?: (error: boolean, row?: Simulate) => void) {
       doActionWithError<AdminDeleteSimulateRequest, AdminDeleteSimulateResponse>(
         API.ADMIN_DELETE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
         (resp: AdminDeleteSimulateResponse): void => {
           this.delSimulate(req.TargetAppID, req.EntID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminCreateSimulate (req: AdminCreateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    adminCreateSimulate (req: AdminCreateSimulateRequest, done?: (error: boolean, row?: Simulate) => void) {
       doActionWithError<AdminCreateSimulateRequest, AdminCreateSimulateResponse>(
         API.ADMIN_CREATE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
         (resp: AdminCreateSimulateResponse): void => {
           this.addSimulates(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdateSimulate (req: AdminUpdateSimulateRequest, done: (error: boolean, row?: Simulate) => void) {
+    adminUpdateSimulate (req: AdminUpdateSimulateRequest, done?: (error: boolean, row?: Simulate) => void) {
       doActionWithError<AdminUpdateSimulateRequest, AdminUpdateSimulateResponse>(
         API.ADMIN_UPDATE_APP_POWERRENTAL_SIMULATE,
         req,
         req.Message,
         (resp: AdminUpdateSimulateResponse): void => {
           this.addSimulates(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
+        }
+      )
+    },
+    adminDeleteSimulate (req: AdminDeleteSimulateRequest, done?: (error: boolean, row?: Simulate) => void) {
+      doActionWithError<AdminDeleteSimulateRequest, AdminDeleteSimulateResponse>(
+        API.ADMIN_DELETE_APP_POWERRENTAL_SIMULATE,
+        req,
+        req.Message,
+        (resp: AdminDeleteSimulateResponse): void => {
+          this.delSimulate(req.TargetAppID, resp.Info.EntID)
+          done?.(false, resp.Info)
+        }, () => {
+          done?.(true)
         }
       )
     }
