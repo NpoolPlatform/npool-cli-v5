@@ -31,3 +31,33 @@ export const getAppCoins = (pageStart: number, pages: number, done?: (error: boo
 }
 
 export const appCoins = computed(() => _appCoin.coins(AppID.value))
+
+export const adminCreateAppCoin = (appCoin: appcoin.AppCoin, done?: (error: boolean, appCoin?: appcoin.AppCoin) => void) => {
+  _appCoin.createAppCoin({
+    ...appCoin,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_APP_COIN',
+        Message: 'MSG_CREATE_APP_COIN_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const adminDeleteAppCoin = (appCoin: appcoin.AppCoin, done?: (error: boolean, appCoin?: appcoin.AppCoin) => void) => {
+  _appCoin.deleteAppCoin({
+    ...appCoin,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_APP_COIN',
+        Message: 'MSG_DELETE_APP_COIN_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
