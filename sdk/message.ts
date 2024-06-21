@@ -58,7 +58,7 @@ export const adminGetMessages = (pageStart: number, pages: number, done?: (error
   adminGetPageMessages(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const messageuages = computed(() => _message.messages(AppID.value, undefined, undefined))
+export const messages = computed(() => _message.messages(AppID.value, undefined, undefined))
 
 export const createMessage = (message: g11nbase.Message, done?: (error: boolean, message?: g11nbase.Message) => void) => {
   _message.createMessage({
@@ -84,6 +84,22 @@ export const adminCreateMessage = (message: g11nbase.Message, done?: (error: boo
       Error: {
         Title: 'MSG_CREATE_MESSAGE',
         Message: 'MSG_CREATE_MESSAGE_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const adminCreateMessages = (langID: string, messages: message.MessageReq[], done?: (error: boolean, message?: g11nbase.Message[]) => void) => {
+  _message.createAppMessages({
+    Infos: messages,
+    TargetAppID: AppID.value,
+    TargetLangID: langID,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_MESSAGES',
+        Message: 'MSG_CREATE_MESSAGES_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }

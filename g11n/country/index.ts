@@ -23,8 +23,8 @@ export const useCountryStore = defineStore('countries', {
         return this.Countries.find((el) => el.ID === id)
       }
     },
-    countries () {
-      return () => this.Countries
+    countries (): Array<Country> {
+      return this.Countries
     }
   },
   actions: {
