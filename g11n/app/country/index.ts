@@ -53,56 +53,56 @@ export const useAppCountryStore = defineStore('app-countries', {
     }
   },
   actions: {
-    getAppCountries (req: GetAppCountriesRequest, done: (error: boolean, rows: Array<Country>) => void) {
+    getAppCountries (req: GetAppCountriesRequest, done?: (error: boolean, rows: Array<Country>) => void) {
       doActionWithError<GetAppCountriesRequest, GetAppCountriesResponse>(
         API.GET_APPCOUNTRIES,
         req,
         req.Message,
         (resp: GetAppCountriesResponse): void => {
           this.addCountries(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true, [])
+          done?.(true, [])
         }
       )
     },
 
-    getNAppCountries (req: GetNAppCountriesRequest, done: (error: boolean, countries: Array<Country>) => void) {
+    getNAppCountries (req: GetNAppCountriesRequest, done?: (error: boolean, countries: Array<Country>) => void) {
       doActionWithError<GetNAppCountriesRequest, GetNAppCountriesResponse>(
         API.GET_APP_APPCOUNTRIES,
         req,
         req.Message,
         (resp: GetNAppCountriesResponse): void => {
           this.addCountries(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true, [])
+          done?.(true, [])
         }
       )
     },
-    deleteAppCountry (req: DeleteAppCountryRequest, done: (error: boolean, country: Country) => void) {
+    deleteAppCountry (req: DeleteAppCountryRequest, done?: (error: boolean, country: Country) => void) {
       doActionWithError<DeleteAppCountryRequest, DeleteAppCountryResponse>(
         API.DELETE_APPCOUNTRY,
         req,
         req.Message,
         (resp: DeleteAppCountryResponse): void => {
           this.delCountry(req.TargetAppID, req.ID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as Country)
+          done?.(true, {} as Country)
         }
       )
     },
-    createAppCountry (req: CreateAppCountryRequest, done: (error: boolean, country: Country) => void) {
+    createAppCountry (req: CreateAppCountryRequest, done?: (error: boolean, country: Country) => void) {
       doActionWithError<CreateAppCountryRequest, CreateAppCountryResponse>(
         API.CREATE_APPCOUNTRY,
         req,
         req.Message,
         (resp: CreateAppCountryResponse): void => {
           this.addCountries(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as Country)
+          done?.(true, {} as Country)
         }
       )
     }

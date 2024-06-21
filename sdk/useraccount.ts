@@ -25,8 +25,8 @@ const getPageUserAccounts = (pageIndex: number, pageEnd: number, done?: (error: 
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, useraccounts?: Array<useraccountbase.Account>, total?: number) => {
-    if (error || !useraccounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+  }, (error: boolean, accounts?: Array<useraccountbase.Account>, total?: number) => {
+    if (error || !accounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / _userAccount.pageLimit(undefined))
       if (total) {
         _userAccount.setTotalPages(undefined, totalPages)
@@ -70,8 +70,8 @@ const adminGetPageUserAccounts = (pageIndex: number, pageEnd: number, done?: (er
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, useraccounts?: Array<useraccountbase.Account>, total?: number) => {
-    if (error || !useraccounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+  }, (error: boolean, accounts?: Array<useraccountbase.Account>, total?: number) => {
+    if (error || !accounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / _userAccount.pageLimit(AppID.value))
       if (total) {
         _userAccount.setTotalPages(AppID.value, totalPages)

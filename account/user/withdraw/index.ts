@@ -25,13 +25,12 @@ export const useUserAccountStore = defineStore('userWithdrawAccounts', {
     UserAccounts: new Map<string, UserAccounts>()
   }),
   getters: {
-    accounts (): (appID?: string, userID?: string, coinTypeID?: string, usedFor?: AccountUsedFor) => Array<Account> {
-      return (appID?: string, userID?: string, coinTypeID?: string, usedFor?: AccountUsedFor) => {
+    accounts (): (appID?: string, userID?: string, coinTypeID?: string) => Array<Account> {
+      return (appID?: string, userID?: string, coinTypeID?: string) => {
         appID = formalizeAppID(appID)
         return this.UserAccounts.get(appID)?.Accounts?.filter((el) => {
           let ok = true
           if (userID) ok &&= el.UserID === userID
-          if (usedFor) ok &&= el.UsedFor === usedFor
           if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
           return ok
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []

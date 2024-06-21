@@ -35,40 +35,40 @@ export const usePlatformAccountStore = defineStore('platform-accounts', {
         _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
       })
     },
-    getPlatformAccounts (req: GetPlatformAccountsRequest, done: (error: boolean, rows?: Array<Account>) => void) {
+    getPlatformAccounts (req: GetPlatformAccountsRequest, done?: (error: boolean, rows?: Array<Account>) => void) {
       doActionWithError<GetPlatformAccountsRequest, GetPlatformAccountsResponse>(
         API.GET_PLATFORMACCOUNTS,
         req,
         req.Message,
         (resp: GetPlatformAccountsResponse): void => {
           this.addAccounts(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updatePlatformAccount (req: UpdatePlatformAccountRequest, done: (error: boolean, row?: Account) => void) {
+    updatePlatformAccount (req: UpdatePlatformAccountRequest, done?: (error: boolean, row?: Account) => void) {
       doActionWithError<UpdatePlatformAccountRequest, UpdatePlatformAccountResponse>(
         API.UPDATE_PLATFORMACCOUNT,
         req,
         req.Message,
         (resp: UpdatePlatformAccountResponse): void => {
           this.addAccounts([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createPlatformAccount (req: CreatePlatformAccountRequest, done: (error: boolean, row?: Account) => void) {
+    createPlatformAccount (req: CreatePlatformAccountRequest, done?: (error: boolean, row?: Account) => void) {
       doActionWithError<CreatePlatformAccountRequest, CreatePlatformAccountResponse>(
         API.CREATE_PLATFORMACCOUNT,
         req,
         req.Message,
         (resp: CreatePlatformAccountResponse): void => {
           this.addAccounts([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

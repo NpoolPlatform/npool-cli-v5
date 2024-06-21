@@ -81,135 +81,135 @@ export const useMessageStore = defineStore('messages', {
       })
       this.Messages.set(appID, messages)
     },
-    getMessages (req: GetMessagesRequest, done: (error: boolean, rows?: Array<Message>, total?: number) => void) {
+    getMessages (req: GetMessagesRequest, done?: (error: boolean, rows?: Array<Message>, total?: number) => void) {
       doActionWithError<GetMessagesRequest, GetMessagesResponse>(
         API.GET_MESSAGES,
         req,
         req.Message,
         (resp: GetMessagesResponse): void => {
           this.addMessages(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
 
-    deleteMessage (req: DeleteMessageRequest, done: (error: boolean, row: Message) => void) {
+    deleteMessage (req: DeleteMessageRequest, done?: (error: boolean, row: Message) => void) {
       doActionWithError<DeleteMessageRequest, DeleteMessageResponse>(
         API.DELETE_MESSAGE,
         req,
         req.Message,
         (resp: DeleteMessageResponse): void => {
           this.delMessage(undefined, req.ID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as Message)
+          done?.(true, {} as Message)
         }
       )
     },
-    createMessage (req: CreateMessageRequest, done: (error: boolean, row: Message) => void) {
+    createMessage (req: CreateMessageRequest, done?: (error: boolean, row: Message) => void) {
       doActionWithError<CreateMessageRequest, CreateMessageResponse>(
         API.CREATE_MESSAGE,
         req,
         req.NotifyMessage,
         (resp: CreateMessageResponse): void => {
           this.addMessages(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as Message)
+          done?.(true, {} as Message)
         }
       )
     },
-    createMessages (req: CreateMessagesRequest, done: (error: boolean, rows: Array<Message>) => void) {
+    createMessages (req: CreateMessagesRequest, done?: (error: boolean, rows: Array<Message>) => void) {
       doActionWithError<CreateMessagesRequest, CreateMessagesResponse>(
         API.CREATE_MESSAGES,
         req,
         req.Message,
         (resp: CreateMessagesResponse): void => {
           this.addMessages(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true, [] as Array<Message>)
+          done?.(true, [] as Array<Message>)
         }
       )
     },
-    updateMessage (req: UpdateMessageRequest, done: (error: boolean, row: Message) => void) {
+    updateMessage (req: UpdateMessageRequest, done?: (error: boolean, row: Message) => void) {
       doActionWithError<UpdateMessageRequest, UpdateMessageResponse>(
         API.UPDATE_MESSAGE,
         req,
         req.NotifyMessage,
         (resp: UpdateMessageResponse): void => {
           this.addMessages(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as Message)
+          done?.(true, {} as Message)
         }
       )
     },
 
-    getAppMessages (req: GetAppMessagesRequest, done: (error: boolean, rows: Array<Message>) => void) {
+    getAppMessages (req: GetAppMessagesRequest, done?: (error: boolean, rows: Array<Message>) => void) {
       doActionWithError<GetAppMessagesRequest, GetAppMessagesResponse>(
         API.GET_APP_MESSAGES,
         req,
         req.Message,
         (resp: GetAppMessagesResponse): void => {
           this.addMessages(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true, [])
+          done?.(true, [])
         }
       )
     },
-    deleteAppMessage (req: DeleteAppMessageRequest, done: (error: boolean, row: Message) => void) {
+    deleteAppMessage (req: DeleteAppMessageRequest, done?: (error: boolean, row: Message) => void) {
       doActionWithError<DeleteAppMessageRequest, DeleteAppMessageResponse>(
         API.DELETE_APP_MESSAGE,
         req,
         req.Message,
         (resp: DeleteAppMessageResponse): void => {
           this.delMessage(req.TargetAppID, req.ID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as Message)
+          done?.(true, {} as Message)
         }
       )
     },
-    createAppMessage (req: CreateAppMessageRequest, done: (error: boolean, row: Message) => void) {
+    createAppMessage (req: CreateAppMessageRequest, done?: (error: boolean, row: Message) => void) {
       doActionWithError<CreateAppMessageRequest, CreateAppMessageResponse>(
         API.CREATE_APP_MESSAGE,
         req,
         req.NotifyMessage,
         (resp: CreateAppMessageResponse): void => {
           this.addMessages(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as Message)
+          done?.(true, {} as Message)
         }
       )
     },
-    createAppMessages (req: CreateAppMessagesRequest, done: (error: boolean, rows: Array<Message>) => void) {
+    createAppMessages (req: CreateAppMessagesRequest, done?: (error: boolean, rows: Array<Message>) => void) {
       doActionWithError<CreateAppMessagesRequest, CreateAppMessagesResponse>(
         API.CREATE_APP_MESSAGES,
         req,
         req.Message,
         (resp: CreateAppMessagesResponse): void => {
           this.addMessages(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true, [] as Array<Message>)
+          done?.(true, [] as Array<Message>)
         }
       )
     },
-    updateAppMessage (req: UpdateAppMessageRequest, done: (error: boolean, row: Message) => void) {
+    updateAppMessage (req: UpdateAppMessageRequest, done?: (error: boolean, row: Message) => void) {
       doActionWithError<UpdateAppMessageRequest, UpdateAppMessageResponse>(
         API.UPDATE_APP_MESSAGE,
         req,
         req.NotifyMessage,
         (resp: UpdateAppMessageResponse): void => {
           this.addMessages(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as Message)
+          done?.(true, {} as Message)
         }
       )
     }

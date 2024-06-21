@@ -26,8 +26,8 @@ const getPageUserDepositAccounts = (pageIndex: number, pageEnd: number, done?: (
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, useraccounts?: Array<useraccountbase.Account>, total?: number) => {
-    if (error || !useraccounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+  }, (error: boolean, accounts?: Array<useraccountbase.Account>, total?: number) => {
+    if (error || !accounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / _userDepositAccount.pageLimit(undefined))
       if (total) {
         _userDepositAccount.setTotalPages(undefined, totalPages)
@@ -71,8 +71,8 @@ const adminGetPageUserDepositAccounts = (pageIndex: number, pageEnd: number, don
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, useraccounts?: Array<useraccountbase.Account>, total?: number) => {
-    if (error || !useraccounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+  }, (error: boolean, accounts?: Array<useraccountbase.Account>, total?: number) => {
+    if (error || !accounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / _userDepositAccount.pageLimit(AppID.value))
       if (total) {
         _userDepositAccount.setTotalPages(AppID.value, totalPages)
