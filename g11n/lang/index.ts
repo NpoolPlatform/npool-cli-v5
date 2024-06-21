@@ -23,8 +23,8 @@ export const useLangStore = defineStore('langs', {
         return this.Langs.find((el) => el.ID === id)
       }
     },
-    langs () {
-      return () => this.Langs
+    langs (): Array<Lang> {
+      return this.Langs
     },
     addLangs (): (countries: Array<Lang>) => void {
       return (countries: Array<Lang>) => {
