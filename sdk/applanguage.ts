@@ -103,3 +103,7 @@ export const adminDeleteAppLang = (appLang: g11nbase.AppLang, done?: (error: boo
     }
   }, done)
 }
+
+export const langIdWithName = (langName: string) => _appLang.langID(AppID.value, langName)
+export const mainLangId = computed(() => _appLang.mainLangID(AppID.value))
+export const appLangWithLangId = (langId: string) => _appLang.lang(AppID.value, langId)

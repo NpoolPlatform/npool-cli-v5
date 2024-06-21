@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { message, constant, notify, g11nbase } from '..'
 import { AppID } from './localapp'
 
@@ -58,7 +57,7 @@ export const adminGetMessages = (pageStart: number, pages: number, done?: (error
   adminGetPageMessages(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const messages = computed(() => _message.messages(AppID.value, undefined, undefined))
+export const messages = (langID: string) => _message.messages(AppID.value, langID, undefined)
 
 export const createMessage = (message: g11nbase.Message, done?: (error: boolean, message?: g11nbase.Message) => void) => {
   _message.createMessage({
