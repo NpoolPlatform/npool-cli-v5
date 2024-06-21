@@ -43,7 +43,7 @@ export interface UpdateUserAccountResponse {
 }
 
 export interface GetUserAccountsRequest extends BaseRequest {
-  UsedFor: AccountUsedFor
+  UsedFor?: AccountUsedFor
   Offset: number
   Limit: number
 }
