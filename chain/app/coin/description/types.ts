@@ -76,7 +76,7 @@ export interface GetAppCoinDescriptionsResponse {
 
 export interface UpdateAppCoinDescriptionRequest extends NotifyRequest {
   TargetAppID: string
-  ID: string
+  ID: number
   AppID: string
   Title: string
   Message: string

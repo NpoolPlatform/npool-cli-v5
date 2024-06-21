@@ -57,77 +57,77 @@ export const useCoinDescriptionStore = defineStore('coin-descriptions', {
     }
   },
   actions: {
-    getCoinDescriptions (req: GetCoinDescriptionsRequest, done: (error: boolean, descriptions?: Array<CoinDescription>) => void) {
+    getCoinDescriptions (req: GetCoinDescriptionsRequest, done?: (error: boolean, descriptions?: Array<CoinDescription>) => void) {
       doActionWithError<GetCoinDescriptionsRequest, GetCoinDescriptionsResponse>(
         API.GET_COINDESCRIPTIONS,
         req,
         req.Message,
         (resp: GetCoinDescriptionsResponse): void => {
           this.addDescriptions(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateCoinDescription (req: UpdateCoinDescriptionRequest, done: (error: boolean, description?: CoinDescription) => void) {
+    updateCoinDescription (req: UpdateCoinDescriptionRequest, done?: (error: boolean, description?: CoinDescription) => void) {
       doActionWithError<UpdateCoinDescriptionRequest, UpdateCoinDescriptionResponse>(
         API.UPDATE_COINDESCRIPTION,
         req,
         req.NotifyMessage,
         (resp: UpdateCoinDescriptionResponse): void => {
           this.addDescriptions(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createCoinDescription (req: CreateCoinDescriptionRequest, done: (error: boolean, description?: CoinDescription) => void) {
+    createCoinDescription (req: CreateCoinDescriptionRequest, done?: (error: boolean, description?: CoinDescription) => void) {
       doActionWithError<CreateCoinDescriptionRequest, CreateCoinDescriptionResponse>(
         API.CREATE_COINDESCRIPTION,
         req,
         req.NotifyMessage,
         (resp: CreateCoinDescriptionResponse): void => {
           this.addDescriptions(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
 
-    getAppCoinDescriptions (req: GetAppCoinDescriptionsRequest, done: (error: boolean, descriptions?: Array<CoinDescription>) => void) {
+    getAppCoinDescriptions (req: GetAppCoinDescriptionsRequest, done?: (error: boolean, descriptions?: Array<CoinDescription>) => void) {
       doActionWithError<GetAppCoinDescriptionsRequest, GetAppCoinDescriptionsResponse>(
         API.GET_APP_COINDESCRIPTIONS,
         req,
         req.Message,
         (resp: GetAppCoinDescriptionsResponse): void => {
           this.addDescriptions(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateAppCoinDescription (req: UpdateAppCoinDescriptionRequest, done: (error: boolean, description?: CoinDescription) => void) {
+    updateAppCoinDescription (req: UpdateAppCoinDescriptionRequest, done?: (error: boolean, description?: CoinDescription) => void) {
       doActionWithError<UpdateAppCoinDescriptionRequest, UpdateAppCoinDescriptionResponse>(
         API.UPDATE_APP_COINDESCRIPTION,
         req,
         req.NotifyMessage,
         (resp: UpdateAppCoinDescriptionResponse): void => {
           this.addDescriptions(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createAppCoinDescription (req: CreateAppCoinDescriptionRequest, done: (error: boolean, description?: CoinDescription) => void) {
+    createAppCoinDescription (req: CreateAppCoinDescriptionRequest, done?: (error: boolean, description?: CoinDescription) => void) {
       doActionWithError<CreateAppCoinDescriptionRequest, CreateAppCoinDescriptionResponse>(
         API.CREATE_APP_COINDESCRIPTION,
         req,
         req.NotifyMessage,
         (resp: CreateAppCoinDescriptionResponse): void => {
           this.addDescriptions(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

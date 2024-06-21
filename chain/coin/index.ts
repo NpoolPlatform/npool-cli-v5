@@ -41,40 +41,40 @@ export const useCoinStore = defineStore('coins', {
     }
   },
   actions: {
-    getCoins (req: GetCoinsRequest, done: (error: boolean, coins?: Array<Coin>) => void) {
+    getCoins (req: GetCoinsRequest, done?: (error: boolean, coins?: Array<Coin>) => void) {
       doActionWithError<GetCoinsRequest, GetCoinsResponse>(
         API.GET_COINS,
         req,
         req.Message,
         (resp: GetCoinsResponse): void => {
           this.addCoins(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateCoin (req: UpdateCoinRequest, done: (error: boolean, coin?: Coin) => void) {
+    updateCoin (req: UpdateCoinRequest, done?: (error: boolean, coin?: Coin) => void) {
       doActionWithError<UpdateCoinRequest, UpdateCoinResponse>(
         API.UPDATE_COIN,
         req,
         req.Message,
         (resp: UpdateCoinResponse): void => {
           this.addCoins([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createCoin (req: CreateCoinRequest, done: (error: boolean, coin?: Coin) => void) {
+    createCoin (req: CreateCoinRequest, done?: (error: boolean, coin?: Coin) => void) {
       doActionWithError<CreateCoinRequest, CreateCoinResponse>(
         API.CREATE_COIN,
         req,
         req.Message,
         (resp: CreateCoinResponse): void => {
           this.addCoins([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }
