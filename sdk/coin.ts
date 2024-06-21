@@ -30,3 +30,31 @@ export const getCoins = (pageStart: number, pages: number, done?: (error: boolea
 }
 
 export const coins = computed(() => _coin.coins())
+
+export const adminCreateCoin = (coin: coin.Coin, done?: (error: boolean, coin?: coin.Coin) => void) => {
+  _coin.createCoin({
+    ...coin,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_COIN',
+        Message: 'MSG_CREATE_COIN_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const adminUpdateCoin = (coin: coin.Coin, done?: (error: boolean, coin?: coin.Coin) => void) => {
+  _coin.updateCoin({
+    ...coin,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_COIN',
+        Message: 'MSG_UPDATE_COIN_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
