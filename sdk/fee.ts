@@ -55,8 +55,8 @@ export const adminGetFees = (pageStart: number, pages: number, done?: (error: bo
   adminGetPageFees(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const powerRentals = computed(() => _fee.fees)
-export const __fee = (goodId: string) => powerRentals.value.find((el) => el.GoodID === goodId)
+export const fees = computed(() => _fee.fees)
+export const __fee = (goodId: string) => fees.value.find((el) => el.GoodID === goodId)
 
 export const adminCreateFee = (target: fee.Fee, done?: (error: boolean, powerRental?: fee.Fee) => void) => {
   _fee.adminCreateFee({
