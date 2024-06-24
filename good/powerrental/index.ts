@@ -25,20 +25,20 @@ export const usePowerRentalStore = defineStore('powerRentals', {
         return this.PowerRentals.find((el: PowerRental) => el.EntID === id)
       }
     },
-    powerRentals () {
-      return () => this.PowerRentals
+    powerRentals (): Array<PowerRental> {
+      return this.PowerRentals
     }
   },
   actions: {
-    addPowerRentals (brands: Array<PowerRental>) {
-      brands.forEach((brand) => {
-        const index = this.PowerRentals.findIndex((el: PowerRental) => el.EntID === brand.EntID)
-        this.PowerRentals.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, brand)
+    addPowerRentals (powerRentals: Array<PowerRental>) {
+      powerRentals.forEach((powerRental) => {
+        const index = this.PowerRentals.findIndex((el: PowerRental) => el.EntID === powerRental.EntID)
+        this.PowerRentals.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, powerRental)
       })
     },
-    deletePowerRentals (brands: Array<PowerRental>) {
-      brands.forEach((brand) => {
-        const index = this.PowerRentals.findIndex((el: PowerRental) => el.EntID === brand.EntID)
+    deletePowerRentals (powerRentals: Array<PowerRental>) {
+      powerRentals.forEach((powerRental) => {
+        const index = this.PowerRentals.findIndex((el: PowerRental) => el.EntID === powerRental.EntID)
         this.PowerRentals.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       })
     },

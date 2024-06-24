@@ -31,13 +31,27 @@ export const getMiningPools = (pageStart: number, pages: number, done?: (error: 
 
 export const miningPools = computed(() => _miningPool.pools)
 
-export const updateMiningPool = (pool: miningpoolpool.Pool, done?: (error: boolean, pool?: miningpoolpool.Pool) => void) => {
-  _miningPool.updatePool({
+export const adminUpdateMiningPool = (pool: miningpoolpool.Pool, done?: (error: boolean, pool?: miningpoolpool.Pool) => void) => {
+  _miningPool.adminUpdatePool({
     ...pool,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_POOL',
         Message: 'MSG_UPDATE_POOL_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const adminCreateMiningPool = (pool: miningpoolpool.Pool, done?: (error: boolean, pool?: miningpoolpool.Pool) => void) => {
+  _miningPool.adminCreatePool({
+    ...pool,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_POOL',
+        Message: 'MSG_CREATE_POOL_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }

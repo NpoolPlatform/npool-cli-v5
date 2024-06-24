@@ -44,7 +44,7 @@ export const useMiningpoolPoolStore = defineStore('miningPoolPools', {
           done(true)
         })
     },
-    updatePool (req: AdminUpdatePoolRequest, done?: (error: boolean, row?: Pool) => void) {
+    adminUpdatePool (req: AdminUpdatePoolRequest, done?: (error: boolean, row?: Pool) => void) {
       doActionWithError<AdminUpdatePoolRequest, AdminUpdatePoolResponse>(
         API.ADMIN_UPDATE_POOL,
         req,
@@ -56,16 +56,16 @@ export const useMiningpoolPoolStore = defineStore('miningPoolPools', {
           done?.(true)
         })
     },
-    createPool (req: AdminCreatePoolRequest, done: (error: boolean, row?: Pool) => void) {
+    adminCreatePool (req: AdminCreatePoolRequest, done?: (error: boolean, row?: Pool) => void) {
       doActionWithError<AdminCreatePoolRequest, AdminCreatePoolResponse>(
         API.ADMIN_CREATE_POOL,
         req,
         req.Message,
         (resp: AdminCreatePoolResponse): void => {
           this.addPools([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }
