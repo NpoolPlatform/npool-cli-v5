@@ -38,7 +38,7 @@ const adminGetPageTopMosts = (pageIndex: number, pageEnd: number, done?: (error:
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_DEFAULT_TOPMOSTS_FAIL',
+        Title: 'MSG_TOPMOSTS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }

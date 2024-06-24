@@ -22,18 +22,18 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../../../appuser/app/local'
 
-export const usePosterStore = defineStore('app-good-descriptions', {
+export const usePosterStore = defineStore('appGoodTopMostPosters', {
   state: () => ({
     Posters: new Map<string, Array<Poster>>()
   }),
   getters: {
-    appFee (): (appID: string | undefined, id: string) => Poster | undefined {
+    poster (): (appID: string | undefined, id: string) => Poster | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.Posters.get(appID)?.find((el: Poster) => el.EntID === id)
       }
     },
-    goods (): (appID?: string) => Array<Poster> {
+    posters (): (appID?: string) => Array<Poster> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.Posters.get(appID) || []
@@ -41,123 +41,123 @@ export const usePosterStore = defineStore('app-good-descriptions', {
     }
   },
   actions: {
-    addPosters (appID: string | undefined, goods: Array<Poster>) {
+    addPosters (appID: string | undefined, posters: Array<Poster>) {
       appID = formalizeAppID(appID)
-      let _goods = this.Posters.get(appID) as Array<Poster>
-      if (!_goods) {
-        _goods = []
+      let _posters = this.Posters.get(appID) as Array<Poster>
+      if (!_posters) {
+        _posters = []
       }
-      goods.forEach((good) => {
-        if (!good) return
-        const index = _goods.findIndex((el) => el.EntID === good.EntID)
-        _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
+      posters.forEach((poster) => {
+        if (!poster) return
+        const index = _posters.findIndex((el) => el.EntID === poster.EntID)
+        _posters.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, poster)
       })
-      this.Posters.set(appID, _goods)
+      this.Posters.set(appID, _posters)
     },
-    _deletePoster (appID: string | undefined, good: Poster) {
+    _deletePoster (appID: string | undefined, poster: Poster) {
       appID = formalizeAppID(appID)
-      let _goods = this.Posters.get(appID) as Array<Poster>
-      if (!_goods) {
-        _goods = []
+      let _posters = this.Posters.get(appID) as Array<Poster>
+      if (!_posters) {
+        _posters = []
       }
-      const index = _goods.findIndex((el) => el.EntID === good.EntID)
-      _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      this.Posters.set(appID, _goods)
+      const index = _posters.findIndex((el) => el.EntID === poster.EntID)
+      _posters.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.Posters.set(appID, _posters)
     },
-    getPosters (req: GetPostersRequest, done: (error: boolean, rows?: Array<Poster>, total?: number) => void) {
+    getPosters (req: GetPostersRequest, done?: (error: boolean, rows?: Array<Poster>, total?: number) => void) {
       doActionWithError<GetPostersRequest, GetPostersResponse>(
         API.GET_TOPMOST_POSTERS,
         req,
         req.Message,
         (resp: GetPostersResponse): void => {
           this.addPosters(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createPosters (req: CreatePosterRequest, done: (error: boolean, row?: Poster) => void) {
+    createPoster (req: CreatePosterRequest, done?: (error: boolean, row?: Poster) => void) {
       doActionWithError<CreatePosterRequest, CreatePosterResponse>(
         API.CREATE_TOPMOST_POSTER,
         req,
         req.Message,
         (resp: CreatePosterResponse): void => {
           this.addPosters(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updatePoster (req: UpdatePosterRequest, done: (error: boolean, row?: Poster) => void) {
+    updatePoster (req: UpdatePosterRequest, done?: (error: boolean, row?: Poster) => void) {
       doActionWithError<UpdatePosterRequest, UpdatePosterResponse>(
         API.UPDATE_TOPMOST_POSTER,
         req,
         req.Message,
         (resp: UpdatePosterResponse): void => {
           this.addPosters(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    deletePoster (req: DeletePosterRequest, done: (error: boolean, row?: Poster) => void) {
+    deletePoster (req: DeletePosterRequest, done?: (error: boolean, row?: Poster) => void) {
       doActionWithError<DeletePosterRequest, DeletePosterResponse>(
         API.DELETE_TOPMOST_POSTER,
         req,
         req.Message,
         (resp: DeletePosterResponse): void => {
           this._deletePoster(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminCreatePosters (req: AdminCreatePosterRequest, done: (error: boolean, row?: Poster) => void) {
+    adminCreatePoster (req: AdminCreatePosterRequest, done?: (error: boolean, row?: Poster) => void) {
       doActionWithError<AdminCreatePosterRequest, AdminCreatePosterResponse>(
         API.ADMIN_CREATE_TOPMOST_POSTER,
         req,
         req.Message,
         (resp: AdminCreatePosterResponse): void => {
           this.addPosters(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminGetPosters (req: AdminGetPostersRequest, done: (error: boolean, rows?: Array<Poster>, total?: number) => void) {
+    adminGetPosters (req: AdminGetPostersRequest, done?: (error: boolean, rows?: Array<Poster>, total?: number) => void) {
       doActionWithError<AdminGetPostersRequest, AdminGetPostersResponse>(
         API.ADMIN_GET_TOPMOST_POSTERS,
         req,
         req.Message,
         (resp: AdminGetPostersResponse): void => {
           this.addPosters(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminUpdatePosters (req: AdminUpdatePosterRequest, done: (error: boolean, row?: Poster) => void) {
+    adminUpdatePoster (req: AdminUpdatePosterRequest, done?: (error: boolean, row?: Poster) => void) {
       doActionWithError<AdminUpdatePosterRequest, AdminUpdatePosterResponse>(
         API.ADMIN_UPDATE_TOPMOST_POSTER,
         req,
         req.Message,
         (resp: AdminUpdatePosterResponse): void => {
           this.addPosters(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminDeletePosters (req: AdminDeletePosterRequest, done: (error: boolean, row?: Poster) => void) {
+    adminDeletePoster (req: AdminDeletePosterRequest, done?: (error: boolean, row?: Poster) => void) {
       doActionWithError<AdminDeletePosterRequest, AdminDeletePosterResponse>(
         API.ADMIN_DELETE_TOPMOST_POSTER,
         req,
         req.Message,
         (resp: AdminDeletePosterResponse): void => {
           this._deletePoster(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

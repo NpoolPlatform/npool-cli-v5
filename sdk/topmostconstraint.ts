@@ -37,7 +37,7 @@ const adminGetPageTopMostConstraints = (pageIndex: number, pageEnd: number, done
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_DEFAULT_TOPMOSTS_FAIL',
+        Title: 'MSG_GET_TOPMOST_CONSTRAINTS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
