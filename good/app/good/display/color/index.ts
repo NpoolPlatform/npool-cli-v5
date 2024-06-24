@@ -22,18 +22,18 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../../../appuser/app/local'
 
-export const useDisplayColorStore = defineStore('app-good-descriptions', {
+export const useDisplayColorStore = defineStore('appGoodDisplayColors', {
   state: () => ({
     DisplayColors: new Map<string, Array<DisplayColor>>()
   }),
   getters: {
-    appFee (): (appID: string | undefined, id: string) => DisplayColor | undefined {
+    displayColor (): (appID: string | undefined, id: string) => DisplayColor | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.DisplayColors.get(appID)?.find((el: DisplayColor) => el.EntID === id)
       }
     },
-    goods (): (appID?: string) => Array<DisplayColor> {
+    displayColors (): (appID?: string) => Array<DisplayColor> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.DisplayColors.get(appID) || []
@@ -41,123 +41,123 @@ export const useDisplayColorStore = defineStore('app-good-descriptions', {
     }
   },
   actions: {
-    addDisplayColors (appID: string | undefined, goods: Array<DisplayColor>) {
+    addDisplayColors (appID: string | undefined, displayColors: Array<DisplayColor>) {
       appID = formalizeAppID(appID)
-      let _goods = this.DisplayColors.get(appID) as Array<DisplayColor>
-      if (!_goods) {
-        _goods = []
+      let _displayColors = this.DisplayColors.get(appID) as Array<DisplayColor>
+      if (!_displayColors) {
+        _displayColors = []
       }
-      goods.forEach((good) => {
+      displayColors.forEach((good) => {
         if (!good) return
-        const index = _goods.findIndex((el) => el.EntID === good.EntID)
-        _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
+        const index = _displayColors.findIndex((el) => el.EntID === good.EntID)
+        _displayColors.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
       })
-      this.DisplayColors.set(appID, _goods)
+      this.DisplayColors.set(appID, _displayColors)
     },
     _deleteDisplayColor (appID: string | undefined, good: DisplayColor) {
       appID = formalizeAppID(appID)
-      let _goods = this.DisplayColors.get(appID) as Array<DisplayColor>
-      if (!_goods) {
-        _goods = []
+      let _displayColors = this.DisplayColors.get(appID) as Array<DisplayColor>
+      if (!_displayColors) {
+        _displayColors = []
       }
-      const index = _goods.findIndex((el) => el.EntID === good.EntID)
-      _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      this.DisplayColors.set(appID, _goods)
+      const index = _displayColors.findIndex((el) => el.EntID === good.EntID)
+      _displayColors.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.DisplayColors.set(appID, _displayColors)
     },
-    getDisplayColors (req: GetDisplayColorsRequest, done: (error: boolean, rows?: Array<DisplayColor>, total?: number) => void) {
+    getDisplayColors (req: GetDisplayColorsRequest, done?: (error: boolean, rows?: Array<DisplayColor>, total?: number) => void) {
       doActionWithError<GetDisplayColorsRequest, GetDisplayColorsResponse>(
         API.GET_GOOD_DISPLAY_COLORS,
         req,
         req.Message,
         (resp: GetDisplayColorsResponse): void => {
           this.addDisplayColors(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createDisplayColors (req: CreateDisplayColorRequest, done: (error: boolean, row?: DisplayColor) => void) {
+    createDisplayColor (req: CreateDisplayColorRequest, done?: (error: boolean, row?: DisplayColor) => void) {
       doActionWithError<CreateDisplayColorRequest, CreateDisplayColorResponse>(
         API.CREATE_GOOD_DISPLAY_COLOR,
         req,
         req.Message,
         (resp: CreateDisplayColorResponse): void => {
           this.addDisplayColors(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateDisplayColor (req: UpdateDisplayColorRequest, done: (error: boolean, row?: DisplayColor) => void) {
+    updateDisplayColor (req: UpdateDisplayColorRequest, done?: (error: boolean, row?: DisplayColor) => void) {
       doActionWithError<UpdateDisplayColorRequest, UpdateDisplayColorResponse>(
         API.UPDATE_GOOD_DISPLAY_COLOR,
         req,
         req.Message,
         (resp: UpdateDisplayColorResponse): void => {
           this.addDisplayColors(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    deleteDisplayColor (req: DeleteDisplayColorRequest, done: (error: boolean, row?: DisplayColor) => void) {
+    deleteDisplayColor (req: DeleteDisplayColorRequest, done?: (error: boolean, row?: DisplayColor) => void) {
       doActionWithError<DeleteDisplayColorRequest, DeleteDisplayColorResponse>(
         API.DELETE_GOOD_DISPLAY_COLOR,
         req,
         req.Message,
         (resp: DeleteDisplayColorResponse): void => {
           this._deleteDisplayColor(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminCreateDisplayColors (req: AdminCreateDisplayColorRequest, done: (error: boolean, row?: DisplayColor) => void) {
+    adminCreateDisplayColor (req: AdminCreateDisplayColorRequest, done?: (error: boolean, row?: DisplayColor) => void) {
       doActionWithError<AdminCreateDisplayColorRequest, AdminCreateDisplayColorResponse>(
         API.ADMIN_CREATE_GOOD_DISPLAY_COLOR,
         req,
         req.Message,
         (resp: AdminCreateDisplayColorResponse): void => {
           this.addDisplayColors(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminGetDisplayColors (req: AdminGetDisplayColorsRequest, done: (error: boolean, rows?: Array<DisplayColor>, total?: number) => void) {
+    adminGetDisplayColors (req: AdminGetDisplayColorsRequest, done?: (error: boolean, rows?: Array<DisplayColor>, total?: number) => void) {
       doActionWithError<AdminGetDisplayColorsRequest, AdminGetDisplayColorsResponse>(
         API.ADMIN_GET_GOOD_DISPLAY_COLORS,
         req,
         req.Message,
         (resp: AdminGetDisplayColorsResponse): void => {
           this.addDisplayColors(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminUpdateDisplayColors (req: AdminUpdateDisplayColorRequest, done: (error: boolean, row?: DisplayColor) => void) {
+    adminUpdateDisplayColor (req: AdminUpdateDisplayColorRequest, done?: (error: boolean, row?: DisplayColor) => void) {
       doActionWithError<AdminUpdateDisplayColorRequest, AdminUpdateDisplayColorResponse>(
         API.ADMIN_UPDATE_GOOD_DISPLAY_COLOR,
         req,
         req.Message,
         (resp: AdminUpdateDisplayColorResponse): void => {
           this.addDisplayColors(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminDeleteDisplayColors (req: AdminDeleteDisplayColorRequest, done: (error: boolean, row?: DisplayColor) => void) {
+    adminDeleteDisplayColor (req: AdminDeleteDisplayColorRequest, done?: (error: boolean, row?: DisplayColor) => void) {
       doActionWithError<AdminDeleteDisplayColorRequest, AdminDeleteDisplayColorResponse>(
         API.ADMIN_DELETE_GOOD_DISPLAY_COLOR,
         req,
         req.Message,
         (resp: AdminDeleteDisplayColorResponse): void => {
           this._deleteDisplayColor(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }
