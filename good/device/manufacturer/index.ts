@@ -14,73 +14,85 @@ import {
   AdminDeleteManufacturerResponse
 } from './types'
 
-export const useManufacturerStore = defineStore('device-manufacturers', {
+export const useManufacturerStore = defineStore('deviceManufacturers', {
   state: () => ({
     Manufacturers: [] as Array<Manufacturer>
   }),
   getters: {
-    Manufacturer (): (id: string) => Manufacturer | undefined {
+    manufacturer (): (id: string) => Manufacturer | undefined {
       return (id: string) => {
         return this.Manufacturers.find((el: Manufacturer) => el.EntID === id)
       }
     },
-    Manufacturers () {
-      return () => this.Manufacturers
+    manufacturers (): Array<Manufacturer> {
+      return this.Manufacturers
     }
   },
   actions: {
-    addManufacturers (devices: Array<Manufacturer>) {
-      devices.forEach((device) => {
+    addManufacturers (manufacturers: Array<Manufacturer>) {
+      manufacturers.forEach((device) => {
         const index = this.Manufacturers.findIndex((el: Manufacturer) => el.EntID === device.EntID)
         this.Manufacturers.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
       })
     },
-    getManufacturers (req: GetManufacturersRequest, done: (error: boolean, devices?: Array<Manufacturer>) => void) {
-      doActionWithError<GetManufacturersRequest, GetManufacturersResponse>(
-        API.GET_DEVICE_MANUFACTURERS,
-        req,
-        req.Message,
-        (resp: GetManufacturersResponse): void => {
-          this.addManufacturers(resp.Infos)
-          done(false, resp.Infos)
-        }, () => {
-          done(true)
-        })
-    },
-    adminUpdateManufacturer (req: AdminUpdateManufacturerRequest, done: (error: boolean, device?: Manufacturer) => void) {
-      doActionWithError<AdminUpdateManufacturerRequest, AdminUpdateManufacturerResponse>(
-        API.ADMIN_UPDATE_DEVICE_MANUFACTURER,
-        req,
-        req.Message,
-        (resp: AdminUpdateManufacturerResponse): void => {
-          this.addManufacturers([resp.Info])
-          done(false, resp.Info)
-        }, () => {
-          done(true)
-        })
-    },
-    createManufacturer (req: AdminCreateManufacturerRequest, done: (error: boolean, device?: Manufacturer) => void) {
+    adminCreateManufacturer (req: AdminCreateManufacturerRequest, done?: (error: boolean, device?: Manufacturer) => void) {
       doActionWithError<AdminCreateManufacturerRequest, AdminCreateManufacturerResponse>(
         API.ADMIN_CREATE_DEVICE_MANUFACTURER,
         req,
         req.Message,
         (resp: AdminCreateManufacturerResponse): void => {
           this.addManufacturers([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    deleteManufacturer (req: AdminDeleteManufacturerRequest, done: (error: boolean, device?: Manufacturer) => void) {
+    getManufacturers (req: GetManufacturersRequest, done?: (error: boolean, manufacturers?: Array<Manufacturer>) => void) {
+      doActionWithError<GetManufacturersRequest, GetManufacturersResponse>(
+        API.GET_DEVICE_MANUFACTURERS,
+        req,
+        req.Message,
+        (resp: GetManufacturersResponse): void => {
+          this.addManufacturers(resp.Infos)
+          done?.(false, resp.Infos)
+        }, () => {
+          done?.(true)
+        })
+    },
+    adminUpdateManufacturer (req: AdminUpdateManufacturerRequest, done?: (error: boolean, device?: Manufacturer) => void) {
+      doActionWithError<AdminUpdateManufacturerRequest, AdminUpdateManufacturerResponse>(
+        API.ADMIN_UPDATE_DEVICE_MANUFACTURER,
+        req,
+        req.Message,
+        (resp: AdminUpdateManufacturerResponse): void => {
+          this.addManufacturers([resp.Info])
+          done?.(false, resp.Info)
+        }, () => {
+          done?.(true)
+        })
+    },
+    createManufacturer (req: AdminCreateManufacturerRequest, done?: (error: boolean, device?: Manufacturer) => void) {
+      doActionWithError<AdminCreateManufacturerRequest, AdminCreateManufacturerResponse>(
+        API.ADMIN_CREATE_DEVICE_MANUFACTURER,
+        req,
+        req.Message,
+        (resp: AdminCreateManufacturerResponse): void => {
+          this.addManufacturers([resp.Info])
+          done?.(false, resp.Info)
+        }, () => {
+          done?.(true)
+        })
+    },
+    deleteManufacturer (req: AdminDeleteManufacturerRequest, done?: (error: boolean, device?: Manufacturer) => void) {
       doActionWithError<AdminDeleteManufacturerRequest, AdminDeleteManufacturerResponse>(
         API.ADMIN_DELETE_DEVICE_MANUFACTURER,
         req,
         req.Message,
         (resp: AdminDeleteManufacturerResponse): void => {
           this.addManufacturers([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }
