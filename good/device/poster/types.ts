@@ -5,7 +5,7 @@ export interface DevicePoster {
   EntID: string
   DeviceTypeID: string
   DeviceType: string
-  DevicePoster: string
+  Manufacturer: string
   Poster: string
   Index: number
   CreatedAt: number
@@ -18,8 +18,8 @@ export interface DevicePosterInfo {
 }
 
 export interface AdminCreateDevicePosterRequest extends BaseRequest {
-  Name: string
-  Logo: string
+  Poster: string
+  Index: number
 }
 
 export interface AdminCreateDevicePosterResponse {
