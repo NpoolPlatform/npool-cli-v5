@@ -22,18 +22,18 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../../appuser/app/local'
 
-export const useLabelStore = defineStore('app-good-descriptions', {
+export const useLabelStore = defineStore('appGoodLabels', {
   state: () => ({
     Labels: new Map<string, Array<Label>>()
   }),
   getters: {
-    appFee (): (appID: string | undefined, id: string) => Label | undefined {
+    label (): (appID: string | undefined, id: string) => Label | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.Labels.get(appID)?.find((el: Label) => el.EntID === id)
       }
     },
-    goods (): (appID?: string) => Array<Label> {
+    labels (): (appID?: string) => Array<Label> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.Labels.get(appID) || []
@@ -64,100 +64,100 @@ export const useLabelStore = defineStore('app-good-descriptions', {
       _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.Labels.set(appID, _goods)
     },
-    getLabels (req: GetLabelsRequest, done: (error: boolean, rows?: Array<Label>, total?: number) => void) {
+    getLabels (req: GetLabelsRequest, done?: (error: boolean, rows?: Array<Label>, total?: number) => void) {
       doActionWithError<GetLabelsRequest, GetLabelsResponse>(
         API.GET_GOOD_LABELS,
         req,
         req.Message,
         (resp: GetLabelsResponse): void => {
           this.addLabels(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createLabels (req: CreateLabelRequest, done: (error: boolean, row?: Label) => void) {
+    createLabel (req: CreateLabelRequest, done?: (error: boolean, row?: Label) => void) {
       doActionWithError<CreateLabelRequest, CreateLabelResponse>(
         API.CREATE_GOOD_LABEL,
         req,
         req.Message,
         (resp: CreateLabelResponse): void => {
           this.addLabels(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateLabel (req: UpdateLabelRequest, done: (error: boolean, row?: Label) => void) {
+    updateLabel (req: UpdateLabelRequest, done?: (error: boolean, row?: Label) => void) {
       doActionWithError<UpdateLabelRequest, UpdateLabelResponse>(
         API.UPDATE_GOOD_LABEL,
         req,
         req.Message,
         (resp: UpdateLabelResponse): void => {
           this.addLabels(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    deleteLabel (req: DeleteLabelRequest, done: (error: boolean, row?: Label) => void) {
+    deleteLabel (req: DeleteLabelRequest, done?: (error: boolean, row?: Label) => void) {
       doActionWithError<DeleteLabelRequest, DeleteLabelResponse>(
         API.DELETE_GOOD_LABEL,
         req,
         req.Message,
         (resp: DeleteLabelResponse): void => {
           this._deleteLabel(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminCreateLabels (req: AdminCreateLabelRequest, done: (error: boolean, row?: Label) => void) {
+    adminCreateLabel (req: AdminCreateLabelRequest, done?: (error: boolean, row?: Label) => void) {
       doActionWithError<AdminCreateLabelRequest, AdminCreateLabelResponse>(
         API.ADMIN_CREATE_GOOD_LABEL,
         req,
         req.Message,
         (resp: AdminCreateLabelResponse): void => {
           this.addLabels(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminGetLabels (req: AdminGetLabelsRequest, done: (error: boolean, rows?: Array<Label>, total?: number) => void) {
+    adminGetLabels (req: AdminGetLabelsRequest, done?: (error: boolean, rows?: Array<Label>, total?: number) => void) {
       doActionWithError<AdminGetLabelsRequest, AdminGetLabelsResponse>(
         API.ADMIN_GET_GOOD_LABELS,
         req,
         req.Message,
         (resp: AdminGetLabelsResponse): void => {
           this.addLabels(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminUpdateLabels (req: AdminUpdateLabelRequest, done: (error: boolean, row?: Label) => void) {
+    adminUpdateLabel (req: AdminUpdateLabelRequest, done?: (error: boolean, row?: Label) => void) {
       doActionWithError<AdminUpdateLabelRequest, AdminUpdateLabelResponse>(
         API.ADMIN_UPDATE_GOOD_LABEL,
         req,
         req.Message,
         (resp: AdminUpdateLabelResponse): void => {
           this.addLabels(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminDeleteLabels (req: AdminDeleteLabelRequest, done: (error: boolean, row?: Label) => void) {
+    adminDeleteLabel (req: AdminDeleteLabelRequest, done?: (error: boolean, row?: Label) => void) {
       doActionWithError<AdminDeleteLabelRequest, AdminDeleteLabelResponse>(
         API.ADMIN_DELETE_GOOD_LABEL,
         req,
         req.Message,
         (resp: AdminDeleteLabelResponse): void => {
           this._deleteLabel(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

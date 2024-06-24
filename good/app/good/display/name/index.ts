@@ -22,7 +22,7 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../../../appuser/app/local'
 
-export const useDisplayNameStore = defineStore('app-good-descriptions', {
+export const useDisplayNameStore = defineStore('appGoodDisplayNames', {
   state: () => ({
     DisplayNames: new Map<string, Array<DisplayName>>()
   }),
