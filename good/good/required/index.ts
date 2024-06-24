@@ -13,7 +13,7 @@ import {
   AdminUpdateRequiredResponse
 } from './types'
 
-export const useRequiredStore = defineStore('good-requireds', {
+export const useRequiredStore = defineStore('goodRequireds', {
   state: () => ({
     Requireds: [] as Array<Required>
   }),
