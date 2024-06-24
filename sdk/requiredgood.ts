@@ -25,13 +25,13 @@ const getPageRequiredGoods = (pageIndex: number, pageEnd: number, done?: (error:
   })
 }
 
-export const getGoodRequiredGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+export const getRequiredGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   getPageRequiredGoods(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const goodRequiredGoods = computed(() => _requiredGood.requireds)
+export const requiredGoods = computed(() => _requiredGood.requireds)
 
-export const adminCreateGoodRequiredGood = (target: requiredgood.Required, done?: (error: boolean) => void) => {
+export const adminCreateRequiredGood = (target: requiredgood.Required, done?: (error: boolean) => void) => {
   _requiredGood.adminCreateRequired({
     ...target,
     Message: {
@@ -51,7 +51,7 @@ export const adminCreateGoodRequiredGood = (target: requiredgood.Required, done?
   }, done)
 }
 
-export const adminUpdateGoodRequiredGood = (target: requiredgood.Required, done?: (error: boolean) => void) => {
+export const adminUpdateRequiredGood = (target: requiredgood.Required, done?: (error: boolean) => void) => {
   _requiredGood.adminUpdateRequired({
     ...target,
     Message: {
@@ -71,7 +71,7 @@ export const adminUpdateGoodRequiredGood = (target: requiredgood.Required, done?
   }, done)
 }
 
-export const adminDeleteGoodRequiredGood = (target: requiredgood.Required, done?: (error: boolean) => void) => {
+export const adminDeleteRequiredGood = (target: requiredgood.Required, done?: (error: boolean) => void) => {
   _requiredGood.adminDeleteRequired({
     ID: target.ID,
     EntID: target.EntID,
