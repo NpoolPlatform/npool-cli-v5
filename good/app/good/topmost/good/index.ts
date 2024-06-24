@@ -62,107 +62,107 @@ export const useTopMostGoodStore = defineStore('topMostGood', {
         this.TopMostGoods.set(top.AppID, _tops)
       })
     },
-    createTopMostGood (req: CreateTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+    createTopMostGood (req: CreateTopMostGoodRequest, done?: (error: boolean, row?: TopMostGood) => void) {
       doActionWithError<CreateTopMostGoodRequest, CreateTopMostGoodResponse>(
         API.CREATE_TOPMOST_GOOD,
         req,
         req.Message,
         (resp: CreateTopMostGoodResponse): void => {
           this.addTopMostGoods(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getTopMostGoods (req: GetTopMostGoodsRequest, done: (error: boolean, rows?: Array<TopMostGood>, total?: number) => void) {
+    getTopMostGoods (req: GetTopMostGoodsRequest, done?: (error: boolean, rows?: Array<TopMostGood>, total?: number) => void) {
       doActionWithError<GetTopMostGoodsRequest, GetTopMostGoodsResponse>(
         API.GET_TOPMOST_GOODS,
         req,
         req.Message,
         (resp: GetTopMostGoodsResponse): void => {
           this.addTopMostGoods(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateTopMostGood (req: UpdateTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+    updateTopMostGood (req: UpdateTopMostGoodRequest, done?: (error: boolean, row?: TopMostGood) => void) {
       doActionWithError<UpdateTopMostGoodRequest, UpdateTopMostGoodResponse>(
         API.UPDATE_TOPMOST_GOOD,
         req,
         req.Message,
         (resp: UpdateTopMostGoodResponse): void => {
           this.addTopMostGoods(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteTopMostGood (req: DeleteTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+    deleteTopMostGood (req: DeleteTopMostGoodRequest, done?: (error: boolean, row?: TopMostGood) => void) {
       doActionWithError<DeleteTopMostGoodRequest, DeleteTopMostGoodResponse>(
         API.DELETE_TOPMOST_GOOD,
         req,
         req.Message,
         (resp: DeleteTopMostGoodResponse): void => {
           this.deleteTopMostGoods([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminCreateTopMostGood (req: AdminCreateTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+    adminCreateTopMostGood (req: AdminCreateTopMostGoodRequest, done?: (error: boolean, row?: TopMostGood) => void) {
       doActionWithError<AdminCreateTopMostGoodRequest, AdminCreateTopMostGoodResponse>(
         API.ADMIN_CREATE_TOPMOST_GOOD,
         req,
         req.Message,
         (resp: AdminCreateTopMostGoodResponse): void => {
           this.addTopMostGoods(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminGetTopMostGoods (req: AdminGetTopMostGoodsRequest, done: (error: boolean, rows?: Array<TopMostGood>, total?: number) => void) {
+    adminGetTopMostGoods (req: AdminGetTopMostGoodsRequest, done?: (error: boolean, rows?: Array<TopMostGood>, total?: number) => void) {
       doActionWithError<AdminGetTopMostGoodsRequest, AdminGetTopMostGoodsResponse>(
         API.ADMIN_GET_TOPMOST_GOODS,
         req,
         req.Message,
         (resp: AdminGetTopMostGoodsResponse): void => {
           this.addTopMostGoods(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdateTopMostGood (req: AdminUpdateTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+    adminUpdateTopMostGood (req: AdminUpdateTopMostGoodRequest, done?: (error: boolean, row?: TopMostGood) => void) {
       doActionWithError<AdminUpdateTopMostGoodRequest, AdminUpdateTopMostGoodResponse>(
         API.ADMIN_UPDATE_TOPMOST_GOOD,
         req,
         req.Message,
         (resp: AdminUpdateTopMostGoodResponse): void => {
           this.addTopMostGoods(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminDeleteTopMostGood (req: AdminDeleteTopMostGoodRequest, done: (error: boolean, row?: TopMostGood) => void) {
+    adminDeleteTopMostGood (req: AdminDeleteTopMostGoodRequest, done?: (error: boolean, row?: TopMostGood) => void) {
       doActionWithError<AdminDeleteTopMostGoodRequest, AdminDeleteTopMostGoodResponse>(
         API.ADMIN_DELETE_TOPMOST_GOOD,
         req,
         req.Message,
         (resp: AdminDeleteTopMostGoodResponse): void => {
           this.deleteTopMostGoods([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
