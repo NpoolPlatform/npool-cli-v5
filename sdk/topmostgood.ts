@@ -59,7 +59,7 @@ export const adminGetTopMostGoods = (pageStart: number, pages: number, done?: (e
 
 export const topMostGoods = computed(() => top.topMostGoods(AppID.value))
 
-export const createTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+export const createTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
   top.createTopMostGood({
     ...target,
     Message: {
@@ -76,12 +76,10 @@ export const createTopMostGood = (target: TopMostGood, finish: (error: boolean) 
         Type: notify.NotifyType.Success
       }
     }
-  }, (error: boolean) => {
-    finish(error)
-  })
+  }, done)
 }
 
-export const adminCreateTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+export const adminCreateTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
   top.adminCreateTopMostGood({
     ...target,
     TargetAppID: AppID.value,
@@ -99,12 +97,10 @@ export const adminCreateTopMostGood = (target: TopMostGood, finish: (error: bool
         Type: notify.NotifyType.Success
       }
     }
-  }, (error: boolean) => {
-    finish(error)
-  })
+  }, done)
 }
 
-export const updateTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+export const updateTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
   top.updateTopMostGood({
     ...target,
     Message: {
@@ -121,12 +117,10 @@ export const updateTopMostGood = (target: TopMostGood, finish: (error: boolean) 
         Type: notify.NotifyType.Success
       }
     }
-  }, (error: boolean) => {
-    finish(error)
-  })
+  }, done)
 }
 
-export const adminUpdateTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+export const adminUpdateTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
   top.adminUpdateTopMostGood({
     ...target,
     TargetAppID: target.AppID,
@@ -144,7 +138,5 @@ export const adminUpdateTopMostGood = (target: TopMostGood, finish: (error: bool
         Type: notify.NotifyType.Success
       }
     }
-  }, (error: boolean) => {
-    finish(error)
-  })
+  }, done)
 }
