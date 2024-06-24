@@ -15,28 +15,28 @@ import {
   AdminDeletePowerRentalResponse
 } from './types'
 
-export const usePowerRentalStore = defineStore('powerrentals', {
+export const usePowerRentalStore = defineStore('powerRentals', {
   state: () => ({
     PowerRentals: [] as Array<PowerRental>
   }),
   getters: {
-    PowerRental (): (id: string) => PowerRental | undefined {
+    powerRental (): (id: string) => PowerRental | undefined {
       return (id: string) => {
         return this.PowerRentals.find((el: PowerRental) => el.EntID === id)
       }
     },
-    PowerRentals () {
+    powerRentals () {
       return () => this.PowerRentals
     }
   },
   actions: {
-    addBrands (brands: Array<PowerRental>) {
+    addPowerRentals (brands: Array<PowerRental>) {
       brands.forEach((brand) => {
         const index = this.PowerRentals.findIndex((el: PowerRental) => el.EntID === brand.EntID)
         this.PowerRentals.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, brand)
       })
     },
-    deleteBrands (brands: Array<PowerRental>) {
+    deletePowerRentals (brands: Array<PowerRental>) {
       brands.forEach((brand) => {
         const index = this.PowerRentals.findIndex((el: PowerRental) => el.EntID === brand.EntID)
         this.PowerRentals.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
@@ -48,7 +48,7 @@ export const usePowerRentalStore = defineStore('powerrentals', {
         req,
         req.Message,
         (resp: GetPowerRentalResponse): void => {
-          this.addBrands([resp.Info])
+          this.addPowerRentals([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -61,46 +61,46 @@ export const usePowerRentalStore = defineStore('powerrentals', {
         req,
         req.Message,
         (resp: GetPowerRentalsResponse): void => {
-          this.addBrands(resp.Infos)
+          this.addPowerRentals(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
         }
       )
     },
-    updatePowerRental (req: AdminUpdatePowerRentalRequest, done: (error: boolean, row?: PowerRental) => void) {
+    adminUpdatePowerRental (req: AdminUpdatePowerRentalRequest, done: (error: boolean, row?: PowerRental) => void) {
       doActionWithError<AdminUpdatePowerRentalRequest, AdminUpdatePowerRentalResponse>(
         API.ADMIN_UPDATE_POWERRENTAL,
         req,
         req.Message,
         (resp: AdminUpdatePowerRentalResponse): void => {
-          this.addBrands([resp.Info])
+          this.addPowerRentals([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
         }
       )
     },
-    createPowerRental (req: AdminCreatePowerRentalRequest, done: (error: boolean, row?: PowerRental) => void) {
+    adminCreatePowerRental (req: AdminCreatePowerRentalRequest, done?: (error: boolean, row?: PowerRental) => void) {
       doActionWithError<AdminCreatePowerRentalRequest, AdminCreatePowerRentalResponse>(
         API.ADMIN_CREATE_POWERRENTAL,
         req,
         req.Message,
         (resp: AdminCreatePowerRentalResponse): void => {
-          this.addBrands([resp.Info])
-          done(false, resp.Info)
+          this.addPowerRentals([resp.Info])
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deletePowerRental (req: AdminDeletePowerRentalRequest, done: (error: boolean, row?: PowerRental) => void) {
+    adminDeletePowerRental (req: AdminDeletePowerRentalRequest, done: (error: boolean, row?: PowerRental) => void) {
       doActionWithError<AdminDeletePowerRentalRequest, AdminDeletePowerRentalResponse>(
         API.ADMIN_DELETE_POWERRENTAL,
         req,
         req.Message,
         (resp: AdminDeletePowerRentalResponse): void => {
-          this.deleteBrands([resp.Info])
+          this.deletePowerRentals([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
