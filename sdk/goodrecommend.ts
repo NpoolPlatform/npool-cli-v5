@@ -30,6 +30,33 @@ export const getGoodRecommends = (pageStart: number, pages: number, done?: (erro
   getPageGoodRecommends(pageStart, pages ? pageStart + pages : pages, done)
 }
 
+const adminGetPageGoodRecommends = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  _recommend.adminGetRecommends({
+    Offset: pageIndex * constant.DefaultPageSize,
+    Limit: constant.DefaultPageSize,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_RECOMMENDS',
+        Message: 'MSG_GET_RECOMMENDS_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error: boolean, rows?: Array<appgoodrecommend.Recommend>, total?: number) => {
+    if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
+      done?.(error, totalPages, total as number)
+      return
+    }
+    adminGetPageGoodRecommends(++pageIndex, pageEnd, done)
+  })
+}
+
+export const adminGetGoodRecommends = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  adminGetPageGoodRecommends(pageStart, pages ? pageStart + pages : pages, done)
+}
+
 export const goodRecommends = computed(() => _recommend.recommends(AppID.value))
 
 export const createGoodRecommend = (target: appgoodrecommend.Recommend, done?: (error: boolean, recommend?: appgoodrecommend.Recommend) => void) => {
