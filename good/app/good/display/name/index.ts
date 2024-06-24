@@ -27,13 +27,13 @@ export const useDisplayNameStore = defineStore('app-good-descriptions', {
     DisplayNames: new Map<string, Array<DisplayName>>()
   }),
   getters: {
-    appFee (): (appID: string | undefined, id: string) => DisplayName | undefined {
+    displayName (): (appID: string | undefined, id: string) => DisplayName | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.DisplayNames.get(appID)?.find((el: DisplayName) => el.EntID === id)
       }
     },
-    goods (): (appID?: string) => Array<DisplayName> {
+    displayNames (): (appID?: string) => Array<DisplayName> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.DisplayNames.get(appID) || []
@@ -41,123 +41,123 @@ export const useDisplayNameStore = defineStore('app-good-descriptions', {
     }
   },
   actions: {
-    addDisplayNames (appID: string | undefined, goods: Array<DisplayName>) {
+    addDisplayNames (appID: string | undefined, displayNames: Array<DisplayName>) {
       appID = formalizeAppID(appID)
-      let _goods = this.DisplayNames.get(appID) as Array<DisplayName>
-      if (!_goods) {
-        _goods = []
+      let _displayNames = this.DisplayNames.get(appID) as Array<DisplayName>
+      if (!_displayNames) {
+        _displayNames = []
       }
-      goods.forEach((good) => {
-        if (!good) return
-        const index = _goods.findIndex((el) => el.EntID === good.EntID)
-        _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
+      displayNames.forEach((displayName) => {
+        if (!displayName) return
+        const index = _displayNames.findIndex((el) => el.EntID === displayName.EntID)
+        _displayNames.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, displayName)
       })
-      this.DisplayNames.set(appID, _goods)
+      this.DisplayNames.set(appID, _displayNames)
     },
-    _deleteDisplayName (appID: string | undefined, good: DisplayName) {
+    _deleteDisplayName (appID: string | undefined, displayName: DisplayName) {
       appID = formalizeAppID(appID)
-      let _goods = this.DisplayNames.get(appID) as Array<DisplayName>
-      if (!_goods) {
-        _goods = []
+      let _displayNames = this.DisplayNames.get(appID) as Array<DisplayName>
+      if (!_displayNames) {
+        _displayNames = []
       }
-      const index = _goods.findIndex((el) => el.EntID === good.EntID)
-      _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      this.DisplayNames.set(appID, _goods)
+      const index = _displayNames.findIndex((el) => el.EntID === displayName.EntID)
+      _displayNames.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      this.DisplayNames.set(appID, _displayNames)
     },
-    getDisplayNames (req: GetDisplayNamesRequest, done: (error: boolean, rows?: Array<DisplayName>, total?: number) => void) {
+    getDisplayNames (req: GetDisplayNamesRequest, done?: (error: boolean, rows?: Array<DisplayName>, total?: number) => void) {
       doActionWithError<GetDisplayNamesRequest, GetDisplayNamesResponse>(
         API.GET_GOOD_DISPLAY_NAMES,
         req,
         req.Message,
         (resp: GetDisplayNamesResponse): void => {
           this.addDisplayNames(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createDisplayNames (req: CreateDisplayNameRequest, done: (error: boolean, row?: DisplayName) => void) {
+    createDisplayName (req: CreateDisplayNameRequest, done?: (error: boolean, row?: DisplayName) => void) {
       doActionWithError<CreateDisplayNameRequest, CreateDisplayNameResponse>(
         API.CREATE_GOOD_DISPLAY_NAME,
         req,
         req.Message,
         (resp: CreateDisplayNameResponse): void => {
           this.addDisplayNames(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateDisplayName (req: UpdateDisplayNameRequest, done: (error: boolean, row?: DisplayName) => void) {
+    updateDisplayName (req: UpdateDisplayNameRequest, done?: (error: boolean, row?: DisplayName) => void) {
       doActionWithError<UpdateDisplayNameRequest, UpdateDisplayNameResponse>(
         API.UPDATE_GOOD_DISPLAY_NAME,
         req,
         req.Message,
         (resp: UpdateDisplayNameResponse): void => {
           this.addDisplayNames(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    deleteDisplayName (req: DeleteDisplayNameRequest, done: (error: boolean, row?: DisplayName) => void) {
+    deleteDisplayName (req: DeleteDisplayNameRequest, done?: (error: boolean, row?: DisplayName) => void) {
       doActionWithError<DeleteDisplayNameRequest, DeleteDisplayNameResponse>(
         API.DELETE_GOOD_DISPLAY_NAME,
         req,
         req.Message,
         (resp: DeleteDisplayNameResponse): void => {
           this._deleteDisplayName(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminCreateDisplayNames (req: AdminCreateDisplayNameRequest, done: (error: boolean, row?: DisplayName) => void) {
+    adminCreateDisplayName (req: AdminCreateDisplayNameRequest, done?: (error: boolean, row?: DisplayName) => void) {
       doActionWithError<AdminCreateDisplayNameRequest, AdminCreateDisplayNameResponse>(
         API.ADMIN_CREATE_GOOD_DISPLAY_NAME,
         req,
         req.Message,
         (resp: AdminCreateDisplayNameResponse): void => {
           this.addDisplayNames(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminGetDisplayNames (req: AdminGetDisplayNamesRequest, done: (error: boolean, rows?: Array<DisplayName>, total?: number) => void) {
+    adminGetDisplayNames (req: AdminGetDisplayNamesRequest, done?: (error: boolean, rows?: Array<DisplayName>, total?: number) => void) {
       doActionWithError<AdminGetDisplayNamesRequest, AdminGetDisplayNamesResponse>(
         API.ADMIN_GET_GOOD_DISPLAY_NAMES,
         req,
         req.Message,
         (resp: AdminGetDisplayNamesResponse): void => {
           this.addDisplayNames(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminUpdateDisplayNames (req: AdminUpdateDisplayNameRequest, done: (error: boolean, row?: DisplayName) => void) {
+    adminUpdateDisplayName (req: AdminUpdateDisplayNameRequest, done?: (error: boolean, row?: DisplayName) => void) {
       doActionWithError<AdminUpdateDisplayNameRequest, AdminUpdateDisplayNameResponse>(
         API.ADMIN_UPDATE_GOOD_DISPLAY_NAME,
         req,
         req.Message,
         (resp: AdminUpdateDisplayNameResponse): void => {
           this.addDisplayNames(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminDeleteDisplayNames (req: AdminDeleteDisplayNameRequest, done: (error: boolean, row?: DisplayName) => void) {
+    adminDeleteDisplayName (req: AdminDeleteDisplayNameRequest, done?: (error: boolean, row?: DisplayName) => void) {
       doActionWithError<AdminDeleteDisplayNameRequest, AdminDeleteDisplayNameResponse>(
         API.ADMIN_DELETE_GOOD_DISPLAY_NAME,
         req,
         req.Message,
         (resp: AdminDeleteDisplayNameResponse): void => {
           this._deleteDisplayName(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }
