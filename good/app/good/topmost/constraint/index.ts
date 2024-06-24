@@ -56,107 +56,107 @@ export const useTopMostConstraintStore = defineStore('topmost-constraints', {
       _topMostConstraints.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.TopMostConstraints.set(topMostConstraint.AppID, _topMostConstraints)
     },
-    createTopMostConstraint (req: CreateTopMostConstraintRequest, done: (error: boolean, row?: TopMostConstraint) => void) {
+    createTopMostConstraint (req: CreateTopMostConstraintRequest, done?: (error: boolean, row?: TopMostConstraint) => void) {
       doActionWithError<CreateTopMostConstraintRequest, CreateTopMostConstraintResponse>(
         API.CREATE_TOPMOST_CONSTRAINT,
         req,
         req.Message,
         (resp: CreateTopMostConstraintResponse): void => {
           this.addTopMostConstraints([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getTopMostConstraints (req: GetTopMostConstraintsRequest, done: (error: boolean, rows?: Array<TopMostConstraint>, total?: number) => void) {
+    getTopMostConstraints (req: GetTopMostConstraintsRequest, done?: (error: boolean, rows?: Array<TopMostConstraint>, total?: number) => void) {
       doActionWithError<GetTopMostConstraintsRequest, GetTopMostConstraintsResponse>(
         API.GET_TOPMOST_CONSTRAINTS,
         req,
         req.Message,
         (resp: GetTopMostConstraintsResponse): void => {
           this.addTopMostConstraints(resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateTopMostConstraint (req: UpdateTopMostConstraintRequest, done: (error: boolean, row?: TopMostConstraint) => void) {
+    updateTopMostConstraint (req: UpdateTopMostConstraintRequest, done?: (error: boolean, row?: TopMostConstraint) => void) {
       doActionWithError<UpdateTopMostConstraintRequest, UpdateTopMostConstraintResponse>(
         API.UPDATE_TOPMOST_CONSTRAINT,
         req,
         req.Message,
         (resp: UpdateTopMostConstraintResponse): void => {
           this.addTopMostConstraints([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteTopMostConstraint (req: DeleteTopMostConstraintRequest, done: (error: boolean, row?: TopMostConstraint) => void) {
+    deleteTopMostConstraint (req: DeleteTopMostConstraintRequest, done?: (error: boolean, row?: TopMostConstraint) => void) {
       doActionWithError<DeleteTopMostConstraintRequest, DeleteTopMostConstraintResponse>(
         API.DELETE_TOPMOST_CONSTRAINT,
         req,
         req.Message,
         (resp: DeleteTopMostConstraintResponse): void => {
           this._deleteTopMostConstraint(resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminCreateTopMostConstraint (req: AdminCreateTopMostConstraintRequest, done: (error: boolean, row?: TopMostConstraint) => void) {
+    adminCreateTopMostConstraint (req: AdminCreateTopMostConstraintRequest, done?: (error: boolean, row?: TopMostConstraint) => void) {
       doActionWithError<AdminCreateTopMostConstraintRequest, AdminCreateTopMostConstraintResponse>(
         API.ADMIN_CREATE_TOPMOST_CONSTRAINT,
         req,
         req.Message,
         (resp: AdminCreateTopMostConstraintResponse): void => {
           this.addTopMostConstraints([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdateTopMostConstraint (req: AdminUpdateTopMostConstraintRequest, done: (error: boolean, row?: TopMostConstraint) => void) {
+    adminUpdateTopMostConstraint (req: AdminUpdateTopMostConstraintRequest, done?: (error: boolean, row?: TopMostConstraint) => void) {
       doActionWithError<AdminUpdateTopMostConstraintRequest, AdminUpdateTopMostConstraintResponse>(
         API.ADMIN_UPDATE_TOPMOST_CONSTRAINT,
         req,
         req.Message,
         (resp: AdminUpdateTopMostConstraintResponse): void => {
           this.addTopMostConstraints([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminDeleteTopMostConstraint (req: AdminDeleteTopMostConstraintRequest, done: (error: boolean, row?: TopMostConstraint) => void) {
+    adminDeleteTopMostConstraint (req: AdminDeleteTopMostConstraintRequest, done?: (error: boolean, row?: TopMostConstraint) => void) {
       doActionWithError<AdminDeleteTopMostConstraintRequest, AdminDeleteTopMostConstraintResponse>(
         API.ADMIN_DELETE_TOPMOST_CONSTRAINT,
         req,
         req.Message,
         (resp: AdminDeleteTopMostConstraintResponse): void => {
           this._deleteTopMostConstraint(resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminGetTopMostConstraints (req: AdminGetTopMostConstraintsRequest, done: (error: boolean, rows?: Array<TopMostConstraint>, total?: number) => void) {
+    adminGetTopMostConstraints (req: AdminGetTopMostConstraintsRequest, done?: (error: boolean, rows?: Array<TopMostConstraint>, total?: number) => void) {
       doActionWithError<AdminGetTopMostConstraintsRequest, AdminGetTopMostConstraintsResponse>(
         API.ADMIN_GET_TOPMOST_CONSTRAINTS,
         req,
         req.Message,
         (resp: AdminGetTopMostConstraintsResponse): void => {
           this.addTopMostConstraints(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
