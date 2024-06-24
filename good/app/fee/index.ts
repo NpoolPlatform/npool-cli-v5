@@ -62,88 +62,88 @@ export const useAppFeeStore = defineStore('app-fees', {
       _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.AppFees.set(appID, _goods)
     },
-    getAppFee (req: GetAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
+    getAppFee (req: GetAppFeeRequest, done?: (error: boolean, row?: AppFee) => void) {
       doActionWithError<GetAppFeeRequest, GetAppFeeResponse>(
         API.GET_APP_FEE,
         req,
         req.Message,
         (resp: GetAppFeeResponse): void => {
           this.addAppFees(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    getAppFees (req: GetAppFeesRequest, done: (error: boolean, rows?: Array<AppFee>, total?: number) => void) {
+    getAppFees (req: GetAppFeesRequest, done?: (error: boolean, rows?: Array<AppFee>, total?: number) => void) {
       doActionWithError<GetAppFeesRequest, GetAppFeesResponse>(
         API.GET_APP_FEES,
         req,
         req.Message,
         (resp: GetAppFeesResponse): void => {
           this.addAppFees(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateAppFee (req: UpdateAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
+    updateAppFee (req: UpdateAppFeeRequest, done?: (error: boolean, row?: AppFee) => void) {
       doActionWithError<UpdateAppFeeRequest, UpdateAppFeeResponse>(
         API.UPDATE_APP_FEE,
         req,
         req.Message,
         (resp: UpdateAppFeeResponse): void => {
           this.addAppFees(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminCreateAppFees (req: AdminCreateAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
+    adminCreateAppFee (req: AdminCreateAppFeeRequest, done?: (error: boolean, row?: AppFee) => void) {
       doActionWithError<AdminCreateAppFeeRequest, AdminCreateAppFeeResponse>(
         API.ADMIN_CREATE_APP_FEE,
         req,
         req.Message,
         (resp: AdminCreateAppFeeResponse): void => {
           this.addAppFees(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminGetAppFees (req: AdminGetAppFeesRequest, done: (error: boolean, rows?: Array<AppFee>, total?: number) => void) {
+    adminGetAppFees (req: AdminGetAppFeesRequest, done?: (error: boolean, rows?: Array<AppFee>, total?: number) => void) {
       doActionWithError<AdminGetAppFeesRequest, AdminGetAppFeesResponse>(
         API.ADMIN_GET_APP_FEES,
         req,
         req.Message,
         (resp: AdminGetAppFeesResponse): void => {
           this.addAppFees(undefined, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminUpdateAppFees (req: AdminUpdateAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
+    adminUpdateAppFee (req: AdminUpdateAppFeeRequest, done?: (error: boolean, row?: AppFee) => void) {
       doActionWithError<AdminUpdateAppFeeRequest, AdminUpdateAppFeeResponse>(
         API.ADMIN_UPDATE_APP_FEE,
         req,
         req.Message,
         (resp: AdminUpdateAppFeeResponse): void => {
           this.addAppFees(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminDeleteAppFees (req: AdminDeleteAppFeeRequest, done: (error: boolean, row?: AppFee) => void) {
+    adminDeleteAppFee (req: AdminDeleteAppFeeRequest, done?: (error: boolean, row?: AppFee) => void) {
       doActionWithError<AdminDeleteAppFeeRequest, AdminDeleteAppFeeResponse>(
         API.ADMIN_DELETE_APP_FEE,
         req,
         req.Message,
         (resp: AdminDeleteAppFeeResponse): void => {
           this.deleteAppFee(undefined, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

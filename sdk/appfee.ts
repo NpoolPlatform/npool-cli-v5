@@ -61,3 +61,34 @@ export const appFees = computed(() => _appFee.goods(AppID.value))
 export const appFee = (appGoodID: string) => appFees.value.find((el) => el.AppGoodID === appGoodID)
 export const onlineAppFees = computed(() => appFees.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
 export const purchasableAppFees = computed(() => onlineAppFees.value.filter((el) => el.GoodPurchasable && el.AppGoodPurchasable))
+
+export const adminCreateAppFee = (target: appfee.AppFee, done?: (error: boolean, appFee?: appfee.AppFee) => void) => {
+  _appFee.adminCreateAppFee({
+    ...target,
+    TargetAppID: AppID.value,
+    Name: target.AppGoodName,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_APP_FEE',
+        Message: 'MSG_CREATE_APP_FEE_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const adminUpdateAppFee = (target: appfee.AppFee, done?: (error: boolean, appFee?: appfee.AppFee) => void) => {
+  _appFee.adminUpdateAppFee({
+    ...target,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_APP_FEE',
+        Message: 'MSG_CREATE_APP_FEE_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
