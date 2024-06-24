@@ -55,7 +55,7 @@ export const adminGetPowerRentals = (pageStart: number, pages: number, done?: (e
   adminGetPagePowerRentals(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const powerRentals = computed(() => _powerRental.powerRentals())
+export const powerRentals = computed(() => _powerRental.powerRentals)
 export const __powerRental = (goodId: string) => powerRentals.value.find((el) => el.GoodID === goodId)
 
 export const adminCreatePowerRental = (target: powerrental.PowerRental, done?: (error: boolean, powerRental?: powerrental.PowerRental) => void) => {

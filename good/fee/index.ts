@@ -20,25 +20,25 @@ export const useFeeStore = defineStore('fees', {
     Fees: [] as Array<Fee>
   }),
   getters: {
-    Fee (): (id: string) => Fee | undefined {
+    fee (): (id: string) => Fee | undefined {
       return (id: string) => {
         return this.Fees.find((el: Fee) => el.EntID === id)
       }
     },
-    Fees () {
-      return () => this.Fees
+    fees (): Array<Fee> {
+      return this.Fees
     }
   },
   actions: {
-    addBrands (brands: Array<Fee>) {
-      brands.forEach((brand) => {
-        const index = this.Fees.findIndex((el: Fee) => el.EntID === brand.EntID)
-        this.Fees.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, brand)
+    addFees (fees: Array<Fee>) {
+      fees.forEach((fee) => {
+        const index = this.Fees.findIndex((el: Fee) => el.EntID === fee.EntID)
+        this.Fees.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, fee)
       })
     },
-    deleteBrands (brands: Array<Fee>) {
-      brands.forEach((brand) => {
-        const index = this.Fees.findIndex((el: Fee) => el.EntID === brand.EntID)
+    deleteFees (fees: Array<Fee>) {
+      fees.forEach((fee) => {
+        const index = this.Fees.findIndex((el: Fee) => el.EntID === fee.EntID)
         this.Fees.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       })
     },
@@ -48,7 +48,7 @@ export const useFeeStore = defineStore('fees', {
         req,
         req.Message,
         (resp: GetFeeResponse): void => {
-          this.addBrands([resp.Info])
+          this.addFees([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
@@ -61,46 +61,46 @@ export const useFeeStore = defineStore('fees', {
         req,
         req.Message,
         (resp: GetFeesResponse): void => {
-          this.addBrands(resp.Infos)
+          this.addFees(resp.Infos)
           done(false, resp.Infos)
         }, () => {
           done(true)
         }
       )
     },
-    updateFee (req: AdminUpdateFeeRequest, done: (error: boolean, row?: Fee) => void) {
+    adminUpdateFee (req: AdminUpdateFeeRequest, done: (error: boolean, row?: Fee) => void) {
       doActionWithError<AdminUpdateFeeRequest, AdminUpdateFeeResponse>(
         API.ADMIN_UPDATE_FEE,
         req,
         req.Message,
         (resp: AdminUpdateFeeResponse): void => {
-          this.addBrands([resp.Info])
+          this.addFees([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
         }
       )
     },
-    createFee (req: AdminCreateFeeRequest, done: (error: boolean, row?: Fee) => void) {
+    adminCreateFee (req: AdminCreateFeeRequest, done?: (error: boolean, row?: Fee) => void) {
       doActionWithError<AdminCreateFeeRequest, AdminCreateFeeResponse>(
         API.ADMIN_CREATE_FEE,
         req,
         req.Message,
         (resp: AdminCreateFeeResponse): void => {
-          this.addBrands([resp.Info])
-          done(false, resp.Info)
+          this.addFees([resp.Info])
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteFee (req: AdminDeleteFeeRequest, done: (error: boolean, row?: Fee) => void) {
+    adminDeleteFee (req: AdminDeleteFeeRequest, done: (error: boolean, row?: Fee) => void) {
       doActionWithError<AdminDeleteFeeRequest, AdminDeleteFeeResponse>(
         API.ADMIN_DELETE_FEE,
         req,
         req.Message,
         (resp: AdminDeleteFeeResponse): void => {
-          this.deleteBrands([resp.Info])
+          this.deleteFees([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
