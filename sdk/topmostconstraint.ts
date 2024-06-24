@@ -10,8 +10,8 @@ const getPageTopMostConstraints = (pageIndex: number, pageEnd: number, done?: (e
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_TOPMOSTS',
-        Message: 'MSG_GET_TOPMOSTS_FAIL',
+        Title: 'MSG_GET_TOPMOST_CONSTRAINTS',
+        Message: 'MSG_GET_TOPMOST_CONSTRAINTS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
