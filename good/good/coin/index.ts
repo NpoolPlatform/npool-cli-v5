@@ -14,7 +14,7 @@ import {
   AdminDeleteGoodCoinResponse
 } from './types'
 
-export const useGoodCoinStore = defineStore('goodCoin-manufacturers', {
+export const useGoodCoinStore = defineStore('goodCoins', {
   state: () => ({
     GoodCoins: [] as Array<GoodCoin>
   }),
@@ -24,8 +24,8 @@ export const useGoodCoinStore = defineStore('goodCoin-manufacturers', {
         return this.GoodCoins.find((el: GoodCoin) => el.EntID === id)
       }
     },
-    goodCoins () {
-      return () => this.GoodCoins
+    goodCoins (): Array<GoodCoin> {
+      return this.GoodCoins
     }
   },
   actions: {
@@ -35,52 +35,52 @@ export const useGoodCoinStore = defineStore('goodCoin-manufacturers', {
         this.GoodCoins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, goodCoin)
       })
     },
-    getGoodCoins (req: GetGoodCoinsRequest, done: (error: boolean, goodCoins?: Array<GoodCoin>) => void) {
+    getGoodCoins (req: GetGoodCoinsRequest, done?: (error: boolean, goodCoins?: Array<GoodCoin>) => void) {
       doActionWithError<GetGoodCoinsRequest, GetGoodCoinsResponse>(
         API.GET_GOOD_COINS,
         req,
         req.Message,
         (resp: GetGoodCoinsResponse): void => {
           this.addGoodCoins(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminUpdateGoodCoin (req: AdminUpdateGoodCoinRequest, done: (error: boolean, goodCoin?: GoodCoin) => void) {
+    adminUpdateGoodCoin (req: AdminUpdateGoodCoinRequest, done?: (error: boolean, goodCoin?: GoodCoin) => void) {
       doActionWithError<AdminUpdateGoodCoinRequest, AdminUpdateGoodCoinResponse>(
         API.ADMIN_UPDATE_GOOD_COIN,
         req,
         req.Message,
         (resp: AdminUpdateGoodCoinResponse): void => {
           this.addGoodCoins([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createGoodCoin (req: AdminCreateGoodCoinRequest, done: (error: boolean, goodCoin?: GoodCoin) => void) {
+    adminCreateGoodCoin (req: AdminCreateGoodCoinRequest, done?: (error: boolean, goodCoin?: GoodCoin) => void) {
       doActionWithError<AdminCreateGoodCoinRequest, AdminCreateGoodCoinResponse>(
         API.ADMIN_CREATE_GOOD_COIN,
         req,
         req.Message,
         (resp: AdminCreateGoodCoinResponse): void => {
           this.addGoodCoins([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    deleteGoodCoin (req: AdminDeleteGoodCoinRequest, done: (error: boolean, goodCoin?: GoodCoin) => void) {
+    adminDeleteGoodCoin (req: AdminDeleteGoodCoinRequest, done?: (error: boolean, goodCoin?: GoodCoin) => void) {
       doActionWithError<AdminDeleteGoodCoinRequest, AdminDeleteGoodCoinResponse>(
         API.ADMIN_DELETE_GOOD_COIN,
         req,
         req.Message,
         (resp: AdminDeleteGoodCoinResponse): void => {
           this.addGoodCoins([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }
