@@ -12,91 +12,82 @@ import {
   AdminUpdateRequiredRequest,
   AdminUpdateRequiredResponse
 } from './types'
-import { formalizeAppID } from '../../../appuser/app/local'
 
 export const useRequiredStore = defineStore('good-requireds', {
   state: () => ({
-    Requireds: new Map<string, Array<Required>>()
+    Requireds: [] as Array<Required>
   }),
   getters: {
-    required (): (appID: string | undefined, id: string) => Required | undefined {
-      return (appID: string | undefined, id: string) => {
-        appID = formalizeAppID(appID)
-        return this.Requireds.get(appID)?.find((el: Required) => el.EntID === id)
+    required (): (id: string) => Required | undefined {
+      return (id: string) => {
+        return this.Requireds.find((el: Required) => el.EntID === id)
       }
     },
-    requireds (): (appID?: string) => Array<Required> {
-      return (appID?: string) => {
-        appID = formalizeAppID(appID)
-        return this.Requireds.get(appID) || []
-      }
+    requireds (): Array<Required> {
+      return this.Requireds
     }
   },
   actions: {
-    addRequireds (goods: Array<Required>) {
-      goods.forEach((required) => {
+    addRequireds (requireds: Array<Required>) {
+      requireds.forEach((required) => {
         if (!required) return
-        const _goods = this.Requireds.get(required.AppID) as Array<Required> || []
-        const index = _goods.findIndex((el) => el.EntID === required.EntID)
-        _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, required)
-        this.Requireds.set(required.AppID, _goods)
+        const index = this.Requireds.findIndex((el) => el.EntID === required.EntID)
+        this.Requireds.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, required)
       })
     },
     _deleteRequired (required: Required) {
-      const _requireds = this.requireds(required.AppID) || []
-      const index = _requireds.findIndex((el: Required) => el.EntID === required.EntID)
-      _requireds.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-      this.Requireds.set(required.AppID, _requireds)
+      const index = this.Requireds.findIndex((el: Required) => el.EntID === required.EntID)
+      this.Requireds.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
     },
-    adminCreateRequired (req: AdminCreateRequiredRequest, done: (error: boolean, row?: Required) => void) {
+    adminCreateRequired (req: AdminCreateRequiredRequest, done?: (error: boolean, row?: Required) => void) {
       doActionWithError<AdminCreateRequiredRequest, AdminCreateRequiredResponse>(
         API.ADMIN_CREATE_REQUIRED_GOOD,
         req,
         req.Message,
         (resp: AdminCreateRequiredResponse): void => {
           this.addRequireds([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getRequireds (req: GetRequiredsRequest, done: (error: boolean, rows?: Array<Required>, total?: number) => void) {
+    getRequireds (req: GetRequiredsRequest, done?: (error: boolean, rows?: Array<Required>, total?: number) => void) {
       doActionWithError<GetRequiredsRequest, GetRequiredsResponse>(
         API.GET_REQUIRED_GOODS,
         req,
         req.Message,
         (resp: GetRequiredsResponse): void => {
           this.addRequireds(resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminDeleteRequired (req: AdminDeleteRequiredRequest, done: (error: boolean, row?: Required) => void) {
+    adminDeleteRequired (req: AdminDeleteRequiredRequest, done?: (error: boolean, row?: Required) => void) {
       doActionWithError<AdminDeleteRequiredRequest, AdminDeleteRequiredResponse>(
         API.ADMIN_DELETE_REQUIRED_GOOD,
         req,
         req.Message,
         (resp: AdminDeleteRequiredResponse): void => {
           this._deleteRequired(resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdateRequired (req: AdminUpdateRequiredRequest, done: (error: boolean, row?: Required) => void) {
+    adminUpdateRequired (req: AdminUpdateRequiredRequest, done?: (error: boolean, row?: Required) => void) {
       doActionWithError<AdminUpdateRequiredRequest, AdminUpdateRequiredResponse>(
         API.ADMIN_UPDATE_REQUIRED_GOOD,
         req,
         req.Message,
         (resp: AdminUpdateRequiredResponse): void => {
           this.addRequireds([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
