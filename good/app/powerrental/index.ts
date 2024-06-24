@@ -20,18 +20,18 @@ import {
 } from './types'
 import { formalizeAppID } from '../../../appuser/app/local'
 
-export const useAppPowerRentalStore = defineStore('app-fees', {
+export const useAppPowerRentalStore = defineStore('appPowerRentals', {
   state: () => ({
     AppPowerRentals: new Map<string, Array<AppPowerRental>>()
   }),
   getters: {
-    appFee (): (appID: string | undefined, id: string) => AppPowerRental | undefined {
+    appPowerRental (): (appID: string | undefined, id: string) => AppPowerRental | undefined {
       return (appID: string | undefined, id: string) => {
         appID = formalizeAppID(appID)
         return this.AppPowerRentals.get(appID)?.find((el: AppPowerRental) => el.EntID === id)
       }
     },
-    goods (): (appID?: string) => Array<AppPowerRental> {
+    appPowerRentals (): (appID?: string) => Array<AppPowerRental> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.AppPowerRentals.get(appID) || []

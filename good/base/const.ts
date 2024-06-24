@@ -88,14 +88,6 @@ export enum BenefitState {
 }
 export const BenefitStates = Object.values(BenefitState)
 
-export enum CancelMode {
-  CancellableBeforeStart = 'CancellableBeforeStart',
-  CancellableBeforeBenefit = 'CancellableBeforeBenefit',
-  Uncancellable = 'Uncancellable',
-  CancellableBeforeUsed = 'CancellableBeforeUsed'
-}
-export const CancelModes = Object.values(CancelMode)
-
 export enum GoodSaleMode {
   GoodSaleModeMainnetSpot = 'GoodSaleModeMainnetSpot',
   GoodSaleModeMainnetPresaleSpot = 'GoodSaleModeMainnetPresaleSpot',
@@ -103,6 +95,14 @@ export enum GoodSaleMode {
   GoodSaleModeTestnetPresale = 'GoodSaleModeTestnetPresale'
 }
 export const GoodSaleModes = Object.values(GoodSaleMode)
+
+export enum CancelMode {
+  CancellableBeforeStart = 'CancellableBeforeStart',
+  CancellableBeforeBenefit = 'CancellableBeforeBenefit',
+  Uncancellable = 'Uncancellable',
+  CancellableBeforeUsed = 'CancellableBeforeUsed'
+}
+export const CancelModes = Object.values(CancelMode)
 
 export enum GoodCommentHideReason {
   GoodCommentHideBySpam = 'GoodCommentHideBySpam',

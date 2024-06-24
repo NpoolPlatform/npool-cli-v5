@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { apppowerrental, constant, notify } from '..'
+import { apppowerrental, constant, goodbase, notify } from '..'
 import { AppID } from './localapp'
 
 const _appPowerRental = apppowerrental.useAppPowerRentalStore()
@@ -57,8 +57,8 @@ export const adminGetAppPowerRentals = (pageStart: number, pages: number, done?:
   adminGetPageAppPowerRentals(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const appPowerRentals = computed(() => _appPowerRental.goods(AppID.value))
-export const appPowerRental = (appGoodID: string) => appPowerRentals.value.find((el) => el.AppGoodID === appGoodID)
+export const appPowerRentals = computed(() => _appPowerRental.appPowerRentals(AppID.value))
+export const appPowerRental = (appGoodId: string) => appPowerRentals.value.find((el) => el.AppGoodID === appGoodId)
 export const appPowerRentalMaxPurchasedUnits = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental) return 0
@@ -69,3 +69,4 @@ export const appPowerRentalMaxPurchasedUnits = (appGoodID: string) => {
 }
 export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
 export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchase && el.AppGoodPurchasable))
+export const appPowerRentalCancelable = (appGoodId: string) => appPowerRental(appGoodId)?.CancelMode !== goodbase.CancelMode.Uncancellable
