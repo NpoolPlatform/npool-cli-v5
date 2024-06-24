@@ -60,133 +60,133 @@ export const useCommentStore = defineStore('app-good-comments', {
       _comments.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.Comments.set(comment.AppID, _comments)
     },
-    createComment (req: CreateCommentRequest, done: (error: boolean, row?: Comment) => void) {
+    createComment (req: CreateCommentRequest, done?: (error: boolean, row?: Comment) => void) {
       doActionWithError<CreateCommentRequest, CreateCommentResponse>(
         API.CREATE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: CreateCommentResponse): void => {
           this.addComments([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getComments (req: GetCommentsRequest, done: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
+    getComments (req: GetCommentsRequest, done?: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
       doActionWithError<GetCommentsRequest, GetCommentsResponse>(
         API.GET_GOOD_COMMENTS,
         req,
         req.Message,
         (resp: GetCommentsResponse): void => {
           this.addComments(resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateComment (req: UpdateCommentRequest, done: (error: boolean, row?: Comment) => void) {
+    updateComment (req: UpdateCommentRequest, done?: (error: boolean, row?: Comment) => void) {
       doActionWithError<UpdateCommentRequest, UpdateCommentResponse>(
         API.UPDATE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: UpdateCommentResponse): void => {
           this.addComments([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteComment (req: DeleteCommentRequest, done: (error: boolean, row?: Comment) => void) {
+    deleteComment (req: DeleteCommentRequest, done?: (error: boolean, row?: Comment) => void) {
       doActionWithError<DeleteCommentRequest, DeleteCommentResponse>(
         API.DELETE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: DeleteCommentResponse): void => {
           this._deleteComment(resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getMyComments (req: GetMyCommentsRequest, done: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
+    getMyComments (req: GetMyCommentsRequest, done?: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
       doActionWithError<GetMyCommentsRequest, GetMyCommentsResponse>(
         API.GET_MY_GOOD_COMMENTS,
         req,
         req.Message,
         (resp: GetMyCommentsResponse): void => {
           this.addComments(resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateUserComment (req: UpdateUserCommentRequest, done: (error: boolean, row?: Comment) => void) {
+    updateUserComment (req: UpdateUserCommentRequest, done?: (error: boolean, row?: Comment) => void) {
       doActionWithError<UpdateUserCommentRequest, UpdateUserCommentResponse>(
         API.UPDATE_USER_GOOD_COMMENT,
         req,
         req.Message,
         (resp: UpdateUserCommentResponse): void => {
           this.addComments([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteUserComment (req: DeleteUserCommentRequest, done: (error: boolean, row?: Comment) => void) {
+    deleteUserComment (req: DeleteUserCommentRequest, done?: (error: boolean, row?: Comment) => void) {
       doActionWithError<DeleteUserCommentRequest, DeleteUserCommentResponse>(
         API.DELETE_USER_GOOD_COMMENT,
         req,
         req.Message,
         (resp: DeleteUserCommentResponse): void => {
           this._deleteComment(resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdateComment (req: AdminUpdateCommentRequest, done: (error: boolean, row?: Comment) => void) {
+    adminUpdateComment (req: AdminUpdateCommentRequest, done?: (error: boolean, row?: Comment) => void) {
       doActionWithError<AdminUpdateCommentRequest, AdminUpdateCommentResponse>(
         API.ADMIN_UPDATE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: AdminUpdateCommentResponse): void => {
           this.addComments([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminDeleteComment (req: AdminDeleteCommentRequest, done: (error: boolean, row?: Comment) => void) {
+    adminDeleteComment (req: AdminDeleteCommentRequest, done?: (error: boolean, row?: Comment) => void) {
       doActionWithError<AdminDeleteCommentRequest, AdminDeleteCommentResponse>(
         API.ADMIN_DELETE_GOOD_COMMENT,
         req,
         req.Message,
         (resp: AdminDeleteCommentResponse): void => {
           this._deleteComment(resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminGetComments (req: AdminGetCommentsRequest, done: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
+    adminGetComments (req: AdminGetCommentsRequest, done?: (error: boolean, rows?: Array<Comment>, total?: number) => void) {
       doActionWithError<AdminGetCommentsRequest, AdminGetCommentsResponse>(
         API.ADMIN_GET_GOOD_COMMENTS,
         req,
         req.Message,
         (resp: AdminGetCommentsResponse): void => {
           this.addComments(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
