@@ -94,7 +94,7 @@ export const useCoinDescriptionStore = defineStore('coin-descriptions', {
         })
     },
 
-    getAppCoinDescriptions (req: GetAppCoinDescriptionsRequest, done?: (error: boolean, descriptions?: Array<CoinDescription>) => void) {
+    adminGetCoinDescriptions (req: GetAppCoinDescriptionsRequest, done?: (error: boolean, descriptions?: Array<CoinDescription>) => void) {
       doActionWithError<GetAppCoinDescriptionsRequest, GetAppCoinDescriptionsResponse>(
         API.GET_APP_COINDESCRIPTIONS,
         req,
@@ -106,7 +106,7 @@ export const useCoinDescriptionStore = defineStore('coin-descriptions', {
           done?.(true)
         })
     },
-    updateAppCoinDescription (req: UpdateAppCoinDescriptionRequest, done?: (error: boolean, description?: CoinDescription) => void) {
+    adminUpdateCoinDescription (req: UpdateAppCoinDescriptionRequest, done?: (error: boolean, description?: CoinDescription) => void) {
       doActionWithError<UpdateAppCoinDescriptionRequest, UpdateAppCoinDescriptionResponse>(
         API.UPDATE_APP_COINDESCRIPTION,
         req,
@@ -118,7 +118,7 @@ export const useCoinDescriptionStore = defineStore('coin-descriptions', {
           done?.(true)
         })
     },
-    createAppCoinDescription (req: CreateAppCoinDescriptionRequest, done?: (error: boolean, description?: CoinDescription) => void) {
+    adminCreateCoinDescription (req: CreateAppCoinDescriptionRequest, done?: (error: boolean, description?: CoinDescription) => void) {
       doActionWithError<CreateAppCoinDescriptionRequest, CreateAppCoinDescriptionResponse>(
         API.CREATE_APP_COINDESCRIPTION,
         req,
