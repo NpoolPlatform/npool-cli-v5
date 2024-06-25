@@ -30,11 +30,10 @@ export interface UpdateAppRequest extends BaseRequest {
   BanMessage?: string
   SignupMethods?: Array<SignMethodType>
   ExtSigninMethods?: Array<SignMethodType>
-  RecaptchaMethod: RecaptchaType
-  KycEnable: boolean
-  SigninVerifyEnable: boolean
-  InvitationCodeMust: boolean
-  MaxTypedCouponsPerOrder?: number
+  RecaptchaMethod?: RecaptchaType
+  KycEnable?: boolean
+  SigninVerifyEnable?: boolean
+  InvitationCodeMust?: boolean
   CreateInvitationCodeWhen?: CreateInvitationCodeWhen
   Maintaining?: boolean
   CouponWithdrawEnable?: boolean
