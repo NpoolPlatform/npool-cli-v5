@@ -35,59 +35,59 @@ export const useMalfunctionStore = defineStore('good-malfunctions', {
         this.Malfunctions.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, malfunction)
       })
     },
-    _deleteMalfunction (malfunction: Malfunction) {
+    delMalfunction (malfunction: Malfunction) {
       const index = this.Malfunctions.findIndex((el: Malfunction) => el.EntID === malfunction.EntID)
       this.Malfunctions.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
     },
-    adminCreateMalfunction (req: AdminCreateMalfunctionRequest, done: (error: boolean, row?: Malfunction) => void) {
+    adminCreateMalfunction (req: AdminCreateMalfunctionRequest, done?: (error: boolean, row?: Malfunction) => void) {
       doActionWithError<AdminCreateMalfunctionRequest, AdminCreateMalfunctionResponse>(
         API.ADMIN_CREATE_GOOD_MALFUNCTION,
         req,
         req.NotifyMessage,
         (resp: AdminCreateMalfunctionResponse): void => {
           this.addMalfunctions([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getMalfunctions (req: GetMalfunctionsRequest, done: (error: boolean, rows?: Array<Malfunction>, total?: number) => void) {
+    getMalfunctions (req: GetMalfunctionsRequest, done?: (error: boolean, rows?: Array<Malfunction>, total?: number) => void) {
       doActionWithError<GetMalfunctionsRequest, GetMalfunctionsResponse>(
         API.GET_GOOD_MALFUNCTIONS,
         req,
         req.Message,
         (resp: GetMalfunctionsResponse): void => {
           this.addMalfunctions(resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminDeleteMalfunction (req: AdminDeleteMalfunctionRequest, done: (error: boolean, row?: Malfunction) => void) {
+    adminDeleteMalfunction (req: AdminDeleteMalfunctionRequest, done?: (error: boolean, row?: Malfunction) => void) {
       doActionWithError<AdminDeleteMalfunctionRequest, AdminDeleteMalfunctionResponse>(
         API.ADMIN_DELETE_GOOD_MALFUNCTION,
         req,
         req.Message,
         (resp: AdminDeleteMalfunctionResponse): void => {
-          this._deleteMalfunction(resp.Info)
-          done(false, resp.Info)
+          this.delMalfunction(resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdateMalfunction (req: AdminUpdateMalfunctionRequest, done: (error: boolean, row?: Malfunction) => void) {
+    adminUpdateMalfunction (req: AdminUpdateMalfunctionRequest, done?: (error: boolean, row?: Malfunction) => void) {
       doActionWithError<AdminUpdateMalfunctionRequest, AdminUpdateMalfunctionResponse>(
         API.ADMIN_UPDATE_GOOD_MALFUNCTION,
         req,
         req.NotifyMessage,
         (resp: AdminUpdateMalfunctionResponse): void => {
           this.addMalfunctions([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
