@@ -51,7 +51,7 @@ export const adminCreateGoodCoin = (target: goodcoin.GoodCoin, done?: (error: bo
   }, done)
 }
 
-export const adminDpdateGoodCoin = (target: goodcoin.GoodCoin, done?: (error: boolean) => void) => {
+export const adminUpdateGoodCoin = (target: goodcoin.GoodCoin, done?: (error: boolean) => void) => {
   _goodCoin.adminUpdateGoodCoin({
     ...target,
     Message: {
