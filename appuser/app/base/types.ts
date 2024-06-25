@@ -18,7 +18,6 @@ export interface App {
   InvitationCodeMust: boolean
   CreatedAt: number
   CreateInvitationCodeWhen: CreateInvitationCodeWhen
-  MaxTypedCouponsPerOrder: number
   Maintaining: boolean
   ResetUserMethod: ResetUserMethod
   CommitButtonTargets: string[]
