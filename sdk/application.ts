@@ -62,10 +62,11 @@ export const adminCreateApplication = (target: app.App, done?: (error: boolean, 
   }, done)
 }
 
-export const adminUpdateApplication = (target: app.App, newEntID: string | undefined, done?: (error: boolean, appFee?: app.App) => void) => {
+export const adminUpdateApplication = (target: app.App, newEntID: string | undefined, newName: string | undefined, done?: (error: boolean, appFee?: app.App) => void) => {
   _application.updateApp({
     ...target,
     NewEntID: newEntID,
+    Name: newName,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_APP',
