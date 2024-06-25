@@ -18,22 +18,25 @@ export const useOAuthThirdPartyStore = defineStore('oauth-third-party', {
     OAuthThirdParties: [] as Array<OAuthThirdParty>
   }),
   getters: {
+    oauthThirdParties (): Array<OAuthThirdParty> {
+      return this.OAuthThirdParties
+    }
   },
   actions: {
-    createOAuthThirdParty (req: CreateOAuthThirdPartyRequest, done: (error: boolean, row?: OAuthThirdParty) => void) {
+    adminCreateOAuthThirdParty (req: CreateOAuthThirdPartyRequest, done?: (error: boolean, row?: OAuthThirdParty) => void) {
       doActionWithError<CreateOAuthThirdPartyRequest, CreateOAuthThirdPartyResponse>(
         APIEnum.CREATE_OAUTH_THIRD_PARTY,
         req,
         req.Message,
         (resp: CreateOAuthThirdPartyResponse): void => {
           this.OAuthThirdParties.push(resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateOAuthThirdParty (req: UpdateOAuthThirdPartyRequest, done: (error: boolean, row?: OAuthThirdParty) => void) {
+    adminUpdateOAuthThirdParty (req: UpdateOAuthThirdPartyRequest, done?: (error: boolean, row?: OAuthThirdParty) => void) {
       doActionWithError<UpdateOAuthThirdPartyRequest, UpdateOAuthThirdPartyResponse>(
         APIEnum.UPDATE_OAUTH_THIRD_PARTY,
         req,
@@ -41,26 +44,26 @@ export const useOAuthThirdPartyStore = defineStore('oauth-third-party', {
         (resp: UpdateOAuthThirdPartyResponse): void => {
           const index = this.OAuthThirdParties.findIndex((el) => el.ID === resp.Info.ID)
           this.OAuthThirdParties.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, resp.Info)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getOAuthThirdParties (req: GetOAuthThirdPartiesRequest, done: (error: boolean, rows?: Array<OAuthThirdParty>) => void) {
+    getOAuthThirdParties (req: GetOAuthThirdPartiesRequest, done?: (error: boolean, rows?: Array<OAuthThirdParty>) => void) {
       doActionWithError<GetOAuthThirdPartiesRequest, GetOAuthThirdPartiesResponse>(
         APIEnum.GET_OAUTH_THIRD_PARTIES,
         req,
         req.Message,
         (resp: GetOAuthThirdPartiesResponse): void => {
           this.OAuthThirdParties = resp.Infos
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteOAuthThirdParty (req: DeleteOAuthThirdPartyRequest, done: (error: boolean, row?: OAuthThirdParty) => void) {
+    adminDeleteOAuthThirdParty (req: DeleteOAuthThirdPartyRequest, done?: (error: boolean, row?: OAuthThirdParty) => void) {
       doActionWithError<DeleteOAuthThirdPartyRequest, DeleteOAuthThirdPartyResponse>(
         APIEnum.DELETE_OAUTH_THIRD_PARTY,
         req,
@@ -68,9 +71,9 @@ export const useOAuthThirdPartyStore = defineStore('oauth-third-party', {
         (resp: DeleteOAuthThirdPartyResponse): void => {
           const index = this.OAuthThirdParties.findIndex((el) => el.ID === resp.Info.ID)
           this.OAuthThirdParties.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
