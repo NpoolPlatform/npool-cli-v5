@@ -30,6 +30,33 @@ export const getAppCoinDescriptions = (pageStart: number, pages: number, done?: 
   getPageAppCoinDescriptions(pageStart, pages ? pageStart + pages : pages, done)
 }
 
+const adminGetPageAppCoinDescriptions = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  _appCoinDescription.adminGetCoinDescriptions({
+    Offset: pageIndex * constant.DefaultPageSize,
+    Limit: constant.DefaultPageSize,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_APP_COIN_DESCRIPTIONS',
+        Message: 'MSG_GET_APP_COIN_DESCRIPTIONS_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error: boolean, orders?: Array<appcoindescription.CoinDescription>, total?: number) => {
+    if (error || !orders?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
+      done?.(error, totalPages, total as number)
+      return
+    }
+    adminGetPageAppCoinDescriptions(++pageIndex, pageEnd, done)
+  })
+}
+
+export const adminGetAppCoinDescriptions = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  adminGetPageAppCoinDescriptions(pageStart, pages ? pageStart + pages : pages, done)
+}
+
 export const appCoinDescriptions = computed(() => _appCoinDescription.descriptions(AppID.value))
 
 export const createAppCoinDescription = (description: appcoindescription.CoinDescription, done?: (error: boolean, description?: appcoindescription.CoinDescription) => void) => {
@@ -47,7 +74,7 @@ export const createAppCoinDescription = (description: appcoindescription.CoinDes
 }
 
 export const adminCreateAppCoinDescription = (description: appcoindescription.CoinDescription, done?: (error: boolean, description?: appcoindescription.CoinDescription) => void) => {
-  _appCoinDescription.createAppCoinDescription({
+  _appCoinDescription.adminCreateCoinDescription({
     ...description,
     TargetAppID: AppID.value,
     NotifyMessage: {
@@ -76,7 +103,7 @@ export const updateAppCoinDescription = (description: appcoindescription.CoinDes
 }
 
 export const adminUpdateAppCoinDescription = (description: appcoindescription.CoinDescription, done?: (error: boolean, description?: appcoindescription.CoinDescription) => void) => {
-  _appCoinDescription.updateAppCoinDescription({
+  _appCoinDescription.adminUpdateCoinDescription({
     ...description,
     TargetAppID: AppID.value,
     NotifyMessage: {
