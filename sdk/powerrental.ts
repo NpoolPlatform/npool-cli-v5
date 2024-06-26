@@ -71,3 +71,17 @@ export const adminCreatePowerRental = (target: powerrental.PowerRental, done?: (
     }
   }, done)
 }
+
+export const adminUpdatePowerRental = (target: powerrental.PowerRental, done?: (error: boolean, powerRental?: powerrental.PowerRental) => void) => {
+  _powerRental.adminUpdatePowerRental({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_POWER_RENTAL',
+        Message: 'MSG_UPDATE_POWER_RENTAL_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
