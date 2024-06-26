@@ -42,42 +42,42 @@ export const usePowerRentalStore = defineStore('powerRentals', {
         this.PowerRentals.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       })
     },
-    getPowerRental (req: GetPowerRentalRequest, done: (error: boolean, row?: PowerRental) => void) {
+    getPowerRental (req: GetPowerRentalRequest, done?: (error: boolean, row?: PowerRental) => void) {
       doActionWithError<GetPowerRentalRequest, GetPowerRentalResponse>(
         API.GET_POWERRENTAL,
         req,
         req.Message,
         (resp: GetPowerRentalResponse): void => {
           this.addPowerRentals([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getPowerRentals (req: GetPowerRentalsRequest, done: (error: boolean, rows?: Array<PowerRental>) => void) {
+    getPowerRentals (req: GetPowerRentalsRequest, done?: (error: boolean, rows?: Array<PowerRental>) => void) {
       doActionWithError<GetPowerRentalsRequest, GetPowerRentalsResponse>(
         API.GET_POWERRENTALS,
         req,
         req.Message,
         (resp: GetPowerRentalsResponse): void => {
           this.addPowerRentals(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdatePowerRental (req: AdminUpdatePowerRentalRequest, done: (error: boolean, row?: PowerRental) => void) {
+    adminUpdatePowerRental (req: AdminUpdatePowerRentalRequest, done?: (error: boolean, row?: PowerRental) => void) {
       doActionWithError<AdminUpdatePowerRentalRequest, AdminUpdatePowerRentalResponse>(
         API.ADMIN_UPDATE_POWERRENTAL,
         req,
         req.Message,
         (resp: AdminUpdatePowerRentalResponse): void => {
           this.addPowerRentals([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
@@ -94,16 +94,16 @@ export const usePowerRentalStore = defineStore('powerRentals', {
         }
       )
     },
-    adminDeletePowerRental (req: AdminDeletePowerRentalRequest, done: (error: boolean, row?: PowerRental) => void) {
+    adminDeletePowerRental (req: AdminDeletePowerRentalRequest, done?: (error: boolean, row?: PowerRental) => void) {
       doActionWithError<AdminDeletePowerRentalRequest, AdminDeletePowerRentalResponse>(
         API.ADMIN_DELETE_POWERRENTAL,
         req,
         req.Message,
         (resp: AdminDeletePowerRentalResponse): void => {
           this.deletePowerRentals([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
