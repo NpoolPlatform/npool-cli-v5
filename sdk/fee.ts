@@ -71,3 +71,17 @@ export const adminCreateFee = (target: fee.Fee, done?: (error: boolean, powerRen
     }
   }, done)
 }
+
+export const adminUpdateFee = (target: fee.Fee, done?: (error: boolean, powerRental?: fee.Fee) => void) => {
+  _fee.adminUpdateFee({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_FEE',
+        Message: 'MSG_UPDATE_FEE_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}

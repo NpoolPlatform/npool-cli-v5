@@ -42,42 +42,42 @@ export const useFeeStore = defineStore('fees', {
         this.Fees.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       })
     },
-    getFee (req: GetFeeRequest, done: (error: boolean, row?: Fee) => void) {
+    getFee (req: GetFeeRequest, done?: (error: boolean, row?: Fee) => void) {
       doActionWithError<GetFeeRequest, GetFeeResponse>(
         API.GET_FEE,
         req,
         req.Message,
         (resp: GetFeeResponse): void => {
           this.addFees([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    getFees (req: GetFeesRequest, done: (error: boolean, rows?: Array<Fee>) => void) {
+    getFees (req: GetFeesRequest, done?: (error: boolean, rows?: Array<Fee>) => void) {
       doActionWithError<GetFeesRequest, GetFeesResponse>(
         API.GET_FEES,
         req,
         req.Message,
         (resp: GetFeesResponse): void => {
           this.addFees(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    adminUpdateFee (req: AdminUpdateFeeRequest, done: (error: boolean, row?: Fee) => void) {
+    adminUpdateFee (req: AdminUpdateFeeRequest, done?: (error: boolean, row?: Fee) => void) {
       doActionWithError<AdminUpdateFeeRequest, AdminUpdateFeeResponse>(
         API.ADMIN_UPDATE_FEE,
         req,
         req.Message,
         (resp: AdminUpdateFeeResponse): void => {
           this.addFees([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
@@ -94,16 +94,16 @@ export const useFeeStore = defineStore('fees', {
         }
       )
     },
-    adminDeleteFee (req: AdminDeleteFeeRequest, done: (error: boolean, row?: Fee) => void) {
+    adminDeleteFee (req: AdminDeleteFeeRequest, done?: (error: boolean, row?: Fee) => void) {
       doActionWithError<AdminDeleteFeeRequest, AdminDeleteFeeResponse>(
         API.ADMIN_DELETE_FEE,
         req,
         req.Message,
         (resp: AdminDeleteFeeResponse): void => {
           this.deleteFees([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }
