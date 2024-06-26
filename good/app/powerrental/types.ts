@@ -52,7 +52,7 @@ export interface AppPowerRental {
   AppGoodPurchasable: boolean
   AppGoodOnline: boolean
   EnableProductPage: boolean
-  ProductPage: boolean
+  ProductPage: string
   Visible: boolean
   AppGoodName: string
   DisplayIndex: number

@@ -70,3 +70,35 @@ export const appPowerRentalMaxPurchasedUnits = (appGoodID: string) => {
 export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
 export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchase && el.AppGoodPurchasable))
 export const appPowerRentalCancelable = (appGoodId: string) => appPowerRental(appGoodId)?.CancelMode !== goodbase.CancelMode.Uncancellable
+
+export const adminCreateAppPowerRental = (target: apppowerrental.AppPowerRental, done?: (error: boolean, appPowerRental?: apppowerrental.AppPowerRental) => void) => {
+  _appPowerRental.adminCreateAppPowerRental({
+    ...target,
+    TargetAppID: AppID.value,
+    Name: target.AppGoodName,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_APP_POWERRENTAL',
+        Message: 'MSG_CREATE_APP_POWERRENTAL_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const adminUpdateAppPowerRental = (target: apppowerrental.AppPowerRental, done?: (error: boolean, appPowerRental?: apppowerrental.AppPowerRental) => void) => {
+  _appPowerRental.adminUpdateAppPowerRental({
+    ...target,
+    TargetAppID: AppID.value,
+    Name: target.AppGoodName,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_APP_POWERRENTAL',
+        Message: 'MSG_CREATE_APP_POWERRENTAL_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
