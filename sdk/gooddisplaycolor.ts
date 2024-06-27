@@ -79,6 +79,27 @@ export const createGoodDisplayColor = (target: appgooddisplaycolor.DisplayColor,
   }, done)
 }
 
+export const adminCreateGoodDisplayColor = (target: appgooddisplaycolor.DisplayColor, done?: (error: boolean) => void) => {
+  displaycolor.adminCreateDisplayColor({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_DISPLAY_COLOR',
+        Message: 'MSG_CREATE_DISPLAY_COLOR_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_DISPLAY_COLOR',
+        Message: 'MSG_CREATE_DISPLAY_COLOR_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
 export const updateGoodDisplayColor = (target: appgooddisplaycolor.DisplayColor, done?: (error: boolean) => void) => {
   displaycolor.updateDisplayColor({
     ...target,
