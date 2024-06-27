@@ -79,6 +79,27 @@ export const createGoodDisplayName = (target: appgooddisplayname.DisplayName, do
   }, done)
 }
 
+export const adminCreateGoodDisplayName = (target: appgooddisplayname.DisplayName, done?: (error: boolean) => void) => {
+  displayname.adminCreateDisplayName({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_DISPLAY_NAME',
+        Message: 'MSG_CREATE_DISPLAY_NAME_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_DISPLAY_NAME',
+        Message: 'MSG_CREATE_DISPLAY_NAME_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
 export const updateGoodDisplayName = (target: appgooddisplayname.DisplayName, done?: (error: boolean) => void) => {
   displayname.updateDisplayName({
     ...target,
