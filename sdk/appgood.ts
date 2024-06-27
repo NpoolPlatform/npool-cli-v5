@@ -1,5 +1,5 @@
 import { computed } from 'vue'
-import { appgood, constant, notify } from '..'
+import { appgood, constant, goodbase, notify } from '..'
 import { AppID } from './localapp'
 
 const _appGood = appgood.useAppGoodStore()
@@ -58,5 +58,6 @@ export const adminGetAppGoods = (pageStart: number, pages: number, done?: (error
 }
 
 export const appGoods = computed(() => _appGood.goods(AppID.value))
+export const appGoodsWithGoodTypes = (goodTypes: goodbase.GoodType[]) => appGoods.value.filter((el) => goodTypes.includes(el.GoodType))
 export const appGood = (appGoodID: string) => appGoods.value.find((el) => el.EntID === appGoodID)
 export const appGoodDisplayName = (appGoodID: string, index: number) => appGood(appGoodID)?.DisplayNames[index] || appGood(appGoodID)?.AppGoodName || ''
