@@ -140,3 +140,44 @@ export const adminUpdateTopMostGood = (target: TopMostGood, done?: (error: boole
     }
   }, done)
 }
+
+export const deleteTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
+  top.deleteTopMostGood({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
+export const adminDeleteTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
+  top.adminDeleteTopMostGood({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
