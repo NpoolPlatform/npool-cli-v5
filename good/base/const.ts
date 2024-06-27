@@ -41,7 +41,7 @@ export enum GoodTopMostType {
   TopMostInnovationStarter = 'TopMostInnovationStarter',
   TopMostLoyaltyExclusive = 'TopMostLoyaltyExclusive',
 }
-export const GoodTypeMostTypes = Object.values(GoodTopMostType)
+export const GoodTopMostTypes = Object.values(GoodTopMostType)
 
 export enum GoodUnitType {
   GoodUnitByDuration = 'GoodUnitByDuration',
