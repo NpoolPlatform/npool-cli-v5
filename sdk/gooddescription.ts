@@ -79,6 +79,27 @@ export const createGoodDescription = (target: appgooddescription.Description, do
   }, done)
 }
 
+export const adminCreateGoodDescription = (target: appgooddescription.Description, done?: (error: boolean) => void) => {
+  description.adminCreateDescription({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_DESCRIPTION',
+        Message: 'MSG_CREATE_DESCRIPTION_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_DESCRIPTION',
+        Message: 'MSG_CREATE_DESCRIPTION_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
 export const updateGoodDescription = (target: appgooddescription.Description, done?: (error: boolean) => void) => {
   description.updateDescription({
     ...target,
