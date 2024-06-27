@@ -139,3 +139,44 @@ export const adminUpdateTopMostGoodPoster = (target: topmostgoodposter.Poster, d
     }
   }, done)
 }
+
+export const deleteTopMostGoodPoster = (target: topmostgoodposter.Poster, done?: (error: boolean) => void) => {
+  _topMostGoodPoster.deletePoster({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD_POSTER_CONSTRAINT',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_POSTER_CONSTRAINT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD_POSTER_CONSTRAINT',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_POSTER_CONSTRAINT_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
+export const adminDeleteTopMostGoodPoster = (target: topmostgoodposter.Poster, done?: (error: boolean) => void) => {
+  _topMostGoodPoster.adminDeletePoster({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD_POSTER_CONSTRAINT',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_POSTER_CONSTRAINT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD_POSTER_CONSTRAINT',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_POSTER_CONSTRAINT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
