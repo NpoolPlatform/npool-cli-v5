@@ -9,8 +9,8 @@ const getPageDevicePosters = (pageIndex: number, pageEnd: number, done?: (error:
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_DEVICE_MANUFACTURERS',
-        Message: 'MSG_GET_DEVICE_MANUFACTURERS_FAIL',
+        Title: 'MSG_GET_DEVICE_POSTERS',
+        Message: 'MSG_GET_DEVICE_POSTERS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -36,8 +36,8 @@ export const adminCreateDevicePoster = (poster: deviceposter.DevicePoster, done?
     ...poster,
     Message: {
       Error: {
-        Title: 'MSG_CREATE_DEVICE_MANUFACTURERS',
-        Message: 'MSG_CREATE_DEVICE_MANUFACTURERS_FAIL',
+        Title: 'MSG_CREATE_DEVICE_POSTERS',
+        Message: 'MSG_CREATE_DEVICE_POSTERS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -50,8 +50,8 @@ export const adminUpdateDevicePoster = (poster: deviceposter.DevicePoster, done?
     ...poster,
     Message: {
       Error: {
-        Title: 'MSG_UPDATE_DEVICE_MANUFACTURERS',
-        Message: 'MSG_UPDATE_DEVICE_MANUFACTURERS_FAIL',
+        Title: 'MSG_UPDATE_DEVICE_POSTERS',
+        Message: 'MSG_UPDATE_DEVICE_POSTERS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -64,8 +64,8 @@ export const adminDeleteDevicePoster = (poster: deviceposter.DevicePoster, done?
     ...poster,
     Message: {
       Error: {
-        Title: 'MSG_DELETE_DEVICE_MANUFACTURERS',
-        Message: 'MSG_DELETE_DEVICE_MANUFACTURERS_FAIL',
+        Title: 'MSG_DELETE_DEVICE_POSTERS',
+        Message: 'MSG_DELETE_DEVICE_POSTERS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
