@@ -30,6 +30,33 @@ export const getAppCoins = (pageStart: number, pages: number, done?: (error: boo
   getPageAppCoins(pageStart, pages ? pageStart + pages : pages, done)
 }
 
+const adminGetPageAppCoins = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  _appCoin.getNAppCoins({
+    Offset: pageIndex * constant.DefaultPageSize,
+    Limit: constant.DefaultPageSize,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_APP_COINS',
+        Message: 'MSG_GET_APP_COINS_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error: boolean, orders?: Array<appcoin.AppCoin>, total?: number) => {
+    if (error || !orders?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
+      done?.(error, totalPages, total as number)
+      return
+    }
+    adminGetPageAppCoins(++pageIndex, pageEnd, done)
+  })
+}
+
+export const adminGetAppCoins = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  adminGetPageAppCoins(pageStart, pages ? pageStart + pages : pages, done)
+}
+
 export const appCoins = computed(() => _appCoin.coins(AppID.value))
 
 export const adminCreateAppCoin = (appCoin: appcoin.AppCoin, done?: (error: boolean, appCoin?: appcoin.AppCoin) => void) => {
