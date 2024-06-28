@@ -35,16 +35,16 @@ export const useDeviceTypeStore = defineStore('device-types', {
         this.DeviceTypes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
       })
     },
-    getDeviceTypes (req: GetDeviceTypesRequest, done: (error: boolean, devices?: Array<DeviceType>) => void) {
+    getDeviceTypes (req: GetDeviceTypesRequest, done?: (error: boolean, devices?: Array<DeviceType>) => void) {
       doActionWithError<GetDeviceTypesRequest, GetDeviceTypesResponse>(
         API.GET_DEVICE_TYPES,
         req,
         req.Message,
         (resp: GetDeviceTypesResponse): void => {
           this.addDeviceTypes(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     adminUpdateDeviceType (req: AdminUpdateDeviceTypeRequest, done?: (error: boolean, device?: DeviceType) => void) {
@@ -71,16 +71,16 @@ export const useDeviceTypeStore = defineStore('device-types', {
           done?.(true)
         })
     },
-    adminDeleteDeviceType (req: AdminDeleteDeviceTypeRequest, done: (error: boolean, device?: DeviceType) => void) {
+    adminDeleteDeviceType (req: AdminDeleteDeviceTypeRequest, done?: (error: boolean, device?: DeviceType) => void) {
       doActionWithError<AdminDeleteDeviceTypeRequest, AdminDeleteDeviceTypeResponse>(
         API.ADMIN_DELETE_DEVICE_TYPE,
         req,
         req.Message,
         (resp: AdminDeleteDeviceTypeResponse): void => {
           this.addDeviceTypes([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

@@ -66,3 +66,18 @@ export const adminUpdateDeviceType = (deviceType: devicetype.DeviceType, done?: 
     }
   }, done)
 }
+
+export const adminDeleteDeviceType = (deviceType: devicetype.DeviceType, done?: (error: boolean, deviceType?: devicetype.DeviceType) => void) => {
+  _deviceType.adminDeleteDeviceType({
+    ID: deviceType.ID,
+    EntID: deviceType.EntID,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_DEVICE_TYPES',
+        Message: 'MSG_DELETE_DEVICE_TYPES_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
