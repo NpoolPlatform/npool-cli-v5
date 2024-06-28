@@ -50,8 +50,22 @@ export const adminUpdateDeviceManufacturer = (manufacturer: devicemanufacturer.M
     ...manufacturer,
     Message: {
       Error: {
-        Title: 'MSG_CREATE_DEVICE_MANUFACTURERS',
-        Message: 'MSG_CREATE_DEVICE_MANUFACTURERS_FAIL',
+        Title: 'MSG_UPDATE_DEVICE_MANUFACTURERS',
+        Message: 'MSG_UPDATE_DEVICE_MANUFACTURERS_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const adminDeleteDeviceManufacturer = (manufacturer: devicemanufacturer.Manufacturer, done?: (error: boolean, manufacturer?: devicemanufacturer.Manufacturer) => void) => {
+  _deviceManufacturer.adminDeleteManufacturer({
+    ...manufacturer,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_DEVICE_MANUFACTURERS',
+        Message: 'MSG_DELETE_DEVICE_MANUFACTURERS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
