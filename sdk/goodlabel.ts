@@ -79,6 +79,27 @@ export const createGoodLabel = (target: appgoodlabel.Label, done?: (error: boole
   }, done)
 }
 
+export const adminCreateGoodLabel = (target: appgoodlabel.Label, done?: (error: boolean) => void) => {
+  _label.adminCreateLabel({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_LABEL',
+        Message: 'MSG_CREATE_LABEL_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_LABEL',
+        Message: 'MSG_CREATE_LABEL_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
 export const updateGoodLabel = (target: appgoodlabel.Label, done?: (error: boolean) => void) => {
   _label.updateLabel({
     ...target,
