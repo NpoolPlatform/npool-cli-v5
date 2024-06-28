@@ -29,7 +29,7 @@ export const getVendorLocations = (pageStart: number, pages: number, done?: (err
   getPageVendorLocations(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const vendorLocations = computed(() => _vendorLocation.vendorLocations())
+export const vendorLocations = computed(() => _vendorLocation.vendorLocations)
 
 export const adminCreateVendorLocation = (vendorLocation: vendorlocation.VendorLocation, done?: (error: boolean, vendorLocation?: vendorlocation.VendorLocation) => void) => {
   _vendorLocation.adminCreateVendorLocation({

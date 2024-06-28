@@ -23,8 +23,8 @@ export const useVendorLocationStore = defineStore('vendorLocations', {
         return this.VendorLocations.find((el: VendorLocation) => el.EntID === id)
       }
     },
-    vendorLocations () {
-      return () => this.VendorLocations
+    vendorLocations (): Array<VendorLocation> {
+      return this.VendorLocations
     }
   },
   actions: {
