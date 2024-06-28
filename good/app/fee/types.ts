@@ -18,10 +18,6 @@ export interface AppFee {
   DurationDisplayType: GoodDurationType
   CancelMode: CancelMode
   MinOrderDurationSeconds: number
-  GoodOnline: boolean
-  GoodPurchasable: boolean
-  AppGoodOnline: boolean
-  AppGoodPurchasable: boolean
   CreatedAt: number
   UpdatedAt: number
 }
