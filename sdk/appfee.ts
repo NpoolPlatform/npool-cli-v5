@@ -59,8 +59,6 @@ export const adminGetAppFees = (pageStart: number, pages: number, done?: (error:
 
 export const appFees = computed(() => _appFee.goods(AppID.value))
 export const appFee = (appGoodID: string) => appFees.value.find((el) => el.AppGoodID === appGoodID)
-export const onlineAppFees = computed(() => appFees.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
-export const purchasableAppFees = computed(() => onlineAppFees.value.filter((el) => el.GoodPurchasable && el.AppGoodPurchasable))
 
 export const adminCreateAppFee = (target: appfee.AppFee, done?: (error: boolean, appFee?: appfee.AppFee) => void) => {
   _appFee.adminCreateAppFee({
