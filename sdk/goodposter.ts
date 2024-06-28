@@ -79,6 +79,27 @@ export const createGoodPoster = (target: appgoodposter.Poster, done?: (error: bo
   }, done)
 }
 
+export const adminCreateGoodPoster = (target: appgoodposter.Poster, done?: (error: boolean) => void) => {
+  poster.adminCreatePoster({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_POSTER',
+        Message: 'MSG_CREATE_POSTER_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_POSTER',
+        Message: 'MSG_CREATE_POSTER_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
 export const updateGoodPoster = (target: appgoodposter.Poster, done?: (error: boolean) => void) => {
   poster.updatePoster({
     ...target,
