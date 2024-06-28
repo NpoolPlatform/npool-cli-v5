@@ -50,8 +50,22 @@ export const adminUpdateDevicePoster = (poster: deviceposter.DevicePoster, done?
     ...poster,
     Message: {
       Error: {
-        Title: 'MSG_CREATE_DEVICE_MANUFACTURERS',
-        Message: 'MSG_CREATE_DEVICE_MANUFACTURERS_FAIL',
+        Title: 'MSG_UPDATE_DEVICE_MANUFACTURERS',
+        Message: 'MSG_UPDATE_DEVICE_MANUFACTURERS_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const adminDeleteDevicePoster = (poster: deviceposter.DevicePoster, done?: (error: boolean, poster?: deviceposter.DevicePoster) => void) => {
+  _devicePoster.adminDeleteDevicePoster({
+    ...poster,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_DEVICE_MANUFACTURERS',
+        Message: 'MSG_DELETE_DEVICE_MANUFACTURERS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
