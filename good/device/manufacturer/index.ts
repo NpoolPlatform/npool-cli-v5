@@ -71,19 +71,7 @@ export const useManufacturerStore = defineStore('deviceManufacturers', {
           done?.(true)
         })
     },
-    createManufacturer (req: AdminCreateManufacturerRequest, done?: (error: boolean, device?: Manufacturer) => void) {
-      doActionWithError<AdminCreateManufacturerRequest, AdminCreateManufacturerResponse>(
-        API.ADMIN_CREATE_DEVICE_MANUFACTURER,
-        req,
-        req.Message,
-        (resp: AdminCreateManufacturerResponse): void => {
-          this.addManufacturers([resp.Info])
-          done?.(false, resp.Info)
-        }, () => {
-          done?.(true)
-        })
-    },
-    deleteManufacturer (req: AdminDeleteManufacturerRequest, done?: (error: boolean, device?: Manufacturer) => void) {
+    adminDeleteManufacturer (req: AdminDeleteManufacturerRequest, done?: (error: boolean, device?: Manufacturer) => void) {
       doActionWithError<AdminDeleteManufacturerRequest, AdminDeleteManufacturerResponse>(
         API.ADMIN_DELETE_DEVICE_MANUFACTURER,
         req,
