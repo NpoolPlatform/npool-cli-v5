@@ -102,3 +102,18 @@ export const adminUpdateAppPowerRental = (target: apppowerrental.AppPowerRental,
     }
   }, done)
 }
+
+export const updateAppPowerRental = (target: apppowerrental.AppPowerRental, done?: (error: boolean, appPowerRental?: apppowerrental.AppPowerRental) => void) => {
+  _appPowerRental.updateAppPowerRental({
+    ...target,
+    Name: target.AppGoodName,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_POWERRENTAL',
+        Message: 'MSG_UPDATE_APP_POWERRENTAL_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
