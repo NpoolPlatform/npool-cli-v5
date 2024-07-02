@@ -57,7 +57,7 @@ export const adminGetAppPowerRentals = (pageStart: number, pages: number, done?:
   adminGetPageAppPowerRentals(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const appPowerRentals = computed(() => _appPowerRental.appPowerRentals(AppID.value))
+export const appPowerRentals = computed(() => _appPowerRental.appPowerRentals(AppID.value).sort((a, b) => a.ID > b.ID ? -1 : 1))
 export const appPowerRental = (appGoodId: string) => appPowerRentals.value.find((el) => el.AppGoodID === appGoodId)
 export const appPowerRentalMaxPurchasedUnits = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
