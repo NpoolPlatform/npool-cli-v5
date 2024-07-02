@@ -61,7 +61,9 @@ export const goodRecommends = computed(() => _recommend.recommends(AppID.value))
 
 export const createGoodRecommend = (target: appgoodrecommend.Recommend, done?: (error: boolean, recommend?: appgoodrecommend.Recommend) => void) => {
   _recommend.createRecommend({
-    ...target,
+    AppGoodID: target.AppGoodID,
+    RecommendIndex: target.RecommendIndex,
+    Message: target.Message,
     NotifyMessage: {
       Error: {
         Title: 'MSG_CREATE_RECOMMEND',
