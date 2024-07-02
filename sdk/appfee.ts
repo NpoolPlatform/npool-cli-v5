@@ -82,8 +82,22 @@ export const adminUpdateAppFee = (target: appfee.AppFee, done?: (error: boolean,
     TargetAppID: AppID.value,
     Message: {
       Error: {
-        Title: 'MSG_CREATE_APP_FEE',
-        Message: 'MSG_CREATE_APP_FEE_FAIL',
+        Title: 'MSG_ADMIN_UPDATE_APP_FEE',
+        Message: 'MSG_ADMIN_UPDATE_APP_FEE_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
+export const updateAppFee = (target: appfee.AppFee, done?: (error: boolean, appFee?: appfee.AppFee) => void) => {
+  _appFee.updateAppFee({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_APP_FEE',
+        Message: 'MSG_UPDATE_APP_FEE_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
