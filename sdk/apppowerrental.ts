@@ -106,7 +106,12 @@ export const adminUpdateAppPowerRental = (target: apppowerrental.AppPowerRental,
 export const updateAppPowerRental = (target: apppowerrental.AppPowerRental, done?: (error: boolean, appPowerRental?: apppowerrental.AppPowerRental) => void) => {
   _appPowerRental.updateAppPowerRental({
     ...target,
+    MinOrderAmount: `${target.MinOrderAmount}`,
+    MaxOrderAmount: `${target.MaxOrderAmount}`,
+    MaxUserAmount: `${target.MaxUserAmount}`,
+    UnitPrice: `${target.UnitPrice}`,
     Name: target.AppGoodName,
+    Purchasable: target.AppGoodPurchasable,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_POWERRENTAL',

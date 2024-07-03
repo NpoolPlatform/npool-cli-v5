@@ -94,6 +94,7 @@ export const adminUpdateAppFee = (target: appfee.AppFee, done?: (error: boolean,
 export const updateAppFee = (target: appfee.AppFee, done?: (error: boolean, appFee?: appfee.AppFee) => void) => {
   _appFee.updateAppFee({
     ...target,
+    UnitValue: `${target.UnitValue}`,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_APP_FEE',
