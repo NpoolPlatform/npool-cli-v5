@@ -76,6 +76,21 @@ export const adminCreateAppFee = (target: appfee.AppFee, done?: (error: boolean,
   }, done)
 }
 
+export const adminDeleteAppFee = (target: appfee.AppFee, done?: (error: boolean, appFee?: appfee.AppFee) => void) => {
+  _appFee.adminDeleteAppFee({
+    ...target,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_APP_FEE',
+        Message: 'MSG_DELETE_APP_FEE_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
 export const adminUpdateAppFee = (target: appfee.AppFee, done?: (error: boolean, appFee?: appfee.AppFee) => void) => {
   _appFee.adminUpdateAppFee({
     ...target,
