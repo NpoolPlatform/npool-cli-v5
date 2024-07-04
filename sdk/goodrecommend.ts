@@ -104,7 +104,7 @@ export const updateGoodRecommend = (target: appgoodrecommend.Recommend, done?: (
 export const updateUserGoodRecommend = (target: appgoodrecommend.Recommend, done?: (error: boolean, recommend?: appgoodrecommend.Recommend) => void) => {
   _recommend.updateUserRecommend({
     ...target,
-    TargetUserID: target.UserID,
+    TargetUserID: target.RecommenderID,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_RECOMMEND',
@@ -126,7 +126,7 @@ export const adminUpdateGoodRecommend = (target: appgoodrecommend.Recommend, don
   _recommend.adminUpdateRecommend({
     ...target,
     TargetAppID: target.AppID,
-    TargetUserID: target.UserID,
+    TargetUserID: target.RecommenderID,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_RECOMMEND',
