@@ -82,7 +82,7 @@ export const createGoodDisplayColor = (target: appgooddisplaycolor.DisplayColor,
 export const adminCreateGoodDisplayColor = (target: appgooddisplaycolor.DisplayColor, done?: (error: boolean) => void) => {
   displaycolor.adminCreateDisplayColor({
     ...target,
-    TargetAppID: target.AppID,
+    TargetAppID: AppID.value,
     Message: {
       Error: {
         Title: 'MSG_CREATE_DISPLAY_COLOR',

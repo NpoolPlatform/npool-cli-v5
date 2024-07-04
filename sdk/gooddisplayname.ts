@@ -82,7 +82,7 @@ export const createGoodDisplayName = (target: appgooddisplayname.DisplayName, do
 export const adminCreateGoodDisplayName = (target: appgooddisplayname.DisplayName, done?: (error: boolean) => void) => {
   displayname.adminCreateDisplayName({
     ...target,
-    TargetAppID: target.AppID,
+    TargetAppID: AppID.value,
     Message: {
       Error: {
         Title: 'MSG_CREATE_DISPLAY_NAME',
