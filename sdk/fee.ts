@@ -61,6 +61,7 @@ export const __fee = (goodId: string) => fees.value.find((el) => el.GoodID === g
 export const adminCreateFee = (target: fee.Fee, done?: (error: boolean, powerRental?: fee.Fee) => void) => {
   _fee.adminCreateFee({
     ...target,
+    UnitValue: `${target.UnitValue}`,
     Message: {
       Error: {
         Title: 'MSG_CREATE_FEE',
@@ -75,6 +76,7 @@ export const adminCreateFee = (target: fee.Fee, done?: (error: boolean, powerRen
 export const adminUpdateFee = (target: fee.Fee, done?: (error: boolean, powerRental?: fee.Fee) => void) => {
   _fee.adminUpdateFee({
     ...target,
+    UnitValue: `${target.UnitValue}`,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_FEE',
