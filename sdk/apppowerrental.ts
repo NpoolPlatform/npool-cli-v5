@@ -103,6 +103,21 @@ export const adminUpdateAppPowerRental = (target: apppowerrental.AppPowerRental,
   }, done)
 }
 
+export const adminDeleteAppPowerRental = (target: apppowerrental.AppPowerRental, done?: (error: boolean, appPowerRental?: apppowerrental.AppPowerRental) => void) => {
+  _appPowerRental.adminDeleteAppPowerRental({
+    ...target,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_APP_POWERRENTAL',
+        Message: 'MSG_DELETE_APP_POWERRENTAL_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
+
 export const updateAppPowerRental = (target: apppowerrental.AppPowerRental, done?: (error: boolean, appPowerRental?: apppowerrental.AppPowerRental) => void) => {
   _appPowerRental.updateAppPowerRental({
     ...target,
