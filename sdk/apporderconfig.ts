@@ -75,6 +75,8 @@ export const appOrderConfig = (appID: string | undefined) => _appOrderConfig.app
 export const updateAppOrderConfig = (target: apporderconfig.AppConfig, done?: (error: boolean, config?: apporderconfig.AppConfig) => void) => {
   _appOrderConfig.updateAppConfig({
     ...target,
+    SimulateOrderCashableProfitProbability: `${target.SimulateOrderCashableProfitProbability}`,
+    SimulateOrderCouponProbability: `${target.SimulateOrderCouponProbability}`,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_APP_CONFIG',
@@ -95,6 +97,8 @@ export const updateAppOrderConfig = (target: apporderconfig.AppConfig, done?: (e
 export const createAppOrderConfig = (target: apporderconfig.AppConfig, done?: (error: boolean, config?: apporderconfig.AppConfig) => void) => {
   _appOrderConfig.createAppConfig({
     ...target,
+    SimulateOrderCashableProfitProbability: `${target.SimulateOrderCashableProfitProbability}`,
+    SimulateOrderCouponProbability: `${target.SimulateOrderCouponProbability}`,
     Message: {
       Error: {
         Title: 'MSG_CREATE_APP_CONFIG',
@@ -116,6 +120,8 @@ export const adminUpdateAppOrderConfig = (target: apporderconfig.AppConfig, done
   _appOrderConfig.adminUpdateAppConfig({
     ...target,
     TargetAppID: AppID.value,
+    SimulateOrderCashableProfitProbability: `${target.SimulateOrderCashableProfitProbability}`,
+    SimulateOrderCouponProbability: `${target.SimulateOrderCouponProbability}`,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_APP_CONFIG',
@@ -137,6 +143,8 @@ export const adminCreateAppOrderConfig = (target: apporderconfig.AppConfig, done
   _appOrderConfig.adminCreateAppConfig({
     ...target,
     TargetAppID: AppID.value,
+    SimulateOrderCashableProfitProbability: `${target.SimulateOrderCashableProfitProbability}`,
+    SimulateOrderCouponProbability: `${target.SimulateOrderCouponProbability}`,
     Message: {
       Error: {
         Title: 'MSG_CREATE_APP_CONFIG',
