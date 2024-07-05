@@ -35,6 +35,12 @@ export const useManufacturerStore = defineStore('deviceManufacturers', {
         this.Manufacturers.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
       })
     },
+    deleteManufacturers (manufacturers: Array<Manufacturer>) {
+      manufacturers.forEach((manufacturer) => {
+        const index = this.Manufacturers.findIndex((el: Manufacturer) => el.EntID === manufacturer.EntID)
+        this.Manufacturers.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      })
+    },
     adminCreateManufacturer (req: AdminCreateManufacturerRequest, done?: (error: boolean, device?: Manufacturer) => void) {
       doActionWithError<AdminCreateManufacturerRequest, AdminCreateManufacturerResponse>(
         API.ADMIN_CREATE_DEVICE_MANUFACTURER,
@@ -77,7 +83,7 @@ export const useManufacturerStore = defineStore('deviceManufacturers', {
         req,
         req.Message,
         (resp: AdminDeleteManufacturerResponse): void => {
-          this.addManufacturers([resp.Info])
+          this.deleteManufacturers([resp.Info])
           done?.(false, resp.Info)
         }, () => {
           done?.(true)
