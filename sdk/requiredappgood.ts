@@ -82,7 +82,7 @@ export const createRequiredAppGood = (target: requiredappgood.Required, done?: (
 export const adminCreateRequiredAppGood = (target: requiredappgood.Required, done?: (error: boolean) => void) => {
   _requiredAppGood.adminCreateRequired({
     ...target,
-    TargetAppID: target.AppID,
+    TargetAppID: AppID.value,
     Message: {
       Error: {
         Title: 'MSG_CREATE_REQUIRED_APP_GOOD',
