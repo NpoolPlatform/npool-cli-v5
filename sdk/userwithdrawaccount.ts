@@ -92,7 +92,7 @@ export const getUserWithdrawAccounts = (pageStart: number, pages: number, done?:
 }
 
 const adminGetPageUserWithdrawAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  if (pageEnd <= pageIndex) {
+  if (pageEnd < pageIndex) {
     return done?.(false, _userWithdrawAccount.totalPages(AppID.value), _userWithdrawAccount.totalRows(AppID.value))
   }
   _userWithdrawAccount.initializePager(AppID.value)

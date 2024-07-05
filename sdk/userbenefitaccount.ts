@@ -93,7 +93,7 @@ export const getUserBenefitAccounts = (pageStart: number, pages: number, done?: 
 }
 
 const adminGetPageUserBenefitAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  if (pageEnd <= pageIndex) {
+  if (pageEnd < pageIndex) {
     return done?.(false, _userBenefitAccount.totalPages(AppID.value), _userBenefitAccount.totalRows(AppID.value))
   }
   _userBenefitAccount.initializePager(AppID.value)
