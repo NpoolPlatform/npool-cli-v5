@@ -13,7 +13,6 @@ export interface Recommend {
     GoodID: string
     AppGoodID: string
     GoodName: string
-    RecommenderID: string
     RecommendIndex: string
     Message: string
     Hide: boolean
