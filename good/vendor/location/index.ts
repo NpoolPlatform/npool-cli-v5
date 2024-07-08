@@ -34,6 +34,12 @@ export const useVendorLocationStore = defineStore('vendorLocations', {
         this.VendorLocations.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, location)
       })
     },
+    deleteVendorLocations (locations: Array<VendorLocation>) {
+      locations.forEach((location) => {
+        const index = this.VendorLocations.findIndex((el: VendorLocation) => el.EntID === location.EntID)
+        this.VendorLocations.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      })
+    },
     getVendorLocations (req: GetVendorLocationsRequest, done?: (error: boolean, rows?: Array<VendorLocation>) => void) {
       doActionWithError<GetVendorLocationsRequest, GetVendorLocationsResponse>(
         API.GET_VENDORLOCATIONS,
@@ -76,7 +82,7 @@ export const useVendorLocationStore = defineStore('vendorLocations', {
         req,
         req.Message,
         (resp: AdminDeleteVendorLocationResponse): void => {
-          this.addLocations([resp.Info])
+          this.deleteVendorLocations([resp.Info])
           done?.(false, resp.Info)
         }, () => {
           done?.(true)

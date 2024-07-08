@@ -35,6 +35,12 @@ export const useDeviceTypeStore = defineStore('device-types', {
         this.DeviceTypes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
       })
     },
+    deleteDeviceTypes (deviceTypes: Array<DeviceType>) {
+      deviceTypes.forEach((powerRental) => {
+        const index = this.DeviceTypes.findIndex((el: DeviceType) => el.EntID === powerRental.EntID)
+        this.DeviceTypes.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      })
+    },
     getDeviceTypes (req: GetDeviceTypesRequest, done?: (error: boolean, devices?: Array<DeviceType>) => void) {
       doActionWithError<GetDeviceTypesRequest, GetDeviceTypesResponse>(
         API.GET_DEVICE_TYPES,
@@ -77,7 +83,7 @@ export const useDeviceTypeStore = defineStore('device-types', {
         req,
         req.Message,
         (resp: AdminDeleteDeviceTypeResponse): void => {
-          this.addDeviceTypes([resp.Info])
+          this.deleteDeviceTypes([resp.Info])
           done?.(false, resp.Info)
         }, () => {
           done?.(true)

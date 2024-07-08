@@ -82,7 +82,7 @@ export const createGoodPoster = (target: appgoodposter.Poster, done?: (error: bo
 export const adminCreateGoodPoster = (target: appgoodposter.Poster, done?: (error: boolean) => void) => {
   poster.adminCreatePoster({
     ...target,
-    TargetAppID: target.AppID,
+    TargetAppID: AppID.value,
     Message: {
       Error: {
         Title: 'MSG_CREATE_POSTER',

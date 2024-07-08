@@ -51,7 +51,7 @@ export const adminCreateMalfunction = (target: goodmalfunction.Malfunction, done
   }, done)
 }
 
-export const adminDpdateMalfunction = (target: goodmalfunction.Malfunction, done?: (error: boolean) => void) => {
+export const adminUpdateMalfunction = (target: goodmalfunction.Malfunction, done?: (error: boolean) => void) => {
   _goodMalfunction.adminUpdateMalfunction({
     ...target,
     NotifyMessage: {

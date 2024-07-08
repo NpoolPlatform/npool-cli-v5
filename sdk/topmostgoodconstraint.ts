@@ -99,6 +99,27 @@ export const adminCreateTopMostGoodConstraint = (target: topmostgoodconstraint.T
   }, done)
 }
 
+export const adminDeleteTopMostGoodConstraint = (target: topmostgoodconstraint.TopMostGoodConstraint, done?: (error: boolean) => void) => {
+  _topMostGoodConstraint.adminDeleteTopMostGoodConstraint({
+    ...target,
+    TargetAppID: AppID.value,
+    Message: {
+      Error: {
+        Title: 'MSG_ADMIN_DELETE_TOPMOST_GOOD_CONSTRAINT',
+        Message: 'MSG_ADMIN_DELETE_TOPMOST_GOOD_CONSTRAINT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_ADMIN_DELETE_TOPMOST_GOOD_CONSTRAINT',
+        Message: 'MSG_ADMIN_DELETE_TOPMOST_GOOD_CONSTRAINT_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
 export const updateTopMostGoodConstraint = (target: topmostgoodconstraint.TopMostGoodConstraint, done?: (error: boolean) => void) => {
   _topMostGoodConstraint.updateTopMostGoodConstraint({
     ...target,

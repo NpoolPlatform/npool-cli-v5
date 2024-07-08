@@ -6,7 +6,7 @@ export interface Recommend {
     EntID: string
     AppID: string
     AppName: string
-    UserID: string
+    RecommenderID: string
     Username: string
     EmailAddress: string
     PhoneNO: string

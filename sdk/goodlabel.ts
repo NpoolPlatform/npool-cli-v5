@@ -82,7 +82,7 @@ export const createGoodLabel = (target: appgoodlabel.Label, done?: (error: boole
 export const adminCreateGoodLabel = (target: appgoodlabel.Label, done?: (error: boolean) => void) => {
   _label.adminCreateLabel({
     ...target,
-    TargetAppID: target.AppID,
+    TargetAppID: AppID.value,
     Message: {
       Error: {
         Title: 'MSG_CREATE_LABEL',

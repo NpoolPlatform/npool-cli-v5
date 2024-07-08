@@ -82,7 +82,7 @@ export const createGoodDescription = (target: appgooddescription.Description, do
 export const adminCreateGoodDescription = (target: appgooddescription.Description, done?: (error: boolean) => void) => {
   description.adminCreateDescription({
     ...target,
-    TargetAppID: target.AppID,
+    TargetAppID: AppID.value,
     Message: {
       Error: {
         Title: 'MSG_CREATE_DESCRIPTION',
