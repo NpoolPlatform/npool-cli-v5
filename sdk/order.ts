@@ -58,3 +58,4 @@ export const adminGetOrders = (pageStart: number, pages: number, done?: (error: 
 }
 
 export const orders = computed(() => _order.orders(AppID.value))
+export const appOrder = (orderID: string) => orders.value.find((el) => el.EntID === orderID)
