@@ -64,7 +64,7 @@ export const adminCreateAppFee = (target: appfee.AppFee, done?: (error: boolean,
   _appFee.adminCreateAppFee({
     ...target,
     TargetAppID: AppID.value,
-    Name: target.GoodName,
+    Name: target.AppGoodName,
     Message: {
       Error: {
         Title: 'MSG_CREATE_APP_FEE',
