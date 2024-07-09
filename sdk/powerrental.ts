@@ -61,6 +61,8 @@ export const __powerRental = (goodId: string) => powerRentals.value.find((el) =>
 export const adminCreatePowerRental = (target: powerrental.PowerRental, done?: (error: boolean, powerRental?: powerrental.PowerRental) => void) => {
   _powerRental.adminCreatePowerRental({
     ...target,
+    Total: `${target.Total}`,
+    UnitLockDeposit: `${target.UnitLockDeposit}`,
     Message: {
       Error: {
         Title: 'MSG_CREATE_POWER_RENTAL',
