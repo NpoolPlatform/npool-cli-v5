@@ -93,5 +93,6 @@ export const adminCreateFeeOrder = (request: feeorder.AdminCreateFeeOrderRequest
       Type: notify.NotifyType.Error
     }
   }
+  request.TargetAppID = AppID.value
   _feeOrder.adminCreateFeeOrder(request, done)
 }
