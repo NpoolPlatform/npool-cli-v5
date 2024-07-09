@@ -12,7 +12,7 @@ export interface Malfunction {
     StartAt: number
     DurationSeconds: number
     CompensateSeconds: number
-    CompensateOrders: number
+    CompensatedOrders: number
     CreatedAt: number
     UpdatedAt: number
 }
