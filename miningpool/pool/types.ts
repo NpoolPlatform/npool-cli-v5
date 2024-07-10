@@ -48,7 +48,9 @@ export interface AdminCreatePoolRequest extends BaseRequest{
   Description: string
 }
 
-export interface AdminCreatePoolResponse { Info: Pool }
+export interface AdminCreatePoolResponse {
+  Info: Pool
+}
 
 export interface AdminUpdatePoolRequest extends BaseRequest{
   ID: number
@@ -59,7 +61,9 @@ export interface AdminUpdatePoolRequest extends BaseRequest{
   Description: string
 }
 
-export interface AdminUpdatePoolResponse { Info: Pool }
+export interface AdminUpdatePoolResponse {
+  Info: Pool
+}
 
 export interface AdminGetPoolsRequest extends BaseRequest{
   Offset: number
@@ -76,4 +80,6 @@ export interface AdminDeletePoolRequest extends BaseRequest{
   EntID: string
 }
 
-export interface AdminDeletePoolResponse { Info: Pool }
+export interface AdminDeletePoolResponse {
+  Info: Pool
+}

@@ -30,7 +30,9 @@ export interface AdminCreateCoinRequest extends BaseRequest{
   Remark: string
 }
 
-export interface AdminCreateCoinResponse { Info: Coin }
+export interface AdminCreateCoinResponse {
+  Info: Coin
+}
 
 export interface AdminUpdateCoinRequest extends BaseRequest{
   ID: number
@@ -43,7 +45,9 @@ export interface AdminUpdateCoinRequest extends BaseRequest{
   Remark: string
 }
 
-export interface AdminUpdateCoinResponse { Info: Coin }
+export interface AdminUpdateCoinResponse {
+  Info: Coin
+}
 
 export interface AdminGetCoinsRequest extends BaseRequest{
   Offset: number
@@ -60,4 +64,6 @@ export interface AdminDeleteCoinRequest extends BaseRequest{
   EntID: string
 }
 
-export interface AdminDeleteCoinResponse { Info: Coin }
+export interface AdminDeleteCoinResponse {
+  Info: Coin
+}

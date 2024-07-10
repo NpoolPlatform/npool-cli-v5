@@ -41,14 +41,18 @@ export interface AdminCreatePoolRequest extends BaseRequest{
   TargetAppID: string
 }
 
-export interface AdminCreatePoolResponse { Info: Pool }
+export interface AdminCreatePoolResponse {
+  Info: Pool
+}
 
 export interface GetPoolRequest extends BaseRequest{
   EntID: string
   AppID: string
 }
 
-export interface GetPoolResponse { Info: Pool }
+export interface GetPoolResponse {
+  Info: Pool
+}
 
 export interface GetPoolsRequest extends BaseRequest{
   AppID: string
