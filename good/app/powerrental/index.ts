@@ -48,6 +48,15 @@ export const useAppPowerRentalStore = defineStore('appPowerRentals', {
       goods.forEach((good) => {
         if (!good) return
         const index = _goods.findIndex((el) => el.EntID === good.EntID)
+        good.GoodCoins.forEach((el) => {
+          if (el.Main) {
+            good.CoinTypeID = el.CoinTypeID
+            good.CoinName = el.CoinName
+            good.CoinLogo = el.CoinLogo
+            good.CoinUnit = el.CoinUnit
+            good.CoinENV = el.CoinENV
+          }
+        })
         _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
       })
       this.AppPowerRentals.set(appID, _goods)

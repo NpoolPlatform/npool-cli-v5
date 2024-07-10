@@ -70,6 +70,32 @@ export const appPowerRentalMaxPurchasedUnits = (appGoodID: string) => {
 export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
 export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchase && el.AppGoodPurchasable))
 export const appPowerRentalCancelable = (appGoodId: string) => appPowerRental(appGoodId)?.CancelMode !== goodbase.CancelMode.Uncancellable
+const getSpotQuantity = computed(() => (appGoodID: string) => {
+  const _appPowerRental = appPowerRental(appGoodID)
+  return Number(_appPowerRental?.GoodSpotQuantity) + Number(_appPowerRental?.AppGoodSpotQuantity)
+})
+export const spotQuantity = (appGoodID: string) => getSpotQuantity.value(appGoodID)
+const getDisplayName = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find(el => el.Index === index)?.Name)
+export const displayName = (appGoodID: string, index: number) => getDisplayName.value(appGoodID, index)
+const getDisplayColor = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color)
+export const displayColor = (appGoodID: string, index: number) => getDisplayColor.value(appGoodID, index)
+const getDescription = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description)
+export const description = (appGoodID: string, index: number) => getDescription.value(appGoodID, index)
+const canBuy = computed(() => (appGoodID: string) => {
+  const _appPowerRental = appPowerRental(appGoodID)
+  if (!_appPowerRental) {
+    return false
+  }
+  const now = Math.floor(Date.now() / 1000)
+  if (_appPowerRental?.SaleEndAt === 0 || _appPowerRental?.SaleStartAt === 0 || now > _appPowerRental?.SaleEndAt || now < _appPowerRental?.SaleStartAt) {
+    return false
+  }
+  if (!spotQuantity(appGoodID)) {
+    return false
+  }
+  return _appPowerRental?.AppGoodOnline
+})
+export const buyable = (appGoodID: string) => canBuy.value(appGoodID)
 
 export const adminCreateAppPowerRental = (target: apppowerrental.AppPowerRental, done?: (error: boolean, appPowerRental?: apppowerrental.AppPowerRental) => void) => {
   _appPowerRental.adminCreateAppPowerRental({

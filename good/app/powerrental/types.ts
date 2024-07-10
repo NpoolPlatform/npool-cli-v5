@@ -1,6 +1,6 @@
 import { BaseRequest } from '../../../request'
 import { BenefitType, CancelMode, GoodDurationType, GoodSaleMode, GoodStockMode, GoodType, StartMode } from '../../base'
-import { GoodCoin } from '../../good/coin'
+import { GoodCoinInfo } from '../../good/coin'
 import { RewardInfo } from '../../good/coin/reward/types'
 import { MiningGoodStockInfo } from '../../good/stock'
 import { DescriptionInfo } from '../good/description'
@@ -95,7 +95,14 @@ export interface AppPowerRental {
   LastRewardAt: number
   AppGoodStartMode: StartMode
 
-  GoodCoins: GoodCoin[]
+  GoodCoins: GoodCoinInfo[]
+  // Main Good Coin
+  CoinTypeID: string
+  CoinLogo: string
+  CoinName: string
+  CoinENV: string
+  CoinUnit: string
+
   Descriptions: DescriptionInfo[]
   MiningGoodStocks: MiningGoodStockInfo[]
   Rewards: RewardInfo[]
