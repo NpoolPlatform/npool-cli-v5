@@ -1,6 +1,8 @@
 import { computed } from 'vue'
 import { powerrentalorder, notify, constant } from '..'
 import { AppID } from './localapp'
+import { OrderState, OrderTimeoutSeconds } from '../order'
+import { remain } from '../utils'
 
 const _powerRentalOrder = powerrentalorder.usePowerRentalOrderStore()
 
@@ -29,7 +31,7 @@ const getPagePowerRentalOrders = (pageIndex: number, pageEnd: number, done?: (er
 export const getPowerRentalOrders = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   getPagePowerRentalOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
-
+export const resetPowerRentalOrders = () => _powerRentalOrder.$reset()
 const adminGetPagePowerRentalOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   _powerRentalOrder.adminGetPowerRentalOrders({
     TargetAppID: AppID.value,
@@ -59,6 +61,43 @@ export const adminGetPowerRentalOrders = (pageStart: number, pages: number, done
 
 export const powerRentalOrders = computed(() => _powerRentalOrder.powerRentalOrders(AppID.value))
 export const powerRentalOrder = (orderID: string) => powerRentalOrders.value.find((el) => el.OrderID === orderID)
+
+const getOrderState = computed(() => (orderID: string) => {
+  const order = powerRentalOrder(orderID)
+  if (!order) {
+    return 'MSG_ERROR'
+  }
+  if (order.OrderState === OrderState.PAYMENT_TIMEOUT) {
+    return 'MSG_CANCELED_BY_TIMEOUT'
+  }
+  switch (order.OrderState) {
+    case OrderState.WAIT_PAYMENT:
+    case OrderState.CREATED:
+      return remain(order.CreatedAt + OrderTimeoutSeconds)
+  }
+  if (order.OrderState === OrderState.EXPIRED) {
+    return 'MSG_DONE'
+  }
+  if (order.OrderState === OrderState.CANCELED) {
+    return 'MSG_PAYMENT_CANCELED'
+  }
+  if (order.OrderState === OrderState.PAID) {
+    return 'MSG_WAIT_FOR_START'
+  }
+  return 'MSG_IN_SERVICE'
+})
+export const orderState = (orderID: string) => getOrderState.value(orderID)
+
+const getPurchasedUnits = computed(() => (appGoodID: string) => {
+  let units = 0
+  _powerRentalOrder.powerRentalOrders(undefined)?.forEach((el) => {
+    if (el.AppGoodID === appGoodID) {
+      units += Number(el.Units)
+    }
+  })
+  return units
+})
+export const purchasedUnits = (appGoodID: string) => getPurchasedUnits.value(appGoodID)
 
 export const createPowerRentalOrder = (request: powerrentalorder.CreatePowerRentalOrderRequest, done?: (error: boolean, powerRentalOrder?: powerrentalorder.PowerRentalOrder) => void) => {
   request.Message = {

@@ -36,6 +36,15 @@ export const useAppPowerRentalStore = defineStore('appPowerRentals', {
         appID = formalizeAppID(appID)
         return this.AppPowerRentals.get(appID) || []
       }
+    },
+    purchaseLimit (): (appID: string | undefined, id: string) => number {
+      return (appID: string | undefined, id: string) => {
+        appID = formalizeAppID(appID)
+        const appPowerRental = this.appPowerRental(appID, id)
+        let min = Math.min(Number(appPowerRental?.MaxOrderAmount) || 0, Number(appPowerRental?.GoodSpotQuantity) + Number(appPowerRental?.AppGoodSpotQuantity))
+        min = Math.min(min, Number(appPowerRental?.MaxUserAmount) || 0)
+        return Math.floor(min)
+      }
     }
   },
   actions: {
@@ -57,6 +66,10 @@ export const useAppPowerRentalStore = defineStore('appPowerRentals', {
             good.CoinENV = el.CoinENV
           }
         })
+        good.DurationDays = 0
+        if (good.MinOrderDurationSeconds > 0) {
+          good.DurationDays = good.MinOrderDurationSeconds / 60 / 60 / 24
+        }
         _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
       })
       this.AppPowerRentals.set(appID, _goods)

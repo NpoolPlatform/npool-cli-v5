@@ -93,4 +93,19 @@ export const adminGetUserDepositAccounts = (pageStart: number, pages: number, do
   adminGetPageUserDepositAccounts(pageStart, pages ? pageStart + pages : pages, done)
 }
 
+export const getDepositAccount = (coinTypeID: string, done?: (error: boolean) => void) => {
+  _userDepositAccount.getDepositAccount({
+    CoinTypeID: coinTypeID,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_DEPOSIT_ACCOUNT',
+        Message: 'MSG_GET_DEPOSIT_ACCOUNT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error:boolean) => {
+    done?.(error)
+  })
+}
 export const userDepositAccounts = computed(() => _userDepositAccount.accounts(AppID.value))

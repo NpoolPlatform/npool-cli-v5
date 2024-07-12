@@ -1,4 +1,5 @@
 import { userwithdrawaccount, notify, useraccountbase } from '..'
+import { CreateUserAccountRequest } from '../account/user/withdraw/types'
 import { AppID } from './localapp'
 
 const _userWithdrawAccount = userwithdrawaccount.useUserAccountStore()
@@ -137,3 +138,47 @@ export const adminGetUserWithdrawAccounts = (pageStart: number, pages: number, d
 }
 
 export const userWithdrawAccounts = (userID: string | undefined, coinTypeID: string | undefined) => _userWithdrawAccount.accounts(AppID.value, userID, coinTypeID)
+
+export const deleteUserAccount = (target: useraccountbase.Account, done?: (error: boolean) => void) => {
+  _userWithdrawAccount.deleteUserAccount({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_WITHDRAW_ADDRESS',
+        Message: 'MSG_DELETE_WITHDRAW_ADDRESS_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_WITHDRAW_ADDRESS',
+        Message: 'MSG_DELETE_WITHDRAW_ADDRESS_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    done?.(error)
+  })
+}
+
+export const createUserAccount = (target: CreateUserAccountRequest, done?: (error: boolean) => void) => {
+  _userWithdrawAccount.createUserAccount({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_CREATE_WITHDRAW_ADDRESS',
+        Message: 'MSG_CREATE_WITHDRAW_ADDRESS_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_CREATE_WITHDRAW_ADDRESS',
+        Message: 'MSG_CREATE_WITHDRAW_ADDRESS_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    done?.(error)
+  })
+}
