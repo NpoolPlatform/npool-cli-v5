@@ -65,6 +65,7 @@ export interface AppPowerRental {
   MaxUserAmount: string
   MinOrderDurationSeconds: number
   MaxOrderDurationSeconds: number
+  DurationDays: number
   SaleStartAt: number
   SaleEndAt: number
   SaleMode: GoodSaleMode

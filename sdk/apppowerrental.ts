@@ -1,6 +1,9 @@
 import { computed } from 'vue'
-import { apppowerrental, constant, goodbase, notify } from '..'
+import { apppowerrental, constant, goodbase, notify, order } from '..'
 import { AppID } from './localapp'
+import { formalizeUserID } from '../appuser/user/local'
+import { usePowerRentalOrderStore } from '../order/powerrental'
+import { date } from 'quasar'
 
 const _appPowerRental = apppowerrental.useAppPowerRentalStore()
 
@@ -57,6 +60,22 @@ export const adminGetAppPowerRentals = (pageStart: number, pages: number, done?:
   adminGetPageAppPowerRentals(pageStart, pages ? pageStart + pages : pages, done)
 }
 
+export const getAppPowerRental = (appGoodID: string, done?: (error: boolean) => void) => {
+  _appPowerRental.getAppPowerRental({
+    AppGoodID: appGoodID,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_APP_POWER_RENTAL',
+        Message: 'MSG_GET_APP_POWER_RENTAL_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error:boolean) => {
+    done?.(error)
+  })
+}
+
 export const appPowerRentals = computed(() => _appPowerRental.appPowerRentals(AppID.value).sort((a, b) => a.ID > b.ID ? -1 : 1))
 export const appPowerRental = (appGoodId: string) => appPowerRentals.value.find((el) => el.AppGoodID === appGoodId)
 export const appPowerRentalMaxPurchasedUnits = (appGoodID: string) => {
@@ -75,13 +94,17 @@ const getSpotQuantity = computed(() => (appGoodID: string) => {
   return Number(_appPowerRental?.GoodSpotQuantity) + Number(_appPowerRental?.AppGoodSpotQuantity)
 })
 export const spotQuantity = (appGoodID: string) => getSpotQuantity.value(appGoodID)
-const getDisplayName = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find(el => el.Index === index)?.Name || '')
+
+export const getDisplayName = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find(el => el.Index === index)?.Name || '')
 export const displayName = (appGoodID: string, index: number) => getDisplayName.value(appGoodID, index)
+
 const getDisplayColor = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || '')
 export const displayColor = (appGoodID: string, index: number) => getDisplayColor.value(appGoodID, index)
+
 const getDescription = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || '')
 export const description = (appGoodID: string, index: number) => getDescription.value(appGoodID, index)
-const canBuy = computed(() => (appGoodID: string) => {
+
+const buyable = computed(() => (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental) {
     return false
@@ -95,7 +118,50 @@ const canBuy = computed(() => (appGoodID: string) => {
   }
   return _appPowerRental?.AppGoodOnline
 })
-export const buyable = (appGoodID: string) => canBuy.value(appGoodID)
+export const canBuy = (appGoodID: string) => buyable.value(appGoodID)
+
+const getPricePresentString = computed(() => (appGoodID: string) => Number(appPowerRental(appGoodID)?.UnitPrice).toFixed(4))
+export const priceString = (appGoodID: string) => getPricePresentString.value(appGoodID)
+
+const getSaleEndDate = computed(() => (appGoodID: string, format?: string) => {
+  const _appPowerRental = appPowerRental(appGoodID)
+  if (!_appPowerRental?.SaleEndAt) {
+    return '*'
+  }
+  return date.formatDate(_appPowerRental?.SaleEndAt * 1000, format || 'YYYY/MM/DD')
+})
+export const saleEndDate = (appGoodID: string, format?: string) => {
+  return getSaleEndDate.value(appGoodID, format)
+}
+const getSaleEndTime = computed(() => (appGoodID: string, format?: string) => {
+  const _appPowerRental = appPowerRental(appGoodID)
+  if (!_appPowerRental?.SaleEndAt) {
+    return '*'
+  }
+  return date.formatDate((_appPowerRental?.SaleEndAt + 60 * new Date().getTimezoneOffset() + 9 * 60 * 60) * 1000, format || 'HH:mm')
+})
+export const saleEndTime = (appGoodID: string, format?: string) => {
+  return getSaleEndTime.value(appGoodID, format)
+}
+
+const powerRentalOrder = usePowerRentalOrderStore()
+
+export const appGoodPurchaseLimit = (appGoodID: string) => {
+  const goodPurchaseLimit = _appPowerRental.purchaseLimit(undefined, appGoodID)
+  if (goodPurchaseLimit <= 0) {
+    return 0
+  }
+  const __appPowerRental = appPowerRental(appGoodID)
+  if (!__appPowerRental) {
+    return 0
+  }
+  let units = 0
+  const userID = formalizeUserID()
+  powerRentalOrder.powerRentalOrders().filter((el) => el.UserID === userID && el.OrderState !== order.OrderState.CANCELED).forEach((el) => {
+    units += Number(el.Units)
+  })
+  return Math.max(Math.min(Number(__appPowerRental.MaxUserAmount) - units, goodPurchaseLimit), 0)
+}
 
 export const adminCreateAppPowerRental = (target: apppowerrental.AppPowerRental, done?: (error: boolean, appPowerRental?: apppowerrental.AppPowerRental) => void) => {
   _appPowerRental.adminCreateAppPowerRental({

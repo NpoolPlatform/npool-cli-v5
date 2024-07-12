@@ -38,6 +38,8 @@ export interface PowerRentalOrder {
   MiningPoolLeastTransferAmount?: string
   MiningPoolBenefitIntervalSeconds?: number
 
+  Unit: string
+  GoodUnit: string
   Units: string
   GoodValueUSD: string
   PaymentAmountUSD: string
