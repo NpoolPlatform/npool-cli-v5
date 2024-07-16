@@ -70,6 +70,23 @@ export const useProfitStore = defineStore('ledger-profits', {
           return ok
         })?.sort((a, b) => a.AppGoodName.localeCompare(b.AppGoodName)) || []
       }
+    },
+    intervalGoodProfits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined, key: IntervalKey) => number {
+      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined, key: IntervalKey) => {
+        appID = formalizeAppID(appID)
+        const goodProfits = this.GoodProfits.get(appID) || new Map<IntervalKey, Array<GoodProfit>>()
+        const _profits = goodProfits.get(key) || []
+        let incoming = 0
+        _profits.filter((el) => {
+          let ok = el.CoinTypeID === coinTypeID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
+          if (userID) ok &&= el.UserID === userID
+          return ok
+        }).forEach((el) => {
+          incoming += Number(el.Incoming)
+        })
+        return incoming
+      }
     }
   },
   actions: {
