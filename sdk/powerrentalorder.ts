@@ -31,6 +31,7 @@ const getPagePowerRentalOrders = (pageIndex: number, pageEnd: number, done?: (er
 export const getPowerRentalOrders = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   getPagePowerRentalOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
+
 export const resetPowerRentalOrders = () => _powerRentalOrder.$reset()
 const adminGetPagePowerRentalOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   _powerRentalOrder.adminGetPowerRentalOrders({
@@ -133,4 +134,29 @@ export const adminCreatePowerRentalOrder = (request: powerrentalorder.AdminCreat
     }
   }
   _powerRentalOrder.adminCreatePowerRentalOrder(request, done)
+}
+
+const getPageMyPowerRentalOrders = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  _powerRentalOrder.getMyPowerRentalOrders({
+    Offset: pageIndex * constant.DefaultPageSize,
+    Limit: constant.DefaultPageSize,
+    Message: {
+      Error: {
+        Title: 'MSG_GET_POWERRENTAL_ORDERS',
+        Message: 'MSG_GET_POWERRENTAL_ORDERS_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, (error: boolean, orders?: Array<powerrentalorder.PowerRentalOrder>, total?: number) => {
+    if (error || !orders?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
+      done?.(error, totalPages, total as number)
+      return
+    }
+    getPageMyPowerRentalOrders(pageIndex + 1, pageEnd, done)
+  })
+}
+export const getMyPowerRentalOrders = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  getPageMyPowerRentalOrders(pageStart, pages ? pageStart + pages : pages, done)
 }

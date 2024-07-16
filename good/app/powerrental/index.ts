@@ -63,7 +63,7 @@ export const useAppPowerRentalStore = defineStore('appPowerRentals', {
             good.CoinName = el.CoinName
             good.CoinLogo = el.CoinLogo
             good.CoinUnit = el.CoinUnit
-            good.CoinENV = el.CoinENV
+            good.CoinEnv = el.CoinENV
           }
         })
         good.DurationDays = 0
