@@ -1,4 +1,4 @@
-import { GoodDurationType, GoodType } from '../../good/base'
+import { GoodType } from '../../good/base'
 import { BaseRequest } from '../../request'
 
 export interface GoodProfit {
@@ -15,10 +15,6 @@ export interface GoodProfit {
   Units: string
   Incoming: string
   GoodUnit: string
-
-  MinOrderDuration: number
-  MaxOrderDuration: number
-  DurationType: GoodDurationType
 }
 
 export interface CoinProfit {
