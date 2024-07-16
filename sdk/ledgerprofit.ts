@@ -1,4 +1,3 @@
-import { computed } from 'vue'
 import { ledgerprofit, constant, notify } from '..'
 import { IntervalKey } from '../utils'
 
@@ -60,5 +59,5 @@ export const getCoinProfits = (key: IntervalKey, startAt: number, endAt: number,
   getPageCoinProfits(key, startAt, endAt, pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const goodProfits = computed(() => (key: IntervalKey) => profit.goodProfits(undefined, undefined, key))
-export const coinProfits = computed(() => (key: IntervalKey) => profit.coinProfits(undefined, undefined, key))
+export const goodProfits = (key: IntervalKey) => profit.goodProfits(undefined, undefined, key)
+export const coinProfits = (key: IntervalKey) => profit.coinProfits(undefined, undefined, key)
