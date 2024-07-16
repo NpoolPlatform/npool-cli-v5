@@ -1,3 +1,5 @@
+import { ledgerstatement } from '..'
+
 export * from './order'
 export * from './localapp'
 export * from './appgood'
@@ -67,5 +69,5 @@ export * from './application'
 export * from './oauththirdparty'
 export * from './vendorlocation'
 export * from './vendorbrand'
-export * from './ledgerprofit'
-export * as ledgerProfit from './ledgerstatement'
+export * as ledgerProfit from './ledgerprofit'
+export * as ledgerStatement from './ledgerstatement'
