@@ -45,7 +45,7 @@ export interface AppPowerRental {
   GoodStartMode: StartMode
   TestOnly: boolean
   BenefitIntervalHours: number
-  GoodPurchase: boolean
+  GoodPurchasable: boolean
   GoodOnline: boolean
   StockMode: GoodStockMode
 

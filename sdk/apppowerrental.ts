@@ -87,7 +87,7 @@ export const appPowerRentalMaxPurchasedUnits = (appGoodID: string) => {
   return Math.min(stockUnits, maxOrderAmount, maxUserAmount)
 }
 export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
-export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchase && el.AppGoodPurchasable))
+export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchasable && el.AppGoodPurchasable))
 export const appPowerRentalCancelable = (appGoodId: string) => appPowerRental(appGoodId)?.CancelMode !== goodbase.CancelMode.Uncancellable
 const getSpotQuantity = computed(() => (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
@@ -116,7 +116,7 @@ const buyable = computed(() => (appGoodID: string) => {
   if (!spotQuantity(appGoodID)) {
     return false
   }
-  return _appPowerRental?.AppGoodOnline
+  return _appPowerRental?.AppGoodOnline && _appPowerRental.GoodOnline
 })
 export const canBuy = (appGoodID: string) => buyable.value(appGoodID)
 
