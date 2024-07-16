@@ -8,6 +8,7 @@ import { DisplayColorInfo } from '../good/display/color'
 import { DisplayNameInfo } from '../good/display/name'
 import { LabelInfo } from '../good/label'
 import { Poster } from '../good/poster'
+import { RequiredInfo } from '../good/required'
 import { StockInfo } from '../good/stock/mining'
 
 export interface AppPowerRental {
@@ -101,7 +102,7 @@ export interface AppPowerRental {
   CoinTypeID: string
   CoinLogo: string
   CoinName: string
-  CoinENV: string
+  CoinEnv: string
   CoinUnit: string
 
   Descriptions: DescriptionInfo[]
@@ -112,6 +113,7 @@ export interface AppPowerRental {
   DisplayColors: DisplayColorInfo[]
   AppMiningGoodStocks: StockInfo[]
   Labels: LabelInfo[]
+  Requireds: RequiredInfo[]
 
   CreatedAt: number
   UpdatedAt: number

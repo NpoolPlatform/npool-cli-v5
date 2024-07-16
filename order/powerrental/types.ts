@@ -79,7 +79,7 @@ export interface CreatePowerRentalOrderRequest extends BaseRequest {
   Units?: string
   Balances: PaymentBalance[]
   PaymentTransferCoinTypeID?: string
-  CouponIDs: string[]
+  CouponIDs?: string[]
   FeeAppGoodIDs: string[]
   FeeDurationSeconds?: number
   FeeAutoDeduction?: boolean

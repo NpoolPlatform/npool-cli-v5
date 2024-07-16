@@ -17,6 +17,13 @@ export interface Required {
     UpdatedAt: number
 }
 
+export interface RequiredInfo {
+    MainGoodID: string
+    RequiredAppGoodID: string
+    RequiredAppGoodName: string
+    Must: boolean
+}
+
 export interface CreateRequiredRequest extends BaseRequest {
     MainAppGoodID: string
     RequiredAppGoodID: string
