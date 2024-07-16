@@ -1,9 +1,10 @@
 import { computed } from 'vue'
 import { ledgerprofit, constant, notify } from '..'
+import { IntervalKey } from '../utils'
 
 const profit = ledgerprofit.useProfitStore()
 
-const getPageGoodProfits = (startAt: number, endAt: number, pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageGoodProfits = (key: IntervalKey, startAt: number, endAt: number, pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   profit.getGoodProfits({
     StartAt: startAt,
     EndAt: endAt,
@@ -17,21 +18,21 @@ const getPageGoodProfits = (startAt: number, endAt: number, pageIndex: number, p
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<ledgerprofit.GoodProfit>, total?: number) => {
+  }, key, (error: boolean, rows?: Array<ledgerprofit.GoodProfit>, total?: number) => {
     if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
       done?.(error, totalPages, total as number)
       return
     }
-    getPageGoodProfits(startAt, endAt, ++pageIndex, pageEnd, done)
+    getPageGoodProfits(key, startAt, endAt, ++pageIndex, pageEnd, done)
   })
 }
 
-export const getGoodProfits = (startAt: number, endAt: number, pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageGoodProfits(startAt, endAt, pageStart, pages ? pageStart + pages : pages, done)
+export const getGoodProfits = (key: IntervalKey, startAt: number, endAt: number, pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  getPageGoodProfits(key, startAt, endAt, pageStart, pages ? pageStart + pages : pages, done)
 }
 
-const getPageCoinProfits = (startAt: number, endAt: number, pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+const getPageCoinProfits = (key: IntervalKey, startAt: number, endAt: number, pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   profit.getCoinProfits({
     StartAt: startAt,
     EndAt: endAt,
@@ -45,19 +46,19 @@ const getPageCoinProfits = (startAt: number, endAt: number, pageIndex: number, p
         Type: notify.NotifyType.Error
       }
     }
-  }, (error: boolean, rows?: Array<ledgerprofit.CoinProfit>, total?: number) => {
+  }, key, (error: boolean, rows?: Array<ledgerprofit.CoinProfit>, total?: number) => {
     if (error || !rows?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
       const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
       done?.(error, totalPages, total as number)
       return
     }
-    getPageCoinProfits(startAt, endAt, ++pageIndex, pageEnd, done)
+    getPageCoinProfits(key, startAt, endAt, ++pageIndex, pageEnd, done)
   })
 }
 
-export const getCoinProfits = (startAt: number, endAt: number, pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getPageCoinProfits(startAt, endAt, pageStart, pages ? pageStart + pages : pages, done)
+export const getCoinProfits = (key: IntervalKey, startAt: number, endAt: number, pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  getPageCoinProfits(key, startAt, endAt, pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const goodProfits = computed(() => profit.goodProfits(undefined, undefined, undefined))
-export const coinProfits = computed(() => profit.coinProfits(undefined, undefined, undefined))
+export const goodProfits = computed(() => (key: IntervalKey) => profit.goodProfits(undefined, undefined, key))
+export const coinProfits = computed(() => (key: IntervalKey) => profit.coinProfits(undefined, undefined, key))
