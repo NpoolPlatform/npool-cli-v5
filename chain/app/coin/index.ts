@@ -111,6 +111,12 @@ export const useAppCoinStore = defineStore('app-coins', {
         const coin = this.coin(appID, coinTypeID)
         return (coin?.SettleTips.length && coin?.SettleTips.length > index) ? coin?.SettleTips[index] : ''
       }
+    },
+    localCurrency (): (appID: string | undefined, coinTypeID: string) => number {
+      return (appID: string | undefined, coinTypeID: string) => {
+        appID = formalizeAppID(appID)
+        return Number(this.coin(appID, coinTypeID)?.MarketValue || 0)
+      }
     }
   },
   actions: {

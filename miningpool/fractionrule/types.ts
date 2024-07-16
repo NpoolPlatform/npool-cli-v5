@@ -21,7 +21,9 @@ export interface AdminCreateFractionRuleRequest extends BaseRequest{
   WithdrawRate: string
 }
 
-export interface AdminCreateFractionRuleResponse { Info: FractionRule }
+export interface AdminCreateFractionRuleResponse {
+  Info: FractionRule
+}
 
 export interface AdminUpdateFractionRuleRequest extends BaseRequest{
   ID: number
@@ -31,7 +33,9 @@ export interface AdminUpdateFractionRuleRequest extends BaseRequest{
   WithdrawInterval: number
 }
 
-export interface AdminUpdateFractionRuleResponse { Info: FractionRule }
+export interface AdminUpdateFractionRuleResponse {
+  Info: FractionRule
+}
 
 export interface AdminGetFractionRulesRequest extends BaseRequest{
   Offset: number
@@ -48,4 +52,6 @@ export interface AdminDeleteFractionRuleRequest extends BaseRequest{
   EntID: string
 }
 
-export interface AdminDeleteFractionRuleResponse { Info: FractionRule }
+export interface AdminDeleteFractionRuleResponse {
+  Info: FractionRule
+}

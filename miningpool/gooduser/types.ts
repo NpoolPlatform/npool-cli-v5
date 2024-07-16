@@ -23,7 +23,9 @@ export interface AdminCreateGoodUserRequest extends BaseRequest{
   RootUserID: string
 }
 
-export interface AdminCreateGoodUserResponse { Info: GoodUser }
+export interface AdminCreateGoodUserResponse {
+  Info: GoodUser
+}
 
 export interface AdminGetGoodUsersRequest extends BaseRequest{
   Offset: number
@@ -40,4 +42,6 @@ export interface AdminDeleteGoodUserRequest extends BaseRequest{
   EntID: string
 }
 
-export interface AdminDeleteGoodUserResponse { Info: GoodUser }
+export interface AdminDeleteGoodUserResponse {
+  Info: GoodUser
+}

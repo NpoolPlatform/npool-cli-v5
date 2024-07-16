@@ -23,7 +23,9 @@ export interface AdminCreateRootUserRequest extends BaseRequest{
   Remark: string
 }
 
-export interface AdminCreateRootUserResponse { Info: RootUser }
+export interface AdminCreateRootUserResponse {
+  Info: RootUser
+}
 
 export interface AdminGetRootUsersRequest extends BaseRequest{
   Offset: number
@@ -44,11 +46,15 @@ export interface AdminUpdateRootUserRequest extends BaseRequest{
   Remark: string
 }
 
-export interface AdminUpdateRootUserResponse { Info: RootUser }
+export interface AdminUpdateRootUserResponse {
+  Info: RootUser
+}
 
 export interface AdminDeleteRootUserRequest extends BaseRequest{
   ID: number
   EntID: string
 }
 
-export interface AdminDeleteRootUserResponse { Info: RootUser }
+export interface AdminDeleteRootUserResponse {
+  Info: RootUser
+}
