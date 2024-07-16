@@ -94,16 +94,12 @@ const getAppPowerRentalSpotQuantity = computed(() => (appGoodID: string) => {
   return Number(_appPowerRental?.GoodSpotQuantity) + Number(_appPowerRental?.AppGoodSpotQuantity)
 })
 export const spotQuantity = (appGoodID: string) => getAppPowerRentalSpotQuantity.value(appGoodID)
-
 export const visible = (appGoodID: string) => appPowerRental(appGoodID)?.Visible
-export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames.find(el => el.Index === index) || appPowerRental(appGoodID)?.AppGoodName
+
+export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find((el) => el.Index === index)?.Name || appPowerRental(appGoodID)?.AppGoodName
 export const enableSetCommission = (appGoodID: string) => appPowerRental(appGoodID)?.EnableSetCommission
-
-const getAppPowerRentalDisplayColor = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || '')
-export const displayColor = (appGoodID: string, index: number) => getAppPowerRentalDisplayColor.value(appGoodID, index)
-
-const getAppPowerRentalDescription = computed(() => (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || '')
-export const description = (appGoodID: string, index: number) => getAppPowerRentalDescription.value(appGoodID, index)
+export const displayColor = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || ''
+export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || ''
 
 const buyable = computed(() => (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
