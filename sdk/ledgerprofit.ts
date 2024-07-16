@@ -61,3 +61,4 @@ export const getCoinProfits = (key: IntervalKey, startAt: number, endAt: number,
 
 export const goodProfits = (key: IntervalKey) => profit.goodProfits(undefined, undefined, key)
 export const coinProfits = (key: IntervalKey) => profit.coinProfits(undefined, undefined, key)
+export const intervalGoodProfits = (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined, key: IntervalKey) => profit.intervalGoodProfits(appID, userID, coinTypeID, appGoodID, key)
