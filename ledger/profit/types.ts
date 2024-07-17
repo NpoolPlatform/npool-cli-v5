@@ -7,6 +7,7 @@ export interface GoodProfit {
   AppGoodID: string
   AppGoodName: string
   GoodType: GoodType
+  GoodQuantityUnit: string
   CoinTypeID: string
   CoinName: string
   DisplayNames: string[]
@@ -14,7 +15,6 @@ export interface GoodProfit {
   CoinUnit: string
   Units: string
   Incoming: string
-  GoodUnit: string
 }
 
 export interface CoinProfit {
