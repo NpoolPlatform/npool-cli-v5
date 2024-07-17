@@ -115,11 +115,17 @@ export const displayName = (appGoodID: string, index: number) => appPowerRental(
 export const enableSetCommission = (appGoodID: string) => appPowerRental(appGoodID)?.EnableSetCommission
 export const displayColor = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || ''
 export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || '*'
+export const requireDescription = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description
 export const enableProductPage = (appGoodID: string) => appPowerRental(appGoodID)?.EnableProductPage
 export const showProductPage = (appGoodID: string) => enableProductPage(appGoodID) && canBuy(appGoodID) && spotQuantity(appGoodID)
 export const maxOrderDurationSeconds = (appGoodID: string) => appPowerRental(appGoodID)?.MaxOrderDurationSeconds
 export const minOrderDurationSeconds = (appGoodID: string) => appPowerRental(appGoodID)?.MinOrderDurationSeconds
 export const durationDisplayType = (appGoodID: string) => appPowerRental(appGoodID)?.DurationDisplayType
+export const unitPrice = (appGoodID: string) => appPowerRental(appGoodID)?.UnitPrice
+export const unitPriceFloat = (appGoodID: string) => Number(unitPrice(appGoodID) || 0)
+export const mainCoinTypeID = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinTypeID
+export const mainCoinUnit = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinUnit
+export const total = (appGoodID: string) => Number(appPowerRental(appGoodID)?.GoodTotal || 0)
 
 export const techniqueFeeRatio = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)

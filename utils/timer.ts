@@ -27,8 +27,17 @@ const formatTime = (timestamp: number, format?: string, utc?: boolean): string =
 
 const RemainZero = '00:00:00'
 
+const SecondsPerHour = 60 * 60
+const SecondsPerDay = 24 * SecondsPerHour
+const SecondsPerMonth = 30 * SecondsPerDay
+const SecondsPerYear = 12 * SecondsPerMonth
+
 export {
   remain,
   formatTime,
-  RemainZero
+  RemainZero,
+  SecondsPerDay,
+  SecondsPerHour,
+  SecondsPerMonth,
+  SecondsPerYear
 }

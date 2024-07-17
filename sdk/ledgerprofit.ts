@@ -60,7 +60,7 @@ export const getCoinProfits = (key: IntervalKey, startAt: number, endAt: number,
   getPageCoinProfits(key, startAt, endAt, pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const goodProfits = (key: IntervalKey) => profit.goodProfits(undefined, formalizeUserID(), key)
-export const coinProfits = (key: IntervalKey) => profit.coinProfits(undefined, formalizeUserID(), key)
+export const goodProfits = (key: IntervalKey, coinTypeID?: string, appGoodID?: string) => profit.goodProfits(undefined, formalizeUserID(), key, coinTypeID, appGoodID)
+export const coinProfits = (key: IntervalKey, coinTypeID?: string) => profit.coinProfits(undefined, formalizeUserID(), key, coinTypeID)
 
 export const totalIncoming = (key: IntervalKey, coinTypeID?: string, appGoodID?: string) => profit.totalIncoming(undefined, formalizeUserID(), key, coinTypeID, appGoodID)
