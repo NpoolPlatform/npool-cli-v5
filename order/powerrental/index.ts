@@ -40,10 +40,10 @@ export const usePowerRentalOrderStore = defineStore('power-rental-orders', {
         return this.PowerRentalOrders.get(appID)?.find((el) => el.EntID === id)
       }
     },
-    powerRentalOrders (): (appID?: string) => Array<PowerRentalOrder> {
-      return (appID?: string) => {
+    powerRentalOrders (): (appID?: string, userID?: string) => Array<PowerRentalOrder> {
+      return (appID?: string, userID?: string) => {
         appID = formalizeAppID(appID)
-        return this.PowerRentalOrders.get(appID) || []
+        return this.PowerRentalOrders.get(appID)?.filter(el => !userID || el.UserID === userID) || []
       }
     },
     validate (): (orderID: string) => boolean {

@@ -3,6 +3,7 @@ import { powerrentalorder, notify, constant } from '..'
 import { AppID } from './localapp'
 import { OrderState, OrderTimeoutSeconds } from '../order'
 import { remain } from '../utils'
+import { formalizeUserID } from '../appuser/user/local'
 
 const _powerRentalOrder = powerrentalorder.usePowerRentalOrderStore()
 
@@ -60,7 +61,7 @@ export const adminGetPowerRentalOrders = (pageStart: number, pages: number, done
   adminGetPagePowerRentalOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const powerRentalOrders = computed(() => _powerRentalOrder.powerRentalOrders(AppID.value))
+export const powerRentalOrders = computed(() => _powerRentalOrder.powerRentalOrders(AppID.value, formalizeUserID()))
 export const powerRentalOrder = (orderID: string) => powerRentalOrders.value.find((el) => el.OrderID === orderID)
 
 export const validate = (orderID: string) => _powerRentalOrder.validate(orderID)
