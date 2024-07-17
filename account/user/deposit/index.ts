@@ -96,7 +96,7 @@ export const useUserAccountStore = defineStore('userDepositAccounts', {
           this.addAccounts(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
-          done(true)
+          done(true, {} as Account)
         })
     },
 
