@@ -1,8 +1,7 @@
 import { computed } from 'vue'
-import { apppowerrental, constant, goodbase, notify, order } from '..'
+import { apppowerrental, constant, goodbase, notify, order, powerrentalorder, utils } from '..'
 import { AppID } from './localapp'
 import { formalizeUserID } from '../appuser/user/local'
-import { usePowerRentalOrderStore } from '../order/powerrental'
 import { date } from 'quasar'
 import { GoodType } from '../good/base'
 
@@ -79,24 +78,16 @@ export const getAppPowerRental = (appGoodID: string, done?: (error: boolean) => 
 
 export const appPowerRentals = computed(() => _appPowerRental.appPowerRentals(AppID.value).sort((a, b) => a.ID > b.ID ? -1 : 1))
 export const appPowerRental = (appGoodId: string) => appPowerRentals.value.find((el) => el.AppGoodID === appGoodId)
-export const maxPurchasedUnits = (appGoodID: string) => {
-  const _appPowerRental = appPowerRental(appGoodID)
-  if (!_appPowerRental) return 0
-  const stockUnits = Number(_appPowerRental.GoodSpotQuantity) - Number(_appPowerRental.AppGoodSpotQuantity)
-  const maxOrderAmount = Number(_appPowerRental.MaxOrderAmount)
-  const maxUserAmount = Number(_appPowerRental.MaxUserAmount)
-  return Math.min(stockUnits, maxOrderAmount, maxUserAmount)
-}
-export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
-export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchasable && el.AppGoodPurchasable))
-export const cancelable = (appGoodId: string) => appPowerRental(appGoodId)?.CancelMode !== goodbase.CancelMode.Uncancellable
 export const spotQuantity = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   return Number(_appPowerRental?.GoodSpotQuantity) + Number(_appPowerRental?.AppGoodSpotQuantity)
 }
+export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
+export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchasable && el.AppGoodPurchasable))
+export const cancelable = (appGoodId: string) => appPowerRental(appGoodId)?.CancelMode !== goodbase.CancelMode.Uncancellable
 export const visible = (appGoodID: string) => appPowerRental(appGoodID)?.Visible
 
-const canBuy = (appGoodID: string) => {
+export const canBuy = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental) {
     return false
@@ -120,11 +111,15 @@ export const enableProductPage = (appGoodID: string) => appPowerRental(appGoodID
 export const showProductPage = (appGoodID: string) => enableProductPage(appGoodID) && canBuy(appGoodID) && spotQuantity(appGoodID)
 export const maxOrderDurationSeconds = (appGoodID: string) => appPowerRental(appGoodID)?.MaxOrderDurationSeconds
 export const minOrderDurationSeconds = (appGoodID: string) => appPowerRental(appGoodID)?.MinOrderDurationSeconds
+export const minOrderDurationDays = (appGoodID: string) => (minOrderDurationSeconds(appGoodID) || 0) / utils.SecondsPerDay
 export const durationDisplayType = (appGoodID: string) => appPowerRental(appGoodID)?.DurationDisplayType
 export const unitPrice = (appGoodID: string) => appPowerRental(appGoodID)?.UnitPrice
 export const unitPriceFloat = (appGoodID: string) => Number(unitPrice(appGoodID) || 0)
 export const mainCoinTypeID = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinTypeID
 export const mainCoinUnit = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinUnit
+export const mainCoinName = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinName
+export const mainCoinLogo = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinLogo
+export const coinEnv = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinENV
 export const total = (appGoodID: string) => Number(appPowerRental(appGoodID)?.GoodTotal || 0)
 
 export const techniqueFeeRatio = (appGoodID: string) => {
@@ -141,31 +136,23 @@ export const techniqueFeeRatio = (appGoodID: string) => {
   return 0
 }
 
-const getPricePresentString = computed(() => (appGoodID: string) => Number(appPowerRental(appGoodID)?.UnitPrice).toFixed(4))
-export const priceString = (appGoodID: string) => getPricePresentString.value(appGoodID)
-
-const getSaleEndDate = computed(() => (appGoodID: string, format?: string) => {
+export const saleEndDate = (appGoodID: string, format?: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental?.SaleEndAt) {
     return '*'
   }
   return date.formatDate(_appPowerRental?.SaleEndAt * 1000, format || 'YYYY/MM/DD')
-})
-export const saleEndDate = (appGoodID: string, format?: string) => {
-  return getSaleEndDate.value(appGoodID, format)
 }
-const getSaleEndTime = computed(() => (appGoodID: string, format?: string) => {
+
+export const saleEndTime = (appGoodID: string, format?: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental?.SaleEndAt) {
     return '*'
   }
   return date.formatDate((_appPowerRental?.SaleEndAt + 60 * new Date().getTimezoneOffset() + 9 * 60 * 60) * 1000, format || 'HH:mm')
-})
-export const saleEndTime = (appGoodID: string, format?: string) => {
-  return getSaleEndTime.value(appGoodID, format)
 }
 
-const powerRentalOrder = usePowerRentalOrderStore()
+const powerRentalOrder = powerrentalorder.usePowerRentalOrderStore()
 
 export const purchaseLimit = (appGoodID: string) => {
   const goodPurchaseLimit = _appPowerRental.purchaseLimit(undefined, appGoodID)

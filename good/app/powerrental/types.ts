@@ -98,12 +98,11 @@ export interface AppPowerRental {
   AppGoodStartMode: StartMode
 
   GoodCoins: GoodCoinInfo[]
-  // Main Good Coin
   CoinTypeID: string
-  CoinLogo: string
   CoinName: string
-  CoinEnv: string
   CoinUnit: string
+  CoinENV: string
+  CoinLogo: string
 
   Descriptions: DescriptionInfo[]
   MiningGoodStocks: MiningGoodStockInfo[]

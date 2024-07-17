@@ -58,6 +58,9 @@ export const adminGetAppCoins = (pageStart: number, pages: number, done?: (error
 }
 
 export const appCoins = computed(() => _appCoin.coins(AppID.value))
+export const appCoin = (coinTypeID: string) => _appCoin.coin(undefined, coinTypeID)
+
+export const displayName = (coinTypeID: string, index: number) => appCoin(coinTypeID)?.DisplayNames?.[index] || appCoin(coinTypeID)?.CoinName
 
 export const adminCreateAppCoin = (appCoin: appcoin.AppCoin, done?: (error: boolean, appCoin?: appcoin.AppCoin) => void) => {
   _appCoin.createAppCoin({

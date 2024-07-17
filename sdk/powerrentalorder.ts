@@ -63,6 +63,8 @@ export const adminGetPowerRentalOrders = (pageStart: number, pages: number, done
 export const powerRentalOrders = computed(() => _powerRentalOrder.powerRentalOrders(AppID.value))
 export const powerRentalOrder = (orderID: string) => powerRentalOrders.value.find((el) => el.OrderID === orderID)
 
+export const validate = (orderID: string) => _powerRentalOrder.validate(orderID)
+
 const getOrderState = computed(() => (orderID: string) => {
   const order = powerRentalOrder(orderID)
   if (!order) {
@@ -157,6 +159,24 @@ const getPageMyPowerRentalOrders = (pageIndex: number, pageEnd: number, done?: (
     getPageMyPowerRentalOrders(pageIndex + 1, pageEnd, done)
   })
 }
+
 export const getMyPowerRentalOrders = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   getPageMyPowerRentalOrders(pageStart, pages ? pageStart + pages : pages, done)
+}
+
+export const getPowerRentalOrder = (orderId: string, done?: (error: boolean, powerRentalOrder?: powerrentalorder.PowerRentalOrder) => void) => {
+  _powerRentalOrder.getPowerRentalOrder({
+    OrderID: orderId
+  }, done)
+}
+
+export const updatePowerRentalOrder = (target: powerrentalorder.PowerRentalOrder, paid?: boolean, canceled?: boolean, done?: (error: boolean, powerRentalOrder?: powerrentalorder.PowerRentalOrder) => void) => {
+  _powerRentalOrder.updatePowerRentalOrder({
+    ID: target.ID,
+    EntID: target.EntID,
+    OrderID: target.OrderID,
+    Balances: [],
+    Paid: paid,
+    Canceled: canceled
+  }, done)
 }

@@ -84,7 +84,7 @@ export interface CreatePowerRentalOrderRequest extends BaseRequest {
   FeeDurationSeconds?: number
   FeeAutoDeduction?: boolean
   Simulate?: boolean
-  AppGoodStockID: string
+  AppGoodStockID?: string
   InvestmentType: InvestmentType
   AppSpotUnits?: string
 }

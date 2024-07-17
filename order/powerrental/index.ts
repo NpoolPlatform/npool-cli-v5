@@ -22,10 +22,12 @@ import {
   AdminUpdatePowerRentalOrderRequest,
   AdminUpdatePowerRentalOrderResponse,
   AdminDeletePowerRentalOrderRequest,
-  AdminDeletePowerRentalOrderResponse
+  AdminDeletePowerRentalOrderResponse,
+  GetPowerRentalOrderRequest,
+  GetPowerRentalOrderResponse
 } from './types'
-
 import { formalizeAppID } from '../../appuser/app/local'
+import { OrderState } from '../const'
 
 export const usePowerRentalOrderStore = defineStore('power-rental-orders', {
   state: () => ({
@@ -42,6 +44,18 @@ export const usePowerRentalOrderStore = defineStore('power-rental-orders', {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.PowerRentalOrders.get(appID) || []
+      }
+    },
+    validate (): (orderID: string) => boolean {
+      return (orderID: string) => {
+        const order = this.powerRentalOrder(undefined, orderID)
+        if (!order) {
+          return false
+        }
+        return !(order.OrderState !== OrderState.CREATED &&
+                 order.OrderState !== OrderState.WAIT_PAYMENT &&
+                 order.OrderState !== OrderState.CANCELED &&
+                 order.OrderState !== OrderState.EXPIRED)
       }
     }
   },
@@ -92,64 +106,76 @@ export const usePowerRentalOrderStore = defineStore('power-rental-orders', {
           done?.(true)
         })
     },
-    updatePowerRentalOrder (req: UpdatePowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {
+    updatePowerRentalOrder (req: UpdatePowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
       doActionWithError<UpdatePowerRentalOrderRequest, UpdatePowerRentalOrderResponse>(
         API.UPDATE_POWERRENTAL_ORDER,
         req,
         req.Message,
         (resp: UpdatePowerRentalOrderResponse): void => {
           this.addPowerRentalOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateUserPowerRentalOrder (req: UpdateUserPowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {
+    updateUserPowerRentalOrder (req: UpdateUserPowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
       doActionWithError<UpdateUserPowerRentalOrderRequest, UpdateUserPowerRentalOrderResponse>(
         API.UPDATE_USER_POWERRENTAL_ORDER,
         req,
         req.Message,
         (resp: UpdateUserPowerRentalOrderResponse): void => {
           this.addPowerRentalOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminGetPowerRentalOrders (req: AdminGetPowerRentalOrdersRequest, done: (error: boolean, rows?: Array<PowerRentalOrder>, total?: number) => void) {
+    adminGetPowerRentalOrders (req: AdminGetPowerRentalOrdersRequest, done?: (error: boolean, rows?: Array<PowerRentalOrder>, total?: number) => void) {
       doActionWithError<AdminGetPowerRentalOrdersRequest, AdminGetPowerRentalOrdersResponse>(
         API.ADMIN_GET_POWERRENTAL_ORDERS,
         req,
         req.Message,
         (resp: AdminGetPowerRentalOrdersResponse): void => {
           this.addPowerRentalOrders(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos, resp.Total)
+          done?.(false, resp.Infos, resp.Total)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    getPowerRentalOrders (req: GetPowerRentalOrdersRequest, done: (error: boolean, rows?: Array<PowerRentalOrder>, total?: number) => void) {
+    getPowerRentalOrders (req: GetPowerRentalOrdersRequest, done?: (error: boolean, rows?: Array<PowerRentalOrder>, total?: number) => void) {
       doActionWithError<GetPowerRentalOrdersRequest, GetPowerRentalOrdersResponse>(
         API.GET_POWERRENTAL_ORDERS,
         req,
         req.Message,
         (resp: GetPowerRentalOrdersResponse): void => {
           this.addPowerRentalOrders(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    getMyPowerRentalOrders (req: GetMyPowerRentalOrdersRequest, done: (error: boolean, rows?: Array<PowerRentalOrder>, total?: number) => void) {
+    getPowerRentalOrder (req: GetPowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
+      doActionWithError<GetPowerRentalOrderRequest, GetPowerRentalOrderResponse>(
+        API.GET_POWERRENTAL_ORDER,
+        req,
+        req.Message,
+        (resp: GetPowerRentalOrderResponse): void => {
+          this.addPowerRentalOrders(undefined, [resp.Info])
+          done?.(false, resp.Info)
+        }, () => {
+          done?.(true)
+        })
+    },
+    getMyPowerRentalOrders (req: GetMyPowerRentalOrdersRequest, done?: (error: boolean, rows?: Array<PowerRentalOrder>, total?: number) => void) {
       doActionWithError<GetMyPowerRentalOrdersRequest, GetMyPowerRentalOrdersResponse>(
         API.GET_MY_POWERRENTAL_ORDERS,
         req,
         req.Message,
         (resp: GetMyPowerRentalOrdersResponse): void => {
           this.addPowerRentalOrders(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
     adminCreatePowerRentalOrder (req: AdminCreatePowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
@@ -164,28 +190,28 @@ export const usePowerRentalOrderStore = defineStore('power-rental-orders', {
           done?.(true)
         })
     },
-    adminUpdatePowerRentalOrder (req: AdminUpdatePowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {
+    adminUpdatePowerRentalOrder (req: AdminUpdatePowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
       doActionWithError<AdminUpdatePowerRentalOrderRequest, AdminUpdatePowerRentalOrderResponse>(
         API.ADMIN_UPDATE_POWERRENTAL_ORDER,
         req,
         req.Message,
         (resp: AdminUpdatePowerRentalOrderResponse): void => {
           this.addPowerRentalOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    adminDeletePowerRentalOrder (req: AdminDeletePowerRentalOrderRequest, done: (error: boolean, row?: PowerRentalOrder) => void) {
+    adminDeletePowerRentalOrder (req: AdminDeletePowerRentalOrderRequest, done?: (error: boolean, row?: PowerRentalOrder) => void) {
       doActionWithError<AdminDeletePowerRentalOrderRequest, AdminDeletePowerRentalOrderResponse>(
         API.ADMIN_DELETE_POWERRENTAL_ORDER,
         req,
         req.Message,
         (resp: AdminDeletePowerRentalOrderResponse): void => {
           this.addPowerRentalOrders(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }
