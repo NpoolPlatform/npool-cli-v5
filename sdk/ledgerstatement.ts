@@ -1,5 +1,6 @@
 import { computed } from 'vue'
 import { ledgerstatement, constant, notify } from '..'
+import { formalizeUserID } from '../appuser/user/local'
 
 const statement = ledgerstatement.useStatementStore()
 
@@ -31,4 +32,6 @@ export const getMiningRewards = (startAt: number, endAt: number, pageStart: numb
   getPageMiningRewards(startAt, endAt, pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const miningRewards = computed(() => statement.miningRewards(undefined, undefined, undefined))
+export const miningRewards = computed(() => statement.miningRewards())
+
+export const totalMiningReward = (coinTypeID?: string, appGoodID?: string, orderID?: string) => statement.totalMiningReward(undefined, formalizeUserID(), coinTypeID, appGoodID, orderID)

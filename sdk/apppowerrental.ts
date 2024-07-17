@@ -120,6 +120,10 @@ export const showProductPage = (appGoodID: string) => enableProductPage(appGoodI
 export const maxOrderDurationSeconds = (appGoodID: string) => appPowerRental(appGoodID)?.MaxOrderDurationSeconds
 export const minOrderDurationSeconds = (appGoodID: string) => appPowerRental(appGoodID)?.MinOrderDurationSeconds
 export const durationDisplayType = (appGoodID: string) => appPowerRental(appGoodID)?.DurationDisplayType
+export const unitPrice = (appGoodID: string) => appPowerRental(appGoodID)?.UnitPrice
+export const unitPriceFloat = (appGoodID: string) => Number(unitPrice(appGoodID) || 0)
+export const mainCoinTypeID = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinTypeID
+export const mainCoinUnit = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinUnit
 
 export const techniqueFeeRatio = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
