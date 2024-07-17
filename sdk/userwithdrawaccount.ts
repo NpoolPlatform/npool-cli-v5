@@ -2,10 +2,10 @@ import { userwithdrawaccount, notify, useraccountbase } from '..'
 import { CreateUserAccountRequest } from '../account/user/withdraw/types'
 import { AppID } from './localapp'
 
-const _userWithdrawAccount = userwithdrawaccount.useUserAccountStore()
+const _userWithdrawAccount = userwithdrawaccount.useUserWithdrawAccountStore()
 
 const getPageMyUserWithdrawAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  if (pageEnd <= pageIndex) {
+  if (pageEnd < pageIndex) {
     return done?.(false, _userWithdrawAccount.totalPages(undefined), _userWithdrawAccount.totalRows(undefined))
   }
   _userWithdrawAccount.initializePager(undefined)
@@ -49,7 +49,7 @@ export const getMyUserWithdrawAccounts = (pageStart: number, pages: number, done
 }
 
 const getPageUserWithdrawAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  if (pageEnd <= pageIndex) {
+  if (pageEnd < pageIndex) {
     return done?.(false, _userWithdrawAccount.totalPages(undefined), _userWithdrawAccount.totalRows(undefined))
   }
   _userWithdrawAccount.initializePager(undefined)
@@ -162,6 +162,7 @@ export const deleteUserAccount = (target: useraccountbase.Account, done?: (error
 }
 
 export const createUserAccount = (target: CreateUserAccountRequest, done?: (error: boolean) => void) => {
+  console.log('target: ', target)
   _userWithdrawAccount.createUserAccount({
     ...target,
     Message: {

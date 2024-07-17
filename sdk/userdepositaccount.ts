@@ -2,7 +2,7 @@ import { computed } from 'vue'
 import { userdepositaccount, notify, useraccountbase } from '..'
 import { AppID } from './localapp'
 
-const _userDepositAccount = userdepositaccount.useUserAccountStore()
+const _userDepositAccount = userdepositaccount.useUserDepositAccountStore()
 
 const getPageUserDepositAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   if (pageEnd <= pageIndex) {

@@ -13,7 +13,7 @@ import { API } from './const'
 import { formalizeAppID } from '../../../appuser/app/local'
 import { UserAccounts } from './state'
 
-export const useUserAccountStore = defineStore('userDepositAccounts', {
+export const useUserDepositAccountStore = defineStore('userDepositAccounts', {
   state: () => ({
     UserAccounts: new Map<string, UserAccounts>()
   }),
