@@ -93,7 +93,7 @@ export const adminGetUserDepositAccounts = (pageStart: number, pages: number, do
   adminGetPageUserDepositAccounts(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const getDepositAccount = (coinTypeID: string, done?: (error: boolean) => void) => {
+export const getDepositAccount = (coinTypeID: string, done?: (error: boolean, row?: useraccountbase.Account) => void) => {
   _userDepositAccount.getDepositAccount({
     CoinTypeID: coinTypeID,
     Message: {
@@ -104,8 +104,8 @@ export const getDepositAccount = (coinTypeID: string, done?: (error: boolean) =>
         Type: notify.NotifyType.Error
       }
     }
-  }, (error:boolean) => {
-    done?.(error)
+  }, (error:boolean, row?: useraccountbase.Account) => {
+    done?.(error, row)
   })
 }
 export const userDepositAccounts = computed(() => _userDepositAccount.accounts(AppID.value))

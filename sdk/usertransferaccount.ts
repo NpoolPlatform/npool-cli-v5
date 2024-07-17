@@ -74,4 +74,4 @@ export const deleteTransfer = (target: TransferAccount, done?: (error: boolean) 
   })
 }
 
-export const userTransferAccounts = (userID: string | undefined) => transfer.transferAccounts(undefined, userID)
+export const userTransferAccounts = (userID?: string | undefined) => transfer.transferAccounts(undefined, userID)
