@@ -2,7 +2,7 @@ import { computed } from 'vue'
 import { userbenefitaccount, notify, useraccountbase } from '..'
 import { AppID } from './localapp'
 
-const _userBenefitAccount = userbenefitaccount.useUserAccountStore()
+const _userBenefitAccount = userbenefitaccount.useUserBenefitAccountStore()
 
 const getPageMyUserBenefitAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   if (pageEnd <= pageIndex) {
