@@ -101,7 +101,7 @@ export interface AppPowerRental {
   CoinTypeID: string
   CoinName: string
   CoinUnit: string
-  CoinENV: string
+  CoinEnv: string
   CoinLogo: string
 
   Descriptions: DescriptionInfo[]
