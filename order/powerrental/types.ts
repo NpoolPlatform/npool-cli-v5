@@ -17,6 +17,7 @@ export interface PowerRentalOrder {
   GoodType: GoodType
   BenefitType: BenefitType
   GoodName: string
+  GoodQuantityUnit: string
   AppGoodID: string
   AppGoodName: string
   OrderID: string
@@ -38,7 +39,6 @@ export interface PowerRentalOrder {
   MiningPoolLeastTransferAmount?: string
   MiningPoolBenefitIntervalSeconds?: number
 
-  QuantityUnit: string
   Units: string
   GoodValueUSD: string
   PaymentAmountUSD: string
