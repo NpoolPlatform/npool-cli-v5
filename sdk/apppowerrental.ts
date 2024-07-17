@@ -96,7 +96,7 @@ export const spotQuantity = (appGoodID: string) => {
 }
 export const visible = (appGoodID: string) => appPowerRental(appGoodID)?.Visible
 
-const canBuy = (appGoodID: string) => {
+export const canBuy = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental) {
     return false
