@@ -34,13 +34,14 @@ export const useProfitStore = defineStore('ledger-profits', {
         return units
       }
     },
-    totalIncoming (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined) => number {
-      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined) => {
+    totalIncoming (): (appID: string | undefined, userID: string | undefined, key: IntervalKey, coinTypeID: string | undefined, appGoodID: string | undefined) => number {
+      return (appID: string | undefined, userID: string | undefined, key: IntervalKey, coinTypeID: string | undefined, appGoodID: string | undefined) => {
         appID = formalizeAppID(appID)
         userID = formalizeUserID(userID)
         let incoming = 0
-        this.GoodProfits.get(appID)?.get(IntervalKey.All)?.filter((el) => {
-          let ok = el.UserID === userID && el.CoinTypeID === coinTypeID
+        this.GoodProfits.get(appID)?.get(key)?.filter((el) => {
+          let ok = el.UserID === userID
+          if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
           if (appGoodID) ok &&= el.AppGoodID === appGoodID
           return ok
         })?.forEach((el) => {
@@ -60,32 +61,16 @@ export const useProfitStore = defineStore('ledger-profits', {
         }) || []
       }
     },
-    goodProfits (): (appID: string | undefined, userID: string | undefined, key: IntervalKey, coinTypeID?: string) => Array<GoodProfit> {
-      return (appID: string | undefined, userID: string | undefined, key: IntervalKey, coinTypeID?: string) => {
+    goodProfits (): (appID: string | undefined, userID: string | undefined, key: IntervalKey, coinTypeID?: string, appGoodID?: string) => Array<GoodProfit> {
+      return (appID: string | undefined, userID: string | undefined, key: IntervalKey, coinTypeID?: string, appGoodID?: string) => {
         appID = formalizeAppID(appID)
         return this.GoodProfits.get(appID)?.get(key)?.filter((el) => {
           let ok = Number(el.Units) > 0
           if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
-          if (userID) ok &&= el.UserID === userID
-          return ok
-        })?.sort((a, b) => a.AppGoodName.localeCompare(b.AppGoodName)) || []
-      }
-    },
-    intervalGoodProfits (): (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined, key: IntervalKey) => number {
-      return (appID: string | undefined, userID: string | undefined, coinTypeID: string, appGoodID: string | undefined, key: IntervalKey) => {
-        appID = formalizeAppID(appID)
-        const goodProfits = this.GoodProfits.get(appID) || new Map<IntervalKey, Array<GoodProfit>>()
-        const _profits = goodProfits.get(key) || []
-        let incoming = 0
-        _profits.filter((el) => {
-          let ok = el.CoinTypeID === coinTypeID
           if (appGoodID) ok &&= el.AppGoodID === appGoodID
           if (userID) ok &&= el.UserID === userID
           return ok
-        }).forEach((el) => {
-          incoming += Number(el.Incoming)
-        })
-        return incoming
+        })?.sort((a, b) => a.AppGoodName.localeCompare(b.AppGoodName)) || []
       }
     }
   },

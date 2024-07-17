@@ -4,6 +4,7 @@ import { AppID } from './localapp'
 import { formalizeUserID } from '../appuser/user/local'
 import { usePowerRentalOrderStore } from '../order/powerrental'
 import { date } from 'quasar'
+import { GoodType } from '../good/base'
 
 const _appPowerRental = apppowerrental.useAppPowerRentalStore()
 
@@ -89,19 +90,13 @@ export const maxPurchasedUnits = (appGoodID: string) => {
 export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter((el) => el.GoodOnline && el.AppGoodOnline))
 export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchasable && el.AppGoodPurchasable))
 export const cancelable = (appGoodId: string) => appPowerRental(appGoodId)?.CancelMode !== goodbase.CancelMode.Uncancellable
-const getAppPowerRentalSpotQuantity = computed(() => (appGoodID: string) => {
+export const spotQuantity = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   return Number(_appPowerRental?.GoodSpotQuantity) + Number(_appPowerRental?.AppGoodSpotQuantity)
-})
-export const spotQuantity = (appGoodID: string) => getAppPowerRentalSpotQuantity.value(appGoodID)
+}
 export const visible = (appGoodID: string) => appPowerRental(appGoodID)?.Visible
 
-export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find((el) => el.Index === index)?.Name || appPowerRental(appGoodID)?.AppGoodName
-export const enableSetCommission = (appGoodID: string) => appPowerRental(appGoodID)?.EnableSetCommission
-export const displayColor = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || ''
-export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || ''
-
-const buyable = computed(() => (appGoodID: string) => {
+const canBuy = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental) {
     return false
@@ -114,8 +109,31 @@ const buyable = computed(() => (appGoodID: string) => {
     return false
   }
   return _appPowerRental?.AppGoodOnline && _appPowerRental.GoodOnline
-})
-export const canBuy = (appGoodID: string) => buyable.value(appGoodID)
+}
+
+export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find((el) => el.Index === index)?.Name || appPowerRental(appGoodID)?.AppGoodName
+export const enableSetCommission = (appGoodID: string) => appPowerRental(appGoodID)?.EnableSetCommission
+export const displayColor = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || ''
+export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || '*'
+export const enableProductPage = (appGoodID: string) => appPowerRental(appGoodID)?.EnableProductPage
+export const showProductPage = (appGoodID: string) => enableProductPage(appGoodID) && canBuy(appGoodID) && spotQuantity(appGoodID)
+export const maxOrderDurationSeconds = (appGoodID: string) => appPowerRental(appGoodID)?.MaxOrderDurationSeconds
+export const minOrderDurationSeconds = (appGoodID: string) => appPowerRental(appGoodID)?.MinOrderDurationSeconds
+export const durationDisplayType = (appGoodID: string) => appPowerRental(appGoodID)?.DurationDisplayType
+
+export const techniqueFeeRatio = (appGoodID: string) => {
+  const _appPowerRental = appPowerRental(appGoodID)
+  if (!_appPowerRental) {
+    return 0
+  }
+  switch (_appPowerRental.GoodType) {
+    case GoodType.LegacyPowerRental:
+      return Number(_appPowerRental.TechniqueFeeRatio)
+    case GoodType.PowerRental:
+      return Number(_appPowerRental.Requireds.find(el => el.RequiredGoodType === GoodType.TechniqueServiceFee)?.RequiredAppGoodUnitValue)
+  }
+  return 0
+}
 
 const getPricePresentString = computed(() => (appGoodID: string) => Number(appPowerRental(appGoodID)?.UnitPrice).toFixed(4))
 export const priceString = (appGoodID: string) => getPricePresentString.value(appGoodID)

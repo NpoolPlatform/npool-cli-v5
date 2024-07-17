@@ -1,3 +1,4 @@
+import { GoodSettlementType, GoodType } from '../../../../good/base'
 import { BaseRequest } from '../../../../request'
 
 export interface Required {
@@ -20,7 +21,10 @@ export interface Required {
 export interface RequiredInfo {
     MainGoodID: string
     RequiredAppGoodID: string
+    RequiredGoodType: GoodType
     RequiredAppGoodName: string
+    RequiredAppGoodUnitValue: string
+    RequiredAppGoodSettleType: GoodSettlementType
     Must: boolean
 }
 
