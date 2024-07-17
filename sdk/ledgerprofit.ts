@@ -1,4 +1,5 @@
 import { ledgerprofit, constant, notify } from '..'
+import { formalizeUserID } from '../appuser/user/local'
 import { IntervalKey } from '../utils'
 
 const profit = ledgerprofit.useProfitStore()
@@ -59,7 +60,7 @@ export const getCoinProfits = (key: IntervalKey, startAt: number, endAt: number,
   getPageCoinProfits(key, startAt, endAt, pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const goodProfits = (key: IntervalKey) => profit.goodProfits(undefined, undefined, key)
-export const coinProfits = (key: IntervalKey) => profit.coinProfits(undefined, undefined, key)
+export const goodProfits = (key: IntervalKey) => profit.goodProfits(undefined, formalizeUserID(), key)
+export const coinProfits = (key: IntervalKey) => profit.coinProfits(undefined, formalizeUserID(), key)
 
-export const totalIncoming = (key: IntervalKey, coinTypeID?: string, appGoodID?: string) => profit.totalIncoming(undefined, undefined, key, coinTypeID, appGoodID)
+export const totalIncoming = (key: IntervalKey, coinTypeID?: string, appGoodID?: string) => profit.totalIncoming(undefined, formalizeUserID(), key, coinTypeID, appGoodID)
