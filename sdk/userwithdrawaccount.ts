@@ -137,7 +137,7 @@ export const adminGetUserWithdrawAccounts = (pageStart: number, pages: number, d
   adminGetPageUserWithdrawAccounts(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const userWithdrawAccounts = (userID: string | undefined, coinTypeID: string | undefined) => _userWithdrawAccount.accounts(AppID.value, userID, coinTypeID)
+export const userWithdrawAccounts = (userID?: string, coinTypeID?: string) => _userWithdrawAccount.accounts(AppID.value, userID, coinTypeID)
 
 export const deleteUserAccount = (target: useraccountbase.Account, done?: (error: boolean) => void) => {
   _userWithdrawAccount.deleteUserAccount({
