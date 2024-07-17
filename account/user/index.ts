@@ -14,7 +14,7 @@ import { formalizeAppID } from '../../appuser/app/local'
 import { AccountUsedFor } from '../base'
 import { UserAccounts } from './state'
 
-export const useUserAccountStore = defineStore('userWithdrawAccounts', {
+export const useUserAccountStore = defineStore('userAccounts', {
   state: () => ({
     UserAccounts: new Map<string, UserAccounts>()
   }),
