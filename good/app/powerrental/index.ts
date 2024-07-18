@@ -31,16 +31,22 @@ export const useAppPowerRentalStore = defineStore('appPowerRentals', {
         return this.AppPowerRentals.get(appID)?.find((el: AppPowerRental) => el.EntID === id)
       }
     },
+    getAppPowerRentalByAppGoodID (): (appID: string | undefined, appGoodID: string) => AppPowerRental | undefined {
+      return (appID: string | undefined, appGoodID: string) => {
+        appID = formalizeAppID(appID)
+        return this.AppPowerRentals.get(appID)?.find((el: AppPowerRental) => el.AppGoodID === appGoodID)
+      }
+    },
     appPowerRentals (): (appID?: string) => Array<AppPowerRental> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
         return this.AppPowerRentals.get(appID) || []
       }
     },
-    purchaseLimit (): (appID: string | undefined, id: string) => number {
-      return (appID: string | undefined, id: string) => {
+    purchaseLimit (): (appID: string | undefined, appGoodID: string) => number {
+      return (appID: string | undefined, appGoodID: string) => {
         appID = formalizeAppID(appID)
-        const appPowerRental = this.appPowerRental(appID, id)
+        const appPowerRental = this.getAppPowerRentalByAppGoodID(appID, appGoodID)
         let min = Math.min(Number(appPowerRental?.MaxOrderAmount) || 0, Number(appPowerRental?.GoodSpotQuantity) + Number(appPowerRental?.AppGoodSpotQuantity))
         min = Math.min(min, Number(appPowerRental?.MaxUserAmount) || 0)
         return Math.floor(min)
