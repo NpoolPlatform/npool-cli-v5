@@ -100,7 +100,7 @@ export const canBuy = (appGoodID: string) => {
   }
   return _appPowerRental?.AppGoodOnline && _appPowerRental.GoodOnline
 }
-export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find((el) => el.Index === index)?.Name || appPowerRental(appGoodID)?.AppGoodName
+export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find((el) => el.Index === index)?.Name || appPowerRental(appGoodID)?.AppGoodName || ''
 export const enableSetCommission = (appGoodID: string) => appPowerRental(appGoodID)?.EnableSetCommission
 export const displayColor = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || ''
 export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || ''

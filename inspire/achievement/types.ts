@@ -38,6 +38,12 @@ export interface Achievement {
   InvitedAt: number
   Kol: boolean
   TotalInvitees: number
+  DirectInvites: number
+  IndirectInvites: number
+  DirectConsumeAmount: string
+  InviteeConsumeAmount: string
+  TotalCommission: string
+  SelfCommission: string
   Achievements: Array<GoodAchievement>
 }
 
