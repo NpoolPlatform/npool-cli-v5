@@ -72,10 +72,6 @@ export const useAppPowerRentalStore = defineStore('appPowerRentals', {
             good.CoinEnv = el.CoinENV
           }
         })
-        good.DurationDays = 0
-        if (good.MinOrderDurationSeconds > 0) {
-          good.DurationDays = good.MinOrderDurationSeconds / 60 / 60 / 24
-        }
         _goods.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, good)
       })
       this.AppPowerRentals.set(appID, _goods)
