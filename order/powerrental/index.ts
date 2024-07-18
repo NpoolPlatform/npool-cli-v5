@@ -43,7 +43,7 @@ export const usePowerRentalOrderStore = defineStore('power-rental-orders', {
     powerRentalOrders (): (appID?: string, userID?: string) => Array<PowerRentalOrder> {
       return (appID?: string, userID?: string) => {
         appID = formalizeAppID(appID)
-        return this.PowerRentalOrders.get(appID)?.filter(el => !userID || el.UserID === userID) || []
+        return this.PowerRentalOrders.get(appID)?.filter(el => !userID || el.UserID === userID).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     },
     validate (): (orderID: string) => boolean {
