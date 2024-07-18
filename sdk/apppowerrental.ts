@@ -105,7 +105,7 @@ export const canBuy = (appGoodID: string) => {
 export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find((el) => el.Index === index)?.Name || appPowerRental(appGoodID)?.AppGoodName
 export const enableSetCommission = (appGoodID: string) => appPowerRental(appGoodID)?.EnableSetCommission
 export const displayColor = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || ''
-export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || '*'
+export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || ''
 export const requireDescription = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description
 export const enableProductPage = (appGoodID: string) => appPowerRental(appGoodID)?.EnableProductPage
 export const showProductPage = (appGoodID: string) => enableProductPage(appGoodID) && canBuy(appGoodID) && spotQuantity(appGoodID)
