@@ -86,7 +86,6 @@ export const onlineAppPowerRentals = computed(() => appPowerRentals.value.filter
 export const purchasableAppPowerRentals = computed(() => onlineAppPowerRentals.value.filter((el) => el.GoodPurchasable && el.AppGoodPurchasable))
 export const cancelable = (appGoodId: string) => appPowerRental(appGoodId)?.CancelMode !== goodbase.CancelMode.Uncancellable
 export const visible = (appGoodID: string) => appPowerRental(appGoodID)?.Visible
-
 export const canBuy = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental) {
@@ -101,11 +100,10 @@ export const canBuy = (appGoodID: string) => {
   }
   return _appPowerRental?.AppGoodOnline && _appPowerRental.GoodOnline
 }
-
-export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find((el) => el.Index === index)?.Name || appPowerRental(appGoodID)?.AppGoodName
+export const displayName = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayNames?.find((el) => el.Index === index)?.Name || appPowerRental(appGoodID)?.AppGoodName || ''
 export const enableSetCommission = (appGoodID: string) => appPowerRental(appGoodID)?.EnableSetCommission
 export const displayColor = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.DisplayColors?.find(el => el.Index === index)?.Color || ''
-export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || '*'
+export const description = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description || ''
 export const requireDescription = (appGoodID: string, index: number) => appPowerRental(appGoodID)?.Descriptions?.find(el => el.Index === index)?.Description
 export const enableProductPage = (appGoodID: string) => appPowerRental(appGoodID)?.EnableProductPage
 export const showProductPage = (appGoodID: string) => enableProductPage(appGoodID) && canBuy(appGoodID) && spotQuantity(appGoodID)
@@ -121,6 +119,8 @@ export const mainCoinName = (appGoodID: string) => appPowerRental(appGoodID)?.Go
 export const mainCoinLogo = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinLogo
 export const coinEnv = (appGoodID: string) => appPowerRental(appGoodID)?.GoodCoins?.find(el => el.Main)?.CoinENV
 export const total = (appGoodID: string) => Number(appPowerRental(appGoodID)?.GoodTotal || 0)
+export const purchasable = (appGoodID: string) => appPowerRental(appGoodID)?.GoodPurchasable && appPowerRental(appGoodID)?.AppGoodPurchasable
+export const enablePurchase = (appGoodID: string) => purchasable(appGoodID) && canBuy(appGoodID) && purchaseLimit(appGoodID) > 0
 
 export const techniqueFeeRatio = (appGoodID: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
@@ -143,7 +143,6 @@ export const saleEndDate = (appGoodID: string, format?: string) => {
   }
   return date.formatDate(_appPowerRental?.SaleEndAt * 1000, format || 'YYYY/MM/DD')
 }
-
 export const saleEndTime = (appGoodID: string, format?: string) => {
   const _appPowerRental = appPowerRental(appGoodID)
   if (!_appPowerRental?.SaleEndAt) {
@@ -153,7 +152,6 @@ export const saleEndTime = (appGoodID: string, format?: string) => {
 }
 
 const powerRentalOrder = powerrentalorder.usePowerRentalOrderStore()
-
 export const purchaseLimit = (appGoodID: string) => {
   const goodPurchaseLimit = _appPowerRental.purchaseLimit(undefined, appGoodID)
   if (goodPurchaseLimit <= 0) {
