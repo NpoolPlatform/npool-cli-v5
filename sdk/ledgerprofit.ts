@@ -64,3 +64,4 @@ export const goodProfits = (key: IntervalKey, coinTypeID?: string, appGoodID?: s
 export const coinProfits = (key: IntervalKey, coinTypeID?: string) => profit.coinProfits(undefined, formalizeUserID(), key, coinTypeID)
 
 export const totalIncoming = (key: IntervalKey, coinTypeID?: string, appGoodID?: string) => profit.totalIncoming(undefined, formalizeUserID(), key, coinTypeID, appGoodID)
+export const goodQuantityUnit = (appGoodID?: string) => goodProfits(IntervalKey.All, undefined, appGoodID)?.[0]?.GoodQuantityUnit || ''
