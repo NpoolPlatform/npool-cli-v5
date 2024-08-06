@@ -77,6 +77,8 @@ export const adminCreatePowerRental = (target: powerrental.PowerRental, done?: (
 export const adminUpdatePowerRental = (target: powerrental.PowerRental, done?: (error: boolean, powerRental?: powerrental.PowerRental) => void) => {
   _powerRental.adminUpdatePowerRental({
     ...target,
+    Total: `${target.Total}`,
+    UnitLockDeposit: `${target.UnitLockDeposit}`,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_POWER_RENTAL',
