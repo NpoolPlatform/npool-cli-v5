@@ -36,7 +36,7 @@ export interface PowerRental {
   StartMode: StartMode
   TestOnly: boolean
   BenefitIntervalHours: number
-  Purchase: boolean
+  Purchasable: boolean
   Online: boolean
   StockMode: GoodStockMode
 
