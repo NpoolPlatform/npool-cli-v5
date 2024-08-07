@@ -35,6 +35,12 @@ export const useGoodCoinStore = defineStore('goodCoins', {
         this.GoodCoins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, goodCoin)
       })
     },
+    deleteGoodCoin (goodCoin: GoodCoin) {
+      const index = this.GoodCoins.findIndex((el: GoodCoin) => el.EntID === goodCoin.EntID)
+      if (index >= 0) {
+        this.GoodCoins.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      }
+    },
     getGoodCoins (req: GetGoodCoinsRequest, done?: (error: boolean, goodCoins?: Array<GoodCoin>) => void) {
       doActionWithError<GetGoodCoinsRequest, GetGoodCoinsResponse>(
         API.GET_GOOD_COINS,
@@ -77,7 +83,7 @@ export const useGoodCoinStore = defineStore('goodCoins', {
         req,
         req.Message,
         (resp: AdminDeleteGoodCoinResponse): void => {
-          this.addGoodCoins([resp.Info])
+          this.deleteGoodCoin(resp.Info)
           done?.(false, resp.Info)
         }, () => {
           done?.(true)
