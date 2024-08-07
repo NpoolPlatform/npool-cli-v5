@@ -175,6 +175,8 @@ export const adminCreateAppPowerRental = (target: apppowerrental.AppPowerRental,
     TargetAppID: AppID.value,
     Name: target.AppGoodName,
     StartMode: target?.GoodStartMode,
+    Online: target.AppGoodOnline,
+    Purchasable: target.AppGoodPurchasable,
     Message: {
       Error: {
         Title: 'MSG_CREATE_APP_POWERRENTAL',
@@ -192,6 +194,8 @@ export const adminUpdateAppPowerRental = (target: apppowerrental.AppPowerRental,
     TargetAppID: AppID.value,
     Name: target.AppGoodName,
     StartMode: target?.GoodStartMode,
+    Online: target.AppGoodOnline,
+    Purchasable: target.AppGoodPurchasable,
     Message: {
       Error: {
         Title: 'MSG_CREATE_APP_POWERRENTAL',
@@ -228,6 +232,7 @@ export const updateAppPowerRental = (target: apppowerrental.AppPowerRental, done
     Name: target.AppGoodName,
     Purchasable: target.AppGoodPurchasable,
     StartMode: target?.GoodStartMode,
+    Online: target.AppGoodOnline,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_POWERRENTAL',
