@@ -23,6 +23,7 @@ export interface GoodAchievement {
   SelfCommission: string
   SuperiorCommission: string
   AppGoodID: string
+  AppGoodName: string
 }
 
 export interface Achievement {
