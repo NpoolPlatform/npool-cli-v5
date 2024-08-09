@@ -37,7 +37,7 @@ export const useAppCoinStore = defineStore('app-coins', {
     payableCoins (): (appID?: string) => Array<AppCoin> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
-        return this.AppCoins.get(appID)?.filter((el) => !el.Disabled && !el.CoinDisabled && el.ForPay && el.CoinForPay && !el.Presale) || []
+        return this.AppCoins.get(appID)?.filter((el) => !el.Disabled && !el.CoinDisabled && el.ForPay && el.CoinForPay && !el.Presale).sort((a, b) => a.DisplayIndex - b.DisplayIndex) || []
       }
     },
     productPage (): (appID: string | undefined, coinTypeID: string) => string | undefined {
