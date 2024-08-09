@@ -163,7 +163,7 @@ export const purchaseLimit = (appGoodID: string) => {
   }
   let units = 0
   const userID = formalizeUserID()
-  powerRentalOrder.powerRentalOrders().filter((el) => el.UserID === userID && el.OrderState !== order.OrderState.CANCELED).forEach((el) => {
+  powerRentalOrder.powerRentalOrders().filter((el) => el.UserID === userID && el.AppGoodID === appGoodID && el.OrderState !== order.OrderState.CANCELED).forEach((el) => {
     units += Number(el.Units)
   })
   return Math.max(Math.min(Number(__appPowerRental.MaxUserAmount) - units, goodPurchaseLimit), 0)
