@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { API } from './const'
-import { GetTxsRequest, GetTxsResponse, Tx } from './types'
+import { GetTxsRequest, GetTxsResponse, Tx, UpdateTxRequest, UpdateTxResponse } from './types'
 import { doActionWithError } from '../../request'
 
 export const useTxStore = defineStore('transactions', {
@@ -36,6 +36,18 @@ export const useTxStore = defineStore('transactions', {
           done(false, resp.Infos)
         }, () => {
           done(true, [])
+        })
+    },
+    updateTx (req: UpdateTxRequest, done?: (error: boolean, coin?: Tx) => void) {
+      doActionWithError<UpdateTxRequest, UpdateTxResponse>(
+        API.UPDATE_TX,
+        req,
+        req.Message,
+        (resp: UpdateTxResponse): void => {
+          this.addTxs([resp.Info])
+          done?.(false, resp.Info)
+        }, () => {
+          done?.(true)
         })
     }
   }

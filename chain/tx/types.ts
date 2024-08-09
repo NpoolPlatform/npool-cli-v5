@@ -20,6 +20,7 @@ export enum TxType {
   TxBenefit = 'TxBenefit',
 }
 
+export const TxStates = Object.values(TxState)
 export interface Tx {
   ID: number
   EntID: string
@@ -53,5 +54,16 @@ export interface GetTxsRequest extends BaseRequest {
 
 export interface GetTxsResponse {
   Infos: Tx[]
+  Total: number
+}
+
+export interface UpdateTxRequest extends BaseRequest {
+  ID: number
+  EntID: string
+  State: TxState
+}
+
+export interface UpdateTxResponse {
+  Info: Tx
   Total: number
 }
