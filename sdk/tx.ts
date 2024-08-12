@@ -32,7 +32,9 @@ export const getTxs = (pageStart: number, pages: number, done?: (error: boolean,
 
 export const updateTx = (target: tx.Tx, done?: (error: boolean) => void) => {
   _tx.updateTx({
-    ...target,
+    ID: target.ID,
+    EntID: target.EntID,
+    State: target.State,
     Message: {
       Error: {
         Title: 'MSG_UPDATE_TX',
