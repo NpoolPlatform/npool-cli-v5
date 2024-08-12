@@ -9,14 +9,14 @@ import {
   UpdateTopMostResponse,
   CreateTopMostRequest,
   CreateTopMostResponse,
-  GetNTopMostsRequest,
-  GetNTopMostsResponse,
-  UpdateNTopMostRequest,
-  UpdateNTopMostResponse,
+  AdminGetTopMostsRequest,
+  AdminGetTopMostsResponse,
+  AdminUpdateTopMostRequest,
+  AdminUpdateTopMostResponse,
   DeleteTopMostRequest,
   DeleteTopMostResponse,
-  CreateNTopMostRequest,
-  CreateNTopMostResponse
+  AdminCreateTopMostRequest,
+  AdminCreateTopMostResponse
 } from './types'
 import { formalizeAppID } from '../../../../appuser/app/local'
 
@@ -112,12 +112,12 @@ export const useTopMostStore = defineStore('topmost', {
         }
       )
     },
-    getNTopMosts (req: GetNTopMostsRequest, done: (error: boolean, rows?: Array<TopMost>, total?: number) => void) {
-      doActionWithError<GetNTopMostsRequest, GetNTopMostsResponse>(
-        API.GET_N_TOPMOSTS,
+    adminGetTopMosts (req: AdminGetTopMostsRequest, done: (error: boolean, rows?: Array<TopMost>, total?: number) => void) {
+      doActionWithError<AdminGetTopMostsRequest, AdminGetTopMostsResponse>(
+        API.ADMIN_GET_TOPMOSTS,
         req,
         req.Message,
-        (resp: GetNTopMostsResponse): void => {
+        (resp: AdminGetTopMostsResponse): void => {
           this.addTopMosts(req.TargetAppID, resp.Infos)
           done(false, resp.Infos, resp.Total)
         }, () => {
@@ -125,9 +125,9 @@ export const useTopMostStore = defineStore('topmost', {
         }
       )
     },
-    createNTopMost (req: CreateNTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
-      doActionWithError<CreateNTopMostRequest, CreateNTopMostResponse>(
-        API.CREATE_N_TOPMOST,
+    adminCreateTopMost (req: AdminCreateTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
+      doActionWithError<AdminCreateTopMostRequest, AdminCreateTopMostResponse>(
+        API.ADMIN_CREATE_TOPMOST,
         req,
         req.NotifyMessage,
         (resp: CreateTopMostResponse): void => {
@@ -138,12 +138,12 @@ export const useTopMostStore = defineStore('topmost', {
         }
       )
     },
-    updateNTopMost (req: UpdateNTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
-      doActionWithError<UpdateNTopMostRequest, UpdateNTopMostResponse>(
-        API.UPDATE_N_TOPMOST,
+    adminUpdateTopMost (req: AdminUpdateTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
+      doActionWithError<AdminUpdateTopMostRequest, AdminUpdateTopMostResponse>(
+        API.ADMIN_UPDATE_TOPMOST,
         req,
         req.NotifyMessage,
-        (resp: UpdateNTopMostResponse): void => {
+        (resp: AdminUpdateTopMostResponse): void => {
           this.addTopMosts(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {

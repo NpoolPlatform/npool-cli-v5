@@ -278,6 +278,7 @@ export const useUserStore = defineStore('users', {
         req,
         req.Message,
         (resp: UpdateAppUserResponse): void => {
+          this.addAppUsers(undefined, [resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)

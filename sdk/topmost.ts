@@ -3,10 +3,10 @@ import { topmost, constant, notify } from '..'
 import { AppID } from './localapp'
 import { TopMost } from '../good/app/good/topmost'
 
-const top = topmost.useTopMostStore()
+const topMost = topmost.useTopMostStore()
 
 const getPageTopMosts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  top.getTopMosts({
+  topMost.getTopMosts({
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
     Message: {
@@ -31,14 +31,14 @@ export const getTopMosts = (pageStart: number, pages: number, done?: (error: boo
   getPageTopMosts(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-const getNPageTopMosts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  top.getNTopMosts({
+const adminGetPageTopMosts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  topMost.adminGetTopMosts({
     TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
     Message: {
       Error: {
-        Title: 'MSG_GET_APP_DEFAULT_TOPMOSTS_FAIL',
+        Title: 'MSG_TOPMOSTS_FAIL',
         Popup: true,
         Type: notify.NotifyType.Error
       }
@@ -49,18 +49,18 @@ const getNPageTopMosts = (pageIndex: number, pageEnd: number, done?: (error: boo
       done?.(error, totalPages, total as number)
       return
     }
-    getNPageTopMosts(++pageIndex, pageEnd, done)
+    adminGetPageTopMosts(++pageIndex, pageEnd, done)
   })
 }
 
-export const getNTopMosts = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getNPageTopMosts(pageStart, pages ? pageStart + pages : pages, done)
+export const adminGetTopMosts = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  adminGetPageTopMosts(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const topMosts = computed(() => top.topmosts(AppID.value))
+export const topMosts = computed(() => topMost.topmosts(AppID.value))
 
 export const createTopMost = (target: TopMost, finish: (error: boolean) => void) => {
-  top.createTopMost({
+  topMost.createTopMost({
     ...target,
     NotifyMessage: {
       Error: {
@@ -81,8 +81,8 @@ export const createTopMost = (target: TopMost, finish: (error: boolean) => void)
   })
 }
 
-export const createNTopMost = (target: TopMost, finish: (error: boolean) => void) => {
-  top.createNTopMost({
+export const adminCreateTopMost = (target: TopMost, finish: (error: boolean) => void) => {
+  topMost.adminCreateTopMost({
     ...target,
     TargetAppID: AppID.value,
     NotifyMessage: {
@@ -105,7 +105,7 @@ export const createNTopMost = (target: TopMost, finish: (error: boolean) => void
 }
 
 export const updateTopMost = (target: TopMost, finish: (error: boolean) => void) => {
-  top.updateTopMost({
+  topMost.updateTopMost({
     ...target,
     NotifyMessage: {
       Error: {
@@ -126,8 +126,8 @@ export const updateTopMost = (target: TopMost, finish: (error: boolean) => void)
   })
 }
 
-export const updateNTopMost = (target: TopMost, finish: (error: boolean) => void) => {
-  top.updateNTopMost({
+export const adminUpdateTopMost = (target: TopMost, finish: (error: boolean) => void) => {
+  topMost.adminUpdateTopMost({
     ...target,
     TargetAppID: target.AppID,
     NotifyMessage: {

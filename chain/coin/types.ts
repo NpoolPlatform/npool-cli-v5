@@ -1,5 +1,6 @@
 import { GasType } from '../../base'
 import { BaseRequest } from '../../request'
+
 export interface Coin {
   ID: number
   EntID: string

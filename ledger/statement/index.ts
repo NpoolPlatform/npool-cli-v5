@@ -45,8 +45,8 @@ export const useStatementStore = defineStore('ledger-statements', {
         }).sort((a, b) => a.CreatedAt > b.CreatedAt ? -1 : 1) || []
       }
     },
-    miningRewardFloat (): (appID?: string, userID?: string, coinTypeID?: string, orderID?: string) => number {
-      return (appID?: string, userID?: string, coinTypeID?: string, orderID?: string) => {
+    totalMiningReward (): (appID?: string, userID?: string, coinTypeID?: string, appGoodID?: string, orderID?: string) => number {
+      return (appID?: string, userID?: string, coinTypeID?: string, appGoodID?: string, orderID?: string) => {
         appID = formalizeAppID(appID)
         let rewards = 0
         this.MiningRewards.get(appID)?.forEach((el) => {
@@ -54,6 +54,7 @@ export const useStatementStore = defineStore('ledger-statements', {
           if (userID) ok &&= el.UserID === userID
           if (coinTypeID) ok &&= el.CoinTypeID === coinTypeID
           if (orderID) ok &&= el.OrderID === orderID
+          if (appGoodID) ok &&= el.AppGoodID === appGoodID
           if (ok) {
             rewards += Number(el.RewardAmount)
           }

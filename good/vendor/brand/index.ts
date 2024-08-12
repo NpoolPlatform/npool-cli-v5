@@ -3,17 +3,17 @@ import { API } from './const'
 import { doActionWithError } from '../../../request'
 import {
   VendorBrand,
-  CreateVendorBrandRequest,
-  CreateVendorBrandResponse,
+  AdminCreateVendorBrandRequest,
+  AdminCreateVendorBrandResponse,
   GetVendorBrandsRequest,
   GetVendorBrandsResponse,
-  UpdateVendorBrandRequest,
-  UpdateVendorBrandResponse,
-  DeleteVendorBrandRequest,
-  DeleteVendorBrandResponse
+  AdminUpdateVendorBrandRequest,
+  AdminUpdateVendorBrandResponse,
+  AdminDeleteVendorBrandRequest,
+  AdminDeleteVendorBrandResponse
 } from './types'
 
-export const useVendorBrandStore = defineStore('vendor-brand', {
+export const useVendorBrandStore = defineStore('vendorBrands', {
   state: () => ({
     VendorBrands: [] as Array<VendorBrand>
   }),
@@ -23,8 +23,8 @@ export const useVendorBrandStore = defineStore('vendor-brand', {
         return this.VendorBrands.find((el: VendorBrand) => el.EntID === id)
       }
     },
-    vendorBrands () {
-      return () => this.VendorBrands
+    vendorBrands (): Array<VendorBrand> {
+      return this.VendorBrands
     }
   },
   actions: {
@@ -34,61 +34,61 @@ export const useVendorBrandStore = defineStore('vendor-brand', {
         this.VendorBrands.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, brand)
       })
     },
-    deleteBrands (brands: Array<VendorBrand>) {
+    delBrands (brands: Array<VendorBrand>) {
       brands.forEach((brand) => {
         const index = this.VendorBrands.findIndex((el: VendorBrand) => el.EntID === brand.EntID)
         this.VendorBrands.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       })
     },
-    getVendorBrands (req: GetVendorBrandsRequest, done: (error: boolean, rows?: Array<VendorBrand>) => void) {
+    getVendorBrands (req: GetVendorBrandsRequest, done?: (error: boolean, rows?: Array<VendorBrand>) => void) {
       doActionWithError<GetVendorBrandsRequest, GetVendorBrandsResponse>(
         API.GET_VENDORBRANDS,
         req,
         req.Message,
         (resp: GetVendorBrandsResponse): void => {
           this.addBrands(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    updateVendorBrand (req: UpdateVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
-      doActionWithError<UpdateVendorBrandRequest, UpdateVendorBrandResponse>(
-        API.UPDATE_VENDORBRAND,
+    adminUpdateVendorBrand (req: AdminUpdateVendorBrandRequest, done?: (error: boolean, row?: VendorBrand) => void) {
+      doActionWithError<AdminUpdateVendorBrandRequest, AdminUpdateVendorBrandResponse>(
+        API.ADMIN_UPDATE_VENDORBRAND,
         req,
         req.Message,
-        (resp: UpdateVendorBrandResponse): void => {
+        (resp: AdminUpdateVendorBrandResponse): void => {
           this.addBrands([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    createVendorBrand (req: CreateVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
-      doActionWithError<CreateVendorBrandRequest, CreateVendorBrandResponse>(
-        API.CREATE_VENDORBRAND,
+    adminCreateVendorBrand (req: AdminCreateVendorBrandRequest, done?: (error: boolean, row?: VendorBrand) => void) {
+      doActionWithError<AdminCreateVendorBrandRequest, AdminCreateVendorBrandResponse>(
+        API.ADMIN_CREATE_VENDORBRAND,
         req,
         req.Message,
-        (resp: CreateVendorBrandResponse): void => {
+        (resp: AdminCreateVendorBrandResponse): void => {
           this.addBrands([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     },
-    deleteVendorBrand (req: DeleteVendorBrandRequest, done: (error: boolean, row?: VendorBrand) => void) {
-      doActionWithError<DeleteVendorBrandRequest, DeleteVendorBrandResponse>(
-        API.DELETE_VENDORBRAND,
+    adminDeleteVendorBrand (req: AdminDeleteVendorBrandRequest, done?: (error: boolean, row?: VendorBrand) => void) {
+      doActionWithError<AdminDeleteVendorBrandRequest, AdminDeleteVendorBrandResponse>(
+        API.ADMIN_DELETE_VENDORBRAND,
         req,
         req.Message,
-        (resp: DeleteVendorBrandResponse): void => {
-          this.deleteBrands([resp.Info])
-          done(false, resp.Info)
+        (resp: AdminDeleteVendorBrandResponse): void => {
+          this.delBrands([resp.Info])
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         }
       )
     }

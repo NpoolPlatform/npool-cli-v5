@@ -75,69 +75,69 @@ export const useAppLangStore = defineStore('app-langs', {
       _langs.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
       this.AppLangs.set(appID, _langs)
     },
-    getAppLangs (req: GetAppLangsRequest, done: (error: boolean, rows: Array<AppLang>) => void) {
+    getAppLangs (req: GetAppLangsRequest, done?: (error: boolean, rows: Array<AppLang>) => void) {
       doActionWithError<GetAppLangsRequest, GetAppLangsResponse>(
         API.GET_APPLANGS,
         req,
         req.Message,
         (resp: GetAppLangsResponse): void => {
           this.addLangs(undefined, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true, [])
+          done?.(true, [])
         }
       )
     },
-    updateAppLang (req: UpdateAppLangRequest, done: (error: boolean, row: AppLang) => void) {
+    updateAppLang (req: UpdateAppLangRequest, done?: (error: boolean, row: AppLang) => void) {
       doActionWithError<UpdateAppLangRequest, UpdateAppLangResponse>(
         API.UPDATE_APPLANG,
         req,
         req.Message,
         (resp: UpdateAppLangResponse): void => {
           this.addLangs(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as AppLang)
+          done?.(true, {} as AppLang)
         }
       )
     },
 
-    getNAppLangs (req: GetNAppLangsRequest, done: (error: boolean, rows: Array<AppLang>) => void) {
+    getNAppLangs (req: GetNAppLangsRequest, done?: (error: boolean, rows: Array<AppLang>) => void) {
       doActionWithError<GetNAppLangsRequest, GetNAppLangsResponse>(
         API.GET_N_APPLANGS,
         req,
         req.Message,
         (resp: GetNAppLangsResponse): void => {
           this.addLangs(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true, [])
+          done?.(true, [])
         }
       )
     },
-    deleteAppLang (req: DeleteAppLangRequest, done: (error: boolean, row: AppLang) => void) {
+    deleteAppLang (req: DeleteAppLangRequest, done?: (error: boolean, row: AppLang) => void) {
       doActionWithError<DeleteAppLangRequest, DeleteAppLangResponse>(
         API.DELETE_APPLANG,
         req,
         req.Message,
         (resp: DeleteAppLangResponse): void => {
           this.delLang(req.TargetAppID, req.ID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as AppLang)
+          done?.(true, {} as AppLang)
         }
       )
     },
-    createAppLang (req: CreateAppLangRequest, done: (error: boolean, row: AppLang) => void) {
+    createAppLang (req: CreateAppLangRequest, done?: (error: boolean, row: AppLang) => void) {
       doActionWithError<CreateAppLangRequest, CreateAppLangResponse>(
         API.CREATE_APPLANG,
         req,
         req.Message,
         (resp: CreateAppLangResponse): void => {
           this.addLangs(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true, {} as AppLang)
+          done?.(true, {} as AppLang)
         }
       )
     }

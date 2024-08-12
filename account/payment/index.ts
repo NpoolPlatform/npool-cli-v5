@@ -14,10 +14,8 @@ export const usePaymentAccountStore = defineStore('payment-accounts', {
     PaymentAccounts: [] as Array<Account>
   }),
   getters: {
-    accounts () {
-      return () => {
-        return this.PaymentAccounts
-      }
+    accounts (): Array<Account> {
+      return this.PaymentAccounts
     }
   },
   actions: {
@@ -29,28 +27,28 @@ export const usePaymentAccountStore = defineStore('payment-accounts', {
         _accounts.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, account)
       })
     },
-    getPaymentAccounts (req: GetPaymentAccountsRequest, done: (error: boolean, rows?: Array<Account>,) => void) {
+    getPaymentAccounts (req: GetPaymentAccountsRequest, done?: (error: boolean, rows?: Array<Account>,) => void) {
       doActionWithError<GetPaymentAccountsRequest, GetPaymentAccountsResponse>(
         API.GET_PAYMENTACCOUNTS,
         req,
         req.Message,
         (resp: GetPaymentAccountsResponse): void => {
           this.addAccounts(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updatePaymentAccount (req: UpdatePaymentAccountRequest, done: (error: boolean, row?: Account) => void) {
+    updatePaymentAccount (req: UpdatePaymentAccountRequest, done?: (error: boolean, row?: Account) => void) {
       doActionWithError<UpdatePaymentAccountRequest, UpdatePaymentAccountResponse>(
         API.UPDATE_PAYMENTACCOUNT,
         req,
         req.Message,
         (resp: UpdatePaymentAccountResponse): void => {
           this.addAccounts([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

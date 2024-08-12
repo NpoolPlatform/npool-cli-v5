@@ -31,8 +31,8 @@ export const getTopMostGoods = (pageStart: number, pages: number, done?: (error:
   getPageTopMostGoods(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-const getNPageTopMostGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  top.getNTopMostGoods({
+const adminGetPageTopMostGoods = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  top.adminGetTopMostGoods({
     TargetAppID: AppID.value,
     Offset: pageIndex * constant.DefaultPageSize,
     Limit: constant.DefaultPageSize,
@@ -49,17 +49,17 @@ const getNPageTopMostGoods = (pageIndex: number, pageEnd: number, done?: (error:
       done?.(error, totalPages, total as number)
       return
     }
-    getNPageTopMostGoods(++pageIndex, pageEnd, done)
+    adminGetPageTopMostGoods(++pageIndex, pageEnd, done)
   })
 }
 
-export const getNTopMostGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  getNPageTopMostGoods(pageStart, pages ? pageStart + pages : pages, done)
+export const adminGetTopMostGoods = (pageStart: number, pages: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
+  adminGetPageTopMostGoods(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const topMostGoods = computed(() => top.topmostgoods(AppID.value))
+export const topMostGoods = computed(() => top.topMostGoods(AppID.value))
 
-export const createTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+export const createTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
   top.createTopMostGood({
     ...target,
     Message: {
@@ -76,13 +76,11 @@ export const createTopMostGood = (target: TopMostGood, finish: (error: boolean) 
         Type: notify.NotifyType.Success
       }
     }
-  }, (error: boolean) => {
-    finish(error)
-  })
+  }, done)
 }
 
-export const createNTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
-  top.createNTopMostGood({
+export const adminCreateTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
+  top.adminCreateTopMostGood({
     ...target,
     TargetAppID: AppID.value,
     Message: {
@@ -99,12 +97,10 @@ export const createNTopMostGood = (target: TopMostGood, finish: (error: boolean)
         Type: notify.NotifyType.Success
       }
     }
-  }, (error: boolean) => {
-    finish(error)
-  })
+  }, done)
 }
 
-export const updateTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
+export const updateTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
   top.updateTopMostGood({
     ...target,
     Message: {
@@ -121,13 +117,11 @@ export const updateTopMostGood = (target: TopMostGood, finish: (error: boolean) 
         Type: notify.NotifyType.Success
       }
     }
-  }, (error: boolean) => {
-    finish(error)
-  })
+  }, done)
 }
 
-export const updateNTopMostGood = (target: TopMostGood, finish: (error: boolean) => void) => {
-  top.updateNTopMostGood({
+export const adminUpdateTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
+  top.adminUpdateTopMostGood({
     ...target,
     TargetAppID: target.AppID,
     Message: {
@@ -144,7 +138,46 @@ export const updateNTopMostGood = (target: TopMostGood, finish: (error: boolean)
         Type: notify.NotifyType.Success
       }
     }
-  }, (error: boolean) => {
-    finish(error)
-  })
+  }, done)
+}
+
+export const deleteTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
+  top.deleteTopMostGood({
+    ...target,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}
+
+export const adminDeleteTopMostGood = (target: TopMostGood, done?: (error: boolean) => void) => {
+  top.adminDeleteTopMostGood({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST_GOOD',
+        Message: 'MSG_DELETE_TOPMOST_GOOD_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
 }

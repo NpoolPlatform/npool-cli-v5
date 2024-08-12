@@ -1,16 +1,7 @@
 export enum API {
   GET_ORDERS = '/order/v1/get/orders',
-  CREATE_ORDER = '/order/v1/create/order',
-  UPDATE_ORDER = '/order/v1/update/order',
-  GET_ORDER = '/order/v1/get/order',
-  GET_APP_ORDERS = '/order/v1/get/app/orders',
-  CREATE_USER_ORDER = '/order/v1/create/user/order',
-  UPDATE_USER_ORDER = '/order/v1/update/user/order',
-  GET_N_APP_ORDERS = '/order/v1/get/n/app/orders',
-  CREATE_APP_USER_ORDER = '/order/v1/create/app/user/order',
-  UPDATE_APP_USER_ORDER = '/order/v1/update/app/user/order',
-  CREATE_SIMULATE_ORDER = '/order/v1/create/simulate/order',
-  CREATE_SIMULATE_ORDERS = '/order/v1/create/simulate/orders',
+  GET_MY_ORDERS = '/order/v1/get/my/orders',
+  ADMIN_GET_ORDERS = '/order/v1/admin/get/orders'
 }
 
 export enum OrderState {
@@ -48,6 +39,7 @@ export enum PaymentType {
   PayWithTransferOnly = 'PayWithTransferOnly',
   PayWithTransferAndBalance = 'PayWithTransferAndBalance',
   PayWithParentOrder = 'PayWithParentOrder',
+  PayWithOtherOrder = 'PayWithOtherOrder',
   PayWithOffline = 'PayWithOffline',
   PayWithNoPayment = 'PayWithNoPayment'
 }
@@ -55,4 +47,16 @@ export enum PaymentType {
 export enum InvestmentType {
   UnionMining = 'UnionMining',
   FullPayment = 'FullPayment'
+}
+
+export enum OrderCreateMethod {
+  OrderCreatedByPurchase = 'OrderCreatedByPurchase',
+  OrderCreatedByAdmin = 'OrderCreatedByAdmin',
+  OrderCreatedByRenew = 'OrderCreatedByRenew'
+}
+
+export enum OrderBenefitState {
+  BenefitWait = 'BenefitWait',
+  BenefitCalculated = 'BenefitCalculated',
+  BenefitBookKept = 'BenefitBookKept'
 }

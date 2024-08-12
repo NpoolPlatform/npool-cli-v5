@@ -1,16 +1,25 @@
-import { GoodDurationType } from 'src/npoolstore/good/base'
+import { GoodType } from '../../good/base'
 import { BaseRequest } from '../../request'
 
 export interface GoodProfit {
   AppID: string
   UserID: string
   AppGoodID: string
-  GoodName: string
-  GoodUnit: string
-  MinOrderDuration: number
-  MaxOrderDuration: number
-  DurationType: GoodDurationType
+  AppGoodName: string
+  GoodType: GoodType
+  GoodQuantityUnit: string
+  CoinTypeID: string
+  CoinName: string
+  DisplayNames: string[]
+  CoinLogo: string
+  CoinUnit: string
   Units: string
+  Incoming: string
+}
+
+export interface CoinProfit {
+  AppID: string
+  UserID: string
   CoinTypeID: string
   CoinName: string
   DisplayNames: string[]
@@ -44,35 +53,14 @@ export interface GetGoodProfitsResponse {
   Total: number
 }
 
-export interface GetIntervalGoodProfitsRequest extends BaseRequest {
+export interface GetCoinProfitsRequest extends BaseRequest {
+  Offset: number
+  Limit: number
   StartAt: number
   EndAt: number
-  Offset: number
-  Limit: number
 }
 
-export interface GetIntervalGoodProfitsResponse {
-  Infos: Array<GoodProfit>
-  Total: number
-}
-export interface GetProfitsRequest extends BaseRequest {
-  Offset: number
-  Limit: number
-}
-
-export interface GetProfitsResponse {
-  Infos: Profit[]
-  Total: number
-}
-
-export interface GetIntervalProfitsRequest extends BaseRequest {
-  StartAt: number
-  EndAt: number
-  Offset: number
-  Limit: number
-}
-
-export interface GetIntervalProfitsResponse {
-  Infos: Array<Profit>
+export interface GetCoinProfitsResponse {
+  Infos: Array<CoinProfit>
   Total: number
 }

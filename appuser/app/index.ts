@@ -25,8 +25,8 @@ export const useApplicationStore = defineStore('applications', {
         return this.Apps.get(appID)
       }
     },
-    apps () {
-      return () => Array.from(this.Apps.values()).sort((a, b) => a.ID > b.ID ? 1 : -1)
+    apps (): Array<App> {
+      return Array.from(this.Apps.values()).sort((a, b) => a.ID > b.ID ? 1 : -1)
     }
   },
   actions: {
@@ -39,31 +39,31 @@ export const useApplicationStore = defineStore('applications', {
         }
       })
     },
-    getApp (req: GetAppRequest, done: (error: boolean, apps?: App) => void) {
+    getApp (req: GetAppRequest, done?: (error: boolean, app?: App) => void) {
       doActionWithError<GetAppRequest, GetAppResponse>(
         API.GET_APP,
         req,
         req.Message,
         (resp: GetAppResponse): void => {
           this.addApps([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    getApps (req: GetAppsRequest, done: (error: boolean, apps?: Array<App>) => void) {
+    getApps (req: GetAppsRequest, done?: (error: boolean, apps?: Array<App>) => void) {
       doActionWithError<GetAppsRequest, GetAppsResponse>(
         API.GET_APPS,
         req,
         req.Message,
         (resp: GetAppsResponse): void => {
           this.addApps(resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    updateApp (req: UpdateAppRequest, done: (error: boolean, app?: App) => void) {
+    updateApp (req: UpdateAppRequest, done?: (error: boolean, app?: App) => void) {
       doActionWithError<UpdateAppRequest, UpdateAppResponse>(
         API.UPDATE_APP,
         req,
@@ -73,21 +73,21 @@ export const useApplicationStore = defineStore('applications', {
             this.Apps.delete(req.EntID)
           }
           this.addApps([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createApp (req: CreateAppRequest, done: (error: boolean, app?: App) => void) {
+    createApp (req: CreateAppRequest, done?: (error: boolean, app?: App) => void) {
       doActionWithError<CreateAppRequest, CreateAppResponse>(
         API.CREATE_APP,
         req,
         req.Message,
         (resp: CreateAppResponse): void => {
           this.addApps([resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

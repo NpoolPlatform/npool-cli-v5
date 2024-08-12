@@ -14,83 +14,80 @@ export interface Default {
   CoinLogo: string
   CoinEnv: string
   CoinUnit: string
-  /** @format int64 */
   CreatedAt: number
-  /** @format int64 */
   UpdatedAt: number
 }
 
-export interface CreateAppDefaultGoodRequest extends BaseRequest{
+export interface CreateDefaultRequest extends BaseRequest{
+  CoinTypeID: string
   AppGoodID: string
 }
 
-export interface CreateAppDefaultGoodResponse {
+export interface CreateDefaultResponse {
   Info: Default
 }
 
-export interface UpdateAppDefaultGoodRequest extends BaseRequest{
+export interface UpdateDefaultRequest extends BaseRequest{
   ID: number
   EntID: string
-  AppGoodID: string
+  AppGoodID?: string
 }
 
-export interface UpdateAppDefaultGoodResponse {
+export interface UpdateDefaultResponse {
   Info: Default
 }
 
-export interface DeleteAppDefaultGoodRequest extends BaseRequest{
+export interface DeleteDefaultRequest extends BaseRequest{
   ID: number
   EntID: string
 }
 
-export interface DeleteAppDefaultGoodResponse {
+export interface DeleteDefaultResponse {
   Info: Default
 }
 
-export interface GetAppDefaultGoodsRequest extends BaseRequest{
-  /** @format int32 */
+export interface GetDefaultsRequest extends BaseRequest{
   Offset: number
-  /** @format int32 */
   Limit: number
 }
 
-export interface GetAppDefaultGoodsResponse {
+export interface GetDefaultsResponse {
   Infos: Default[]
-  /** @format int64 */
   Total: number
 }
 
-export interface CreateNAppDefaultGoodRequest extends BaseRequest{
+export interface AdminCreateDefaultRequest extends BaseRequest{
   TargetAppID: string
+  CoinTypeID: string
   AppGoodID: string
 }
 
-export interface CreateNAppDefaultGoodResponse {
+export interface AdminCreateDefaultResponse {
   Info: Default
 }
 
-export interface UpdateNAppDefaultGoodRequest extends BaseRequest{
-  ID: number
-  EntID: string
-  AppGoodID: string
-  TargetAppID: string
-}
-
-export interface UpdateNAppDefaultGoodResponse {
-  Info: Default
-}
-
-export interface DeleteNAppDefaultGoodRequest extends BaseRequest{
+export interface AdminUpdateDefaultRequest extends BaseRequest{
   ID: number
   EntID: string
   TargetAppID: string
+  AppGoodID?: string
 }
 
-export interface DeleteNAppDefaultGoodResponse {
+export interface AdminUpdateDefaultResponse {
   Info: Default
 }
 
-export interface GetNAppDefaultGoodsRequest extends BaseRequest{
+export interface AdminDeleteDefaultRequest extends BaseRequest{
+  ID: number
+  EntID: string
+  TargetAppID: string
+}
+
+export interface AdminDeleteDefaultResponse {
+  Info: Default
+}
+
+export interface AdminGetDefaultsRequest extends BaseRequest{
   TargetAppID: string
   /** @format int32 */
   Offset: number
@@ -98,7 +95,7 @@ export interface GetNAppDefaultGoodsRequest extends BaseRequest{
   Limit: number
 }
 
-export interface GetNAppDefaultGoodsResponse {
+export interface AdminGetDefaultsResponse {
   Infos: Default[]
   /** @format int64 */
   Total: number

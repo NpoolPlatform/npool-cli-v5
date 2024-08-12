@@ -2,7 +2,7 @@ import { NotifyRequest, BaseRequest } from '../../request'
 import { Message } from '../base'
 
 export interface GetMessagesRequest extends BaseRequest {
-  Disabled: boolean
+  Disabled?: boolean
   Offset: number
   Limit: number
 }

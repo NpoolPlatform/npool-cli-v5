@@ -37,7 +37,7 @@ export const useAppCoinStore = defineStore('app-coins', {
     payableCoins (): (appID?: string) => Array<AppCoin> {
       return (appID?: string) => {
         appID = formalizeAppID(appID)
-        return this.AppCoins.get(appID)?.filter((el) => !el.Disabled && !el.CoinDisabled && el.ForPay && el.CoinForPay && !el.Presale) || []
+        return this.AppCoins.get(appID)?.filter((el) => !el.Disabled && !el.CoinDisabled && el.ForPay && el.CoinForPay && !el.Presale).sort((a, b) => a.DisplayIndex - b.DisplayIndex) || []
       }
     },
     productPage (): (appID: string | undefined, coinTypeID: string) => string | undefined {
@@ -154,53 +154,53 @@ export const useAppCoinStore = defineStore('app-coins', {
           done(true)
         })
     },
-    updateAppCoin (req: UpdateAppCoinRequest, done: (error: boolean, appCoin?: AppCoin) => void) {
+    updateAppCoin (req: UpdateAppCoinRequest, done?: (error: boolean, appCoin?: AppCoin) => void) {
       doActionWithError<UpdateAppCoinRequest, UpdateAppCoinResponse>(
         API.UPDATE_APPCOIN,
         req,
         req.Message,
         (resp: UpdateAppCoinResponse): void => {
           this.addCoins(undefined, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
 
-    getNAppCoins (req: GetNAppCoinsRequest, done: (error: boolean, appCoins?: Array<AppCoin>) => void) {
+    getNAppCoins (req: GetNAppCoinsRequest, done?: (error: boolean, appCoins?: Array<AppCoin>) => void) {
       doActionWithError<GetNAppCoinsRequest, GetNAppCoinsResponse>(
         API.GET_N_APPCOINS,
         req,
         req.Message,
         (resp: GetNAppCoinsResponse): void => {
           this.addCoins(req.TargetAppID, resp.Infos)
-          done(false, resp.Infos)
+          done?.(false, resp.Infos)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    createAppCoin (req: CreateAppCoinRequest, done: (error: boolean, appCoin?: AppCoin) => void) {
+    createAppCoin (req: CreateAppCoinRequest, done?: (error: boolean, appCoin?: AppCoin) => void) {
       doActionWithError<CreateAppCoinRequest, CreateAppCoinResponse>(
         API.CREATE_APPCOIN,
         req,
         req.Message,
         (resp: CreateAppCoinResponse): void => {
           this.addCoins(req.TargetAppID, [resp.Info])
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     },
-    deleteAppCoin (req: DeleteAppCoinRequest, done: (error: boolean, appCoin?: AppCoin) => void) {
+    deleteAppCoin (req: DeleteAppCoinRequest, done?: (error: boolean, appCoin?: AppCoin) => void) {
       doActionWithError<DeleteAppCoinRequest, DeleteAppCoinResponse>(
         API.DELETE_APPCOIN,
         req,
         req.Message,
         (resp: DeleteAppCoinResponse): void => {
           this.delAppCoin(req.TargetAppID, resp.Info.ID)
-          done(false, resp.Info)
+          done?.(false, resp.Info)
         }, () => {
-          done(true)
+          done?.(true)
         })
     }
   }

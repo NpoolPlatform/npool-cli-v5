@@ -12,7 +12,7 @@ export interface VendorLocation {
   BrandLogo: string
 }
 
-export interface CreateVendorLocationRequest extends BaseRequest {
+export interface AdminCreateVendorLocationRequest extends BaseRequest {
   Country: string
   Province: string
   City: string
@@ -20,7 +20,7 @@ export interface CreateVendorLocationRequest extends BaseRequest {
   BrandID: string
 }
 
-export interface CreateVendorLocationResponse {
+export interface AdminCreateVendorLocationResponse {
   Info: VendorLocation
 }
 
@@ -35,7 +35,7 @@ export interface GetVendorLocationsResponse {
   Total: number
 }
 
-export interface UpdateVendorLocationRequest extends BaseRequest {
+export interface AdminUpdateVendorLocationRequest extends BaseRequest {
   ID: number
   EntID: string
   Country?: string
@@ -45,6 +45,15 @@ export interface UpdateVendorLocationRequest extends BaseRequest {
   BrandID?: string
 }
 
-export interface UpdateVendorLocationResponse {
+export interface AdminUpdateVendorLocationResponse {
+  Info: VendorLocation
+}
+
+export interface AdminDeleteVendorLocationRequest extends BaseRequest {
+  ID: number
+  EntID: string
+}
+
+export interface AdminDeleteVendorLocationResponse {
   Info: VendorLocation
 }
