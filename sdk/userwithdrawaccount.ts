@@ -162,7 +162,6 @@ export const deleteUserAccount = (target: useraccountbase.Account, done?: (error
 }
 
 export const createUserAccount = (target: CreateUserAccountRequest, done?: (error: boolean) => void) => {
-  console.log('target: ', target)
   _userWithdrawAccount.createUserAccount({
     ...target,
     Message: {
