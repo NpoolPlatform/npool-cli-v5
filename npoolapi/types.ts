@@ -35,7 +35,7 @@ export interface API {
 
 export interface GetAPIsRequest extends BaseRequest {
   Exported?: boolean
-  Depracated?: boolean
+  Deprecated?: boolean
   /** @format int32 */
   Offset: number
   /** @format int32 */
