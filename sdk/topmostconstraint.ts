@@ -139,3 +139,24 @@ export const adminUpdateTopMostConstraint = (target: topmostconstraint.TopMostCo
     }
   }, done)
 }
+
+export const adminDeleteTopMostConstraint = (target: topmostconstraint.TopMostConstraint, done?: (error: boolean) => void) => {
+  _topMostConstraint.adminDeleteTopMostConstraint({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST_CONSTRAINT',
+        Message: 'MSG_DELETE_TOPMOST_CONSTRAINT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST_CONSTRAINT',
+        Message: 'MSG_DELETE_TOPMOST_CONSTRAINT_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}

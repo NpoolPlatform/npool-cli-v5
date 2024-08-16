@@ -16,7 +16,9 @@ import {
   DeleteTopMostRequest,
   DeleteTopMostResponse,
   AdminCreateTopMostRequest,
-  AdminCreateTopMostResponse
+  AdminCreateTopMostResponse,
+  AdminDeleteTopMostRequest,
+  AdminDeleteTopMostResponse
 } from './types'
 import { formalizeAppID } from '../../../../appuser/app/local'
 
@@ -145,6 +147,19 @@ export const useTopMostStore = defineStore('topmost', {
         req.NotifyMessage,
         (resp: AdminUpdateTopMostResponse): void => {
           this.addTopMosts(req.TargetAppID, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminDeleteTopMost (req: AdminDeleteTopMostRequest, done: (error: boolean, row?: TopMost) => void) {
+      doActionWithError<AdminDeleteTopMostRequest, AdminDeleteTopMostResponse>(
+        API.ADMIN_DELETE_TOPMOST,
+        req,
+        req.Message,
+        (resp: AdminDeleteTopMostResponse): void => {
+          this.deleteTopMosts([resp.Info])
           done(false, resp.Info)
         }, () => {
           done(true)
