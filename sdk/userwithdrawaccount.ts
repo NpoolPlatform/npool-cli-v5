@@ -1,23 +1,13 @@
-import { userwithdrawaccount, notify, useraccountbase } from '..'
+import { userwithdrawaccount, notify, useraccountbase, constant } from '..'
 import { CreateUserAccountRequest } from '../account/user/withdraw/types'
 import { AppID } from './localapp'
 
 const _userWithdrawAccount = userwithdrawaccount.useUserWithdrawAccountStore()
 
 const getPageMyUserWithdrawAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  if (pageEnd < pageIndex) {
-    return done?.(false, _userWithdrawAccount.totalPages(undefined), _userWithdrawAccount.totalRows(undefined))
-  }
-  _userWithdrawAccount.initializePager(undefined)
-  if (_userWithdrawAccount.pageLoaded(undefined, pageIndex) || _userWithdrawAccount.pageLoading(undefined, pageIndex)) {
-    _userWithdrawAccount.incrementPageStart(undefined)
-    getPageMyUserWithdrawAccounts(++pageIndex, pageEnd, done)
-    return
-  }
-  _userWithdrawAccount.loadPage(undefined, pageIndex)
   _userWithdrawAccount.getUserAccounts({
-    Offset: pageIndex * _userWithdrawAccount.pageLimit(undefined),
-    Limit: _userWithdrawAccount.pageLimit(undefined),
+    Offset: pageIndex * constant.DefaultPageSize,
+    Limit: constant.DefaultPageSize,
     Message: {
       Error: {
         Title: 'MSG_GET_USER_ACCOUNTS',
@@ -28,17 +18,10 @@ const getPageMyUserWithdrawAccounts = (pageIndex: number, pageEnd: number, done?
     }
   }, (error: boolean, accounts?: Array<useraccountbase.Account>, total?: number) => {
     if (error || !accounts?.length || (pageEnd > 0 && pageIndex === pageEnd - 1)) {
-      const totalPages = Math.ceil(total as number / _userWithdrawAccount.pageLimit(undefined))
-      if (total) {
-        _userWithdrawAccount.setTotalPages(undefined, totalPages)
-        _userWithdrawAccount.setTotalRows(undefined, total || 0)
-      }
-      _userWithdrawAccount.subtractPageStart(undefined)
+      const totalPages = Math.ceil(total as number / constant.DefaultPageSize)
       done?.(error, totalPages, total as number)
       return
     }
-    _userWithdrawAccount.loadedPage(undefined, pageIndex)
-    _userWithdrawAccount.incrementPageStart(undefined)
     getPageMyUserWithdrawAccounts(++pageIndex, pageEnd, done)
   })
 }
