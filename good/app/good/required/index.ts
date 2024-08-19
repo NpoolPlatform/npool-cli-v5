@@ -153,7 +153,7 @@ export const useRequiredStore = defineStore('appGoodRrequireds', {
         req,
         req.Message,
         (resp: AdminDeleteRequiredResponse): void => {
-          this.addRequireds([resp.Info])
+          this._deleteRequired(resp.Info)
           done?.(false, resp.Info)
         }, () => {
           done?.(true)

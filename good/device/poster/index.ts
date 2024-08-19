@@ -35,6 +35,12 @@ export const useDevicePosterStore = defineStore('devicePosters', {
         this.DevicePosters.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, device)
       })
     },
+    deleteDevicePosters (devicePosters: Array<DevicePoster>) {
+      devicePosters.forEach((device) => {
+        const index = this.DevicePosters.findIndex((el: DevicePoster) => el.EntID === device.EntID)
+        this.DevicePosters.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0)
+      })
+    },
     getDevicePosters (req: GetDevicePostersRequest, done?: (error: boolean, devicePosters?: Array<DevicePoster>) => void) {
       doActionWithError<GetDevicePostersRequest, GetDevicePostersResponse>(
         API.GET_DEVICE_POSTERS,
@@ -77,7 +83,7 @@ export const useDevicePosterStore = defineStore('devicePosters', {
         req,
         req.Message,
         (resp: AdminDeleteDevicePosterResponse): void => {
-          this.addDevicePosters([resp.Info])
+          this.deleteDevicePosters([resp.Info])
           done?.(false, resp.Info)
         }, () => {
           done?.(true)

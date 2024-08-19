@@ -23,7 +23,9 @@ import {
   GetAppRolesRequest,
   GetAppRolesResponse,
   GetAppRoleUsersRequest,
-  GetAppRoleUsersResponse
+  GetAppRoleUsersResponse,
+  UpdateAppRoleRequest,
+  UpdateAppRoleResponse
 } from './types'
 import { doActionWithError } from '../../request'
 import { formalizeAppID } from '../app/local'
@@ -177,6 +179,18 @@ export const useRoleStore = defineStore('roles', {
         req,
         req.Message,
         (resp: CreateAppRoleResponse): void => {
+          this.addRoles(req.TargetAppID, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        })
+    },
+    updateAppRole (req: UpdateAppRoleRequest, done: (error: boolean, row?: Role) => void) {
+      doActionWithError<UpdateAppRoleRequest, UpdateAppRoleResponse>(
+        API.UPDATE_APP_ROLE,
+        req,
+        req.Message,
+        (resp: UpdateAppRoleResponse): void => {
           this.addRoles(req.TargetAppID, [resp.Info])
           done(false, resp.Info)
         }, () => {

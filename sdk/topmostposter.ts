@@ -139,3 +139,24 @@ export const adminUpdateTopMostPoster = (target: topmostposter.Poster, done?: (e
     }
   }, done)
 }
+
+export const adminDeleteTopMostPoster = (target: topmostposter.Poster, done?: (error: boolean) => void) => {
+  _topMostPoster.adminDeletePoster({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST_POSTER_CONSTRAINT',
+        Message: 'MSG_DELETE_TOPMOST_POSTER_CONSTRAINT_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST_POSTER_CONSTRAINT',
+        Message: 'MSG_DELETE_TOPMOST_POSTER_CONSTRAINT_SUCCESS',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, done)
+}

@@ -148,3 +148,26 @@ export const adminUpdateTopMost = (target: TopMost, finish: (error: boolean) => 
     finish(error)
   })
 }
+
+export const adminDeleteTopMost = (target: TopMost, finish: (error: boolean) => void) => {
+  topMost.adminDeleteTopMost({
+    ...target,
+    TargetAppID: target.AppID,
+    Message: {
+      Error: {
+        Title: 'MSG_DELETE_TOPMOST',
+        Message: 'MSG_DELETE_TOPMOST_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      },
+      Info: {
+        Title: 'MSG_DELETE_TOPMOST',
+        Message: 'MSG_DELETE_TOPMOST_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Success
+      }
+    }
+  }, (error: boolean) => {
+    finish(error)
+  })
+}

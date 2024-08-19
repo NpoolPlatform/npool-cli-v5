@@ -79,10 +79,28 @@ export interface DeleteRoleUserResponse {
 }
 
 export interface UpdateRoleRequest extends BaseRequest {
-  Info: Role
+  ID: number
+  EntID: string
+  AppID: string
+  RoleName?: string
+  Default?: boolean
+  Description?: string
 }
 
 export interface UpdateRoleResponse {
+  Info: Role
+}
+
+export interface UpdateAppRoleRequest extends BaseRequest {
+  ID: number
+  EntID: string
+  TargetAppID: string
+  RoleName?: string
+  Default?: boolean
+  Description?: string
+}
+
+export interface UpdateAppRoleResponse {
   Info: Role
 }
 

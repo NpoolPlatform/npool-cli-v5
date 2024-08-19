@@ -1,7 +1,9 @@
 import { useraccount, notify, useraccountbase } from '..'
+import { AccountUsedFor } from '../account/base'
 import { AppID } from './localapp'
 
 const _userAccount = useraccount.useUserAccountStore()
+export const userAccounts = (userID?: string, coinTypeID?: string, usedFor?: AccountUsedFor) => _userAccount.accounts(AppID.value, userID, coinTypeID, usedFor)
 
 const getPageUserAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
   if (pageEnd <= pageIndex) {
@@ -48,7 +50,7 @@ export const getUserAccounts = (pageStart: number, pages: number, done?: (error:
 }
 
 const adminGetPageUserAccounts = (pageIndex: number, pageEnd: number, done?: (error: boolean, totalPages: number, totalRows: number) => void) => {
-  if (pageEnd <= pageIndex) {
+  if (pageEnd < pageIndex) {
     return done?.(false, _userAccount.totalPages(AppID.value), _userAccount.totalRows(AppID.value))
   }
   _userAccount.initializePager(AppID.value)
