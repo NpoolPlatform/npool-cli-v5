@@ -57,6 +57,7 @@ export const adminGetAppDefaultGoods = (pageStart: number, pages: number, done?:
 }
 
 export const appDefaultGoods = computed(() => appDefaultGood.defaults(AppID.value))
+export const coinDefaultAppGoodIDWithUnit = (coinUnit: string) => appDefaultGoods.value.find((el) => el.CoinUnit === coinUnit)?.AppGoodID
 
 export const adminUpdateAppDefaultGood = (target: appdefaultgood.Default, done?: (error: boolean, defautle?: appdefaultgood.Default) => void) => {
   appDefaultGood.adminUpdateDefault({
