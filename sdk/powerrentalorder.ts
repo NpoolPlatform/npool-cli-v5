@@ -102,6 +102,7 @@ const getPurchasedUnits = computed(() => (appGoodID: string) => {
   return units
 })
 export const purchasedUnits = (appGoodID: string) => getPurchasedUnits.value(appGoodID)
+export const orderGoodQuantityUnit = (orderID: string) => powerRentalOrder(orderID)?.GoodQuantityUnit || 'MSG_UNKNOWN'
 
 export const createPowerRentalOrder = (request: powerrentalorder.CreatePowerRentalOrderRequest, done?: (error: boolean, powerRentalOrder?: powerrentalorder.PowerRentalOrder) => void) => {
   request.Message = {
