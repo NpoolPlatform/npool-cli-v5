@@ -38,9 +38,8 @@ export interface Achievement {
   CreatedAt: number
   InvitedAt: number
   Kol: boolean
-  TotalInvitees: number
-  DirectInvites: number
-  IndirectInvites: number
+  DirectInvitees: number
+  IndirectInvitees: number
   DirectConsumeAmount: string
   InviteeConsumeAmount: string
   TotalCommission: string
