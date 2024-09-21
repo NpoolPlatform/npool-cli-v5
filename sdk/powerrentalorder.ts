@@ -186,3 +186,21 @@ export const updatePowerRentalOrder = (target: powerrentalorder.PowerRentalOrder
     }
   }, done)
 }
+
+export const updateUserPowerRentalOrder = (target: powerrentalorder.PowerRentalOrder, paid?: boolean, canceled?: boolean, done?: (error: boolean, powerRentalOrder?: powerrentalorder.PowerRentalOrder) => void) => {
+  _powerRentalOrder.updateUserPowerRentalOrder({
+    ID: target.ID,
+    EntID: target.EntID,
+    TargetUserID: target.UserID,
+    OrderID: target.OrderID,
+    Canceled: canceled,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_POWERRENTAL_ORDER',
+        Message: 'MSG_UPDATE_POWERRENTAL_ORDER_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
+  }, done)
+}
