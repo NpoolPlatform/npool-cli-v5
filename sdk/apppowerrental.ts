@@ -131,7 +131,7 @@ export const techniqueFeeRatio = (appGoodID: string) => {
     case GoodType.LegacyPowerRental:
       return Number(_appPowerRental.TechniqueFeeRatio)
     case GoodType.PowerRental:
-      return Number(_appPowerRental.Requireds.find(el => el.RequiredGoodType === GoodType.TechniqueServiceFee)?.RequiredAppGoodUnitValue)
+      return Number(_appPowerRental.Requireds.find(el => el.RequiredGoodType === GoodType.TechniqueServiceFee)?.RequiredAppGoodUnitValue || 0)
   }
   return 0
 }

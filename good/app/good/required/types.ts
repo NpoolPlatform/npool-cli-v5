@@ -19,12 +19,12 @@ export interface Required {
 }
 
 export interface RequiredInfo {
-    MainGoodID: string
+    MainAppGoodID: string
     RequiredAppGoodID: string
     RequiredGoodType: GoodType
     RequiredAppGoodName: string
     RequiredAppGoodUnitValue: string
-    RequiredAppGoodSettleType: GoodSettlementType
+    RequiredGoodSettleType: GoodSettlementType
     Must: boolean
 }
 
