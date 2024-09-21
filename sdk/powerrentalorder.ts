@@ -1,9 +1,7 @@
-import { computed } from 'vue'
 import { powerrentalorder, notify, constant } from '..'
 import { AppID } from './localapp'
 import { OrderState, OrderTimeoutSeconds } from '../order'
 import { remain } from '../utils'
-import { formalizeUserID } from '../appuser/user/local'
 
 const _powerRentalOrder = powerrentalorder.usePowerRentalOrderStore()
 
@@ -61,12 +59,12 @@ export const adminGetPowerRentalOrders = (pageStart: number, pages: number, done
   adminGetPagePowerRentalOrders(pageStart, pages ? pageStart + pages : pages, done)
 }
 
-export const powerRentalOrders = computed(() => _powerRentalOrder.powerRentalOrders(AppID.value, formalizeUserID()))
-export const powerRentalOrder = (orderID: string) => powerRentalOrders.value.find((el) => el.OrderID === orderID)
+export const powerRentalOrders = (userID?: string) => _powerRentalOrder.powerRentalOrders(AppID.value, userID)
+export const powerRentalOrder = (orderID: string) => powerRentalOrders().find((el) => el.OrderID === orderID)
 
 export const validate = (orderID: string) => _powerRentalOrder.validate(orderID)
 
-const getOrderState = computed(() => (orderID: string) => {
+export const orderState = (orderID: string) => {
   const order = powerRentalOrder(orderID)
   if (!order) {
     return 'MSG_ERROR'
@@ -89,10 +87,9 @@ const getOrderState = computed(() => (orderID: string) => {
     return 'MSG_WAIT_FOR_START'
   }
   return 'MSG_IN_SERVICE'
-})
-export const orderState = (orderID: string) => getOrderState.value(orderID)
+}
 
-const getPurchasedUnits = computed(() => (appGoodID: string) => {
+export const purchasedUnits = (appGoodID: string) => {
   let units = 0
   _powerRentalOrder.powerRentalOrders(undefined)?.forEach((el) => {
     if (el.AppGoodID === appGoodID) {
@@ -100,8 +97,7 @@ const getPurchasedUnits = computed(() => (appGoodID: string) => {
     }
   })
   return units
-})
-export const purchasedUnits = (appGoodID: string) => getPurchasedUnits.value(appGoodID)
+}
 
 export const createPowerRentalOrder = (request: powerrentalorder.CreatePowerRentalOrderRequest, done?: (error: boolean, powerRentalOrder?: powerrentalorder.PowerRentalOrder) => void) => {
   request.Message = {
