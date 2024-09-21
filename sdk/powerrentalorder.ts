@@ -175,6 +175,14 @@ export const updatePowerRentalOrder = (target: powerrentalorder.PowerRentalOrder
     OrderID: target.OrderID,
     Balances: [],
     Paid: paid,
-    Canceled: canceled
+    Canceled: canceled,
+    Message: {
+      Error: {
+        Title: 'MSG_UPDATE_POWERRENTAL_ORDER',
+        Message: 'MSG_UPDATE_POWERRENTAL_ORDER_FAIL',
+        Popup: true,
+        Type: notify.NotifyType.Error
+      }
+    }
   }, done)
 }
