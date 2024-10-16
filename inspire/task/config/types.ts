@@ -1,5 +1,5 @@
 import { BaseRequest } from '../../../request'
-import { TaskType, TaskState, RewardState } from './const'
+import { TaskType } from './const'
 import { EventType } from '../../../base'
 
 export interface TaskConfig {

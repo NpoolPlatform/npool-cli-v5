@@ -1,6 +1,5 @@
 import { EventType } from '../../base'
 import { BaseRequest } from '../../request'
-import { Coupon } from '../coupon/types'
 
 export interface Event {
   ID: number
