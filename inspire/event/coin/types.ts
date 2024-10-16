@@ -10,7 +10,7 @@ export interface EventCoin {
   CoinValue: string
   CoinPerUSD: string
   CoinName: string
-  DisplayNames: string
+  DisplayNames: string[]
   CoinLogo: string
   CoinUnit: string
 }
