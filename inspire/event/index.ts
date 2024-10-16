@@ -7,6 +7,14 @@ import {
   CreateEventResponse,
   GetEventsRequest,
   GetEventsResponse,
+  AdminUpdateEventRequest,
+  AdminUpdateEventResponse,
+  AdminCreateEventRequest,
+  AdminCreateEventResponse,
+  AdminGetEventsRequest,
+  AdminGetEventsResponse,
+  AdminDeleteEventRequest,
+  AdminDeleteEventResponse,
   Event
 } from './types'
 import { doActionWithError } from '../../request/action'
@@ -34,6 +42,18 @@ export const useEventStore = defineStore('event', {
           const index = _events.findIndex((el) => el.ID === event.ID)
           _events.splice(index >= 0 ? index : 0, index >= 0 ? 1 : 0, event)
         })
+        this.Events.set(appID, _events)
+      }
+    },
+    delEvent (): (appID: string | undefined, id: number) => void {
+      return (appID: string | undefined, id: number) => {
+        appID = formalizeAppID(appID)
+        let _events = this.Events.get(appID) as Array<Event>
+        if (!_events) {
+          _events = []
+        }
+        const index = _events.findIndex((el) => el.ID === id)
+        _events.splice(index < 0 ? 0 : index, index < 0 ? 0 : 1)
         this.Events.set(appID, _events)
       }
     }
@@ -72,6 +92,58 @@ export const useEventStore = defineStore('event', {
         req.Message,
         (resp: CreateEventResponse): void => {
           this.addEvents(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminGetEvents (req: AdminGetEventsRequest, done: (error: boolean, rows?: Array<Event>) => void) {
+      doActionWithError<AdminGetEventsRequest, AdminGetEventsResponse>(
+        API.ADMIN_GET_EVENTINSPIRES,
+        req,
+        req.Message,
+        (resp: AdminGetEventsResponse): void => {
+          this.addEvents(undefined, resp.Infos)
+          done(false, resp.Infos)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminUpdateEvent (req: AdminUpdateEventRequest, done: (error: boolean, row?: Event) => void) {
+      doActionWithError<AdminUpdateEventRequest, AdminUpdateEventResponse>(
+        API.ADMIN_UPDATE_EVENTINSPIRE,
+        req,
+        req.Message,
+        (resp: AdminUpdateEventResponse): void => {
+          this.addEvents(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminCreateEvent (req: AdminCreateEventRequest, done: (error: boolean, row?: Event) => void) {
+      doActionWithError<AdminCreateEventRequest, AdminCreateEventResponse>(
+        API.ADMIN_CREATE_EVENTINSPIRE,
+        req,
+        req.Message,
+        (resp: AdminCreateEventResponse): void => {
+          this.addEvents(undefined, [resp.Info])
+          done(false, resp.Info)
+        }, () => {
+          done(true)
+        }
+      )
+    },
+    adminDeleteEvent (req: AdminDeleteEventRequest, done: (error: boolean, row?: Event) => void) {
+      doActionWithError<AdminDeleteEventRequest, AdminDeleteEventResponse>(
+        API.ADMIN_DELETE_EVENTINSPIRE,
+        req,
+        req.Message,
+        (resp: AdminDeleteEventResponse): void => {
+          this.delEvent(undefined, req.ID)
           done(false, resp.Info)
         }, () => {
           done(true)
