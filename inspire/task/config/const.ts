@@ -7,7 +7,6 @@ export enum API {
 
 export enum TaskType {
   BaseTask = 'BaseTask',
-  DailyTask = 'DailyTask',
   GrowthTask = 'GrowthTask'
 }
 export const TaskTypes = Object.values(TaskType)
