@@ -15,7 +15,7 @@ export interface TaskConfig {
   Index: string
   LastTaskID: string
   MaxRewardCount: string
-  CooldownSecord: string
+  CooldownSecond: string
   EventType: EventType
   IntervalReset: boolean
   /** @format int64 */
@@ -38,7 +38,7 @@ export interface AdminCreateTaskConfigRequest extends BaseRequest {
   RecommendMessage: string
   Index: string
   MaxRewardCount: string
-  CooldownSecord: string
+  CooldownSecond: string
   LastTaskID?: string
   IntervalReset?: boolean
   IntervalResetSecond?: number
@@ -60,7 +60,7 @@ export interface AdminUpdateTaskConfigRequest extends BaseRequest {
   RecommendMessage?: string
   Index?: string
   MaxRewardCount?: string
-  CooldownSecord?: string
+  CooldownSecond?: string
   LastTaskID?: string
   IntervalReset?: boolean
   IntervalResetSecond?: number
