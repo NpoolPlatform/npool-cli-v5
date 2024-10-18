@@ -16,7 +16,7 @@ export interface UserTask {
   /** @format int64 */
   MaxRewardCount: number
   /** @format int64 */
-  CooldownSecord: number
+  CooldownSecond: number
   /** @format int64 */
   CompletionTimes: number
   /** @format int64 */
