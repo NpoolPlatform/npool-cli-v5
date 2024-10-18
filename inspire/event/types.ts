@@ -19,7 +19,7 @@ export interface Event {
   CreatedAt: number
   /** @format int64 */
   UpdatedAt: number
-  AppGoodID: string
+  AppGoodID?: string
 }
 
 export interface CreateEventRequest extends BaseRequest {
