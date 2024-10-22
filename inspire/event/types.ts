@@ -13,6 +13,7 @@ export interface Event {
   MaxConsecutive: number
   GoodID: string
   GoodName: string
+  AppGoodName: string
   /** @format int64 */
   InviterLayers: number
   /** @format int64 */
