@@ -119,3 +119,11 @@ export enum GoodTopMostConstraint {
   TopMostKycMust = 'TopMostKycMust'
 }
 export const GoodTopMostConstraints = Object.values(GoodTopMostConstraint)
+
+export enum ContractState {
+  ContractWaitDeployment = 'ContractWaitDeployment',
+  ContractInDeployment = 'ContractInDeployment',
+  ContractDeploymentSuccess = 'ContractDeploymentSuccess',
+  ContractDeploymentFail = 'ContractDeploymentFail'
+}
+export const ContractStates = Object.values(ContractState)
