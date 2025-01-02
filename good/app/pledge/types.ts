@@ -1,15 +1,13 @@
 import { BaseRequest } from '../../../request'
-import { BenefitType, CancelMode, GoodDurationType, GoodSaleMode, GoodStockMode, GoodType, StartMode } from '../../base'
+import { BenefitType, GoodType, StartMode } from '../../base'
 import { GoodCoinInfo } from '../../good/coin'
 import { RewardInfo } from '../../good/coin/reward/types'
-import { MiningGoodStockInfo } from '../../good/stock'
 import { DescriptionInfo } from '../good/description'
 import { DisplayColorInfo } from '../good/display/color'
 import { DisplayNameInfo } from '../good/display/name'
 import { LabelInfo } from '../good/label'
 import { Poster } from '../good/poster'
 import { RequiredInfo } from '../good/required'
-import { StockInfo } from '../good/stock/mining'
 
 export interface AppPledge {
   ID: number
