@@ -106,7 +106,7 @@ export const adminCreateAppPledge = (target: apppledge.AppPledge, done?: (error:
     ...target,
     TargetAppID: AppID.value,
     Name: target.AppGoodName,
-    StartMode: target?.GoodStartMode,
+    StartMode: target?.AppGoodStartMode,
     Online: target.AppGoodOnline,
     Purchasable: target.AppGoodPurchasable,
     Message: {
