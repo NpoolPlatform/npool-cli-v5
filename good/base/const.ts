@@ -22,7 +22,9 @@ export enum StartMode {
   GoodStartModeTBD = 'GoodStartModeTBD',
   GoodStartModeInstantly = 'GoodStartModeInstantly',
   GoodStartModeNextDay = 'GoodStartModeNextDay',
-  GoodStartModePreset = 'GoodStartModePreset'
+  GoodStartModePreset = 'GoodStartModePreset',
+  GoodStartModeConfirmed = 'GoodStartModeConfirmed',
+  GoodStartModeWithParent = 'GoodStartModeWithParent'
 }
 
 export const StartModes = Object.values(StartMode)
