@@ -5,7 +5,7 @@ export interface Account {
   ID: number
   EntID: string
   GoodID: string
-  PledgeID: string
+  DelegatedStakingID: string
   GoodName: string
   CoinTypeID: string
   CoinName: string

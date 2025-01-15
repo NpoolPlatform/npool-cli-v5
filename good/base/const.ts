@@ -7,7 +7,6 @@ export enum GoodType {
   ElectricityFee = 'ElectricityFee',
   DelegatedStaking = 'DelegatedStaking',
   FbmCrowdFunding = 'FbmCrowdFunding',
-  Pledge = 'Pledge'
 }
 export const GoodTypes = Object.values(GoodType)
 
