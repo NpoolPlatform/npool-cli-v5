@@ -6,7 +6,7 @@ export enum GoodType {
   TechniqueServiceFee = 'TechniqueServiceFee',
   ElectricityFee = 'ElectricityFee',
   DelegatedStaking = 'DelegatedStaking',
-  FbmCrowdFunding = 'FbmCrowdFunding'
+  FbmCrowdFunding = 'FbmCrowdFunding',
 }
 export const GoodTypes = Object.values(GoodType)
 
@@ -21,7 +21,9 @@ export enum StartMode {
   GoodStartModeTBD = 'GoodStartModeTBD',
   GoodStartModeInstantly = 'GoodStartModeInstantly',
   GoodStartModeNextDay = 'GoodStartModeNextDay',
-  GoodStartModePreset = 'GoodStartModePreset'
+  GoodStartModePreset = 'GoodStartModePreset',
+  GoodStartModeConfirmed = 'GoodStartModeConfirmed',
+  GoodStartModeWithParent = 'GoodStartModeWithParent'
 }
 
 export const StartModes = Object.values(StartMode)
@@ -119,3 +121,11 @@ export enum GoodTopMostConstraint {
   TopMostKycMust = 'TopMostKycMust'
 }
 export const GoodTopMostConstraints = Object.values(GoodTopMostConstraint)
+
+export enum ContractState {
+  ContractWaitDeployment = 'ContractWaitDeployment',
+  ContractInDeployment = 'ContractInDeployment',
+  ContractDeploymentSuccess = 'ContractDeploymentSuccess',
+  ContractDeploymentFail = 'ContractDeploymentFail'
+}
+export const ContractStates = Object.values(ContractState)
