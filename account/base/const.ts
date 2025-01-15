@@ -20,8 +20,8 @@ export enum AccountLockedBy {
   Collecting = 'Collecting',
 }
 
-export enum ContractType {
-  DefaultContractType = 'DefaultContractType',
-  ContractDeployment = 'ContractDeployment',
-  ContractCalculate = 'ContractCalculate',
+export enum ContractOperatorType {
+  DefaultContractOperatorType = 'DefaultContractOperatorType',
+  ContractOwner = 'ContractOwner',
+  ContractCalculator = 'ContractCalculator',
 }

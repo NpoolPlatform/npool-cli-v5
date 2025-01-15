@@ -1,5 +1,5 @@
 import { BaseRequest } from '../../request'
-import { AccountLockedBy, ContractType } from '../base'
+import { AccountLockedBy, ContractOperatorType } from '../base'
 
 export interface Account {
   ID: number
@@ -13,7 +13,7 @@ export interface Account {
   CoinUnit: string
   CoinEnv: string
   CoinLogo: string
-  ContractType: ContractType
+  ContractOperatorType: ContractOperatorType
   AccountID: string
   Address: string
   Backup: true
