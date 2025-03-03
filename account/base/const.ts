@@ -19,3 +19,9 @@ export enum AccountLockedBy {
   Payment = 'Payment',
   Collecting = 'Collecting',
 }
+
+export enum ContractOperatorType {
+  DefaultContractOperatorType = 'DefaultContractOperatorType',
+  ContractOwner = 'ContractOwner',
+  ContractCalculator = 'ContractCalculator',
+}
